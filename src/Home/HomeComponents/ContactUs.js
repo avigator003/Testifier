@@ -29,15 +29,7 @@ function ContactUs() {
             style:{color:"#fff"}
           }}
         /> 
-        <TextField
-          id="outlined-subject-input"
-          label="Subject"
-          variant="outlined"
-          className={classes.root}
-          InputLabelProps={{
-            style:{color:"#fff"}
-          }}
-        /> 
+        
         <TextField
           id="outlined-message-input"
           label="Message"

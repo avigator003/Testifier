@@ -1,9 +1,17 @@
-import React from 'react'
+import React,{useState} from 'react'
 import { makeStyles } from "@material-ui/core/styles";
 import { Grid, TextField, FormControlLabel, Checkbox, Button,Stepper ,Step,StepLabel,Typography  } from "@material-ui/core";
 import registerBackground from '../assests/images/signup.png'
 import GoogleButton from 'react-google-button'
+import { useDispatch } from "react-redux";
+import { notification } from "antd";
+import { register } from "../store/Actions";
 
+const validEmailRegex = RegExp(
+  /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i
+);
+
+const validNameRegex = RegExp(/^[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.'-]+$/u);
 
 function getSteps() {
     return ['Step 1', 'Step 2' ];
@@ -22,9 +30,30 @@ function getStepContent(stepIndex) {
   }
 
 
-function Registration() {
+function Registration(props) {
     
     const classes = useStyles()
+    const dispatch = useDispatch();
+    const [display, setDisplay] = useState(false);
+    const [state, setState] = useState({
+      name: "",
+      userName: "",
+      emailAddress: "",
+      password: "",
+      phoneNumber: "",
+      upscAttempts:"",
+      additionalSubjects:""
+    });
+    const [error, setError] = useState({
+      name: "",
+      userName: "",
+      emailAddress: "",
+      password: "",
+      phoneNumber: "",
+      upscAttempts:"",
+      additionalSubjects:""
+    });
+  
     const [activeStep, setActiveStep] = React.useState(0);
     const steps = getSteps();
   
@@ -39,6 +68,108 @@ function Registration() {
     const handleReset = () => {
       setActiveStep(0);
     };
+  
+    const handleChange = (e) => {
+      e.persist();
+      setDisplay(false)
+      const { name, value } = e.target;
+      let errors = error;
+      switch (name) {
+        case "name":
+          errors.name =
+              (value.length == 0) 
+              ? "" 
+              : (!validNameRegex.test(value))
+              ? " Name must be in characters!"
+              : (value.length > 20) 
+              ? " Name must be less than 20 characters long!" 
+              : "";
+         break;
+        case "userName":
+          errors.userName =
+            (value.length == 0) 
+            ? "" 
+            : (!validNameRegex.test(value))
+            ? "User Name must be in characters!"
+            : (value.length > 20) 
+            ? "User Name must be less than 20 characters long!" 
+            : "";
+          break;
+        case "emailAddress":
+          errors.emailAddress = validEmailRegex.test(value)
+            ? ""
+            : "Email is not valid!";
+          break;
+        case "upscAttempts":
+          errors.upscAttempts =
+            value === "" ? "Should be a Number" : "";
+          break;
+          case "additionalSubjects":
+          errors.additionalSubjects =
+            value === "" ? "" : "";
+          break;
+        case "phoneNumber":
+          errors.phoneNumber =
+            value.length < 10 || value.length > 13
+              ? "phone number must be between 10 and 13 digits"
+              : "";
+          break;
+        case "password":
+          errors.password =
+            value.length < 6 ? "Password must be at least 6 characters" : "";
+          break;
+        default:
+          break;
+      }
+      setError({ ...errors });
+      setState((st) => ({ ...st, [e.target.name]: e.target.value }));
+    };
+  
+    const handleRegister = (e) => {
+      e.preventDefault();
+      if(!display){
+        const validateForm = (error) => {
+          let valid = true;
+          Object.values(error).forEach((val) => val.length > 0 && (valid = false));
+          return valid;
+        };
+        if (validateForm(error)) {
+          checkValidity();
+        } else {
+          setDisplay(true)
+          return notification.warning({
+            message: "Failed to Register.",
+          });
+        }
+      }
+      
+    };
+  
+    function checkValidity() {
+      if (!Object.keys(state).every((k) => state[k] !== "")) {
+        setDisplay(true)
+        return notification.warning({
+          message: "Fields Should Not Be Empty",
+        });
+      } else if (state["password"] !== state["confirmPass"]) {
+        setDisplay(true)
+        return notification.warning({
+          message: "Passwords Don't Match",
+        });
+      } else {
+        return dispatch(
+          register(state, (err, response) => {
+            if (err) {
+              setDisplay(true)
+              notification.error(err);
+            } else {
+              props.history.push("/login");
+              notification.success(response);
+            }
+          })
+        );
+      }
+    }
   
     
     return (

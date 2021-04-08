@@ -8,15 +8,11 @@ import ContactUs from './HomeComponents/ContactUs';
 
 function Item(props)
 {
+    const classes=useStyles()
     return (
         <Paper>
-            <h2>{props.item.name}</h2>
-            <p>{props.item.description}</p>
-
-            <Button className="CheckButton">
-                Check it out!
-            </Button>
-        </Paper>
+            <img src={props.item.url} alt="" className={classes.image}/>
+          </Paper>
     )
 }
 
@@ -26,11 +22,11 @@ export default function Landing(props){
     var items = [
         {
             name: "Random Name #1",
-            description: "Probably the most random thing you have ever seen!"
+            url: "https://via.placeholder.com/150/771796"
         },
         {
             name: "Random Name #2",
-            description: "Hello World!"
+            url:"https://via.placeholder.com/150/771796"
         }
     ]
 
@@ -88,6 +84,10 @@ const useStyles = makeStyles((theme) => ({
       button: {
           width: "100%",
           marginBottom: 15
+      },
+      image:{
+          width:"100%",
+          height:"500px",
       }
   
   }));

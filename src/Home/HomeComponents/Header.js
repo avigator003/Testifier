@@ -19,17 +19,23 @@ const useStyles = makeStyles((theme) => ({
   grow: {
     flexGrow: 1,
   },
+  appbar:{
+backgroundColor:"white",
+position:"fixed"
+  },
   menuButton: {
     marginRight: theme.spacing(2),
   },
   title: {
     display: 'none',
+    color:"black",
     [theme.breakpoints.up('sm')]: {
       display: 'block',
     },
   },
   search: {
     position: 'relative',
+    color:"black",
     borderRadius: theme.shape.borderRadius,
     backgroundColor: fade(theme.palette.common.white, 0.15),
     '&:hover': {
@@ -46,6 +52,7 @@ const useStyles = makeStyles((theme) => ({
   searchIcon: {
     padding: theme.spacing(0, 2),
     height: '100%',
+    color:"black",
     position: 'absolute',
     pointerEvents: 'none',
     display: 'flex',
@@ -77,6 +84,9 @@ const useStyles = makeStyles((theme) => ({
       display: 'none',
     },
   },
+  icon:{
+    color:"black"
+  }
 }));
 
 export default function Header() {
@@ -163,18 +173,10 @@ export default function Header() {
 
   return (
     <div className={classes.grow}>
-      <AppBar position="static">
+      <AppBar position="static" className={classes.appbar}>
         <Toolbar>
-          <IconButton
-            edge="start"
-            className={classes.menuButton}
-            color="inherit"
-            aria-label="open drawer"
-          >
-            <MenuIcon />
-          </IconButton>
           <Typography className={classes.title} variant="h6" noWrap>
-            Material-UI
+            Testifier
           </Typography>
           <div className={classes.search}>
             <div className={classes.searchIcon}>
@@ -193,12 +195,12 @@ export default function Header() {
           <div className={classes.sectionDesktop}>
             <IconButton aria-label="show 4 new mails" color="inherit">
               <Badge badgeContent={4} color="secondary">
-                <MailIcon />
+                <MailIcon className={classes.icon}/>
               </Badge>
             </IconButton>
             <IconButton aria-label="show 17 new notifications" color="inherit">
               <Badge badgeContent={17} color="secondary">
-                <NotificationsIcon />
+                <NotificationsIcon className={classes.icon} />
               </Badge>
             </IconButton>
             <IconButton
@@ -209,7 +211,7 @@ export default function Header() {
               onClick={handleProfileMenuOpen}
               color="inherit"
             >
-              <AccountCircle />
+              <AccountCircle className={classes.icon} />
             </IconButton>
           </div>
           <div className={classes.sectionMobile}>
