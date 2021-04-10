@@ -103,16 +103,16 @@ export const logoutUser = (payload) => ({ type: LOGOUT_USER, payload });
 export const register = (payload, cb) => {
   return (dispatch) => {
     api
-      .post("api/auth/register", payload)
+      .post("/auth/register", payload)
       .then((res) => {
-        console.log(res.data);
+        console.log(res?.data);
         cb(null, {
           message: "Registered Successfully",
         });
       })
       .catch((err) => {
         //Dispatch Toaster Notificaton
-        console.log(err.response);
+        console.log(err);
         cb({
           message: err.response.data.message,
         });
@@ -229,6 +229,26 @@ export const unblockUser = (payload, cb) => {
         console.log(err); //Dispatch Toaster Notificaton
         cb({
           message: "Try Again Later",
+        });
+      });
+  };
+};
+
+//User List
+export const getUsers = (cb) => {
+  return (dispatch) => {
+    api
+      .get("/user/list")
+      .then((res) => {
+            return cb(null,{
+              users: res.data.users,
+            });
+        })
+
+             .catch((err) => {
+        console.log(err);
+        cb({
+          message:"Fetching Failed",
         });
       });
   };

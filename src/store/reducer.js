@@ -9,6 +9,8 @@ const initialState = {
         timeout:0,
         color:'green'
     },
+    
+    sidebarShow: 'responsive'
     //Timer
     
 }
@@ -32,6 +34,9 @@ const reducer = (state = initialState, action) => {
                     ...state,
                     resetToken:action.payload
                 }
+                case 'set':
+                return {...state, sidebarShow:action.sidebarShow}
+   
 
         default:
             return state;

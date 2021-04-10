@@ -6,6 +6,11 @@ import GoogleButton from 'react-google-button'
 import { useDispatch } from "react-redux";
 import { notification } from "antd";
 import { register } from "../store/Actions";
+import { Spin } from "antd";
+import api from "../resources/api";
+
+
+
 
 const validEmailRegex = RegExp(
   /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i
@@ -127,43 +132,34 @@ function Registration(props) {
   
     const handleRegister = (e) => {
       e.preventDefault();
-      if(!display){
         const validateForm = (error) => {
           let valid = true;
           Object.values(error).forEach((val) => val.length > 0 && (valid = false));
           return valid;
         };
+
+        console.log("eroor",error)
         if (validateForm(error)) {
           checkValidity();
         } else {
-          setDisplay(true)
           return notification.warning({
             message: "Failed to Register.",
           });
         }
-      }
       
     };
   
     function checkValidity() {
       if (!Object.keys(state).every((k) => state[k] !== "")) {
-        setDisplay(true)
         return notification.warning({
           message: "Fields Should Not Be Empty",
         });
-      } else if (state["password"] !== state["confirmPass"]) {
-        setDisplay(true)
-        return notification.warning({
-          message: "Passwords Don't Match",
-        });
-      } else {
+      }  else {
         return dispatch(
           register(state, (err, response) => {
             if (err) {
-              setDisplay(true)
               notification.error(err);
             } else {
-              props.history.push("/login");
               notification.success(response);
             }
           })
@@ -201,10 +197,10 @@ function Registration(props) {
             
             <h2>Register yourself and</h2>
             <h2> ace your Academics</h2>
-            <TextField id="standard-basic" label="Name" color="primary" className={classes.input} />
-            <TextField id="standard-basic" label="Username" color="primary" className={classes.input} />
-            <TextField id="standard-basic" label="E-mail" color="primary" className={classes.input} />
-            <TextField id="standard-basic" label="Password" color="primary" className={classes.input} />
+            <TextField id="standard-basic" label="Name" color="primary" className={classes.input} name="name" value={state['name']} onChange={(e)=>handleChange(e)} />
+            <TextField id="standard-basic" label="Username" color="primary" className={classes.input} name="userName" value={state['upscAtuserNametempts']} onChange={(e)=>handleChange(e)}/>
+            <TextField id="standard-basic" label="E-mail" color="primary" className={classes.input} name="emailAddress" value={state['emailAddress']} onChange={(e)=>handleChange(e)}/>
+            <TextField id="standard-basic" label="Password" color="primary" className={classes.input} name="password" value={state['password']} onChange={(e)=>handleChange(e)}/>
             
             <div className={classes.checkbox}>
             <h4 className={classes.login}>Have an Account ? Click Here!</h4>
@@ -223,9 +219,9 @@ function Registration(props) {
         :  <Grid item xs={12} md={3} lg={3} sm={3} className={classes.formContainer}>
             
         <h2>Complete Profile !!</h2>
-        <TextField id="standard-basic" label="Phone Number" color="primary" className={classes.input} />
-        <TextField id="standard-basic" label="UPSC Attempts" color="primary" className={classes.input} />
-        <TextField id="standard-basic" label="Additional Subjects" color="primary" className={classes.input} />
+        <TextField id="standard-basic" label="Phone Number" color="primary" className={classes.input} name="phoneNumber" value={state['phoneNumber']} onChange={(e)=>handleChange(e)}/>
+        <TextField id="standard-basic" label="UPSC Attempts" color="primary" className={classes.input} name="upscAttempts" value={state['upscAttempts']} onChange={(e)=>handleChange(e)}/>
+        <TextField id="standard-basic" label="Additional Subjects" color="primary" className={classes.input} name="additionalSubjects" value={state['additionalSubjects']} onChange={(e)=>handleChange(e)}/>
         
         <div className={classes.checkbox}>
             <h4 className={classes.login}>Have an Account ? Click Here!</h4>
@@ -235,7 +231,7 @@ function Registration(props) {
                 Back
               </Button>
             
-            <Button variant="contained" color="primary" className={classes.button} onClick={handleNext} >
+            <Button variant="contained" color="primary" className={classes.button} onClick={(e)=>handleRegister(e)} >
                 Register
             </Button>
             </div>

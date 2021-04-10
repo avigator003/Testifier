@@ -7,6 +7,9 @@ import {Provider} from 'react-redux';
 import {BrowserRouter} from 'react-router-dom';
 import store from './store'
 
+import { icons } from './Dashboard/src/assets/icons'
+React.icons = icons
+
 const app = (
   <Provider store={store}>
       <BrowserRouter>
