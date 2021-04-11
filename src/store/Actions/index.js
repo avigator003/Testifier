@@ -273,7 +273,6 @@ export const getUserById = (payload,cb) => {
     api
       .get(`/user/view/${payload}`)
       .then((res) => {
-        console.log(res)
         return cb(null,{res
         });
 
@@ -309,6 +308,7 @@ export const updateUser = (payload, cb) => {
 
 //Save Test
 export const saveTest = (payload,cb) => {
+  console.log("pay",payload)
   return (dispatch) => {
     api
       .post("/tests/savetest",payload)
@@ -350,3 +350,42 @@ export const getTests = (cb) => {
   };
 };
 
+
+
+
+// Test by Id
+export const getTestById = (payload,cb) => {
+  return (dispatch) => {
+    api
+      .get(`/tests/view/${payload}`)
+      .then((res) => {
+        return cb(null,{res
+        });
+
+      })
+      .catch((err) => {
+        console.log(err); //Dispatch Toaster Notificaton
+      });
+  };
+};
+ 
+
+// Update Test
+export const updateTest = (payload, cb) => {
+  var { id, body } = payload;
+  return (dispatch) => {
+    api
+      .post(`/tests/edit/${id}`, body)
+      .then((res) => {
+        cb(null, {
+          message: "Tests Updated",
+        });
+      })
+      .catch((err) => {
+        console.log(err); //Dispatch Toaster Notificaton
+        cb({
+          message: "Try Again Later",
+        });
+      });
+  };
+};

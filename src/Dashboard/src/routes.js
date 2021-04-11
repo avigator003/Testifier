@@ -51,7 +51,6 @@ const routes = [
   { path: '/base/cards', name: 'Cards', component: Cards },
   { path: '/base/carousels', name: 'Carousel', component: Carousels },
   { path: '/base/collapses', name: 'Collapse', component: Collapses },
-  { path: '/test/add', name: 'Add Test', component: TestForm },
   { path: '/base/jumbotrons', name: 'Jumbotrons', component: Jumbotrons },
   { path: '/base/list-groups', name: 'List Groups', component: ListGroups },
   { path: '/base/navbars', name: 'Navbars', component: Navbars },
@@ -79,6 +78,9 @@ const routes = [
   { path: '/notifications/modals', name: 'Modals', component: Modals },
   { path: '/notifications/toaster', name: 'Toaster', component: Toaster },
   { path: '/test/details', name: 'Tests', component: Tests },
+  { path: '/test/add', name: 'Add Test', component: TestForm },
+  { path: '/test/edit/:id', name: 'Edit Test', component: TestForm },
+  { path: '/test/view/:id', name: 'View Test', component: TestForm },
   { path: '/users', exact: true,  name: 'Users', component: Users },
   { path: '/users/:id', exact: true, name: 'User Details', component: User },
   { path: '/user/edit/:id', exact: true, name: 'Edit User', component: UserForm }

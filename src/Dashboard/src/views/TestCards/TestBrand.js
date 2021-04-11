@@ -6,10 +6,12 @@ import ChartLineSimple from '../charts/ChartLineSimple';
 import {getTests } from "../../../../store/Actions";
 import { useDispatch, useSelector } from "react-redux";
 import { makeStyles } from "@material-ui/core/styles";
+import { useHistory } from 'react-router-dom';
 
 
 const TestBrand = ({withCharts})=>{
   const classes=useStyles()
+  const history=useHistory()
   const dispatch=useDispatch()
   const [testList,setTestList]=useState([])
 
@@ -20,10 +22,25 @@ const TestBrand = ({withCharts})=>{
     dispatch(
       getTests((err, response) => {
         setTestList(response.tests)
-        console.log(response.tests,"name")
       }))
-  
   },[])
+
+  // View Test Details
+  const handleViewTest=(id)=>{
+    history.push({
+      pathname: `/test/view/${id}`,
+      state: { name: 'view',id:id }
+  });
+  }
+
+  // Edit Test Details
+  const handleEditTest=(id)=>{
+    history.push({
+      pathname: `/test/edit/${id}`,
+      state: { name: 'edit',id:id}
+  });
+
+  }
 
 
   return withCharts ?
@@ -130,10 +147,10 @@ testList.map((item,index)=>(
         
         rightFooter=
         {<CButton variant="outline" color="primary" 
-        size="sm" block>View Test Details</CButton>
+        size="sm" block onClick={()=>handleViewTest(item._id)}>View Test Details</CButton>
       }
         leftFooter={<CButton variant="outline" color="warning" 
-        size="sm" block>Edit Test Details</CButton>
+        size="sm" block onClick={()=>handleEditTest(item._id)}>Edit Test Details</CButton>
       }
         >
           <CCol sm="6" lg="6" style={{padding:20}}>

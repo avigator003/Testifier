@@ -1,4 +1,4 @@
-import React ,{useState,useEffect} from 'react'
+import React, { useState, useEffect } from 'react'
 import {
   CButton,
   CCard,
@@ -35,7 +35,7 @@ import {
 import CIcon from '@coreui/icons-react'
 import DocsLink from '../../../reusable/DocsLink'
 import { makeStyles } from "@material-ui/core/styles";
-import { Radio ,RadioGroup} from "@material-ui/core";
+import { Radio, RadioGroup } from "@material-ui/core";
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormControl from '@material-ui/core/FormControl';
 import { useDispatch, useSelector } from "react-redux";
@@ -43,20 +43,21 @@ import { notification } from "antd";
 import api from "../../../../../resources/api";
 import Backdrop from '@material-ui/core/Backdrop';
 import CircularProgress from '@material-ui/core/CircularProgress';
-import { saveTest,getTests } from "../../../../../store/Actions";
+import { saveTest, getTests, getTestById, updateTest } from "../../../../../store/Actions";
 import 'antd/dist/antd.css';
 import Snackbar from '@material-ui/core/Snackbar';
 import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from '@material-ui/icons/Close';
 import Button from '@material-ui/core/Button';
 import MuiAlert from '@material-ui/lab/Alert';
+import { useHistory, useLocation } from 'react-router-dom';
 
 const validEmailRegex = RegExp(
   /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i
 );
 
 
-const validAlphabetRegex=RegExp(/[A-Za-z]/)
+const validAlphabetRegex = RegExp(/[A-Za-z]/)
 
 
 
@@ -65,149 +66,235 @@ function Alert(props) {
 }
 
 const TestForm = (props) => {
-  const classes=useStyles();
-  const dispatch=useDispatch()
-  
-    const [collapsed, setCollapsed] = React.useState(true)
-    const [showElements, setShowElements] = React.useState(true)
-    const [spinner, setSpinner] = useState(false);
-    const[notify,setNotify]=useState(false)
-    const[message,setMessage]=useState("")
-    const[success,setSuccess]=useState(false)
-    const[state,setState]=useState({
-                  instituteName:'',
-                  testName:'',
-                  testCategory:'',
-                  categoryType:'',
-                  numberOfQuestions:0,
-                  questionPaperLink:'',
-                  answers:[]
-        })
-        
+  const classes = useStyles()
+  const dispatch = useDispatch()
+  const location = useLocation()
+  const history = useHistory()
+
+  const [collapsed, setCollapsed] = React.useState(true)
+  const [showElements, setShowElements] = React.useState(true)
+  const [spinner, setSpinner] = useState(false);
+  const [notify, setNotify] = useState(false)
+  const [message, setMessage] = useState("")
+  const [success, setSuccess] = useState(false)
+  const [disable, setDisabled] = useState(false)
+  const [edit, setEdit] = useState(false)
+  const [editButton, setEditButton] = useState(false)
+  const [state, setState] = useState({
+    instituteName: '',
+    testName: '',
+    testCategory: '',
+    categoryType: '',
+    numberOfQuestions: 0,
+    questionPaperLink: '',
+    answers: []
+  })
+
   const [errors, setErrors] = useState({
-    instituteName:'',
-    testName:'',
-    testCategory:'',
-    categoryType:'',
-    numberOfQuestions:"",
-    questionPaperLink:'',
+    instituteName: '',
+    testName: '',
+    testCategory: '',
+    categoryType: '',
+    numberOfQuestions: "",
+    questionPaperLink: '',
   });
 
+  // Checking is it View ,Edit or Add
+  useEffect(() => {
+    var name = location?.state?.name
+    var id = location?.state?.id
+    if (name == "view") {
+      setDisabled(true)
+      dispatch(
+        getTestById(id, (err, response) => {
+          if (err)
+            console.log(err)
+          else {
+            console.log(response.res.data.data)
+            setState(response.res.data.data)
+            setEdit(true)
+          }
+        }))
 
 
 
-        const handleChange = (e) => {
-            e.persist();
-            const { name, value } = e.target;
-            if(name=="numberOfQuestions" && value!=="")
-            setState((st) => ({ ...st, [name]: parseInt(value) }));
-             else
-            setState((st) => ({ ...st, [name]: value }));
-            var err = errors;
-            switch (name) {
-              case "emailAddress":
-                err.emailAddress = validEmailRegex.test(value)
-                  ? ""
-                  : "Email is not valid!";
-                break;
-              case "password":
-                err.password =
-                  value.length < 6 ? "Password must be at least 6 characters" : "";
-                break;
-              default:
-                break;
-            }
-            setErrors({ ...err });
-          };
-          
-          
-        const handleQuestionChange = (i,name,value) => {
+    }
+    else if (name == "edit") {
+      dispatch(
+        getTestById(id, (err, response) => {
+          if (err)
+            console.log(err)
+          else {
+            console.log(response.res.data.data)
+            setState(response.res.data.data)
+            setEdit(true)
+            setEditButton(true)
 
-          const array = [...state['answers']]
-          const found=array.findIndex(function(obj){return obj.number == i+1})
-       
-          if (found==-1) 
-          {
-          if(name=="options")
-          array.push({number:i+1,options:value,category:''});
-          else
-          array.push({number:i+1,category:value,options:''});
-        }
-        else
-        {
-          if(name=="options")
-            array[found].options=value
-          else
-          array[found].category=value
-        }
-        array.sort(function (a, b) {
-          return a.number - b.number;
-        });
-   
-         setState((st) => ({ ...st, answers: array }));
-            }
-        
+          }
+        }))
 
-          const handleSubmit = (e) => {
-            e.preventDefault();
-            setSpinner(true);
-            const validateForm = (error) => {
-              let valid = true;
-              Object.values(error).forEach((val) => val.length > 0 && (valid = false));
-              console.log(valid,"valid")
-              return valid;
-            };
-            console.log("error",errors)
-            if (validateForm(errors)) {
-              checkValidity();
+
+
+
+
+    }
+
+
+
+
+  }, [])
+
+
+  const handleChange = (e) => {
+    e.persist();
+    const { name, value } = e.target;
+    if (name == "numberOfQuestions" && value !== "")
+      setState((st) => ({ ...st, [name]: parseInt(value) }));
+    else
+      setState((st) => ({ ...st, [name]: value }));
+    var err = errors;
+    switch (name) {
+      case "emailAddress":
+        err.emailAddress = validEmailRegex.test(value)
+          ? ""
+          : "Email is not valid!";
+        break;
+      case "password":
+        err.password =
+          value.length < 6 ? "Password must be at least 6 characters" : "";
+        break;
+      default:
+        break;
+    }
+    setErrors({ ...err });
+  };
+
+
+  const handleQuestionChange = (i, name, value) => {
+
+    const array = [...state['answers']]
+    const found = array.findIndex(function (obj) { return obj.number == i + 1 })
+
+    if (found == -1) {
+      if (name == "options")
+        array.push({ number: i + 1, options: value, category: '' });
+      else
+        array.push({ number: i + 1, category: value, options: '' });
+    }
+    else {
+      if (name == "options")
+        array[found].options = value
+      else
+        array[found].category = value
+    }
+    array.sort(function (a, b) {
+      return a.number - b.number;
+    });
+
+    setState((st) => ({ ...st, answers: array }));
+  }
+
+  //When Editing Question Paper Options Changes
+  const handleEditQuestionChange = (i, name, value) => {
+
+    const array = [...state['answers']]
+    array[i][name] = value;
+    setState((st) => ({ ...st, answers: array }));
+  }
+
+
+
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setSpinner(true);
+    const validateForm = (error) => {
+      let valid = true;
+      Object.values(error).forEach((val) => val.length > 0 && (valid = false));
+      console.log(valid, "valid")
+      return valid;
+    };
+    console.log("error", errors)
+    if (validateForm(errors)) {
+      checkValidity();
+    } else {
+      setSpinner(false);
+      return notification.error({
+        message: "Failed to Save.",
+      });
+    }
+  };
+
+  const checkValidity = () => {
+    if (state["numberOfQuestions"] === "" || state["instituteName"] === "") {
+      setSpinner(false);
+      return notification.warning({
+        message: "Fields Should Not Be Empty",
+      });
+    }
+
+
+
+
+    else {
+      if (editButton) {
+        var id = location?.state?.id
+        dispatch(
+          updateTest({ id: id, body: state }, (err, response) => {
+            if (err) {
+              console.log(err)
+              setMessage("Updating Failed")
+
             } else {
-              setSpinner(false);
-              return notification.error({
-                message: "Failed to Save.",
-              });
+              setNotify(true)
+              setSuccess(true)
+              setMessage("Updated Successfully")
+              const timer = setTimeout(() => {
+                history.push('/test/details')
+              }, 1000);
+              return () => clearTimeout(timer);
+
             }
-          };
-        
-          const checkValidity = () => {
-            console.log("valid")
-            if (state["numberOfQuestions"] === "" || state["instituteName"] === "") {
-              setSpinner(false);
-                return notification.warning({
-                message: "Fields Should Not Be Empty",
-              });
-            } 
-            else {
-              dispatch(
-                saveTest(state, (err, response) => {
-                  if (err) {
-                         console.log(err)
-                         setMessage("Saving Failed")
-            
-                  } else {
-                    setNotify(true)
-                    setSuccess(true)
-                    setState({
-                      instituteName:'',
-                      testName:'',
-                      testCategory:'',
-                      categoryType:'',
-                      numberOfQuestions:0,
-                      questionPaperLink:'',
-                      answers:[]})
-                      setMessage("Successfully Saved")
-             }
-                   setSuccess(false)
-                   setSpinner(false);
-              
-                })
-              );
-            }
-          };
-        
-          const handleClose = () => {
+            setSuccess(false)
             setSpinner(false);
-          };
-  
+
+          })
+        );
+      }
+      else {
+        dispatch(
+          saveTest(state, (err, response) => {
+            if (err) {
+              console.log(err)
+              setMessage("Saving Failed")
+
+            } else {
+              setNotify(true)
+              setSuccess(true)
+              setState({
+                instituteName: '',
+                testName: '',
+                testCategory: '',
+                categoryType: '',
+                numberOfQuestions: 0,
+                questionPaperLink: '',
+                answers: []
+              })
+              setMessage("Successfully Saved")
+            }
+            setSuccess(false)
+            setSpinner(false);
+
+          })
+        );
+      }
+    }
+  };
+
+  const handleClose = () => {
+    setSpinner(false);
+  };
+
   return (
     <>
       <Backdrop className={classes.backdrop} open={spinner} onClick={handleClose}>
@@ -215,18 +302,18 @@ const TestForm = (props) => {
       </Backdrop>
 
       <Snackbar open={notify}
-       autoHideDuration={6000} 
-       anchorOrigin={{
-        vertical: 'top',
-        horizontal: 'center',
-      }}
-      onClose={()=>setNotify(false)}>
-  <Alert onClose={()=>setNotify(false)} severity="success">
-    {message}
-  </Alert>
-</Snackbar>
+        autoHideDuration={6000}
+        anchorOrigin={{
+          vertical: 'top',
+          horizontal: 'center',
+        }}
+        onClose={() => setNotify(false)}>
+        <Alert onClose={() => setNotify(false)} severity="success">
+          {message}
+        </Alert>
+      </Snackbar>
       <CRow>
-       <CCol xs="12" md="12" sm="12">
+        <CCol xs="12" md="12" sm="12">
           <CCard>
             <CCardHeader>
               Test Form
@@ -239,8 +326,9 @@ const TestForm = (props) => {
                     <CLabel htmlFor="text-input">Name of Institute</CLabel>
                   </CCol>
                   <CCol xs="12" md="9">
-                  <CSelect custom  id="select" name="instituteName" value={state['instituteName']} onChange={(e)=>handleChange(e)}>
-                  <option value=""  selected >Please select</option>
+                    <CSelect custom id="select" name="instituteName" disabled={disable}
+                      value={state['instituteName']} onChange={(e) => handleChange(e)}>
+                      <option value="" selected >Please select</option>
                       <option value="Vision IAS">Vision IAS</option>
                       <option value="Vajiram and Ravi">Vajiram and Ravi</option>
                       <option value="Shankar IAS Academy">Shankar IAS Academy</option>
@@ -249,7 +337,7 @@ const TestForm = (props) => {
                       <option value="Insights IAS">Insights IAS</option>
                       <option value="UPSC PYQs">UPSC PYQs</option>
                     </CSelect>
-                  
+
                   </CCol>
                 </CFormGroup>
                 <CFormGroup row>
@@ -257,7 +345,8 @@ const TestForm = (props) => {
                     <CLabel htmlFor="email-input">Test Name / Title</CLabel>
                   </CCol>
                   <CCol xs="12" md="9">
-                    <CInput  id="email-input"  placeholder="Test Name / Title"  name="testName" value={state['testName']} onChange={(e)=>handleChange(e)} />
+                    <CInput id="email-input" placeholder="Test Name / Title" disabled={disable}
+                      name="testName" value={state['testName']} onChange={(e) => handleChange(e)} />
                   </CCol>
                 </CFormGroup>
                 <CFormGroup row>
@@ -265,112 +354,70 @@ const TestForm = (props) => {
                     <CLabel htmlFor="select">Test Category</CLabel>
                   </CCol>
                   <CCol xs="12" md="9">
-                    <CSelect custom  id="select" name="testCategory" value={state['testCategory']} onChange={(e)=>handleChange(e)}>
+                    <CSelect custom id="select" name="testCategory" disabled={disable}
+                      value={state['testCategory']} onChange={(e) => handleChange(e)}>
                       <option value="0" disabled>Please select</option>
-                      
+
                       <option value="Full Length">Full Length</option>
                       <option value="Sectional">Sectional</option>
                     </CSelect>
                   </CCol>
                 </CFormGroup>
-                {/* 
-                <CFormGroup row>
-                  <CCol tag="label" sm="3" className="col-form-label">
-                    Switch checkboxes
-                  </CCol>
-                  <CCol sm="9">
-                    <CSwitch
-                      className="mr-1"
-                      color="primary"
-                      defaultChecked
-                    />
-                    <CSwitch
-                      className="mr-1"
-                      color="success"
-                      defaultChecked
-                      variant="outline"
-                    />
-                    <CSwitch
-                      className="mr-1"
-                      color="warning"
-                      defaultChecked
-                      variant="opposite"
-                    />
-                    <CSwitch
-                      className="mr-1"
-                      color="danger"
-                      defaultChecked
-                      shape="pill"
-                    />
-                    <CSwitch
-                      className="mr-1"
-                      color="info"
-                      defaultChecked
-                      shape="pill"
-                      variant="outline"
-                    />
-                    <CSwitch
-                      className="mr-1"
-                      color="dark"
-                      defaultChecked
-                      shape="pill"
-                      variant="opposite"
-                    />
-                  </CCol>
-                </CFormGroup>
-                */}
-{ state['testCategory']=="Sectional"&&
-                <CFormGroup row>
-                  <CCol md="3">
-                    <CLabel> Category Type</CLabel>
-                  </CCol>
-                  <CCol md="9">
-                  <RadioGroup row aria-label="position" name="categoryType" value={state['categoryType']} onChange={(e)=>handleChange(e)} >
-        <FormControlLabel
-          value="History"
-          control={<Radio color="primary"size="small" />}
-          label="History"
-          labelPlacement="end"
-        />
-        <FormControlLabel
-          value="Polity"
-          control={<Radio color="primary" size="small" />}
-          label="Polity"
-          labelPlacement="end"
-        />
-        <FormControlLabel
-          value="Environment"
-          control={<Radio color="primary" size="small"/>}
-          label="Environment"
-          labelPlacement="end"
-        />
-        <FormControlLabel 
-        value="Economy" 
-        control={<Radio color="primary" size="small" />} 
-        label="Economy" />
-        
-        <FormControlLabel
-          value="Geography"
-          control={<Radio color="primary" size="small"/>}
-          label="Geography"
-          labelPlacement="end"
-        />
-        <FormControlLabel 
-        value="Current Affairs" 
-        control={<Radio color="primary" size="small" />} 
-        label="Current Affairs" />
-      </RadioGroup>
-                
-                  </CCol>
-                </CFormGroup>
-}
+
+                {state['testCategory'] == "Sectional" &&
+                  <CFormGroup row>
+                    <CCol md="3">
+                      <CLabel> Category Type</CLabel>
+                    </CCol>
+                    <CCol md="9">
+                      <RadioGroup row aria-label="position" name="categoryType" disabled={disable}
+                        value={state['categoryType']} onChange={(e) => handleChange(e)} >
+                        <FormControlLabel
+                          value="History"
+                          control={<Radio color="primary" size="small" />}
+                          label="History"
+                          labelPlacement="end"
+                        />
+                        <FormControlLabel
+                          value="Polity"
+                          control={<Radio color="primary" size="small" />}
+                          label="Polity"
+                          labelPlacement="end"
+                        />
+                        <FormControlLabel
+                          value="Environment"
+                          control={<Radio color="primary" size="small" />}
+                          label="Environment"
+                          labelPlacement="end"
+                        />
+                        <FormControlLabel
+                          value="Economy"
+                          control={<Radio color="primary" size="small" />}
+                          label="Economy" />
+
+                        <FormControlLabel
+                          value="Geography"
+                          control={<Radio color="primary" size="small" />}
+                          label="Geography"
+                          labelPlacement="end"
+                        />
+                        <FormControlLabel
+                          value="Current Affairs"
+                          control={<Radio color="primary" size="small" />}
+                          label="Current Affairs" />
+                      </RadioGroup>
+
+                    </CCol>
+                  </CFormGroup>
+                }
 
                 <CFormGroup row>
                   <CCol md="3">
                     <CLabel htmlFor="text-input">No. of Questions</CLabel>
                   </CCol>
                   <CCol xs="12" md="9">
-                    <CInput id="text-input" type="number" placeholder="Number of Questions" name="numberOfQuestions" value={state['numberOfQuestions']} onChange={(e)=>handleChange(e)} />
+                    <CInput id="text-input" type="number" placeholder="Number of Questions" disabled={disable}
+                      name="numberOfQuestions" value={state['numberOfQuestions']} onChange={(e) => handleChange(e)} />
                   </CCol>
                 </CFormGroup>
 
@@ -380,106 +427,24 @@ const TestForm = (props) => {
                     <CLabel htmlFor="text-input">Question Paper Link</CLabel>
                   </CCol>
                   <CCol xs="12" md="9">
-                    <CInput id="text-input"  placeholder="Question Paper Link" name="questionPaperLink" value={state['questionPaperLink']} onChange={(e)=>handleChange(e)} />
+                    <CInput id="text-input" placeholder="Question Paper Link" name="questionPaperLink" disabled={disable}
+                      value={state['questionPaperLink']} onChange={(e) => handleChange(e)} />
                   </CCol>
                 </CFormGroup>
-                {/* 
-                <CFormGroup row>
-                  <CCol md="3"><CLabel>Checkboxes</CLabel></CCol>
-                  <CCol md="9">
-                    <CFormGroup variant="checkbox" className="checkbox">
-                      <CInputCheckbox 
-                        id="checkbox1" 
-                        name="checkbox1" 
-                        value="option1" 
-                      />
-                      <CLabel variant="checkbox" className="form-check-label" htmlFor="checkbox1">Option 1</CLabel>
-                    </CFormGroup>
-                    <CFormGroup variant="checkbox" className="checkbox">
-                      <CInputCheckbox id="checkbox2" name="checkbox2" value="option2" />
-                      <CLabel variant="checkbox" className="form-check-label" htmlFor="checkbox2">Option 2</CLabel>
-                    </CFormGroup>
-                    <CFormGroup variant="checkbox" className="checkbox">
-                      <CInputCheckbox id="checkbox3" name="checkbox3" value="option3" />
-                      <CLabel variant="checkbox" className="form-check-label" htmlFor="checkbox3">Option 3</CLabel>
-                    </CFormGroup>
-                  </CCol>
-                </CFormGroup>
-                <CFormGroup row>
-                  <CCol md="3">
-                    <CLabel>Inline Checkboxes</CLabel>
-                  </CCol>
-                  <CCol md="9">
-                    <CFormGroup variant="custom-checkbox" inline>
-                      <CInputCheckbox 
-                        custom 
-                        id="inline-checkbox1" 
-                        name="inline-checkbox1" 
-                        value="option1" 
-                      />
-                      <CLabel variant="custom-checkbox" htmlFor="inline-checkbox1">One</CLabel>
-                    </CFormGroup>
-                    <CFormGroup variant="custom-checkbox" inline>
-                      <CInputCheckbox custom id="inline-checkbox2" name="inline-checkbox2" value="option2" />
-                      <CLabel variant="custom-checkbox" htmlFor="inline-checkbox2">Two</CLabel>
-                    </CFormGroup>
-                    <CFormGroup variant="custom-checkbox" inline>
-                      <CInputCheckbox custom id="inline-checkbox3" name="inline-checkbox3" value="option3" />
-                      <CLabel variant="custom-checkbox" htmlFor="inline-checkbox3">Three</CLabel>
-                    </CFormGroup>
-                  </CCol>
-                </CFormGroup>
-                <CFormGroup row>
-                  <CLabel col md="3" htmlFor="file-input">File input</CLabel>
-                  <CCol xs="12" md="9">
-                    <CInputFile id="file-input" name="file-input"/>
-                  </CCol>
-                </CFormGroup>
-                <CFormGroup row>
-                  <CCol md="3">
-                    <CLabel>Multiple File input</CLabel>
-                  </CCol>
-                  <CCol xs="12" md="9">
-                    <CInputFile 
-                      id="file-multiple-input" 
-                      name="file-multiple-input" 
-                      multiple
-                      custom
-                    />
-                    <CLabel htmlFor="file-multiple-input" variant="custom-file">
-                      Choose Files...
-                    </CLabel>
-                  </CCol>
-                </CFormGroup>
-                <CFormGroup row>
-                  <CLabel col md={3}>Custom file input</CLabel>
-                  <CCol xs="12" md="9">
-                    <CInputFile custom id="custom-file-input"/>
-                    <CLabel htmlFor="custom-file-input" variant="custom-file">
-                      Choose file...
-                    </CLabel>
-                  </CCol>
-                </CFormGroup>
-                */}
+
               </CForm>
             </CCardBody>
-            {/* 
-            <CCardFooter>
-              <CButton type="submit" size="sm" color="primary"><CIcon name="cil-scrubber" /> Submit</CButton>
-              <CButton type="reset" size="sm" color="danger"><CIcon name="cil-ban" /> Reset</CButton>
-            </CCardFooter>
-            */}
           </CCard>
         </CCol>
 
 
-       </CRow>
+      </CRow>
 
-       <CRow>
-       <CCol xs="12" md="12" sm="12">
+      <CRow>
+        <CCol xs="12" md="12" sm="12">
           <CCard>
             <CCardHeader>
-              Question  Paper
+              Question Paper
             </CCardHeader>
 
             <CCardBody>
@@ -491,7 +456,7 @@ const TestForm = (props) => {
                     <CLabel htmlFor="hf-email">S No.</CLabel>
                   </CCol>
                   <CCol md="6" xs="5" sm="6" lg="4">
-                   <CLabel htmlFor="hf-email">Options</CLabel>
+                    <CLabel htmlFor="hf-email">Options</CLabel>
                   </CCol>
                   <CCol xs="4" md="4" sm="4" lg="4">
 
@@ -500,65 +465,90 @@ const TestForm = (props) => {
 
                 </CFormGroup>
 
-<CDropdownDivider/>
-{
-[...Array((state['numberOfQuestions'])?state['numberOfQuestions']:0)].map((value, index) => (
-                
-                <CFormGroup row>
-                  <CCol md="2" xs="2" sm="2" lg="4">
-                    <CLabel htmlFor="hf-email">{index+1}</CLabel>
-                  </CCol>
-                  <CCol md="6" xs="6" sm="6" lg="4">
-                    <CInput id="text-input"  placeholder="Option" name="options" value={((state['answers']).filter(ob=>ob.number===index+1))?.options} onChange={(e)=>handleQuestionChange(index,e.target.name,e.target.value)} />
-                 
+                <CDropdownDivider />
+
+                {edit ?
+                  state['answers'].map((item, index) => (
+
+                    <CFormGroup row>
+                      <CCol md="2" xs="2" sm="2" lg="4">
+                        <CLabel htmlFor="hf-email">{item.number}</CLabel>
+                      </CCol>
+                      <CCol md="6" xs="6" sm="6" lg="4">
+                        <CInput id="text-input" placeholder="Option" name="options" disabled={disable}
+                          value={item.options}
+                          onChange={(e) => handleEditQuestionChange(index, e.target.name, e.target.value)} />
 
 
-      {/**               
-      <RadioGroup row aria-label="position" name="position" name="options" value={((state['answers'])[index])?.options} onChange={(e)=>handleQuestionChange(index,e.target.name,e.target.value)}>
-        <FormControlLabel
-          value="A"
-          control={<Radio color="primary"size="small" />}
-          label="A"
-          labelPlacement="end"
-        />
-        <FormControlLabel
-          value="B"
-          control={<Radio color="primary" size="small" />}
-          label="B"
-          labelPlacement="end"
-          
-        />
-        <FormControlLabel
-          value="C"
-          control={<Radio color="primary" size="small"/>}
-          label="C"
-          labelPlacement="end"
-        />
-        <FormControlLabel value="D" control={<Radio color="primary" size="small" />} label="D" />
-      </RadioGroup>
-             */}   
-                  </CCol>
-                  <CCol xs="4" md="4" sm="4" lg="4">
-                    <CSelect  id="select" name="category" value={((state['answers']).filter(ob=>ob.number===index+1))?.category} onChange={(e)=>handleQuestionChange(index,e.target.name,e.target.value)}>
-                      <option value="0" disabled selected>Please select</option>
-                      <option value="History">History</option>
-                      <option value="Polity">Polity</option>
-                      <option value="Environment">Environment</option>
-                      <option value="Economy">Economy</option>
-                      <option value="Geaography">Geography</option>
-                      <option value="Current Affairs">Current Affairs</option>
-                
-                    </CSelect>
-                  </CCol>
 
-                </CFormGroup>
-))}
+                      </CCol>
+                      <CCol xs="4" md="4" sm="4" lg="4">
+                        <CSelect id="select" name="category" value={item.category} disabled={disable}
+                          onChange={(e) => handleEditQuestionChange(index, e.target.name, e.target.value)}>
+                          <option value="0" disabled selected>Please select</option>
+                          <option value="History">History</option>
+                          <option value="Polity">Polity</option>
+                          <option value="Environment">Environment</option>
+                          <option value="Economy">Economy</option>
+                          <option value="Geaography">Geography</option>
+                          <option value="Current Affairs">Current Affairs</option>
+
+                        </CSelect>
+                      </CCol>
+
+                    </CFormGroup>))
+                  :
+                  <>
+                    {
+                      [...Array((state['numberOfQuestions']) ? state['numberOfQuestions'] : 0)].map((value, index) => (
+
+                        <CFormGroup row>
+                          <CCol md="2" xs="2" sm="2" lg="4">
+                            <CLabel htmlFor="hf-email">{index + 1}</CLabel>
+                          </CCol>
+                          <CCol md="6" xs="6" sm="6" lg="4">
+                            <CInput id="text-input" placeholder="Option" name="options" disabled={disable}
+                              value={((state['answers']).filter(ob => ob.number === index + 1))?.options}
+                              onChange={(e) => handleQuestionChange(index, e.target.name, e.target.value)} />
 
 
+
+                          </CCol>
+                          <CCol xs="4" md="4" sm="4" lg="4">
+                            <CSelect id="select" name="category" disabled={disable}
+                              value={((state['answers']).filter(ob => ob.number === index + 1))?.category}
+                              onChange={(e) => handleQuestionChange(index, e.target.name, e.target.value)}>
+
+                              <option value="0" disabled selected>Please select</option>
+                              <option value="History">History</option>
+                              <option value="Polity">Polity</option>
+                              <option value="Environment">Environment</option>
+                              <option value="Economy">Economy</option>
+                              <option value="Geaography">Geography</option>
+                              <option value="Current Affairs">Current Affairs</option>
+
+                            </CSelect>
+                          </CCol>
+
+                        </CFormGroup>
+                      ))
+                    }
+
+                  </>
+
+                }
               </CForm>
             </CCardBody>
             <CCardFooter>
-              <CButton type="submit" size="md" color="primary" onClick={(e)=>handleSubmit(e)}><CIcon name="cil-scrubber" /> Save Paper</CButton> 
+              {editButton ?
+                <CButton type="submit" size="md" color="primary" onClick={(e) => handleSubmit(e)}><CIcon name="cil-scrubber" /> Edit Test</CButton>
+                :
+                <>
+                  {disable ? <></> :
+                    <CButton type="submit" size="md" color="primary" onClick={(e) => handleSubmit(e)}><CIcon name="cil-scrubber" /> Save Test</CButton>
+                  }
+                </>
+              }
             </CCardFooter>
           </CCard>
 
