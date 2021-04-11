@@ -254,3 +254,27 @@ export const getUsers = (cb) => {
   };
 };
 
+
+//Save Test
+export const saveTest = (payload,cb) => {
+  console.log(payload,"payload")
+  return (dispatch) => {
+    api
+      .post("/tests/savetest",payload)
+      .then((res) => {
+        console.log("saved",res)
+            return cb(null,{
+              test: res.data,
+            });
+        })
+
+             .catch((err) => {
+        console.log(err);
+        cb({
+          message:"Saved Failed",
+        });
+      });
+  };
+};
+
+

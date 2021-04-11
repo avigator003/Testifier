@@ -42,12 +42,15 @@ import { useDispatch, useSelector } from "react-redux";
 import { notification } from "antd";
 import api from "../../../../../resources/api";
 
+import { saveTest } from "../../../../../store/Actions";
 
 
 const validEmailRegex = RegExp(
   /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i
 );
 
+
+const validAlphabetRegex=RegExp(/[A-Za-z]/)
 
 const TestForm = (props) => {
   const classes=useStyles();
@@ -61,6 +64,7 @@ const TestForm = (props) => {
                   testCategory:'',
                   categoryType:'',
                   numberOfQuestions:0,
+                  questionPaperLink:'',
                   answers:[]
         })
         
@@ -69,13 +73,16 @@ const TestForm = (props) => {
     testName:'',
     testCategory:'',
     categoryType:'',
-    numberOfQuestions:0,
-    answers:[{option:'',category:''}]
+    numberOfQuestions:"",
+    questionPaperLink:'',
   });
 
         const handleChange = (e) => {
             e.persist();
             const { name, value } = e.target;
+            if(name=="numberOfQuestions" && value!=="")
+            setState((st) => ({ ...st, [name]: parseInt(value) }));
+             else
             setState((st) => ({ ...st, [name]: value }));
             var err = errors;
             switch (name) {
@@ -114,22 +121,28 @@ const TestForm = (props) => {
           else
           array[found].category=value
         }
+        array.sort(function (a, b) {
+          return a.number - b.number;
+        });
+   
          setState((st) => ({ ...st, answers: array }));
-        //  console.log("array",state['answers'])
             }
         
 
-          const handleLogin = (e) => {
+          const handleSubmit = (e) => {
             e.preventDefault();
             setSpinner(true);
             const validateForm = (error) => {
               let valid = true;
               Object.values(error).forEach((val) => val.length > 0 && (valid = false));
+              console.log(valid,"valid")
               return valid;
             };
+            console.log("error",errors)
             if (validateForm(errors)) {
               checkValidity();
             } else {
+              console.log("failed")
               setSpinner(false);
               return notification.error({
                 message: "Failed to Login.",
@@ -139,12 +152,26 @@ const TestForm = (props) => {
         
           const checkValidity = () => {
             console.log("valid")
-            if (state["emailAddress"] === "" || state["password"] === "") {
+            if (state["numberOfQuestions"] === "" || state["instituteName"] === "") {
               setSpinner(false);
               return notification.warning({
                 message: "Fields Should Not Be Empty",
               });
             } 
+            else {
+              dispatch(
+                saveTest(state, (err, response) => {
+                  if (err) {
+                         console.log(err)
+                         notification.error(err);
+                  } else {
+                    notification.success(response);
+                    console.log(response)
+                  }
+                  setSpinner(false);
+                })
+              );
+            }
           };
         
 
@@ -166,7 +193,17 @@ const TestForm = (props) => {
                     <CLabel htmlFor="text-input">Name of Institute</CLabel>
                   </CCol>
                   <CCol xs="12" md="9">
-                    <CInput id="text-input"  placeholder="Institute Name"  name="instituteName" value={state['instituteName']} onChange={(e)=>handleChange(e)}/>
+                  <CSelect custom  id="select" name="instituteName" value={state['instituteName']} onChange={(e)=>handleChange(e)}>
+                  <option value=""  selected >Please select</option>
+                      <option value="Vision IAS">Vision IAS</option>
+                      <option value="Vajiram and Ravi">Vajiram and Ravi</option>
+                      <option value="Shankar IAS Academy">Shankar IAS Academy</option>
+                      <option value="Forum IAS">Forum IAS</option>
+                      <option value="IAS Score">IAS Score</option>
+                      <option value="Insights IAS">Insights IAS</option>
+                      <option value="UPSC PYQs">UPSC PYQs</option>
+                    </CSelect>
+                  
                   </CCol>
                 </CFormGroup>
                 <CFormGroup row>
@@ -287,10 +324,19 @@ const TestForm = (props) => {
                     <CLabel htmlFor="text-input">No. of Questions</CLabel>
                   </CCol>
                   <CCol xs="12" md="9">
-                    <CInput id="text-input"  placeholder="Number of Questions" name="numberOfQuestions" value={state['numberOfQuestions']} onChange={(e)=>handleChange(e)} />
+                    <CInput id="text-input" type placeholder="Number of Questions" name="numberOfQuestions" value={state['numberOfQuestions']} onChange={(e)=>handleChange(e)} />
                   </CCol>
                 </CFormGroup>
 
+
+                <CFormGroup row>
+                  <CCol md="3">
+                    <CLabel htmlFor="text-input">Question Paper Link</CLabel>
+                  </CCol>
+                  <CCol xs="12" md="9">
+                    <CInput id="text-input"  placeholder="Question Paper Link" name="questionPaperLink" value={state['questionPaperLink']} onChange={(e)=>handleChange(e)} />
+                  </CCol>
+                </CFormGroup>
                 {/* 
                 <CFormGroup row>
                   <CCol md="3"><CLabel>Checkboxes</CLabel></CCol>
@@ -410,13 +456,18 @@ const TestForm = (props) => {
 
 <CDropdownDivider/>
 {
-[...Array(80),].map((value, index) => (
+[...Array((state['numberOfQuestions'])?state['numberOfQuestions']:0)].map((value, index) => (
                 
                 <CFormGroup row>
                   <CCol md="2" xs="2" sm="2" lg="4">
                     <CLabel htmlFor="hf-email">{index+1}</CLabel>
                   </CCol>
                   <CCol md="6" xs="6" sm="6" lg="4">
+                    <CInput id="text-input"  placeholder="Option" name="options" value={((state['answers']).filter(ob=>ob.number===index+1))?.options} onChange={(e)=>handleQuestionChange(index,e.target.name,e.target.value)} />
+                 
+
+
+      {/**               
       <RadioGroup row aria-label="position" name="position" name="options" value={((state['answers'])[index])?.options} onChange={(e)=>handleQuestionChange(index,e.target.name,e.target.value)}>
         <FormControlLabel
           value="A"
@@ -439,11 +490,11 @@ const TestForm = (props) => {
         />
         <FormControlLabel value="D" control={<Radio color="primary" size="small" />} label="D" />
       </RadioGroup>
-                
+             */}   
                   </CCol>
                   <CCol xs="4" md="4" sm="4" lg="4">
-                    <CSelect  id="select" name="category" value={((state['answers'])[index])?.category} onChange={(e)=>handleQuestionChange(index,e.target.name,e.target.value)}>
-                      <option value="0" disabled>Please select</option>
+                    <CSelect  id="select" name="category" value={((state['answers']).filter(ob=>ob.number===index+1))?.category} onChange={(e)=>handleQuestionChange(index,e.target.name,e.target.value)}>
+                      <option value="0" disabled selected>Please select</option>
                       <option value="History">History</option>
                       <option value="Polity">Polity</option>
                       <option value="Environment">Environment</option>
@@ -461,7 +512,7 @@ const TestForm = (props) => {
               </CForm>
             </CCardBody>
             <CCardFooter>
-              <CButton type="submit" size="sm" color="primary"><CIcon name="cil-scrubber" /> Submit</CButton> <CButton type="reset" size="sm" color="danger"><CIcon name="cil-ban" /> Reset</CButton>
+              <CButton type="submit" size="md" color="primary" onClick={(e)=>handleSubmit(e)}><CIcon name="cil-scrubber" /> Save Paper</CButton> 
             </CCardFooter>
           </CCard>
 
