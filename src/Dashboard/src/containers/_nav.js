@@ -15,48 +15,46 @@ const _nav =  [
     to: '/users',
     icon: 'cil-user',
   },
-  {
-    _tag: 'CSidebarNavItem',
-    name: 'Tests Management',
-    to: '/theme/typography',
-    icon: 'cil-pencil',
-  },
+  
   /*
   {
     _tag: 'CSidebarNavTitle',
-    _children: ['Components']
+    _children: ['Test Management'],
   },
+  */
   {
     _tag: 'CSidebarNavDropdown',
-    name: 'Base',
+    name: 'Test Management',
     route: '/base',
-    icon: 'cil-puzzle',
+    icon: 'cil-pencil',
     _children: [
       {
         _tag: 'CSidebarNavItem',
-        name: 'Breadcrumb',
+        name: 'Add Test',
         to: '/base/breadcrumbs',
       },
       {
         _tag: 'CSidebarNavItem',
-        name: 'Cards',
+        name: 'Add Categories',
         to: '/base/cards',
       },
       {
         _tag: 'CSidebarNavItem',
-        name: 'Carousel',
+        name: 'Edit Test',
         to: '/base/carousels',
       },
+      {
+        _tag: 'CSidebarNavItem',
+        name: 'Forms',
+        to: '/test/add',
+      },
+      /*
       {
         _tag: 'CSidebarNavItem',
         name: 'Collapse',
         to: '/base/collapses',
       },
-      {
-        _tag: 'CSidebarNavItem',
-        name: 'Forms',
-        to: '/base/forms',
-      },
+      
       {
         _tag: 'CSidebarNavItem',
         name: 'Jumbotron',
@@ -112,6 +110,7 @@ const _nav =  [
         name: 'Tooltips',
         to: '/base/tooltips',
       },
+      */
     ],
   },
   {
@@ -301,7 +300,7 @@ const _nav =  [
     _tag: 'CSidebarNavDivider',
     className: 'm-2'
   }
-  */
+  
 ]
 
 export default _nav

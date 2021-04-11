@@ -1,4 +1,4 @@
-import React from 'react'
+import React ,{useState} from 'react'
 import {
   CButton,
   CCard,
@@ -29,263 +29,168 @@ import {
   CLabel,
   CSelect,
   CRow,
-  CSwitch
+  CSwitch,
+  CDropdownDivider
 } from '@coreui/react'
 import CIcon from '@coreui/icons-react'
-import  DocsLink  from '../../../reusable/DocsLink'
+import DocsLink from '../../../reusable/DocsLink'
+import { makeStyles } from "@material-ui/core/styles";
+import { Radio ,RadioGroup} from "@material-ui/core";
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import FormControl from '@material-ui/core/FormControl';
+import { useDispatch, useSelector } from "react-redux";
+import { notification } from "antd";
+import api from "../../../../../resources/api";
 
-const BasicForms = () => {
+
+
+const validEmailRegex = RegExp(
+  /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i
+);
+
+
+const TestForm = (props) => {
+  const classes=useStyles();
   const [collapsed, setCollapsed] = React.useState(true)
   const [showElements, setShowElements] = React.useState(true)
+  const dispatch=useDispatch()
+    const [spinner, setSpinner] = useState(false);
+    const[state,setState]=useState({
+                  instituteName:'',
+                  testName:'',
+                  testCategory:'',
+                  categoryType:'',
+                  numberOfQuestions:0,
+                  answers:[]
+        })
+        
+  const [errors, setErrors] = useState({
+    instituteName:'',
+    testName:'',
+    testCategory:'',
+    categoryType:'',
+    numberOfQuestions:0,
+    answers:[{option:'',category:''}]
+  });
 
+        const handleChange = (e) => {
+            e.persist();
+            const { name, value } = e.target;
+            setState((st) => ({ ...st, [name]: value }));
+            var err = errors;
+            switch (name) {
+              case "emailAddress":
+                err.emailAddress = validEmailRegex.test(value)
+                  ? ""
+                  : "Email is not valid!";
+                break;
+              case "password":
+                err.password =
+                  value.length < 6 ? "Password must be at least 6 characters" : "";
+                break;
+              default:
+                break;
+            }
+            setErrors({ ...err });
+          };
+          
+          
+        const handleQuestionChange = (i,name,value) => {
+
+          const array = [...state['answers']]
+          const found=array.findIndex(function(obj){return obj.number == i+1})
+       
+          if (found==-1) 
+          {
+          if(name=="options")
+          array.push({number:i+1,options:value,category:''});
+          else
+          array.push({number:i+1,category:value,options:''});
+        }
+        else
+        {
+          if(name=="options")
+            array[found].options=value
+          else
+          array[found].category=value
+        }
+         setState((st) => ({ ...st, answers: array }));
+        //  console.log("array",state['answers'])
+            }
+        
+
+          const handleLogin = (e) => {
+            e.preventDefault();
+            setSpinner(true);
+            const validateForm = (error) => {
+              let valid = true;
+              Object.values(error).forEach((val) => val.length > 0 && (valid = false));
+              return valid;
+            };
+            if (validateForm(errors)) {
+              checkValidity();
+            } else {
+              setSpinner(false);
+              return notification.error({
+                message: "Failed to Login.",
+              });
+            }
+          };
+        
+          const checkValidity = () => {
+            console.log("valid")
+            if (state["emailAddress"] === "" || state["password"] === "") {
+              setSpinner(false);
+              return notification.warning({
+                message: "Fields Should Not Be Empty",
+              });
+            } 
+          };
+        
+
+  
   return (
     <>
+
       <CRow>
-        <CCol xs="12" sm="6">
+       <CCol xs="12" md="12" sm="12">
           <CCard>
             <CCardHeader>
-              Credit Card
-              <small> Form</small>
-              <DocsLink name="-Input"/>
-            </CCardHeader>
-            <CCardBody>
-              <CRow>
-                <CCol xs="12">
-                  <CFormGroup>
-                    <CLabel htmlFor="name">Name</CLabel>
-                    <CInput id="name" placeholder="Enter your name" required />
-                  </CFormGroup>
-                </CCol>
-              </CRow>
-              <CRow>
-                <CCol xs="12">
-                  <CFormGroup>
-                    <CLabel htmlFor="ccnumber">Credit Card Number</CLabel>
-                    <CInput id="ccnumber" placeholder="0000 0000 0000 0000" required />
-                  </CFormGroup>
-                </CCol>
-              </CRow>
-              <CRow>
-                <CCol xs="4">
-                  <CFormGroup>
-                    <CLabel htmlFor="ccmonth">Month</CLabel>
-                    <CSelect custom name="ccmonth" id="ccmonth">
-                      <option value="1">1</option>
-                      <option value="2">2</option>
-                      <option value="3">3</option>
-                      <option value="4">4</option>
-                      <option value="5">5</option>
-                      <option value="6">6</option>
-                      <option value="7">7</option>
-                      <option value="8">8</option>
-                      <option value="9">9</option>
-                      <option value="10">10</option>
-                      <option value="11">11</option>
-                      <option value="12">12</option>
-                    </CSelect>
-                  </CFormGroup>
-                </CCol>
-                <CCol xs="4">
-                  <CFormGroup>
-                    <CLabel htmlFor="ccyear">Year</CLabel>
-                    <CSelect custom name="ccyear" id="ccyear">
-                      <option>2017</option>
-                      <option>2018</option>
-                      <option>2019</option>
-                      <option>2020</option>
-                      <option>2021</option>
-                      <option>2022</option>
-                      <option>2023</option>
-                      <option>2024</option>
-                      <option>2025</option>
-                      <option>2026</option>
-                    </CSelect>
-                  </CFormGroup>
-                </CCol>
-                <CCol xs="4">
-                  <CFormGroup>
-                    <CLabel htmlFor="cvv">CVV/CVC</CLabel>
-                    <CInput id="cvv" placeholder="123" required/>
-                  </CFormGroup>
-                </CCol>
-              </CRow>
-            </CCardBody>
-          </CCard>
-        </CCol>
-        <CCol xs="12" sm="6">
-          <CCard>
-            <CCardHeader>
-              Company
-              <small> Form</small>
-            </CCardHeader>
-            <CCardBody>
-              <CFormGroup>
-                <CLabel htmlFor="company">Company</CLabel>
-                <CInput id="company" placeholder="Enter your company name" />
-              </CFormGroup>
-              <CFormGroup>
-                <CLabel htmlFor="vat">VAT</CLabel>
-                <CInput id="vat" placeholder="DE1234567890" />
-              </CFormGroup>
-              <CFormGroup>
-                <CLabel htmlFor="street">Street</CLabel>
-                <CInput id="street" placeholder="Enter street name" />
-              </CFormGroup>
-              <CFormGroup row className="my-0">
-                <CCol xs="8">
-                  <CFormGroup>
-                    <CLabel htmlFor="city">City</CLabel>
-                    <CInput id="city" placeholder="Enter your city" />
-                  </CFormGroup>
-                </CCol>
-                <CCol xs="4">
-                  <CFormGroup>
-                    <CLabel htmlFor="postal-code">Postal Code</CLabel>
-                    <CInput id="postal-code" placeholder="Postal Code" />
-                  </CFormGroup>
-                </CCol>
-              </CFormGroup>
-              <CFormGroup>
-                <CLabel htmlFor="country">Country</CLabel>
-                <CInput id="country" placeholder="Country name" />
-              </CFormGroup>
-            </CCardBody>
-          </CCard>
-        </CCol>
-      </CRow>
-      <CRow>
-        <CCol xs="12" md="6">
-          <CCard>
-            <CCardHeader>
-              Basic Form
-              <small> Elements</small>
+              Test Form
             </CCardHeader>
             <CCardBody>
               <CForm action="" method="post" encType="multipart/form-data" className="form-horizontal">
+
                 <CFormGroup row>
                   <CCol md="3">
-                    <CLabel>Static</CLabel>
+                    <CLabel htmlFor="text-input">Name of Institute</CLabel>
                   </CCol>
                   <CCol xs="12" md="9">
-                    <p className="form-control-static">Username</p>
+                    <CInput id="text-input"  placeholder="Institute Name"  name="instituteName" value={state['instituteName']} onChange={(e)=>handleChange(e)}/>
                   </CCol>
                 </CFormGroup>
                 <CFormGroup row>
                   <CCol md="3">
-                    <CLabel htmlFor="text-input">Text Input</CLabel>
+                    <CLabel htmlFor="email-input">Test Name / Title</CLabel>
                   </CCol>
                   <CCol xs="12" md="9">
-                    <CInput id="text-input" name="text-input" placeholder="Text" />
-                    <CFormText>This is a help text</CFormText>
+                    <CInput  id="email-input"  placeholder="Test Name / Title"  name="testName" value={state['testName']} onChange={(e)=>handleChange(e)} />
                   </CCol>
                 </CFormGroup>
                 <CFormGroup row>
                   <CCol md="3">
-                    <CLabel htmlFor="email-input">Email Input</CLabel>
+                    <CLabel htmlFor="select">Test Category</CLabel>
                   </CCol>
                   <CCol xs="12" md="9">
-                    <CInput type="email" id="email-input" name="email-input" placeholder="Enter Email" autoComplete="email"/>
-                    <CFormText className="help-block">Please enter your email</CFormText>
-                  </CCol>
-                </CFormGroup>
-                <CFormGroup row>
-                  <CCol md="3">
-                    <CLabel htmlFor="password-input">Password</CLabel>
-                  </CCol>
-                  <CCol xs="12" md="9">
-                    <CInput type="password" id="password-input" name="password-input" placeholder="Password" autoComplete="new-password" />
-                    <CFormText className="help-block">Please enter a complex password</CFormText>
-                  </CCol>
-                </CFormGroup>
-                <CFormGroup row>
-                  <CCol md="3">
-                    <CLabel htmlFor="date-input">Date Input</CLabel>
-                  </CCol>
-                  <CCol xs="12" md="9">
-                    <CInput type="date" id="date-input" name="date-input" placeholder="date" />
-                  </CCol>
-                </CFormGroup>
-                <CFormGroup row>
-                  <CCol md="3">
-                    <CLabel htmlFor="disabled-input">Disabled Input</CLabel>
-                  </CCol>
-                  <CCol xs="12" md="9">
-                    <CInput id="disabled-input" name="disabled-input" placeholder="Disabled" disabled />
-                  </CCol>
-                </CFormGroup>
-                <CFormGroup row>
-                  <CCol md="3">
-                    <CLabel htmlFor="textarea-input">Textarea</CLabel>
-                  </CCol>
-                  <CCol xs="12" md="9">
-                    <CTextarea 
-                      name="textarea-input" 
-                      id="textarea-input" 
-                      rows="9"
-                      placeholder="Content..." 
-                    />
-                  </CCol>
-                </CFormGroup>
-                <CFormGroup row>
-                  <CCol md="3">
-                    <CLabel htmlFor="select">Select</CLabel>
-                  </CCol>
-                  <CCol xs="12" md="9">
-                    <CSelect custom name="select" id="select">
-                      <option value="0">Please select</option>
-                      <option value="1">Option #1</option>
-                      <option value="2">Option #2</option>
-                      <option value="3">Option #3</option>
+                    <CSelect custom  id="select" name="testCategory" value={state['testCategory']} onChange={(e)=>handleChange(e)}>
+                      <option value="0" disabled>Please select</option>
+                      
+                      <option value="Full Length">Full Length</option>
+                      <option value="Sectional">Sectional</option>
                     </CSelect>
                   </CCol>
                 </CFormGroup>
-                <CFormGroup row>
-                  <CCol md="3">
-                    <CLabel htmlFor="selectLg">Select Large</CLabel>
-                  </CCol>
-                  <CCol xs="12" md="9" size="lg">
-                    <CSelect custom size="lg" name="selectLg" id="selectLg">
-                      <option value="0">Please select</option>
-                      <option value="1">Option #1</option>
-                      <option value="2">Option #2</option>
-                      <option value="3">Option #3</option>
-                    </CSelect>
-                  </CCol>
-                </CFormGroup>
-                <CFormGroup row>
-                  <CCol md="3">
-                    <CLabel htmlFor="selectSm">Select Small</CLabel>
-                  </CCol>
-                  <CCol xs="12" md="9">
-                    <CSelect custom size="sm" name="selectSm" id="SelectLm">
-                      <option value="0">Please select</option>
-                      <option value="1">Option #1</option>
-                      <option value="2">Option #2</option>
-                      <option value="3">Option #3</option>
-                      <option value="4">Option #4</option>
-                      <option value="5">Option #5</option>
-                    </CSelect>
-                  </CCol>
-                </CFormGroup>
-                <CFormGroup row>
-                  <CCol md="3">
-                    <CLabel htmlFor="disabledSelect">Disabled Select</CLabel>
-                  </CCol>
-                  <CCol xs="12" md="9">
-                    <CSelect 
-                      custom 
-                      name="disabledSelect" 
-                      id="disabledSelect" 
-                      disabled 
-                      autoComplete="name"
-                    >
-                      <option value="0">Please select</option>
-                      <option value="1">Option #1</option>
-                      <option value="2">Option #2</option>
-                      <option value="3">Option #3</option>
-                    </CSelect>
-                  </CCol>
-                </CFormGroup>
+                {/* 
                 <CFormGroup row>
                   <CCol tag="label" sm="3" className="col-form-label">
                     Switch checkboxes
@@ -330,44 +235,63 @@ const BasicForms = () => {
                     />
                   </CCol>
                 </CFormGroup>
+                */}
+{ state['testCategory']=="Sectional"&&
                 <CFormGroup row>
                   <CCol md="3">
-                    <CLabel>Radios</CLabel>
+                    <CLabel> Category Type</CLabel>
                   </CCol>
                   <CCol md="9">
-                    <CFormGroup variant="checkbox">
-                      <CInputRadio className="form-check-input" id="radio1" name="radios" value="option1" />
-                      <CLabel variant="checkbox" htmlFor="radio1">Option 1</CLabel>
-                    </CFormGroup>
-                    <CFormGroup variant="checkbox">
-                      <CInputRadio className="form-check-input" id="radio2" name="radios" value="option2" />
-                      <CLabel variant="checkbox" htmlFor="radio2">Option 2</CLabel>
-                    </CFormGroup>
-                    <CFormGroup variant="checkbox">
-                      <CInputRadio className="form-check-input" id="radio3" name="radios" value="option3" />
-                      <CLabel variant="checkbox" htmlFor="radio3">Option 3</CLabel>
-                    </CFormGroup>
+                  <RadioGroup row aria-label="position" name="categoryType" value={state['categoryType']} onChange={(e)=>handleChange(e)} >
+        <FormControlLabel
+          value="History"
+          control={<Radio color="primary"size="small" />}
+          label="History"
+          labelPlacement="end"
+        />
+        <FormControlLabel
+          value="Polity"
+          control={<Radio color="primary" size="small" />}
+          label="Polity"
+          labelPlacement="end"
+        />
+        <FormControlLabel
+          value="Environment"
+          control={<Radio color="primary" size="small"/>}
+          label="Environment"
+          labelPlacement="end"
+        />
+        <FormControlLabel 
+        value="Economy" 
+        control={<Radio color="primary" size="small" />} 
+        label="Economy" />
+        
+        <FormControlLabel
+          value="Geography"
+          control={<Radio color="primary" size="small"/>}
+          label="Geography"
+          labelPlacement="end"
+        />
+        <FormControlLabel 
+        value="Current Affairs" 
+        control={<Radio color="primary" size="small" />} 
+        label="Current Affairs" />
+      </RadioGroup>
+                
                   </CCol>
                 </CFormGroup>
+}
+
                 <CFormGroup row>
                   <CCol md="3">
-                    <CLabel>Inline Radios</CLabel>
+                    <CLabel htmlFor="text-input">No. of Questions</CLabel>
                   </CCol>
-                  <CCol md="9">
-                    <CFormGroup variant="custom-radio" inline>
-                      <CInputRadio custom id="inline-radio1" name="inline-radios" value="option1" />
-                      <CLabel variant="custom-checkbox" htmlFor="inline-radio1">One</CLabel>
-                    </CFormGroup>
-                    <CFormGroup variant="custom-radio" inline>
-                      <CInputRadio custom id="inline-radio2" name="inline-radios" value="option2" />
-                      <CLabel variant="custom-checkbox" htmlFor="inline-radio2">Two</CLabel>
-                    </CFormGroup>
-                    <CFormGroup variant="custom-radio" inline>
-                      <CInputRadio custom id="inline-radio3" name="inline-radios" value="option3" />
-                      <CLabel variant="custom-checkbox" htmlFor="inline-radio3">Three</CLabel>
-                    </CFormGroup>
+                  <CCol xs="12" md="9">
+                    <CInput id="text-input"  placeholder="Number of Questions" name="numberOfQuestions" value={state['numberOfQuestions']} onChange={(e)=>handleChange(e)} />
                   </CCol>
                 </CFormGroup>
+
+                {/* 
                 <CFormGroup row>
                   <CCol md="3"><CLabel>Checkboxes</CLabel></CCol>
                   <CCol md="9">
@@ -444,188 +368,107 @@ const BasicForms = () => {
                     </CLabel>
                   </CCol>
                 </CFormGroup>
+                */}
               </CForm>
             </CCardBody>
+            {/* 
             <CCardFooter>
               <CButton type="submit" size="sm" color="primary"><CIcon name="cil-scrubber" /> Submit</CButton>
               <CButton type="reset" size="sm" color="danger"><CIcon name="cil-ban" /> Reset</CButton>
             </CCardFooter>
-          </CCard>
-          <CCard>
-            <CCardHeader>
-              Inline
-              <small> Form</small>
-            </CCardHeader>
-            <CCardBody>
-              <CForm action="" method="post" inline>
-                <CFormGroup className="pr-1">
-                  <CLabel htmlFor="exampleInputName2" className="pr-1">Name</CLabel>
-                  <CInput id="exampleInputName2" placeholder="Jane Doe" required />
-                </CFormGroup>
-                <CFormGroup className="pr-1">
-                  <CLabel htmlFor="exampleInputEmail2" className="pr-1">Email</CLabel>
-                  <CInput type="email" id="exampleInputEmail2" placeholder="jane.doe@example.com" required />
-                </CFormGroup>
-              </CForm>
-            </CCardBody>
-            <CCardFooter>
-              <CButton type="submit" size="sm" color="primary"><CIcon name="cil-scrubber" /> Submit</CButton>
-              <CButton type="reset" size="sm" color="danger"><CIcon name="cil-ban" /> Reset</CButton>
-            </CCardFooter>
+            */}
           </CCard>
         </CCol>
-        <CCol xs="12" md="6">
+
+
+       </CRow>
+
+       <CRow>
+       <CCol xs="12" md="12" sm="12">
           <CCard>
             <CCardHeader>
-              Horizontal
-              <small> Form</small>
+              Question  Paper
             </CCardHeader>
+
             <CCardBody>
               <CForm action="" method="post" className="form-horizontal">
                 <CFormGroup row>
-                  <CCol md="3">
-                    <CLabel htmlFor="hf-email">Email</CLabel>
+
+                  <CCol md="2" xs="3" sm="2" lg="4">
+
+                    <CLabel htmlFor="hf-email">S No.</CLabel>
                   </CCol>
-                  <CCol xs="12" md="9">
-                    <CInput type="email" id="hf-email" name="hf-email" placeholder="Enter Email..." autoComplete="email" />
-                    <CFormText className="help-block">Please enter your email</CFormText>
+                  <CCol md="6" xs="5" sm="6" lg="4">
+                   <CLabel htmlFor="hf-email">Options</CLabel>
                   </CCol>
+                  <CCol xs="4" md="4" sm="4" lg="4">
+
+                    <CLabel htmlFor="hf-email">Category</CLabel>
+                  </CCol>
+
                 </CFormGroup>
+
+<CDropdownDivider/>
+{
+[...Array(80),].map((value, index) => (
+                
                 <CFormGroup row>
-                  <CCol md="3">
-                    <CLabel htmlFor="hf-password">Password</CLabel>
+                  <CCol md="2" xs="2" sm="2" lg="4">
+                    <CLabel htmlFor="hf-email">{index+1}</CLabel>
                   </CCol>
-                  <CCol xs="12" md="9">
-                    <CInput type="password" id="hf-password" name="hf-password" placeholder="Enter Password..." autoComplete="current-password"/>
-                    <CFormText className="help-block">Please enter your password</CFormText>
+                  <CCol md="6" xs="6" sm="6" lg="4">
+      <RadioGroup row aria-label="position" name="position" name="options" value={((state['answers'])[index])?.options} onChange={(e)=>handleQuestionChange(index,e.target.name,e.target.value)}>
+        <FormControlLabel
+          value="A"
+          control={<Radio color="primary"size="small" />}
+          label="A"
+          labelPlacement="end"
+        />
+        <FormControlLabel
+          value="B"
+          control={<Radio color="primary" size="small" />}
+          label="B"
+          labelPlacement="end"
+          
+        />
+        <FormControlLabel
+          value="C"
+          control={<Radio color="primary" size="small"/>}
+          label="C"
+          labelPlacement="end"
+        />
+        <FormControlLabel value="D" control={<Radio color="primary" size="small" />} label="D" />
+      </RadioGroup>
+                
                   </CCol>
+                  <CCol xs="4" md="4" sm="4" lg="4">
+                    <CSelect  id="select" name="category" value={((state['answers'])[index])?.category} onChange={(e)=>handleQuestionChange(index,e.target.name,e.target.value)}>
+                      <option value="0" disabled>Please select</option>
+                      <option value="History">History</option>
+                      <option value="Polity">Polity</option>
+                      <option value="Environment">Environment</option>
+                      <option value="Economy">Economy</option>
+                      <option value="Geaography">Geography</option>
+                      <option value="Current Affairs">Current Affairs</option>
+                
+                    </CSelect>
+                  </CCol>
+
                 </CFormGroup>
+))}
+
+
               </CForm>
             </CCardBody>
             <CCardFooter>
               <CButton type="submit" size="sm" color="primary"><CIcon name="cil-scrubber" /> Submit</CButton> <CButton type="reset" size="sm" color="danger"><CIcon name="cil-ban" /> Reset</CButton>
             </CCardFooter>
           </CCard>
-          <CCard>
-            <CCardHeader>
-              Normal
-              <small> Form</small>
-            </CCardHeader>
-            <CCardBody>
-              <CForm action="" method="post">
-                <CFormGroup>
-                  <CLabel htmlFor="nf-email">Email</CLabel>
-                  <CInput type="email" id="nf-email" name="nf-email" placeholder="Enter Email.." autoComplete="email"/>
-                  <CFormText className="help-block">Please enter your email</CFormText>
-                </CFormGroup>
-                <CFormGroup>
-                  <CLabel htmlFor="nf-password">Password</CLabel>
-                  <CInput type="password" id="nf-password" name="nf-password" placeholder="Enter Password.." autoComplete="current-password"/>
-                  <CFormText className="help-block">Please enter your password</CFormText>
-                </CFormGroup>
-              </CForm>
-            </CCardBody>
-            <CCardFooter>
-              <CButton type="submit" size="sm" color="primary"><CIcon name="cil-scrubber" /> Submit</CButton> <CButton type="reset" size="sm" color="danger"><CIcon name="cil-ban" /> Reset</CButton>
-            </CCardFooter>
-          </CCard>
-          <CCard>
-            <CCardHeader>
-              Input
-              <small> Grid</small>
-            </CCardHeader>
-            <CCardBody>
-              <CForm action="" method="post" className="form-horizontal">
-                <CFormGroup row>
-                  <CCol sm="3">
-                    <CInput placeholder=".col-sm-3" />
-                  </CCol>
-                </CFormGroup>
-                <CFormGroup row>
-                  <CCol sm="4">
-                    <CInput placeholder=".col-sm-4" />
-                  </CCol>
-                </CFormGroup>
-                <CFormGroup row>
-                  <CCol sm="5">
-                    <CInput placeholder=".col-sm-5" />
-                  </CCol>
-                </CFormGroup>
-                <CFormGroup row>
-                  <CCol sm="6">
-                    <CInput placeholder=".col-sm-6" />
-                  </CCol>
-                </CFormGroup>
-                <CFormGroup row>
-                  <CCol sm="7">
-                    <CInput placeholder=".col-sm-7" />
-                  </CCol>
-                </CFormGroup>
-                <CFormGroup row>
-                  <CCol sm="8">
-                    <CInput placeholder=".col-sm-8" />
-                  </CCol>
-                </CFormGroup>
-                <CFormGroup row>
-                  <CCol sm="9">
-                    <CInput placeholder=".col-sm-9" />
-                  </CCol>
-                </CFormGroup>
-                <CFormGroup row>
-                  <CCol sm="10">
-                    <CInput placeholder=".col-sm-10" />
-                  </CCol>
-                </CFormGroup>
-                <CFormGroup row>
-                  <CCol sm="11">
-                    <CInput placeholder=".col-sm-11" />
-                  </CCol>
-                </CFormGroup>
-                <CFormGroup row>
-                  <CCol sm="12">
-                    <CInput placeholder=".col-sm-12" />
-                  </CCol>
-                </CFormGroup>
-              </CForm>
-            </CCardBody>
-            <CCardFooter>
-              <CButton type="submit" size="sm" color="primary"><CIcon name="cil-user" /> Login</CButton> <CButton type="reset" size="sm" color="danger"><CIcon name="cil-ban" /> Reset</CButton>
-            </CCardFooter>
-          </CCard>
-          <CCard>
-            <CCardHeader>
-              Input
-              <small> Sizes</small>
-            </CCardHeader>
-            <CCardBody>
-              <CForm action="" method="post" className="form-horizontal">
-                <CFormGroup row>
-                  <CLabel sm="5" col="sm" htmlFor="input-small">Small Input</CLabel>
-                  <CCol sm="6">
-                    <CInput size="sm" type="text" id="input-small" name="input-small" className="input-sm" placeholder=".form-control-sm" />
-                  </CCol>
-                </CFormGroup>
-                <CFormGroup row>
-                  <CLabel sm="5" col htmlFor="input-normal">Normal Input</CLabel>
-                  <CCol sm="6">
-                    <CInput id="input-normal" name="input-normal" placeholder="Normal" />
-                  </CCol>
-                </CFormGroup>
-                <CFormGroup row>
-                  <CLabel sm="5" col="lg" htmlFor="input-large">Large Input</CLabel>
-                  <CCol sm="6">
-                    <CInput size="lg" type="text" id="input-large" name="input-large" className="input-lg" placeholder=".form-control-lg" />
-                  </CCol>
-                </CFormGroup>
-              </CForm>
-            </CCardBody>
-            <CCardFooter>
-              <CButton type="submit" size="sm" color="primary"><CIcon name="cil-scrubber" /> Submit</CButton>
-              <CButton type="reset" size="sm" color="danger"><CIcon name="cil-ban" /> Reset</CButton>
-            </CCardFooter>
-          </CCard>
+
+
         </CCol>
       </CRow>
+      {/* 
       <CRow>
         <CCol xs="12" sm="6">
           <CCard>
@@ -1204,8 +1047,15 @@ const BasicForms = () => {
           </CFade>
         </CCol>
       </CRow>
+      */}
     </>
   )
 }
 
-export default BasicForms
+export default TestForm
+const useStyles = makeStyles((theme) => ({
+  
+
+
+
+}));
