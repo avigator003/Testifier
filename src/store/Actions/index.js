@@ -14,6 +14,11 @@ import {
 import api from "../../resources/api";
 import { notification } from "antd";
 
+
+
+/************************   Authentication Block    ********************************/
+
+
 //Auth
 export const setLoginSuccess = (payload) => ({
   type: LOGIN_USER_SUCCESS,
@@ -188,7 +193,10 @@ export const setNewPass = (payload, cb) => {
 };
 
 
-//Block/Unblock
+
+/************************   User Block    ********************************/
+
+//Block User
 const blockUserSuccess = (payload) => ({ type: BLOCK_USER_SUCCESS, payload });
 const unblockUserSuccess = (payload) => ({
   type: UNBLOCK_USER_SUCCESS,
@@ -214,6 +222,7 @@ export const blockUser = (payload, cb) => {
   };
 };
 
+//Unblock User
 export const unblockUser = (payload, cb) => {
   return (dispatch) => {
     api
@@ -233,6 +242,8 @@ export const unblockUser = (payload, cb) => {
       });
   };
 };
+
+
 
 //User List
 export const getUsers = (cb) => {
@@ -255,14 +266,53 @@ export const getUsers = (cb) => {
 };
 
 
+
+// User by Id
+export const getUserById = (payload,cb) => {
+  return (dispatch) => {
+    api
+      .get(`/user/view/${payload}`)
+      .then((res) => {
+        console.log(res)
+        return cb(null,{res
+        });
+
+      })
+      .catch((err) => {
+        console.log(err); //Dispatch Toaster Notificaton
+      });
+  };
+};
+ 
+// Update User
+export const updateUser = (payload, cb) => {
+  var { id, body } = payload;
+  return (dispatch) => {
+    api
+      .post(`/user/update/${id}`, body)
+      .then((res) => {
+        cb(null, {
+          message: "User Updated",
+        });
+      })
+      .catch((err) => {
+        console.log(err); //Dispatch Toaster Notificaton
+        cb({
+          message: "Try Again Later",
+        });
+      });
+  };
+};
+
+
+/************************   Test Block    ********************************/
+
 //Save Test
 export const saveTest = (payload,cb) => {
-  console.log(payload,"payload")
   return (dispatch) => {
     api
       .post("/tests/savetest",payload)
       .then((res) => {
-        console.log("saved",res)
             return cb(null,{
               test: res.data,
             });
@@ -280,7 +330,7 @@ export const saveTest = (payload,cb) => {
 
 
 
-//User List
+//Tests List
 export const getTests = (cb) => {
   return (dispatch) => {
     api
@@ -300,20 +350,3 @@ export const getTests = (cb) => {
   };
 };
 
-
-// User by Id
-export const getUserById = (payload,cb) => {
-  return (dispatch) => {
-    api
-      .get(`/user/view/${payload}`)
-      .then((res) => {
-        console.log(res)
-        return cb(null,{res
-        });
-
-      })
-      .catch((err) => {
-        console.log(err); //Dispatch Toaster Notificaton
-      });
-  };
-};

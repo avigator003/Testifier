@@ -50,23 +50,31 @@ const Users = () => {
 useEffect(()=>{
   dispatch(
     getUsers((err, response) => {
-      console.log(response.users)
       setUsersData(response.users)
     }))
 
 },[blocking])
 
-//View User Details
-const handleViewUser=(id)=>{
+// Edit User
+
+const handleEditUser=(id)=>{
   dispatch(
     getUserById(id,(err, response) => {
       if(err)
       console.log(err)
-      else
-      console.log(response.res.data.data,"hey")
+    else
+      {
+        const editUser=response.res.data.data
+        const editUserId=response.res.data.data._id
+        console.log(editUserId,"hey")
+      history.push({
+          pathname: `/user/edit/${editUserId}`,
+       });
+      }
     }))
 
 }
+
 
 //Block User
 const handleBlockUser=(id)=>{
@@ -97,16 +105,15 @@ const handleUnBlockUser=(id)=>{
     <CRow>
       <CCol xl={12}>
         <CCard>
-          <CCardHeader>
-            Users
-            <small className="text-muted"> example</small>
+          <CCardHeader size={50}>
+            Users 
           </CCardHeader>
           <CCardBody>
           <CDataTable
             items={usersData}
             fields={[
               { key: 'name', _classes: 'font-weight-bold' },
-              'emailAddress', 'status','Block User','Edit Details','Delete User','View Details'
+              'emailAddress', 'status','Block User','Edit Details'
             ]}
             hover
             striped
@@ -144,26 +151,11 @@ const handleUnBlockUser=(id)=>{
                 "Edit Details":(item)=>(
                   <td>
                   <CButton variant="outline" color="warning" 
-                  size="sm" block onClick={()=>handleViewUser(item._id)}>Edit</CButton>
+                  size="sm" block onClick={()=>handleEditUser(item._id)}>Edit</CButton>
                 </td>
                 ),
                
-                "Delete User":(item)=>(
-                  <td>
-                  <CButton variant="outline" color="danger" 
-                  size="sm" block onClick={()=>handleViewUser(item._id)}>Delete</CButton>
-                </td>
-                ),
-                "View Details":
-                (item)=>(
-                  <td>
-                    <CButton variant="outline" color="primary" 
-                    size="sm" block onClick={()=>handleViewUser(item._id)}>View</CButton>
-      
-                  </td>
-                
-                )
-            }}
+             }}
           />
           <CPagination
             activePage={page}

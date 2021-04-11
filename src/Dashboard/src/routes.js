@@ -37,6 +37,8 @@ const Typography = React.lazy(() => import('./views/theme/typography/Typography'
 const Tests = React.lazy(() => import('./views/TestCards/TestCards'));
 const Users = React.lazy(() => import('./views/users/Users'));
 const User = React.lazy(() => import('./views/users/User'));
+const UserForm = React.lazy(() => import('./views/users/UserForm'));
+
 
 const routes = [
   { path: '/', exact: true, name: 'Home' },
@@ -78,7 +80,8 @@ const routes = [
   { path: '/notifications/toaster', name: 'Toaster', component: Toaster },
   { path: '/test/details', name: 'Tests', component: Tests },
   { path: '/users', exact: true,  name: 'Users', component: Users },
-  { path: '/users/:id', exact: true, name: 'User Details', component: User }
+  { path: '/users/:id', exact: true, name: 'User Details', component: User },
+  { path: '/user/edit/:id', exact: true, name: 'Edit User', component: UserForm }
 ];
 
 export default routes;
