@@ -1,4 +1,4 @@
-import React from 'react'
+import React,{useState,useEffect} from 'react'
 import {
   CCardGroup,
   CCardFooter,
@@ -11,17 +11,20 @@ import {
   CWidgetSimple,
   CProgress,
 } from '@coreui/react'
-import WidgetsBrand from './WidgetsBrand'
+import TestBrand from './TestBrand'
 import WidgetsDropdown from './WidgetsDropdown'
-
+import { useDispatch, useSelector } from "react-redux";
 import ChartLineSimple from '../charts/ChartLineSimple'
 import ChartBarSimple from '../charts/ChartBarSimple'
-
+import {getTests } from "../../../../store/Actions";
 import CIcon from '@coreui/icons-react'
 
-const Widgets = () => {
+const TestCards = () => {
+
+
   return (
     <>
+    {/*
       <WidgetsDropdown />
       <CRow>
         <CCol xs="12" sm="6" lg="3">
@@ -130,7 +133,9 @@ const Widgets = () => {
           </CWidgetIcon>
         </CCol>
       </CRow>
-      <WidgetsBrand/>
+* */}
+      <TestBrand/>
+   {/**  
       <WidgetsBrand withCharts/>
       <CCardGroup className="mb-4">
         <CWidgetProgressIcon
@@ -363,8 +368,9 @@ const Widgets = () => {
           </CWidgetSimple>
         </CCol>
       </CRow>
+      */}
     </>
   )
 }
 
-export default Widgets
+export default TestCards

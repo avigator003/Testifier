@@ -1,4 +1,4 @@
-import React ,{useState} from 'react'
+import React ,{useState,useEffect} from 'react'
 import {
   CButton,
   CCard,
@@ -41,9 +41,15 @@ import FormControl from '@material-ui/core/FormControl';
 import { useDispatch, useSelector } from "react-redux";
 import { notification } from "antd";
 import api from "../../../../../resources/api";
-
-import { saveTest } from "../../../../../store/Actions";
-
+import Backdrop from '@material-ui/core/Backdrop';
+import CircularProgress from '@material-ui/core/CircularProgress';
+import { saveTest,getTests } from "../../../../../store/Actions";
+import 'antd/dist/antd.css';
+import Snackbar from '@material-ui/core/Snackbar';
+import IconButton from '@material-ui/core/IconButton';
+import CloseIcon from '@material-ui/icons/Close';
+import Button from '@material-ui/core/Button';
+import MuiAlert from '@material-ui/lab/Alert';
 
 const validEmailRegex = RegExp(
   /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i
@@ -52,12 +58,22 @@ const validEmailRegex = RegExp(
 
 const validAlphabetRegex=RegExp(/[A-Za-z]/)
 
+
+
+function Alert(props) {
+  return <MuiAlert elevation={6} variant="filled" {...props} />;
+}
+
 const TestForm = (props) => {
   const classes=useStyles();
-  const [collapsed, setCollapsed] = React.useState(true)
-  const [showElements, setShowElements] = React.useState(true)
   const dispatch=useDispatch()
+  
+    const [collapsed, setCollapsed] = React.useState(true)
+    const [showElements, setShowElements] = React.useState(true)
     const [spinner, setSpinner] = useState(false);
+    const[notify,setNotify]=useState(false)
+    const[message,setMessage]=useState("")
+    const[success,setSuccess]=useState(false)
     const[state,setState]=useState({
                   instituteName:'',
                   testName:'',
@@ -76,6 +92,9 @@ const TestForm = (props) => {
     numberOfQuestions:"",
     questionPaperLink:'',
   });
+
+
+
 
         const handleChange = (e) => {
             e.persist();
@@ -142,10 +161,9 @@ const TestForm = (props) => {
             if (validateForm(errors)) {
               checkValidity();
             } else {
-              console.log("failed")
               setSpinner(false);
               return notification.error({
-                message: "Failed to Login.",
+                message: "Failed to Save.",
               });
             }
           };
@@ -154,7 +172,7 @@ const TestForm = (props) => {
             console.log("valid")
             if (state["numberOfQuestions"] === "" || state["instituteName"] === "") {
               setSpinner(false);
-              return notification.warning({
+                return notification.warning({
                 message: "Fields Should Not Be Empty",
               });
             } 
@@ -163,22 +181,50 @@ const TestForm = (props) => {
                 saveTest(state, (err, response) => {
                   if (err) {
                          console.log(err)
-                         notification.error(err);
+                         setMessage("Saving Failed")
+            
                   } else {
-                    notification.success(response);
-                    console.log(response)
-                  }
-                  setSpinner(false);
+                    setNotify(true)
+                    setSuccess(true)
+                    setState({
+                      instituteName:'',
+                      testName:'',
+                      testCategory:'',
+                      categoryType:'',
+                      numberOfQuestions:0,
+                      questionPaperLink:'',
+                      answers:[]})
+                      setMessage("Successfully Saved")
+             }
+                   setSuccess(false)
+                   setSpinner(false);
+              
                 })
               );
             }
           };
         
-
+          const handleClose = () => {
+            setSpinner(false);
+          };
   
   return (
     <>
+      <Backdrop className={classes.backdrop} open={spinner} onClick={handleClose}>
+        <CircularProgress color="inherit" size={100} color="primary" />
+      </Backdrop>
 
+      <Snackbar open={notify}
+       autoHideDuration={6000} 
+       anchorOrigin={{
+        vertical: 'top',
+        horizontal: 'center',
+      }}
+      onClose={()=>setNotify(false)}>
+  <Alert onClose={()=>setNotify(false)} severity="success">
+    {message}
+  </Alert>
+</Snackbar>
       <CRow>
        <CCol xs="12" md="12" sm="12">
           <CCard>
@@ -1105,8 +1151,9 @@ const TestForm = (props) => {
 
 export default TestForm
 const useStyles = makeStyles((theme) => ({
-  
-
-
+  backdrop: {
+    zIndex: theme.zIndex.drawer + 1,
+    color: '#fff',
+  },
 
 }));

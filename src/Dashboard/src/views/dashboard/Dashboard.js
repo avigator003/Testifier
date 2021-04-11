@@ -16,8 +16,8 @@ import CIcon from '@coreui/icons-react'
 
 import MainChartExample from '../charts/MainChartExample.js'
 
-const WidgetsDropdown = lazy(() => import('../widgets/WidgetsDropdown.js'))
-const WidgetsBrand = lazy(() => import('../widgets/WidgetsBrand.js'))
+const WidgetsDropdown = lazy(() => import('../TestCards/WidgetsDropdown.js'))
+const TestBrand = lazy(() => import('../TestCards/TestBrand.js'))
 
 const Dashboard = () => {
   return (
@@ -107,7 +107,7 @@ const Dashboard = () => {
         </CCardFooter>
       </CCard>
 
-      <WidgetsBrand withCharts/>
+      <TestBrand withCharts/>
 
       <CRow>
         <CCol>

@@ -278,3 +278,24 @@ export const saveTest = (payload,cb) => {
 };
 
 
+
+
+//User List
+export const getTests = (cb) => {
+  return (dispatch) => {
+    api
+      .get("/tests/showall")
+      .then((res) => {
+            return cb(null,{
+              tests: res.data.data,
+            });
+        })
+
+             .catch((err) => {
+        console.log(err);
+        cb({
+          message:"Fetching Failed",
+        });
+      });
+  };
+};

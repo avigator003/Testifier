@@ -31,23 +31,25 @@ const _nav =  [
       {
         _tag: 'CSidebarNavItem',
         name: 'Add Test',
-        to: '/base/breadcrumbs',
+        to: '/test/add',
       },
       {
         _tag: 'CSidebarNavItem',
-        name: 'Add Categories',
-        to: '/base/cards',
+        name: 'Test Details',
+        to: '/test/details',
       },
       {
         _tag: 'CSidebarNavItem',
         name: 'Edit Test',
         to: '/base/carousels',
       },
-      {
+         {
         _tag: 'CSidebarNavItem',
-        name: 'Forms',
-        to: '/test/add',
+        name: 'Tables',
+        to: '/base/tables',
       },
+   
+      
       /*
       {
         _tag: 'CSidebarNavItem',
@@ -94,11 +96,6 @@ const _nav =  [
         _tag: 'CSidebarNavItem',
         name: 'Switches',
         to: '/base/switches',
-      },
-      {
-        _tag: 'CSidebarNavItem',
-        name: 'Tables',
-        to: '/base/tables',
       },
       {
         _tag: 'CSidebarNavItem',
@@ -202,6 +199,7 @@ const _nav =  [
       }
     ]
   },
+  /*
   {
     _tag: 'CSidebarNavItem',
     name: 'Widgets',
@@ -300,7 +298,7 @@ const _nav =  [
     _tag: 'CSidebarNavDivider',
     className: 'm-2'
   }
-  
+  */
 ]
 
 export default _nav

@@ -1,12 +1,30 @@
-import React from 'react';
+import React,{useState,useEffect} from 'react';
 import PropTypes from 'prop-types';
-import { CWidgetBrand, CRow, CCol } from '@coreui/react';
+import { CWidgetBrand, CRow, CCol, CButton } from '@coreui/react';
 import CIcon from '@coreui/icons-react';
 import ChartLineSimple from '../charts/ChartLineSimple';
+import {getTests } from "../../../../store/Actions";
+import { useDispatch, useSelector } from "react-redux";
+import { makeStyles } from "@material-ui/core/styles";
 
-const WidgetsBrand = ({withCharts})=>{
 
-  // render
+const TestBrand = ({withCharts})=>{
+  const classes=useStyles()
+  const dispatch=useDispatch()
+  const [testList,setTestList]=useState([])
+
+
+
+  // Use Effect for Fetching Test (for Not having Same Test Name)
+  useEffect(()=>{
+    dispatch(
+      getTests((err, response) => {
+        setTestList(response.tests)
+        console.log(response.tests,"name")
+      }))
+  
+  },[])
+
 
   return withCharts ?
   <CRow>
@@ -15,7 +33,7 @@ const WidgetsBrand = ({withCharts})=>{
         color="facebook"
         rightHeader="89k"
         rightFooter="friends"
-        leftHeader="459"
+        leftHeader="Edit Test"
         leftFooter="feeds"
       >
         <CIcon
@@ -102,24 +120,35 @@ const WidgetsBrand = ({withCharts})=>{
       </CWidgetBrand>
     </CCol>
   </CRow> :
-  
+ 
   <CRow>
-    <CCol sm="6" lg="3">
+    {
+testList.map((item,index)=>(      
+    <CCol sm="6" lg="4">
       <CWidgetBrand
-        color="facebook"
-        rightHeader="89k"
-        rightFooter="friends"
-        leftHeader="459"
-        leftFooter="feeds"
-      >
-        <CIcon
-          name="cib-facebook"
-          height="56"
-          className="my-4"
-        />
+        color="linkedin"
+        
+        rightFooter=
+        {<CButton variant="outline" color="primary" 
+        size="sm" block>View Test Details</CButton>
+      }
+        leftFooter={<CButton variant="outline" color="warning" 
+        size="sm" block>Edit Test Details</CButton>
+      }
+        >
+          <CCol sm="6" lg="6" style={{padding:20}}>
+             {item.testName}
+             </CCol> 
+             
+          <CCol sm="6" lg="6">
+          {(item.created_at)?.substring(0,10).split("-").reverse().join("/")}
+          </CCol>
+         
+
       </CWidgetBrand>
     </CCol>
-
+))}
+{/** 
     <CCol sm="6" lg="3">
       <CWidgetBrand
         color="twitter"
@@ -167,11 +196,27 @@ const WidgetsBrand = ({withCharts})=>{
         />
       </CWidgetBrand>
     </CCol>
+    */}
   </CRow>
+
+  
 }
 
-WidgetsBrand.propTypes = {
+TestBrand.propTypes = {
   withCharts: PropTypes.bool
 }
 
-export default WidgetsBrand
+
+export default TestBrand
+
+
+const useStyles = makeStyles((theme) => ({
+
+  cardHeading: {
+   display:"flex",
+   flexDirection:"row",
+   alignItems:"flex-start",
+   justifyContent:"flex-end"
+  },
+
+}));
