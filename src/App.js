@@ -21,6 +21,7 @@ function App() {
   
   return (
     <div className="App">
+      
         <HashRouter>
           <React.Suspense fallback={loading}>
             <Switch>

@@ -299,3 +299,21 @@ export const getTests = (cb) => {
       });
   };
 };
+
+
+// User by Id
+export const getUserById = (payload,cb) => {
+  return (dispatch) => {
+    api
+      .get(`/user/view/${payload}`)
+      .then((res) => {
+        console.log(res)
+        return cb(null,{res
+        });
+
+      })
+      .catch((err) => {
+        console.log(err); //Dispatch Toaster Notificaton
+      });
+  };
+};

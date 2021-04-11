@@ -14,16 +14,17 @@ import {
   CDropdownItem,
   CDropdownMenu,
   CDropdownToggle,
-  CImg
+  CImg,
+  CButton
 } from '@coreui/react'
 import CIcon from '@coreui/icons-react'
-import { getUsers } from "../../../../store/Actions";
+import { getUsers ,getUserById,blockUser,unblockUser} from "../../../../store/Actions";
 
 const getBadge = status => {
   switch (status) {
     case 'Active': return 'success'
     case 'Inactive': return 'secondary'
-    case 'Pending': return 'warning'
+    case 'Unblock': return 'warning'
     case 'Blocked': return 'danger'
     default: return 'primary'
   }
@@ -36,6 +37,7 @@ const Users = () => {
   const currentPage = Number(queryPage && queryPage[1] ? queryPage[1] : 1)
   const [page, setPage] = useState(currentPage)
   const [usersData,setUsersData]=useState()
+  const[blocking,setBlocking]=useState(true)
   const pageChange = newPage => {
     currentPage !== newPage && history.push(`/users?page=${newPage}`)
   }
@@ -52,7 +54,43 @@ useEffect(()=>{
       setUsersData(response.users)
     }))
 
-},[])
+},[blocking])
+
+//View User Details
+const handleViewUser=(id)=>{
+  dispatch(
+    getUserById(id,(err, response) => {
+      if(err)
+      console.log(err)
+      else
+      console.log(response.res.data.data,"hey")
+    }))
+
+}
+
+//Block User
+const handleBlockUser=(id)=>{
+  dispatch(
+    blockUser(id,(err, response) => {
+      if(err)
+      console.log(err)
+      else
+      setBlocking(!blocking)
+    }))
+
+}
+
+//Unblock User
+const handleUnBlockUser=(id)=>{
+  dispatch(
+    unblockUser(id,(err, response) => {
+      if(err)
+      console.log(err)
+      else
+      setBlocking(!blocking)
+    }))
+
+}
 
 
   return (
@@ -68,7 +106,7 @@ useEffect(()=>{
             items={usersData}
             fields={[
               { key: 'name', _classes: 'font-weight-bold' },
-              'emailAddress', 'phoneNumber', 'additionalSubjects','upscAttempts','status','Actions'
+              'emailAddress', 'status','Block User','Edit Details','Delete User','View Details'
             ]}
             hover
             striped
@@ -80,46 +118,48 @@ useEffect(()=>{
               'status':
                 (item)=>(
                   <td>
+                    {
+                      item.blocked?
                     <CBadge color={getBadge("Blocked")}>
                       Blocked
-                    </CBadge>
+                    </CBadge>:
+                     <CBadge color={getBadge("Active")}>
+                     Active
+                   </CBadge>
+            }
                   </td>
                 ),
-                "Actions":
+                "Block User":(item)=>(
+                  <td>
+                    {item.blocked?
+                       <CButton variant="outline" color="success" 
+                       size="sm" block onClick={()=>handleUnBlockUser(item._id)}>Unblock</CButton>:
+                    
+                  <CButton variant="outline" color="danger" 
+                  size="sm" block onClick={()=>handleBlockUser(item._id)}>Block</CButton>
+                    }
+                </td>
+                ),
+             
+                "Edit Details":(item)=>(
+                  <td>
+                  <CButton variant="outline" color="warning" 
+                  size="sm" block onClick={()=>handleViewUser(item._id)}>Edit</CButton>
+                </td>
+                ),
+               
+                "Delete User":(item)=>(
+                  <td>
+                  <CButton variant="outline" color="danger" 
+                  size="sm" block onClick={()=>handleViewUser(item._id)}>Delete</CButton>
+                </td>
+                ),
+                "View Details":
                 (item)=>(
                   <td>
-                  <CDropdown
-                  className="c-header-nav-items mx-2"
-                  direction="down"
-    >
-      <CDropdownToggle className="c-header-nav-link" caret={false}>
-      <CIcon name="cil-pencil" />
-    </CDropdownToggle>
-      <CDropdownMenu className="pt-0" placement="bottom-end">
-        <CDropdownItem
-          header
-          tag="div"
-          color="light"
-          className="text-center"
-        >
-          <strong>Account</strong>
-        </CDropdownItem>
-        <CDropdownItem>
-          <CIcon name="cil-pencil" className="mfe-2" />
-          Edit 
-        </CDropdownItem>
-        <CDropdownItem>
-          <CIcon name="cil-bell" className="mfe-2" />
-          Delete
-        </CDropdownItem>
-   
-        <CDropdownItem divider />
-        <CDropdownItem>
-        <CIcon name="cil-user" className="mfe-2" />
-          View Details
-        </CDropdownItem>
-      </CDropdownMenu>
-    </CDropdown>
+                    <CButton variant="outline" color="primary" 
+                    size="sm" block onClick={()=>handleViewUser(item._id)}>View</CButton>
+      
                   </td>
                 
                 )

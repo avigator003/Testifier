@@ -370,7 +370,7 @@ const TestForm = (props) => {
                     <CLabel htmlFor="text-input">No. of Questions</CLabel>
                   </CCol>
                   <CCol xs="12" md="9">
-                    <CInput id="text-input" type placeholder="Number of Questions" name="numberOfQuestions" value={state['numberOfQuestions']} onChange={(e)=>handleChange(e)} />
+                    <CInput id="text-input" type="number" placeholder="Number of Questions" name="numberOfQuestions" value={state['numberOfQuestions']} onChange={(e)=>handleChange(e)} />
                   </CCol>
                 </CFormGroup>
 
