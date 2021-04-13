@@ -81,11 +81,6 @@ function Login(props) {
                 loginUser({ ...state, type: "user" }, (err, response) => {
                   if (err) {
                     console.log(err)
-                    if(err.message === "Your trial period expired."  || 
-                      err.message === "You payment has been declined." || 
-                      err.message === "Payment confirmation awaited."){
-                      props.history.push('/plans/subscription')
-            }
                     notification.error(err);
                   } else {
                     notification.success(response);

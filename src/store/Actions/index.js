@@ -29,16 +29,12 @@ const setRegisterSuccess = (payload) => ({ type: LOGIN_USER_SUCCESS, payload });
 
 //LoginUser
 export const loginUser = (payload, cb) => {
-  console.log("payload",payload)
   return (dispatch) => {
     api
       .post("/auth/login", payload)
       .then((res) => {
         console.log(res)
         let created_at = new Date(res.data.token.user.created_at)
-        let now = new Date()
-        let expiry_date = created_at
-        expiry_date.setDate(created_at.getDate() + 15)
         if(res.data.token.user.registeredOn == undefined){
           res.data.token.user.registeredOn = {
 
@@ -61,26 +57,8 @@ export const loginUser = (payload, cb) => {
               message: "E-Mail not Verified",
             });
           }
-          if( res.data.token.user.registeredOn.requestGranted === "Declined" && (now > expiry_date && res.data.token.user.registeredOn.requestGranted !== "Yes")){
-            window.localStorage.setItem('userId' , res.data.token.user._id)
-            return cb({
-              message: "You payment has been declined.",
-            });
-          }  
-          if( res.data.token.user.registeredOn.requestGranted === "No" && (now > expiry_date && res.data.token.user.registeredOn.requestGranted !== "Yes")){
-            window.localStorage.setItem('userId' , res.data.token.user._id)
-            return cb({
-              message: "Payment confirmation awaited.",
-            });
-          }  
-
-          if(now > expiry_date && res.data.token.user.registeredOn.requestGranted !== "Yes"){
-            window.localStorage.setItem('userId' , res.data.token.user._id)
-            return cb({
-              message: "Your trial period expired!",
-            });
-          }  
-        } else {
+        }
+         else {
           if (!res.data.token.user.admin) {
             return cb({
               message: "Only For Admin",

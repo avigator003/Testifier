@@ -198,7 +198,7 @@ function Registration(props) {
             <h2>Register yourself and</h2>
             <h2> ace your Academics</h2>
             <TextField id="standard-basic" label="Name" color="primary" className={classes.input} name="name" value={state['name']} onChange={(e)=>handleChange(e)} />
-            <TextField id="standard-basic" label="Username" color="primary" className={classes.input} name="userName" value={state['upscAtuserNametempts']} onChange={(e)=>handleChange(e)}/>
+            <TextField id="standard-basic" label="Username" color="primary" className={classes.input} name="userName" value={state['userName']} onChange={(e)=>handleChange(e)}/>
             <TextField id="standard-basic" label="E-mail" color="primary" className={classes.input} name="emailAddress" value={state['emailAddress']} onChange={(e)=>handleChange(e)}/>
             <TextField id="standard-basic" label="Password" color="primary" className={classes.input} name="password" value={state['password']} onChange={(e)=>handleChange(e)}/>
             
