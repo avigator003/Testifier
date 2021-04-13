@@ -3,7 +3,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { getTests } from "../../store/Actions";
 import { CalendarToday, ArrowRightAltRounded, TimerRounded, NoteRounded, PeopleAltOutlined } from '@material-ui/icons';
 import { CButton } from '@coreui/react';
@@ -18,6 +18,11 @@ import Backdrop from '@material-ui/core/Backdrop';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import clsx from 'clsx';
 import { Typography } from 'antd';
+import Modal from '@material-ui/core/Modal';
+import Fade from '@material-ui/core/Fade';
+import { WhatsappShareButton } from "react-share";
+import ModalBackground from '../../assests/images/background.png'
+
 
 export default function Test(props) {
     const classes = useStyles();
@@ -33,7 +38,8 @@ export default function Test(props) {
     const [insightsTestList, setInsightsTestList] = useState([])
     const [upscTestList, setUpscTestList] = useState([])
     const [spinner, setSpinner] = useState(false);
-
+    const[open,setOpen]=useState(false)
+    const[currentTestId,setCurrentTestId]=useState()
     const [state, setState] = React.useState({
         vision: true,
         vajiram: false,
@@ -51,7 +57,7 @@ export default function Test(props) {
 
     // Use Effect for Fetching Test (for Not having Same Test Name)
     useEffect(() => {
-        dispatch(
+        dispatch( 
             getTests((err, response) => {
                 setVisionTestList(response.tests.filter(ob => ob.instituteName == "Vision IAS"))
                 setVajiramTestList(response.tests.filter(ob => ob.instituteName == "Vajiram and Ravi"))
@@ -63,41 +69,88 @@ export default function Test(props) {
             }))
     }, [])
 
+    const user = useSelector((state) => state.user);
 
     // Handle Give Test
     const handleGiveTest = (id) => {
-        setSpinner(true)
+       setCurrentTestId(id)
 
+     const sharedTestItem=user. token.user.numberOfShares.filter(ob=>ob.testId==id)
+     const countShares=sharedTestItem[0]?.number
+
+
+     if(countShares>2)
+     {
+        setSpinner(true)
         const timer = setTimeout(() => {
             history.push({
                 pathname: `/givetest/${id}`,
             });
         }, 1000);
         return () => clearTimeout(timer);
+     }
+     else{
+        setOpen(true)
+     }
+     
 
+      
 
+     
     }
+
+    //Close Modal
+      const handleCloseModal=()=>{
+          setOpen(false)
+          setCurrentTestId("")
+      }
 
 
     return (
         <div className={classes.root}>
+
+        <Modal
+         aria-labelledby="transition-modal-title"
+        aria-describedby="transition-modal-description"
+        className={classes.modal}
+        open={open}
+        onClose={()=>handleCloseModal()}
+        closeAfterTransition
+        BackdropComponent={Backdrop}
+        BackdropProps={{
+          timeout: 500,
+        }}
+      >
+        <Fade in={open}>
+          <div className={classes.paper1}>
+            <h2 id="transition-modal-title" className={classes.modalHeading}>Unlock Test</h2>
+            <p id="transition-modal-description">Share Test to 2 times to unlock</p>
+            <CButton shape="pill" color="success" className={classes.whatsappButton} onClick={()=>handleGiveTest("hey")}>
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6b/WhatsApp.svg/766px-WhatsApp.svg.png" className={classes.image}/>
+              Share to Whatsapp
+              </CButton>
+           
+         
+          </div>
+        </Fade>
+      </Modal>
             <Backdrop className={classes.backdrop} open={spinner} onClick={() => setSpinner(false)}>
                 <p style={{ marginRight: 20 }}>Preparing Test</p>
                 <CircularProgress color="inherit" size={100} color="primary" />
             </Backdrop>
 
-            <Grid container spacing={1}>
-                <Grid item lg={3} style={{ paddingTop: 20 }} md={3} sm={3} xs={12}>
+            <Grid container >
+                <Grid item lg={2} style={{ paddingTop: 20 }} md={3} sm={3} xs={12}>
                     <Paper elevation={3} className={classes.filterContainer}>
                         <p className={classes.filterHeading}>FILTER</p>
-
+                        <WhatsappShareButton size={32} round={true}>Hey</WhatsappShareButton>
                         {/* First Filter*/}
                         <div className={classes.filterCategoryContainer}>
                             <p className={classes.filterCategoryHeading}>Institute</p>
                             <div className={classes.filterCategoryItems}>
                                 <FormControl component="fieldset" className={classes.formControl}>
                                     <FormGroup>
-                                        
+
 
 
 
@@ -120,8 +173,8 @@ export default function Test(props) {
                                             label={<Typography variant="body2" color="textSecondary" className={classes.label}>Vision IAS</Typography>}
                                         />
 
-                                        
-<FormControlLabel
+
+                                        <FormControlLabel
                                             input
                                             control={
                                                 <Checkbox
@@ -139,7 +192,7 @@ export default function Test(props) {
                                             }
                                             label={<Typography variant="body2" color="textSecondary" className={classes.label}>Vajiram and Ravi</Typography>}
                                         />
-                                        
+
                                         <FormControlLabel
                                             input
                                             control={
@@ -156,7 +209,7 @@ export default function Test(props) {
                                                     {...props}
                                                 />
                                             }
-                                            label={<Typography variant="body2" color="textSecondary" className={classes.label}>Shankar IAS Academy</Typography>}
+                                            label={<Typography variant="body2" color="textSecondary" className={classes.label}>Shankar IAS </Typography>}
                                         />
 
 
@@ -267,20 +320,23 @@ export default function Test(props) {
                     </Paper>
 
                 </Grid>
-                <Grid item lg={9} md={9} sm={9} xs={12}>
+                
+                <Grid item lg={10} md={7} sm={8} xs={12}>
 
 
 
                     {/*Vajiram and Ravi */}
 
                     {vajiramTestList.length > 0 &&
+                            <Paper className={classes.categorypaper} elevation={3}>
+                                        
                         <div className={classes.categoryContainer}>
                             <h1 className={classes.testCategory}>Vajiram and Ravi</h1>
-                            <Grid container spacing={4}>
+                            <Grid container spacing={1}>
                                 {
                                     vajiramTestList.map((item, index) => (
                                         <>
-                                            <Grid item lg={4} md={4} sm={6} xs={12}>
+                                            <Grid item lg={2} md={4} sm={6} xs={12}>
                                                 <Paper className={classes.paper} elevation={3}>
                                                     <p className={classes.testHeading}>{item.testName}</p>
 
@@ -332,20 +388,25 @@ export default function Test(props) {
                                     ))}
                             </Grid>
                         </div>
+                        </Paper>
+                                        
                     }
+                    
 
 
                     {/*Shankar IAS Academy */}
 
                     {shankarTestList.length > 0 &&
+                           <Paper className={classes.categorypaper} elevation={3}>
+                     
                         <div className={classes.categoryContainer}>
                             <h1 className={classes.testCategory}>Shankar IAS Academy</h1>
-                            <Grid container spacing={4}>
+                            <Grid container spacing={1}>
                                 {
                                     shankarTestList.map((item, index) => (
                                         <>
-                                            <Grid item lg={4} md={4} sm={6} xs={12}>
-                                                <Paper className={classes.paper} elevation={3}>
+                                              <Grid item lg={2} md={4} sm={6} xs={12}>
+                                              <Paper className={classes.paper} elevation={3}>
                                                     <p className={classes.testHeading}>{item.testName}</p>
 
                                                     {/* First Content*/}
@@ -392,20 +453,23 @@ export default function Test(props) {
                                     ))}
                             </Grid>
                         </div>
+                        </Paper>
                     }
 
 
                     {/*Forum IAS */}
 
                     {forumTestList.length > 0 &&
-                        <div className={classes.categoryContainer}>
+                            <Paper className={classes.categorypaper} elevation={3}>
+                     
+                     <div className={classes.categoryContainer}>
                             <h1 className={classes.testCategory}>Forum IAS</h1>
-                            <Grid container spacing={4}>
+                            <Grid container spacing={1}>
                                 {
                                     forumTestList.map((item, index) => (
                                         <>
-                                            <Grid item lg={4} md={4} sm={6} xs={12}>
-                                                <Paper className={classes.paper} elevation={3}>
+                                           <Grid item lg={2} md={4} sm={6} xs={12}>
+                                                 <Paper className={classes.paper} elevation={3}>
                                                     <p className={classes.testHeading}>{item.testName}</p>
 
                                                     {/* First Content*/}
@@ -452,20 +516,23 @@ export default function Test(props) {
                                     ))}
                             </Grid>
                         </div>
+                        </Paper>
                     }
 
 
                     {/*IAS Score */}
 
                     {iasTestList.length > 0 &&
-                        <div className={classes.categoryContainer}>
+                            <Paper className={classes.categorypaper} elevation={3}>
+                     
+                     <div className={classes.categoryContainer}>
                             <h1 className={classes.testCategory}>IAS Score</h1>
-                            <Grid container spacing={4}>
+                            <Grid container spacing={1}>
                                 {
                                     iasTestList.map((item, index) => (
                                         <>
-                                            <Grid item lg={4} md={4} sm={6} xs={12}>
-                                                <Paper className={classes.paper} elevation={3}>
+                                             <Grid item lg={2} md={4} sm={6} xs={12}>
+                                               <Paper className={classes.paper} elevation={3}>
                                                     <p className={classes.testHeading}>{item.testName}</p>
 
                                                     {/* First Content*/}
@@ -512,6 +579,7 @@ export default function Test(props) {
                                     ))}
                             </Grid>
                         </div>
+                        </Paper>
                     }
 
 
@@ -519,13 +587,15 @@ export default function Test(props) {
                     {/*Insights IAS */}
 
                     {insightsTestList.length > 0 &&
-                        <div className={classes.categoryContainer}>
+                            <Paper className={classes.categorypaper} elevation={3}>
+                     
+                     <div className={classes.categoryContainer}>
                             <h1 className={classes.testCategory}>Insights IAS</h1>
-                            <Grid container spacing={4}>
+                            <Grid container spacing={1}>
                                 {
                                     insightsTestList.map((item, index) => (
                                         <>
-                                            <Grid item lg={4} md={4} sm={6} xs={12}>
+                                            <Grid item lg={2} md={4} sm={6} xs={12}>
                                                 <Paper className={classes.paper} elevation={3}>
                                                     <p className={classes.testHeading}>{item.testName}</p>
 
@@ -573,19 +643,22 @@ export default function Test(props) {
                                     ))}
                             </Grid>
                         </div>
+                        </Paper>
                     }
 
 
                     {/*UPSC PYQs */}
                     {upscTestList.length > 0 &&
-                        <div className={classes.categoryContainer}>
+                            <Paper className={classes.categorypaper} elevation={3}>
+                     
+                     <div className={classes.categoryContainer}>
                             <h1 className={classes.testCategory}>UPSC PYQs</h1>
-                            <Grid container spacing={4}>
+                            <Grid container spacing={1}>
                                 {
                                     upscTestList.map((item, index) => (
                                         <>
-                                            <Grid item lg={4} md={4} sm={6} xs={12}>
-                                                <Paper className={classes.paper} elevation={3}>
+                                           <Grid item lg={2} md={4} sm={6} xs={12}>
+                                                 <Paper className={classes.paper} elevation={3}>
                                                     <p className={classes.testHeading}>{item.testName}</p>
 
                                                     {/* First Content*/}
@@ -632,6 +705,7 @@ export default function Test(props) {
                                     ))}
                             </Grid>
                         </div>
+                        </Paper>
                     }
 
 
@@ -639,14 +713,16 @@ export default function Test(props) {
                     {/*Vision IAS */}
 
                     {visionTestList.length > 0 &&
-                        <div className={classes.categoryContainer}>
+                            <Paper className={classes.categorypaper} elevation={3}>
+                     
+                     <div className={classes.categoryContainer}>
                             <h1 className={classes.testCategory}>Vision IAS</h1>
-                            <Grid container spacing={4}>
+                            <Grid container spacing={1}>
                                 {
                                     visionTestList.map((item, index) => (
                                         <>
-                                            <Grid item lg={4} md={4} sm={6} xs={12}>
-                                                <Paper className={classes.paper} elevation={3}>
+                                             <Grid item lg={2} md={4} sm={6} xs={6}>
+                                               <Paper className={classes.paper} elevation={3}>
                                                     <p className={classes.testHeading}>{item.testName}</p>
 
                                                     {/* First Content*/}
@@ -692,6 +768,7 @@ export default function Test(props) {
                                     ))}
                             </Grid>
                         </div>
+                        </Paper>
                     }
 
 
@@ -715,7 +792,23 @@ const useStyles = makeStyles((theme) => ({
     paper: {
         padding: theme.spacing(1),
         color: theme.palette.text.secondary,
-        borderRadius: 15
+        borderRadius: 15,
+        width:165,
+        height:190,
+        [theme.breakpoints.down('xs')]: {
+            width: "210px",
+         
+          },
+
+
+
+    },
+    categorypaper:{
+
+        padding: theme.spacing(1),
+        color: theme.palette.text.secondary,
+        borderRadius: 15,
+        margin:20
     },
     categoryContainer: {
         margin: 20,
@@ -795,7 +888,60 @@ const useStyles = makeStyles((theme) => ({
     },
     label: {
         fontSize: 14,
-        width:150
-    }
+        width: 150
+    },
+    modal: {
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+      },
+      paper1: {
+        backgroundColor: theme.palette.background.paper,
+        border:"none",
+        borderRadius:20,
+        height:300,
+        width:500,
+        outline:"none",
+        boxShadow: theme.shadows[5],
+        padding: theme.spacing(2, 4, 3),
+        backgroundImage: `url(${ModalBackground})` ,
+        backgroundRepeat:"no-repeat",
+        backgroundSize:"cover",
+        backgroundPosition:"center",
+        margin:40,
+        justifyContent:"center",
+        alignItems:"center",
+        textAlign:"center",
+        [theme.breakpoints.down('xs')]: {
+            height: "250px",
+            width: "250px",
+         
+          },
+
+      },
+      modalHeading:{
+          fontSize:"30px",
+          fontWeight:"bold"
+      },
+      image:{
+        objectFit: "contain",
+        height:"50px",
+        marginRight:10,
+        [theme.breakpoints.down('xs')]: {
+            height: "30px",
+
+         
+          },
+      },
+      whatsappButton:{
+          height:80,
+          width:300,
+          [theme.breakpoints.down('xs')]: {
+            height:50,
+            width:200,
+
+         
+          },
+      }
 }));
 

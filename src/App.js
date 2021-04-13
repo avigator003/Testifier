@@ -26,7 +26,6 @@ function App() {
   const classes=useStyles()
  
   const user = useSelector((state) => state.user);
-   console.log("user",user)
 
   return (
     <div className={classes.Appcontainer}>
