@@ -78,7 +78,7 @@ function Login(props) {
               });
             } else {
               dispatch(
-                loginUser({ ...state, type: "user" }, (err, response) => {
+                loginUser({ ...state, type: "admin" }, (err, response) => {
                   if (err) {
                     console.log(err)
                     notification.error(err);

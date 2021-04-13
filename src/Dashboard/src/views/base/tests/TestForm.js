@@ -87,6 +87,8 @@ const TestForm = (props) => {
     categoryType: '',
     numberOfQuestions: 0,
     questionPaperLink: '',
+    answerPaperLink:'',
+    paid:true,
     answers: []
   })
 
@@ -97,6 +99,7 @@ const TestForm = (props) => {
     categoryType: '',
     numberOfQuestions: "",
     questionPaperLink: '',
+    answerPaperLink:'',
   });
 
   // Checking is it View ,Edit or Add
@@ -132,21 +135,14 @@ const TestForm = (props) => {
 
           }
         }))
-
-
-
-
-
-    }
-
-
-
+  }
 
   }, [])
 
 
   const handleChange = (e) => {
     e.persist();
+    
     const { name, value } = e.target;
     if (name == "numberOfQuestions" && value !== "")
       setState((st) => ({ ...st, [name]: parseInt(value) }));
@@ -170,6 +166,9 @@ const TestForm = (props) => {
   };
 
 
+
+
+//Handle Change Question
   const handleQuestionChange = (i, name, value) => {
 
     const array = [...state['answers']]
@@ -194,6 +193,10 @@ const TestForm = (props) => {
     setState((st) => ({ ...st, answers: array }));
   }
 
+
+
+
+
   //When Editing Question Paper Options Changes
   const handleEditQuestionChange = (i, name, value) => {
 
@@ -204,6 +207,7 @@ const TestForm = (props) => {
 
 
 
+  // Handle Add Test Form
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -340,6 +344,8 @@ const TestForm = (props) => {
 
                   </CCol>
                 </CFormGroup>
+
+
                 <CFormGroup row>
                   <CCol md="3">
                     <CLabel htmlFor="email-input">Test Name / Title</CLabel>
@@ -432,6 +438,35 @@ const TestForm = (props) => {
                   </CCol>
                 </CFormGroup>
 
+
+                
+                <CFormGroup row>
+                  <CCol md="3">
+                    <CLabel htmlFor="text-input">Answer Paper Link</CLabel>
+                  </CCol>
+                  <CCol xs="12" md="9">
+                    <CInput id="text-input" placeholder="Answer Paper Link" name="answerPaperLink" disabled={disable}
+                      value={state['answerPaperLink']} onChange={(e) => handleChange(e)} />
+                  </CCol>
+                </CFormGroup>
+
+                
+                <CFormGroup row>
+                  <CCol md="3">
+                    <CLabel htmlFor="text-input">Test Price</CLabel>
+                  </CCol>
+                  <CCol xs="12" md="9">
+                    <CSelect custom id="select" name="paid" disabled={disable}
+                      value={state['paid']} onChange={(e) => handleChange(e)}>
+                      <option value="" selected >Please select</option>
+                      <option value={true}>Paid</option>
+                      <option value={false}>Unpaid</option>
+                     </CSelect>
+
+                  </CCol>
+                </CFormGroup>
+            
+         
               </CForm>
             </CCardBody>
           </CCard>

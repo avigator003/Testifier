@@ -4,7 +4,7 @@ import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
 import { useDispatch, useSelector } from 'react-redux';
-import { getTests } from "../../store/Actions";
+import { getTests, setLoginSuccess, updateUser } from "../../store/Actions";
 import { CalendarToday, ArrowRightAltRounded, TimerRounded, NoteRounded, PeopleAltOutlined } from '@material-ui/icons';
 import { CButton } from '@coreui/react';
 import FormLabel from '@material-ui/core/FormLabel';
@@ -20,7 +20,7 @@ import clsx from 'clsx';
 import { Typography } from 'antd';
 import Modal from '@material-ui/core/Modal';
 import Fade from '@material-ui/core/Fade';
-import { WhatsappShareButton } from "react-share";
+import { WhatsappShareButton,WhatsappIcon } from "react-share";
 import ModalBackground from '../../assests/images/background.png'
 
 
@@ -69,6 +69,8 @@ export default function Test(props) {
             }))
     }, [])
 
+
+    // Logined User
     const user = useSelector((state) => state.user);
 
     // Handle Give Test
@@ -79,7 +81,7 @@ export default function Test(props) {
      const countShares=sharedTestItem[0]?.number
 
 
-     if(countShares>2)
+     if(countShares>=2)
      {
         setSpinner(true)
         const timer = setTimeout(() => {
@@ -92,11 +94,6 @@ export default function Test(props) {
      else{
         setOpen(true)
      }
-     
-
-      
-
-     
     }
 
     //Close Modal
@@ -106,9 +103,56 @@ export default function Test(props) {
       }
 
 
+      //Share to Whatsapp
+      const handleWhatsappShare=()=>{
+        var array=user.token.user.numberOfShares
+        var index = array.findIndex(item=>item.testId==currentTestId);
+
+        if(index==-1)
+        {
+            array.push({number:1,testId:currentTestId})
+            user.token.user.numberOfShares=array
+            dispatch(setLoginSuccess(user))
+            var userId=user.token.user._id
+            var body=user.token.user
+              dispatch(
+                updateUser({id:userId,body:body}, (err, response) => {
+                  if (err) {
+                    console.log(err)
+                  } else {
+                }
+            }))
+    
+          
+        }
+        else{
+        var shares=array[index].number
+        var newShares=shares+1
+        array[index].number=newShares
+        user.token.user.numberOfShares=array
+        dispatch(setLoginSuccess(user))
+        var userId=user.token.user._id
+        var body=user.token.user
+
+        dispatch(
+            updateUser({id:userId,body:body}, (err, response) => {
+              if (err) {
+                console.log(err)
+              } else {
+            }
+        //Update user in db and storage
+        }))
+    }
+
+        setCurrentTestId("")
+        setOpen(false)
+      
+    }
+
+
     return (
         <div className={classes.root}>
-
+         
         <Modal
          aria-labelledby="transition-modal-title"
         aria-describedby="transition-modal-description"
@@ -125,10 +169,15 @@ export default function Test(props) {
           <div className={classes.paper1}>
             <h2 id="transition-modal-title" className={classes.modalHeading}>Unlock Test</h2>
             <p id="transition-modal-description">Share Test to 2 times to unlock</p>
-            <CButton shape="pill" color="success" className={classes.whatsappButton} onClick={()=>handleGiveTest("hey")}>
-            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6b/WhatsApp.svg/766px-WhatsApp.svg.png" className={classes.image}/>
+            <WhatsappShareButton url={"Hey Testifier Share your tests"}>
+          
+            <CButton shape="pill" color="success" className={classes.whatsappButton} onClick={()=>handleWhatsappShare()}>
+                <WhatsappIcon size={32} round={true} className={classes.image} />
+             
               Share to Whatsapp
               </CButton>
+              </WhatsappShareButton>
+
            
          
           </div>

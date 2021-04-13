@@ -9,6 +9,7 @@ import { useDispatch } from 'react-redux';
 import Timer from './Timer';
 import Backdrop from '@material-ui/core/Backdrop';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import { CButton } from '@coreui/react';
 
 
 const GreenRadio = withStyles({
@@ -53,8 +54,8 @@ function Omr(props) {
     const [answerArray, setAnswerArray] = useState([])
     const [percentageArray, setPercentageArray] = useState([])
     const [test, setTest] = useState()
-    const [spinner, setSpinner] = useState(true);
-  
+    const [spinner, setSpinner] = useState(false);
+    const [answerSet,setAnswerSet]=useState([])
 
 
     // Handle Test id
@@ -65,15 +66,17 @@ function Omr(props) {
                 if (err)
                     console.log(err)
                 else {
-                    setTest(response.res.data.data)
+                    var object=response.res.data.data
+                    console.log(object.answers.map(item=>item.options),"options")
+                    setAnswerSet(object.answers.map(item=>item.options))
+                    setTest(object)
                 }
             }))
             setSpinner(false)
+     }, [])
 
 
-    }, [])
-
-
+     // Handle Omr Answers
     const handleOmrAnswer = (option, index) => {
         console.log(option, index)
         let array = [...answerArray]
@@ -82,7 +85,7 @@ function Omr(props) {
         setAnswerArray(array)
     }
 
-
+   // Handle Omr NAswers Percentage
     const handleOmrAnswerPercentage = (option, index) => {
         let array = [...percentageArray]
         array[index] = option
@@ -92,16 +95,38 @@ function Omr(props) {
 
 
 
+    // Handle Test Submit
+    const handleSubmitTest=()=>{
+     setSpinner(true)
+     var array=[]
+     for(var i=0;i<answerSet.length;i++)
+     {
+            if(answerSet[i]===answerArray[i]?.toLowerCase())
+                array.push(true)
+            else
+                 array.push(false)    
+     }
+        console.log(array)
+       setSpinner(false)
+    }
+
     return (
 
         <div className={classes.root}>
-            
+            <Backdrop className={classes.backdrop} open={spinner} onClick={() => setSpinner(false)}>
+                <p style={{ marginRight: 20 }}>Submitting Test</p>
+                <CircularProgress color="inherit" size={100} color="primary" />
+            </Backdrop>
+
         {
         !spinner?
         <>
             <h1>{test?.testName}</h1>
-            
             <Timer  time={test?.numberOfQuestions>50?7200000:3600000}/>
+            <CButton variant="outline" color="primary"
+            size="md" block onClick={() => handleSubmitTest()} >Submit Test</CButton>
+                                                   
+
             <Paper elevation={3} className={classes.paper}>
 
                 <Grid container className={classes.rowContainer}>
