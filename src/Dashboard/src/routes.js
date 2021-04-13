@@ -41,7 +41,7 @@ const UserForm = React.lazy(() => import('./views/users/UserForm'));
 
 
 const routes = [
-  { path: '/', exact: true, name: 'Home' },
+  { path: '/', exact: true, name: 'Home', component: Dashboard  },
   { path: '/dashboard', name: 'Dashboard', component: Dashboard },
   { path: '/theme', name: 'Theme', component: Colors, exact: true },
   { path: '/theme/colors', name: 'Colors', component: Colors },
@@ -78,7 +78,7 @@ const routes = [
   { path: '/notifications/modals', name: 'Modals', component: Modals },
   { path: '/notifications/toaster', name: 'Toaster', component: Toaster },
   { path: '/test/details', name: 'Tests', component: Tests },
-  { path: '/test/add', name: 'Add Test', component: TestForm },
+  { path: '/test/add', name: 'Add Test', component: TestForm ,exact:true},
   { path: '/test/edit/:id', name: 'Edit Test', component: TestForm },
   { path: '/test/view/:id', name: 'View Test', component: TestForm },
   { path: '/users', exact: true,  name: 'Users', component: Users },

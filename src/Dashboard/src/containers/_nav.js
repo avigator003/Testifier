@@ -38,16 +38,7 @@ const _nav =  [
         name: 'Test Details',
         to: '/test/details',
       },
-      {
-        _tag: 'CSidebarNavItem',
-        name: 'Edit Test',
-        to: '/base/carousels',
-      },
-         {
-        _tag: 'CSidebarNavItem',
-        name: 'Tables',
-        to: '/base/tables',
-      },
+      
    
       
       /*
@@ -110,6 +101,7 @@ const _nav =  [
       */
     ],
   },
+  /*
   {
     _tag: 'CSidebarNavDropdown',
     name: 'Buttons',
@@ -138,12 +130,14 @@ const _nav =  [
       }
     ],
   },
+  */
   {
     _tag: 'CSidebarNavItem',
     name: 'Charts',
     to: '/charts',
     icon: 'cil-chart-pie'
   },
+  /*
   {
     _tag: 'CSidebarNavDropdown',
     name: 'Icons',
@@ -171,6 +165,7 @@ const _nav =  [
       },
     ],
   },
+  
   {
     _tag: 'CSidebarNavDropdown',
     name: 'Notifications',
@@ -199,6 +194,7 @@ const _nav =  [
       }
     ]
   },
+  */
   /*
   {
     _tag: 'CSidebarNavItem',

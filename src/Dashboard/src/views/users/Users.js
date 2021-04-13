@@ -66,7 +66,6 @@ const handleEditUser=(id)=>{
       {
         const editUser=response.res.data.data
         const editUserId=response.res.data.data._id
-        console.log(editUserId,"hey")
       history.push({
           pathname: `/user/edit/${editUserId}`,
        });
