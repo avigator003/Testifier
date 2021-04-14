@@ -8,8 +8,7 @@ import { notification } from "antd";
 import { register } from "../store/Actions";
 import { Spin } from "antd";
 import api from "../resources/api";
-
-
+import { useHistory } from 'react-router-dom';
 
 
 const validEmailRegex = RegExp(
@@ -39,6 +38,9 @@ function Registration(props) {
     
     const classes = useStyles()
     const dispatch = useDispatch();
+    const history=useHistory();
+
+
     const [display, setDisplay] = useState(false);
     const [state, setState] = useState({
       name: "",
@@ -160,11 +162,17 @@ function Registration(props) {
             if (err) {
               notification.error(err);
             } else {
+              
+              props.history.push('/login')
               notification.success(response);
             }
           })
         );
+        
+
+
       }
+      
     }
   
     

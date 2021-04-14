@@ -11,7 +11,7 @@ import Test from './Home/TestComponents/Test';
 import { makeStyles } from '@material-ui/core/styles';
 import TestForm from './Dashboard/src/views/base/tests/TestForm';
 import { useSelector, useDispatch } from "react-redux";
-
+import EmailConfirm from './Authentication/EmailConfirm';
 
 const TheLayout = React.lazy(() => import('./Dashboard/src/containers/TheLayout'));
 
@@ -45,14 +45,18 @@ function App() {
                  
                   <Route exact path="/givetest" name="Page 404" render={props => <Test {...props}/>} />
                   <Route exact path="/givetest/:id" name="Page 404" render={props => <Omr {...props}/>} />
+           
                   <Redirect from='*' to='/givetest' />
                   </Switch>
                 ))
             :
     (
               <Switch>
-              <Route exact path="/login" name="Login Page" render={props => <Login {...props}/>} />
+                  <Route exact path="/login" name="Login Page" render={props => <Login {...props}/>} />
                   <Route exact path="/register" name="Register Page" render={props => <Registration {...props}/>} />
+                  <Route exact path="/verified" name="Email Confirm" render={props => <EmailConfirm {...props}/>} />
+           
+    
                   <Redirect from='*' to='/login' />
               </Switch>
             )}

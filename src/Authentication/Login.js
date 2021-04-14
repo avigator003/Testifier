@@ -83,12 +83,13 @@ function Login(props) {
                     console.log(err)
                     notification.error(err);
                   } else {
-                    notification.success(response);
-                    console.log(response)
-                    
-                    localStorage.setItem('timer', 0)
-        
-                    let user = JSON.parse(window.localStorage.getItem('Case.user'))
+               
+                    notification["success"]({
+                      message: response,
+                      duration: 10
+                   });
+                
+                    let user = JSON.parse(window.localStorage.getItem('Test.user'))
                     user = user.token.user
                     user.updated_at = new Date()
                     

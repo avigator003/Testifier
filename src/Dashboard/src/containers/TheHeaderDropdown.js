@@ -8,8 +8,19 @@ import {
   CImg
 } from '@coreui/react'
 import CIcon from '@coreui/icons-react'
+import { useHistory } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { logoutUser } from '../../../store/Actions';
 
-const TheHeaderDropdown = () => {
+const TheHeaderDropdown = (props) => {
+  const history=useHistory()
+  const dispatch=useDispatch()
+
+  const handleLogout=()=>{
+    console.log("loggin")
+    dispatch(logoutUser())
+    history.push('/')
+}
   return (
     <CDropdown
       inNav
@@ -80,7 +91,7 @@ const TheHeaderDropdown = () => {
           <CBadge color="primary" className="mfs-auto">42</CBadge>
         </CDropdownItem>
         <CDropdownItem divider />
-        <CDropdownItem>
+        <CDropdownItem onClick={()=>handleLogout()}>
           <CIcon name="cil-lock-locked" className="mfe-2" />
           Lock Account
         </CDropdownItem>
