@@ -6,7 +6,7 @@ import Box from '@material-ui/core/Box';
 import { useDispatch, useSelector } from 'react-redux';
 import { getTests, setLoginSuccess, updateUser } from "../../store/Actions";
 import { CalendarToday, ArrowRightAltRounded, TimerRounded, NoteRounded, PeopleAltOutlined } from '@material-ui/icons';
-import { CButton } from '@coreui/react';
+import { CButton, CCol, CFormGroup, CLabel, CSelect } from '@coreui/react';
 import FormLabel from '@material-ui/core/FormLabel';
 import FormControl from '@material-ui/core/FormControl';
 import FormGroup from '@material-ui/core/FormGroup';
@@ -20,8 +20,9 @@ import clsx from 'clsx';
 import { Typography } from 'antd';
 import Modal from '@material-ui/core/Modal';
 import Fade from '@material-ui/core/Fade';
-import { WhatsappShareButton,WhatsappIcon } from "react-share";
+import { WhatsappShareButton, WhatsappIcon } from "react-share";
 import ModalBackground from '../../assests/images/background.png'
+import Header from '../HomeComponents/Header';
 
 
 export default function Test(props) {
@@ -38,36 +39,199 @@ export default function Test(props) {
     const [insightsTestList, setInsightsTestList] = useState([])
     const [upscTestList, setUpscTestList] = useState([])
     const [spinner, setSpinner] = useState(false);
-    const[open,setOpen]=useState(false)
-    const[currentTestId,setCurrentTestId]=useState()
+    const [open, setOpen] = useState(false)
+    const [currentTestId, setCurrentTestId] = useState()
     const [state, setState] = React.useState({
-        vision: true,
-        vajiram: false,
-        upsc: false,
-        insights: false,
-        score: false,
-        shankar: false,
-        forum: false,
+        polity: false,
+        environment: false,
+        geography: false,
+        economy: false,
+        history: false,
+        currentAffairs: false,
     });
 
+    const [testCategory, setTestCategory] = useState("0")
+
+
     const handleChange = (event) => {
-        setState({ ...state, [event.target.name]: event.target.checked });
+        var name = event.target.name
+        if (name == 'polity') {
+            setState({
+                polity: true,
+                environment: false,
+                geography: false,
+                economy: false,
+                history: false,
+                currentAffairs: false,
+            })
+        }
+       else if (name == 'history') {
+            setState({
+                polity: false,
+                environment: false,
+                geography: false,
+                economy: false,
+                history: true,
+                currentAffairs: false,
+            })
+        }
+       else if (name == 'economy') {
+            setState({
+                polity: false,
+                environment: false,
+                geography: false,
+                economy: true,
+                history: false,
+                currentAffairs: false,
+            })
+        }
+       else if (name == 'geography') {
+            setState({
+                polity: false,
+                environment: false,
+                geography: true,
+                economy: false,
+                history: false,
+                currentAffairs: false,
+            })
+        }
+       else if (name == 'environment') {
+            setState({
+                polity: false,
+                environment: true,
+                geography: false,
+                economy: false,
+                history: false,
+                currentAffairs: false,
+            })
+        }
+        else if (name == 'currentAffairs') {
+            setState({
+                polity: false,
+                environment: false,
+                geography: false,
+                economy: false,
+                history: false,
+                currentAffairs: true,
+            })
+        }
     };
 
 
     // Use Effect for Fetching Test (for Not having Same Test Name)
+    //Filtering
+
     useEffect(() => {
-        dispatch( 
-            getTests((err, response) => {
-                setVisionTestList(response.tests.filter(ob => ob.instituteName == "Vision IAS"))
-                setVajiramTestList(response.tests.filter(ob => ob.instituteName == "Vajiram and Ravi"))
-                setShankarTestList(response.tests.filter(ob => ob.instituteName == "Shankar IAS Academy"))
-                setForumTestList(response.tests.filter(ob => ob.instituteName == "Forum IAS"))
-                setIasTestList(response.tests.filter(ob => ob.instituteName == "IAS Score"))
-                setInsightsTestList(response.tests.filter(ob => ob.instituteName == "Insights IAS"))
-                setUpscTestList(response.tests.filter(ob => ob.instituteName == "UPSC PYQs"))
-            }))
-    }, [])
+        if (testCategory == "0") {
+            setState({
+                polity: false,
+                environment: false,
+                geography: false,
+                economy: false,
+                history: false,
+                currentAffairs: false,
+            })
+        
+            dispatch(
+                getTests((err, response) => {
+                    setVisionTestList(response.tests.filter(ob => ob.instituteName == "Vision IAS"))
+                    setVajiramTestList(response.tests.filter(ob => ob.instituteName == "Vajiram and Ravi"))
+                    setShankarTestList(response.tests.filter(ob => ob.instituteName == "Shankar IAS Academy"))
+                    setForumTestList(response.tests.filter(ob => ob.instituteName == "Forum IAS"))
+                    setIasTestList(response.tests.filter(ob => ob.instituteName == "IAS Score"))
+                    setInsightsTestList(response.tests.filter(ob => ob.instituteName == "Insights IAS"))
+                    setUpscTestList(response.tests.filter(ob => ob.instituteName == "UPSC PYQs"))
+                }))
+        }
+        else if (testCategory == "Full Length") {
+            setState({
+                polity: false,
+                environment: false,
+                geography: false,
+                economy: false,
+                history: false,
+                currentAffairs: false,
+            })
+        
+            dispatch(
+                getTests((err, response) => {
+                    setVisionTestList(response.tests.filter(ob => ob.instituteName == "Vision IAS" && ob.testCategory == "Full Length"))
+                    setVajiramTestList(response.tests.filter(ob => ob.instituteName == "Vajiram and Ravi" && ob.testCategory == "Full Length"))
+                    setShankarTestList(response.tests.filter(ob => ob.instituteName == "Shankar IAS Academy" && ob.testCategory == "Full Length"))
+                    setForumTestList(response.tests.filter(ob => ob.instituteName == "Forum IAS" && ob.testCategory == "Full Length"))
+                    setIasTestList(response.tests.filter(ob => ob.instituteName == "IAS Score" && ob.testCategory == "Full Length"))
+                    setInsightsTestList(response.tests.filter(ob => ob.instituteName == "Insights IAS" && ob.testCategory == "Full Length"))
+                    setUpscTestList(response.tests.filter(ob => ob.instituteName == "UPSC PYQs" && ob.testCategory == "Full Length"))
+                }))
+
+        }
+        else {
+
+            dispatch(
+                getTests((err, response) => {
+                    if (state['polity']) {
+                        setVisionTestList(response.tests.filter(ob => ob.instituteName == "Vision IAS" && ob.testCategory == "Sectional" && ob.categoryType == "Polity"))
+                        setVajiramTestList(response.tests.filter(ob => ob.instituteName == "Vajiram and Ravi" && ob.testCategory == "Sectional" && ob.categoryType == "Polity"))
+                        setShankarTestList(response.tests.filter(ob => ob.instituteName == "Shankar IAS Academy" && ob.testCategory == "Sectional" && ob.categoryType == "Polity"))
+                        setForumTestList(response.tests.filter(ob => ob.instituteName == "Forum IAS" && ob.testCategory == "Sectional" && ob.categoryType == "Polity"))
+                        setIasTestList(response.tests.filter(ob => ob.instituteName == "IAS Score" && ob.testCategory == "Sectional" && ob.categoryType == "Polity"))
+                        setInsightsTestList(response.tests.filter(ob => ob.instituteName == "Insights IAS" && ob.testCategory == "Sectional" && ob.categoryType == "Polity"))
+                        setUpscTestList(response.tests.filter(ob => ob.instituteName == "UPSC PYQs" && ob.testCategory == "Sectional" && ob.categoryType == "Polity"))
+                    }
+                    else if (state['history']) {
+                        setVisionTestList(response.tests.filter(ob => ob.instituteName == "Vision IAS" && ob.testCategory == "Sectional" && ob.categoryType == "History"))
+                        setVajiramTestList(response.tests.filter(ob => ob.instituteName == "Vajiram and Ravi" && ob.testCategory == "Sectional" && ob.categoryType == "History"))
+                        setShankarTestList(response.tests.filter(ob => ob.instituteName == "Shankar IAS Academy" && ob.testCategory == "Sectional" && ob.categoryType == "History"))
+                        setForumTestList(response.tests.filter(ob => ob.instituteName == "Forum IAS" && ob.testCategory == "Sectional" && ob.categoryType == "History"))
+                        setIasTestList(response.tests.filter(ob => ob.instituteName == "IAS Score" && ob.testCategory == "Sectional" && ob.categoryType == "History"))
+                        setInsightsTestList(response.tests.filter(ob => ob.instituteName == "Insights IAS" && ob.testCategory == "Sectional" && ob.categoryType == "History"))
+                        setUpscTestList(response.tests.filter(ob => ob.instituteName == "UPSC PYQs" && ob.testCategory == "Sectional" && ob.categoryType == "History"))
+
+                    }
+                    else if (state['environment']) {
+                        setVisionTestList(response.tests.filter(ob => ob.instituteName == "Vision IAS" && ob.testCategory == "Sectional" && ob.categoryType == "Environment"))
+                        setVajiramTestList(response.tests.filter(ob => ob.instituteName == "Vajiram and Ravi" && ob.testCategory == "Sectional" && ob.categoryType == "Environment"))
+                        setShankarTestList(response.tests.filter(ob => ob.instituteName == "Shankar IAS Academy" && ob.testCategory == "Sectional" && ob.categoryType == "Environment"))
+                        setForumTestList(response.tests.filter(ob => ob.instituteName == "Forum IAS" && ob.testCategory == "Sectional" && ob.categoryType == "Environment"))
+                        setIasTestList(response.tests.filter(ob => ob.instituteName == "IAS Score" && ob.testCategory == "Sectional" && ob.categoryType == "Environment"))
+                        setInsightsTestList(response.tests.filter(ob => ob.instituteName == "Insights IAS" && ob.testCategory == "Sectional" && ob.categoryType == "Environment"))
+                        setUpscTestList(response.tests.filter(ob => ob.instituteName == "UPSC PYQs" && ob.testCategory == "Sectional" && ob.categoryType == "Environment"))
+
+                    }
+                    else if (state['economy']) {
+                        setVisionTestList(response.tests.filter(ob => ob.instituteName == "Vision IAS" && ob.testCategory == "Sectional" && ob.categoryType == "Economy"))
+                        setVajiramTestList(response.tests.filter(ob => ob.instituteName == "Vajiram and Ravi" && ob.testCategory == "Sectional" && ob.categoryType == "Economy"))
+                        setShankarTestList(response.tests.filter(ob => ob.instituteName == "Shankar IAS Academy" && ob.testCategory == "Sectional" && ob.categoryType == "Economy"))
+                        setForumTestList(response.tests.filter(ob => ob.instituteName == "Forum IAS" && ob.testCategory == "Sectional" && ob.categoryType == "Economy"))
+                        setIasTestList(response.tests.filter(ob => ob.instituteName == "IAS Score" && ob.testCategory == "Sectional" && ob.categoryType == "Economy"))
+                        setInsightsTestList(response.tests.filter(ob => ob.instituteName == "Insights IAS" && ob.testCategory == "Sectional" && ob.categoryType == "Economy"))
+                        setUpscTestList(response.tests.filter(ob => ob.instituteName == "UPSC PYQs" && ob.testCategory == "Sectional" && ob.categoryType == "Economy"))
+
+                    }
+                    else if (state['geography']) {
+                        setVisionTestList(response.tests.filter(ob => ob.instituteName == "Vision IAS" && ob.testCategory == "Sectional" && ob.categoryType == "Geography"))
+                        setVajiramTestList(response.tests.filter(ob => ob.instituteName == "Vajiram and Ravi" && ob.testCategory == "Sectional" && ob.categoryType == "Geography"))
+                        setShankarTestList(response.tests.filter(ob => ob.instituteName == "Shankar IAS Academy" && ob.testCategory == "Sectional" && ob.categoryType == "Geography"))
+                        setForumTestList(response.tests.filter(ob => ob.instituteName == "Forum IAS" && ob.testCategory == "Sectional" && ob.categoryType == "Geography"))
+                        setIasTestList(response.tests.filter(ob => ob.instituteName == "IAS Score" && ob.testCategory == "Sectional" && ob.categoryType == "Geography"))
+                        setInsightsTestList(response.tests.filter(ob => ob.instituteName == "Insights IAS" && ob.testCategory == "Sectional" && ob.categoryType == "Geography"))
+                        setUpscTestList(response.tests.filter(ob => ob.instituteName == "UPSC PYQs" && ob.testCategory == "Sectional" && ob.categoryType == "Geography"))
+
+                    }
+                    else if (state['currentAffairs']) {
+                        setVisionTestList(response.tests.filter(ob => ob.instituteName == "Vision IAS" && ob.testCategory == "Sectional" && ob.categoryType == "Current Affairs"))
+                        setVajiramTestList(response.tests.filter(ob => ob.instituteName == "Vajiram and Ravi" && ob.testCategory == "Sectional" && ob.categoryType == "Current Affairs"))
+                        setShankarTestList(response.tests.filter(ob => ob.instituteName == "Shankar IAS Academy" && ob.testCategory == "Sectional" && ob.categoryType == "Current Affairs"))
+                        setForumTestList(response.tests.filter(ob => ob.instituteName == "Forum IAS" && ob.testCategory == "Sectional" && ob.categoryType == "Current Affairs"))
+                        setIasTestList(response.tests.filter(ob => ob.instituteName == "IAS Score" && ob.testCategory == "Sectional" && ob.categoryType == "Current Affairs"))
+                        setInsightsTestList(response.tests.filter(ob => ob.instituteName == "Insights IAS" && ob.testCategory == "Sectional" && ob.categoryType == "Current Affairs"))
+                        setUpscTestList(response.tests.filter(ob => ob.instituteName == "UPSC PYQs" && ob.testCategory == "Sectional" && ob.categoryType == "Current Affairs"))
+
+                    }
+                }))
+        }
+
+    }, [testCategory, state])
 
 
     // Logined User
@@ -75,279 +239,279 @@ export default function Test(props) {
 
     // Handle Give Test
     const handleGiveTest = (id) => {
-       setCurrentTestId(id)
+        setCurrentTestId(id)
 
-     const sharedTestItem=user. token.user.numberOfShares.filter(ob=>ob.testId==id)
-     const countShares=sharedTestItem[0]?.number
+        const sharedTestItem = user.token.user.numberOfShares.filter(ob => ob.testId == id)
+        const countShares = sharedTestItem[0]?.number
 
 
-     if(countShares>=2)
-     {
-        setSpinner(true)
-        const timer = setTimeout(() => {
-            history.push({
-                pathname: `/givetest/${id}`,
-            });
-        }, 1000);
-        return () => clearTimeout(timer);
-     }
-     else{
-        setOpen(true)
-     }
+        if (countShares >= 2) {
+            setSpinner(true)
+            const timer = setTimeout(() => {
+                history.push({
+                    pathname: `/givetest/${id}`,
+                });
+            }, 1000);
+            return () => clearTimeout(timer);
+        }
+        else {
+            setOpen(true)
+        }
     }
 
     //Close Modal
-      const handleCloseModal=()=>{
-          setOpen(false)
-          setCurrentTestId("")
-      }
-
-
-      //Share to Whatsapp
-      const handleWhatsappShare=()=>{
-        var array=user.token.user.numberOfShares
-        var index = array.findIndex(item=>item.testId==currentTestId);
-
-        if(index==-1)
-        {
-            array.push({number:1,testId:currentTestId})
-            user.token.user.numberOfShares=array
-            dispatch(setLoginSuccess(user))
-            var userId=user.token.user._id
-            var body=user.token.user
-              dispatch(
-                updateUser({id:userId,body:body}, (err, response) => {
-                  if (err) {
-                    console.log(err)
-                  } else {
-                }
-            }))
-    
-          
-        }
-        else{
-        var shares=array[index].number
-        var newShares=shares+1
-        array[index].number=newShares
-        user.token.user.numberOfShares=array
-        dispatch(setLoginSuccess(user))
-        var userId=user.token.user._id
-        var body=user.token.user
-
-        dispatch(
-            updateUser({id:userId,body:body}, (err, response) => {
-              if (err) {
-                console.log(err)
-              } else {
-            }
-        //Update user in db and storage
-        }))
+    const handleCloseModal = () => {
+        setOpen(false)
+        setCurrentTestId("")
     }
+
+
+    //Share to Whatsapp
+    const handleWhatsappShare = () => {
+        var array = user.token.user.numberOfShares
+        var index = array.findIndex(item => item.testId == currentTestId);
+
+        if (index == -1) {
+            array.push({ number: 1, testId: currentTestId })
+            user.token.user.numberOfShares = array
+            dispatch(setLoginSuccess(user))
+            var userId = user.token.user._id
+            var body = user.token.user
+            dispatch(
+                updateUser({ id: userId, body: body }, (err, response) => {
+                    if (err) {
+                        console.log(err)
+                    } else {
+                    }
+                }))
+
+
+        }
+        else {
+            var shares = array[index].number
+            var newShares = shares + 1
+            array[index].number = newShares
+            user.token.user.numberOfShares = array
+            dispatch(setLoginSuccess(user))
+            var userId = user.token.user._id
+            var body = user.token.user
+
+            dispatch(
+                updateUser({ id: userId, body: body }, (err, response) => {
+                    if (err) {
+                        console.log(err)
+                    } else {
+                    }
+                    //Update user in db and storage
+                }))
+        }
 
         setCurrentTestId("")
         setOpen(false)
-      
+
+    }
+
+
+
+    //Handle Filteration
+
+    const handleFilter = () => {
+        var trueObjectsArray = []
+
+
+        console.log("true", trueObjectsArray)
+
+        console.log(state, "state")
+
+
     }
 
 
     return (
         <div className={classes.root}>
-         
-        <Modal
-         aria-labelledby="transition-modal-title"
-        aria-describedby="transition-modal-description"
-        className={classes.modal}
-        open={open}
-        onClose={()=>handleCloseModal()}
-        closeAfterTransition
-        BackdropComponent={Backdrop}
-        BackdropProps={{
-          timeout: 500,
-        }}
-      >
-        <Fade in={open}>
-          <div className={classes.paper1}>
-            <h2 id="transition-modal-title" className={classes.modalHeading}>Unlock Test</h2>
-            <p id="transition-modal-description">Share Test to 2 times to unlock</p>
-            <WhatsappShareButton url={"Hey Testifier Share your tests"}>
-          
-            <CButton shape="pill" color="success" className={classes.whatsappButton} onClick={()=>handleWhatsappShare()}>
-                <WhatsappIcon size={32} round={true} className={classes.image} />
-             
+            <Header />
+            <Modal
+                aria-labelledby="transition-modal-title"
+                aria-describedby="transition-modal-description"
+                className={classes.modal}
+                open={open}
+                onClose={() => handleCloseModal()}
+                closeAfterTransition
+                BackdropComponent={Backdrop}
+                BackdropProps={{
+                    timeout: 500,
+                }}
+            >
+                <Fade in={open}>
+                    <div className={classes.paper1}>
+                        <h2 id="transition-modal-title" className={classes.modalHeading}>Unlock Test</h2>
+                        <p id="transition-modal-description">Share Test to 2 times to unlock</p>
+                        <WhatsappShareButton url={"Hey Testifier Share your tests"}>
+
+                            <CButton shape="pill" color="success" className={classes.whatsappButton} onClick={() => handleWhatsappShare()}>
+                                <WhatsappIcon size={32} round={true} className={classes.image} />
+
               Share to Whatsapp
               </CButton>
-              </WhatsappShareButton>
+                        </WhatsappShareButton>
 
-           
-         
-          </div>
-        </Fade>
-      </Modal>
+
+
+                    </div>
+                </Fade>
+            </Modal>
             <Backdrop className={classes.backdrop} open={spinner} onClick={() => setSpinner(false)}>
                 <p style={{ marginRight: 20 }}>Preparing Test</p>
                 <CircularProgress color="inherit" size={100} color="primary" />
             </Backdrop>
 
-            <Grid container >
+            <Grid container className={classes.container} >
                 <Grid item lg={2} style={{ paddingTop: 20 }} md={3} sm={3} xs={12}>
                     <Paper elevation={3} className={classes.filterContainer}>
                         <p className={classes.filterHeading}>FILTER</p>
-                        <WhatsappShareButton size={32} round={true}>Hey</WhatsappShareButton>
                         {/* First Filter*/}
                         <div className={classes.filterCategoryContainer}>
-                            <p className={classes.filterCategoryHeading}>Institute</p>
+                            <p className={classes.filterCategoryHeading}>SUBJECT FILTER</p>
                             <div className={classes.filterCategoryItems}>
-                                <FormControl component="fieldset" className={classes.formControl}>
-                                    <FormGroup>
+
+                                <CSelect custom id="select" name="testCategory" className={classes.select}
+                                    value={testCategory} onChange={(e) => setTestCategory(e.target.value)}>
+                                    <option value="0" selected>Please select Test Category</option>
+
+                                    <option value="Full Length">Full Length</option>
+                                    <option value="Sectional">Sectional</option>
+                                </CSelect>
+
+                                {testCategory == "Sectional" &&
+                                    <FormControl component="fieldset" className={classes.formControl} >
+                                        <FormGroup >
 
 
 
 
-                                        <FormControlLabel
-                                            input
-                                            control={
-                                                <Checkbox
-                                                    checked={state['vision']}
-                                                    onChange={handleChange}
-                                                    name="vision"
-                                                    className={classes.root}
-                                                    disableRipple
-                                                    color="default"
-                                                    checkedIcon={<span className={clsx(classes.icon, classes.checkedIcon)} />}
-                                                    icon={<span className={classes.icon} />}
-                                                    inputProps={{ 'aria-label': 'decorative checkbox' }}
-                                                    {...props}
-                                                />
-                                            }
-                                            label={<Typography variant="body2" color="textSecondary" className={classes.label}>Vision IAS</Typography>}
-                                        />
+                                            <FormControlLabel
+                                                input
+                                                control={
+                                                    <Checkbox
+                                                        checked={state['polity']}
+                                                        onChange={handleChange}
+                                                        name="polity"
+                                                        className={classes.labelCheckbox}
+                                                        disableRipple
+                                                        color="default"
+                                                        checkedIcon={<span className={clsx(classes.icon, classes.checkedIcon)} />}
+                                                        icon={<span className={classes.icon} />}
+                                                        inputProps={{ 'aria-label': 'decorative checkbox' }}
+                                                        {...props}
+                                                    />
+                                                }
+                                                label={<Typography variant="body2" color="textSecondary" className={classes.label}>Polity</Typography>}
+                                            />
 
 
-                                        <FormControlLabel
-                                            input
-                                            control={
-                                                <Checkbox
-                                                    checked={state['vajiram']}
-                                                    onChange={handleChange}
-                                                    name="vajiram"
-                                                    className={classes.root}
-                                                    disableRipple
-                                                    color="default"
-                                                    checkedIcon={<span className={clsx(classes.icon, classes.checkedIcon)} />}
-                                                    icon={<span className={classes.icon} />}
-                                                    inputProps={{ 'aria-label': 'decorative checkbox' }}
-                                                    {...props}
-                                                />
-                                            }
-                                            label={<Typography variant="body2" color="textSecondary" className={classes.label}>Vajiram and Ravi</Typography>}
-                                        />
+                                            <FormControlLabel
+                                                input
+                                                control={
+                                                    <Checkbox
+                                                        checked={state['environment']}
+                                                        onChange={handleChange}
+                                                        name="environment"
+                                                        className={classes.labelCheckbox}
+                                                        disableRipple
+                                                        color="default"
+                                                        checkedIcon={<span className={clsx(classes.icon, classes.checkedIcon)} />}
+                                                        icon={<span className={classes.icon} />}
+                                                        inputProps={{ 'aria-label': 'decorative checkbox' }}
+                                                        {...props}
+                                                    />
+                                                }
+                                                label={<Typography variant="body2" color="textSecondary" className={classes.label}>Environment</Typography>}
+                                            />
 
-                                        <FormControlLabel
-                                            input
-                                            control={
-                                                <Checkbox
-                                                    checked={state['shankar']}
-                                                    onChange={handleChange}
-                                                    name="shankar"
-                                                    className={classes.root}
-                                                    disableRipple
-                                                    color="default"
-                                                    checkedIcon={<span className={clsx(classes.icon, classes.checkedIcon)} />}
-                                                    icon={<span className={classes.icon} />}
-                                                    inputProps={{ 'aria-label': 'decorative checkbox' }}
-                                                    {...props}
-                                                />
-                                            }
-                                            label={<Typography variant="body2" color="textSecondary" className={classes.label}>Shankar IAS </Typography>}
-                                        />
-
-
-
-                                        <FormControlLabel
-                                            input
-                                            control={
-                                                <Checkbox
-                                                    checked={state['forum']}
-                                                    onChange={handleChange}
-                                                    name="forum"
-                                                    className={classes.root}
-                                                    disableRipple
-                                                    color="default"
-                                                    checkedIcon={<span className={clsx(classes.icon, classes.checkedIcon)} />}
-                                                    icon={<span className={classes.icon} />}
-                                                    inputProps={{ 'aria-label': 'decorative checkbox' }}
-                                                    {...props}
-                                                />
-                                            }
-                                            label={<Typography variant="body2" color="textSecondary" className={classes.label}>Forum IAS</Typography>}
-                                        />
-
-
-                                        <FormControlLabel
-                                            input
-                                            control={
-                                                <Checkbox
-                                                    checked={state['score']}
-                                                    onChange={handleChange}
-                                                    name="score"
-                                                    className={classes.root}
-                                                    disableRipple
-                                                    color="default"
-                                                    checkedIcon={<span className={clsx(classes.icon, classes.checkedIcon)} />}
-                                                    icon={<span className={classes.icon} />}
-                                                    inputProps={{ 'aria-label': 'decorative checkbox' }}
-                                                    {...props}
-                                                />
-                                            }
-                                            label={<Typography variant="body2" color="textSecondary" className={classes.label}>IAS Score</Typography>}
-                                        />
+                                            <FormControlLabel
+                                                input
+                                                control={
+                                                    <Checkbox
+                                                        checked={state['history']}
+                                                        onChange={handleChange}
+                                                        name="history"
+                                                        className={classes.labelCheckbox}
+                                                        disableRipple
+                                                        color="default"
+                                                        checkedIcon={<span className={clsx(classes.icon, classes.checkedIcon)} />}
+                                                        icon={<span className={classes.icon} />}
+                                                        inputProps={{ 'aria-label': 'decorative checkbox' }}
+                                                        {...props}
+                                                    />
+                                                }
+                                                label={<Typography variant="body2" color="textSecondary" className={classes.label}>History</Typography>}
+                                            />
 
 
 
-
-                                        <FormControlLabel
-                                            input
-                                            control={
-                                                <Checkbox
-                                                    checked={state['insights']}
-                                                    onChange={handleChange}
-                                                    name="insights"
-                                                    className={classes.root}
-                                                    disableRipple
-                                                    color="default"
-                                                    checkedIcon={<span className={clsx(classes.icon, classes.checkedIcon)} />}
-                                                    icon={<span className={classes.icon} />}
-                                                    inputProps={{ 'aria-label': 'decorative checkbox' }}
-                                                    {...props}
-                                                />
-                                            }
-                                            label={<Typography variant="body2" color="textSecondary" className={classes.label}>Insights IAS</Typography>}
-                                        />
-
+                                            <FormControlLabel
+                                                input
+                                                control={
+                                                    <Checkbox
+                                                        checked={state['economy']}
+                                                        onChange={handleChange}
+                                                        name="economy"
+                                                        className={classes.labelCheckbox}
+                                                        disableRipple
+                                                        color="default"
+                                                        checkedIcon={<span className={clsx(classes.icon, classes.checkedIcon)} />}
+                                                        icon={<span className={classes.icon} />}
+                                                        inputProps={{ 'aria-label': 'decorative checkbox' }}
+                                                        {...props}
+                                                    />
+                                                }
+                                                label={<Typography variant="body2" color="textSecondary" className={classes.label}>Economy</Typography>}
+                                            />
 
 
-                                        <FormControlLabel
-                                            input
-                                            control={
-                                                <Checkbox
-                                                    checked={state['upsc']}
-                                                    onChange={handleChange}
-                                                    name="upsc"
-                                                    className={classes.root}
-                                                    disableRipple
-                                                    color="default"
-                                                    checkedIcon={<span className={clsx(classes.icon, classes.checkedIcon)} />}
-                                                    icon={<span className={classes.icon} />}
-                                                    inputProps={{ 'aria-label': 'decorative checkbox' }}
-                                                    {...props}
-                                                />
-                                            }
-                                            label={<Typography variant="body2" color="textSecondary" className={classes.label}>UPSC PYQs</Typography>}
-                                        />
+                                            <FormControlLabel
+                                                input
+                                                control={
+                                                    <Checkbox
+                                                        checked={state['geography']}
+                                                        onChange={handleChange}
+                                                        name="geography"
+                                                        className={classes.labelCheckbox}
+                                                        disableRipple
+                                                        color="default"
+                                                        checkedIcon={<span className={clsx(classes.icon, classes.checkedIcon)} />}
+                                                        icon={<span className={classes.icon} />}
+                                                        inputProps={{ 'aria-label': 'decorative checkbox' }}
+                                                        {...props}
+                                                    />
+                                                }
+                                                label={<Typography variant="body2" color="textSecondary" className={classes.label}>Geography</Typography>}
+                                            />
 
 
-                                    </FormGroup>
-                                </FormControl>
+
+
+                                            <FormControlLabel
+                                                input
+                                                control={
+                                                    <Checkbox
+                                                        checked={state['currentAffairs']}
+                                                        onChange={handleChange}
+                                                        name="currentAffairs"
+                                                        className={classes.labelCheckbox}
+                                                        disableRipple
+                                                        color="default"
+                                                        checkedIcon={<span className={clsx(classes.icon, classes.checkedIcon)} />}
+                                                        icon={<span className={classes.icon} />}
+                                                        inputProps={{ 'aria-label': 'decorative checkbox' }}
+                                                        {...props}
+                                                    />
+                                                }
+                                                label={<Typography variant="body2" color="textSecondary" className={classes.label}>Current Affairs</Typography>}
+                                            />
+                                        </FormGroup>
+                                    </FormControl>
+                                }
                             </div>
 
                         </div>
@@ -369,7 +533,7 @@ export default function Test(props) {
                     </Paper>
 
                 </Grid>
-                
+
                 <Grid item lg={10} md={7} sm={8} xs={12}>
 
 
@@ -377,131 +541,131 @@ export default function Test(props) {
                     {/*Vajiram and Ravi */}
 
                     {vajiramTestList.length > 0 &&
-                            <Paper className={classes.categorypaper} elevation={3}>
-                                        
-                        <div className={classes.categoryContainer}>
-                            <h1 className={classes.testCategory}>Vajiram and Ravi</h1>
-                            <Grid container spacing={1}>
-                                {
-                                    vajiramTestList.map((item, index) => (
-                                        <>
-                                            <Grid item lg={2} md={4} sm={6} xs={12}>
-                                                <Paper className={classes.paper} elevation={3}>
-                                                    <p className={classes.testHeading}>{item.testName}</p>
+                        <Paper className={classes.categorypaper} elevation={3}>
 
-                                                    {/* First Content*/}
-                                                    <div className={classes.testContent}>
-                                                        <div className={classes.testContentItems}>
-                                                            {item.testCategory == "Sectional" ?
-                                                                <p className={classes.testContentHeading}>Category :                 {item.categoryType} </p> :
+                            <div className={classes.categoryContainer}>
+                                <h1 className={classes.testCategory}>Vajiram and Ravi</h1>
+                                <Grid container spacing={1}>
+                                    {
+                                        vajiramTestList.map((item, index) => (
+                                            <>
+                                                <Grid item lg={2} md={4} sm={6} xs={12}>
+                                                    <Paper className={classes.paper} elevation={3}>
+                                                        <p className={classes.testHeading}>{item.testName}</p>
 
-                                                                <p className={classes.testContentHeading}>Full Length Test</p>
-                                                            }
-                                                        </div>
+                                                        {/* First Content*/}
+                                                        <div className={classes.testContent}>
+                                                            <div className={classes.testContentItems}>
+                                                                {item.testCategory == "Sectional" ?
+                                                                    <p className={classes.testContentHeading}>Category :                 {item.categoryType} </p> :
 
-                                                    </div>
+                                                                    <p className={classes.testContentHeading}>Full Length Test</p>
+                                                                }
+                                                            </div>
 
-
-                                                    {/* Second Content*/}
-                                                    <div className={classes.testContent}>
-                                                        <div className={classes.testContentItems}>
-                                                            <TimerRounded color="primary" className={classes.testContentIcons} />
-                                                            <p className={classes.testContentHeading}>{item.numberOfQuestions > 50 ? "2" : "1"} Hr</p>
                                                         </div>
 
 
-                                                        <div className={classes.testContentItems}>
-                                                            <NoteRounded color="primary" className={classes.testContentIcons} />
-                                                            <p className={classes.testContentHeading}>{item.numberOfQuestions} Questions</p>
+                                                        {/* Second Content*/}
+                                                        <div className={classes.testContent}>
+                                                            <div className={classes.testContentItems}>
+                                                                <TimerRounded color="primary" className={classes.testContentIcons} />
+                                                                <p className={classes.testContentHeading}>{item.numberOfQuestions > 50 ? "2" : "1"} Hr</p>
+                                                            </div>
+
+
+                                                            <div className={classes.testContentItems}>
+                                                                <NoteRounded color="primary" className={classes.testContentIcons} />
+                                                                <p className={classes.testContentHeading}>{item.numberOfQuestions} Questions</p>
+                                                            </div>
                                                         </div>
-                                                    </div>
 
 
-                                                    {/* Second Content*/}
-                                                    <div className={classes.testContent}>
-                                                        <div className={classes.testContentItems}>
+                                                        {/* Second Content*/}
+                                                        <div className={classes.testContent}>
+                                                            <div className={classes.testContentItems}>
+                                                            </div>
+
+
+                                                            {/*  Test Button*/}
+
+                                                            <div className={classes.testContentItems} style={{ width: "100%", margin: 10 }}>
+                                                                <CButton variant="outline" color="primary"
+                                                                    size="md" block onClick={() => handleGiveTest(item._id)} >Start Test</CButton>
+                                                            </div>
                                                         </div>
+                                                    </Paper>
+                                                </Grid>
 
-
-                                                        {/*  Test Button*/}
-
-                                                        <div className={classes.testContentItems} style={{ width: "100%", margin: 10 }}>
-                                                            <CButton variant="outline" color="primary"
-                                                                size="md" block onClick={() => handleGiveTest(item._id)} >Start Test</CButton>
-                                                        </div>
-                                                    </div>
-                                                </Paper>
-                                            </Grid>
-
-                                        </>
-                                    ))}
-                            </Grid>
-                        </div>
+                                            </>
+                                        ))}
+                                </Grid>
+                            </div>
                         </Paper>
-                                        
+
                     }
-                    
+
 
 
                     {/*Shankar IAS Academy */}
 
                     {shankarTestList.length > 0 &&
-                           <Paper className={classes.categorypaper} elevation={3}>
-                     
-                        <div className={classes.categoryContainer}>
-                            <h1 className={classes.testCategory}>Shankar IAS Academy</h1>
-                            <Grid container spacing={1}>
-                                {
-                                    shankarTestList.map((item, index) => (
-                                        <>
-                                              <Grid item lg={2} md={4} sm={6} xs={12}>
-                                              <Paper className={classes.paper} elevation={3}>
-                                                    <p className={classes.testHeading}>{item.testName}</p>
+                        <Paper className={classes.categorypaper} elevation={3}>
 
-                                                    {/* First Content*/}
-                                                    <div className={classes.testContent}>
-                                                        <div className={classes.testContentItems}>
-                                                            <p className={classes.testContentHeading}>Category :                 {item.categoryType} </p>
-                                                        </div>
+                            <div className={classes.categoryContainer}>
+                                <h1 className={classes.testCategory}>Shankar IAS Academy</h1>
+                                <Grid container spacing={1}>
+                                    {
+                                        shankarTestList.map((item, index) => (
+                                            <>
+                                                <Grid item lg={2} md={4} sm={6} xs={12}>
+                                                    <Paper className={classes.paper} elevation={3}>
+                                                        <p className={classes.testHeading}>{item.testName}</p>
 
-                                                    </div>
+                                                        {/* First Content*/}
+                                                        <div className={classes.testContent}>
+                                                            <div className={classes.testContentItems}>
+                                                                <p className={classes.testContentHeading}>Category :                 {item.categoryType} </p>
+                                                            </div>
 
-
-                                                    {/* Second Content*/}
-                                                    <div className={classes.testContent}>
-                                                        <div className={classes.testContentItems}>
-                                                            <TimerRounded color="primary" className={classes.testContentIcons} />
-                                                            <p className={classes.testContentHeading}>{item.numberOfQuestions >= 50 ? "2" : "1"} Hr</p>
                                                         </div>
 
 
-                                                        <div className={classes.testContentItems}>
-                                                            <NoteRounded color="primary" className={classes.testContentIcons} />
-                                                            <p className={classes.testContentHeading}>{item.numberOfQuestions} Questions</p>
+                                                        {/* Second Content*/}
+                                                        <div className={classes.testContent}>
+                                                            <div className={classes.testContentItems}>
+                                                                <TimerRounded color="primary" className={classes.testContentIcons} />
+                                                                <p className={classes.testContentHeading}>{item.numberOfQuestions >= 50 ? "2" : "1"} Hr</p>
+                                                            </div>
+
+
+                                                            <div className={classes.testContentItems}>
+                                                                <NoteRounded color="primary" className={classes.testContentIcons} />
+                                                                <p className={classes.testContentHeading}>{item.numberOfQuestions} Questions</p>
+                                                            </div>
                                                         </div>
-                                                    </div>
 
 
-                                                    {/* Second Content*/}
-                                                    <div className={classes.testContent}>
-                                                        <div className={classes.testContentItems}>
+                                                        {/* Second Content*/}
+                                                        <div className={classes.testContent}>
+                                                            <div className={classes.testContentItems}>
+                                                            </div>
+
+
+                                                            {/*  Test Button*/}
+
+                                                            <div className={classes.testContentItems} style={{ width: "100%", margin: 10 }}>
+                                                                <CButton variant="outline" color="primary"
+                                                                    size="md" block >Start Test</CButton>
+                                                            </div>
                                                         </div>
+                                                    </Paper>
+                                                </Grid>
 
-
-                                                        {/*  Test Button*/}
-
-                                                        <div className={classes.testContentItems} style={{ width: "100%", margin: 10 }}>
-                                                            <CButton variant="outline" color="primary"
-                                                                size="md" block >Start Test</CButton>
-                                                        </div>
-                                                    </div>
-                                                </Paper>
-                                            </Grid>
-
-                                        </>
-                                    ))}
-                            </Grid>
-                        </div>
+                                            </>
+                                        ))}
+                                </Grid>
+                            </div>
                         </Paper>
                     }
 
@@ -509,62 +673,62 @@ export default function Test(props) {
                     {/*Forum IAS */}
 
                     {forumTestList.length > 0 &&
-                            <Paper className={classes.categorypaper} elevation={3}>
-                     
-                     <div className={classes.categoryContainer}>
-                            <h1 className={classes.testCategory}>Forum IAS</h1>
-                            <Grid container spacing={1}>
-                                {
-                                    forumTestList.map((item, index) => (
-                                        <>
-                                           <Grid item lg={2} md={4} sm={6} xs={12}>
-                                                 <Paper className={classes.paper} elevation={3}>
-                                                    <p className={classes.testHeading}>{item.testName}</p>
+                        <Paper className={classes.categorypaper} elevation={3}>
 
-                                                    {/* First Content*/}
-                                                    <div className={classes.testContent}>
-                                                        <div className={classes.testContentItems}>
-                                                            <p className={classes.testContentHeading}>Category :                 {item.categoryType} </p>
-                                                        </div>
+                            <div className={classes.categoryContainer}>
+                                <h1 className={classes.testCategory}>Forum IAS</h1>
+                                <Grid container spacing={1}>
+                                    {
+                                        forumTestList.map((item, index) => (
+                                            <>
+                                                <Grid item lg={2} md={4} sm={6} xs={12}>
+                                                    <Paper className={classes.paper} elevation={3}>
+                                                        <p className={classes.testHeading}>{item.testName}</p>
 
-                                                    </div>
+                                                        {/* First Content*/}
+                                                        <div className={classes.testContent}>
+                                                            <div className={classes.testContentItems}>
+                                                                <p className={classes.testContentHeading}>Category :                 {item.categoryType} </p>
+                                                            </div>
 
-
-                                                    {/* Second Content*/}
-                                                    <div className={classes.testContent}>
-                                                        <div className={classes.testContentItems}>
-                                                            <TimerRounded color="primary" className={classes.testContentIcons} />
-                                                            <p className={classes.testContentHeading}>{item.numberOfQuestions >= 50 ? "2" : "1"} Hr</p>
                                                         </div>
 
 
-                                                        <div className={classes.testContentItems}>
-                                                            <NoteRounded color="primary" className={classes.testContentIcons} />
-                                                            <p className={classes.testContentHeading}>{item.numberOfQuestions} Questions</p>
+                                                        {/* Second Content*/}
+                                                        <div className={classes.testContent}>
+                                                            <div className={classes.testContentItems}>
+                                                                <TimerRounded color="primary" className={classes.testContentIcons} />
+                                                                <p className={classes.testContentHeading}>{item.numberOfQuestions >= 50 ? "2" : "1"} Hr</p>
+                                                            </div>
+
+
+                                                            <div className={classes.testContentItems}>
+                                                                <NoteRounded color="primary" className={classes.testContentIcons} />
+                                                                <p className={classes.testContentHeading}>{item.numberOfQuestions} Questions</p>
+                                                            </div>
                                                         </div>
-                                                    </div>
 
 
-                                                    {/* Second Content*/}
-                                                    <div className={classes.testContent}>
-                                                        <div className={classes.testContentItems}>
+                                                        {/* Second Content*/}
+                                                        <div className={classes.testContent}>
+                                                            <div className={classes.testContentItems}>
+                                                            </div>
+
+
+                                                            {/*  Test Button*/}
+
+                                                            <div className={classes.testContentItems} style={{ width: "100%", margin: 10 }}>
+                                                                <CButton variant="outline" color="primary"
+                                                                    size="md" block >Start Test</CButton>
+                                                            </div>
                                                         </div>
+                                                    </Paper>
+                                                </Grid>
 
-
-                                                        {/*  Test Button*/}
-
-                                                        <div className={classes.testContentItems} style={{ width: "100%", margin: 10 }}>
-                                                            <CButton variant="outline" color="primary"
-                                                                size="md" block >Start Test</CButton>
-                                                        </div>
-                                                    </div>
-                                                </Paper>
-                                            </Grid>
-
-                                        </>
-                                    ))}
-                            </Grid>
-                        </div>
+                                            </>
+                                        ))}
+                                </Grid>
+                            </div>
                         </Paper>
                     }
 
@@ -572,62 +736,62 @@ export default function Test(props) {
                     {/*IAS Score */}
 
                     {iasTestList.length > 0 &&
-                            <Paper className={classes.categorypaper} elevation={3}>
-                     
-                     <div className={classes.categoryContainer}>
-                            <h1 className={classes.testCategory}>IAS Score</h1>
-                            <Grid container spacing={1}>
-                                {
-                                    iasTestList.map((item, index) => (
-                                        <>
-                                             <Grid item lg={2} md={4} sm={6} xs={12}>
-                                               <Paper className={classes.paper} elevation={3}>
-                                                    <p className={classes.testHeading}>{item.testName}</p>
+                        <Paper className={classes.categorypaper} elevation={3}>
 
-                                                    {/* First Content*/}
-                                                    <div className={classes.testContent}>
-                                                        <div className={classes.testContentItems}>
-                                                            <p className={classes.testContentHeading}>Category :                 {item.categoryType} </p>
-                                                        </div>
+                            <div className={classes.categoryContainer}>
+                                <h1 className={classes.testCategory}>IAS Score</h1>
+                                <Grid container spacing={1}>
+                                    {
+                                        iasTestList.map((item, index) => (
+                                            <>
+                                                <Grid item lg={2} md={4} sm={6} xs={12}>
+                                                    <Paper className={classes.paper} elevation={3}>
+                                                        <p className={classes.testHeading}>{item.testName}</p>
 
-                                                    </div>
+                                                        {/* First Content*/}
+                                                        <div className={classes.testContent}>
+                                                            <div className={classes.testContentItems}>
+                                                                <p className={classes.testContentHeading}>Category :                 {item.categoryType} </p>
+                                                            </div>
 
-
-                                                    {/* Second Content*/}
-                                                    <div className={classes.testContent}>
-                                                        <div className={classes.testContentItems}>
-                                                            <TimerRounded color="primary" className={classes.testContentIcons} />
-                                                            <p className={classes.testContentHeading}>{item.numberOfQuestions >= 50 ? "2" : "1"} Hr</p>
                                                         </div>
 
 
-                                                        <div className={classes.testContentItems}>
-                                                            <NoteRounded color="primary" className={classes.testContentIcons} />
-                                                            <p className={classes.testContentHeading}>{item.numberOfQuestions} Questions</p>
+                                                        {/* Second Content*/}
+                                                        <div className={classes.testContent}>
+                                                            <div className={classes.testContentItems}>
+                                                                <TimerRounded color="primary" className={classes.testContentIcons} />
+                                                                <p className={classes.testContentHeading}>{item.numberOfQuestions >= 50 ? "2" : "1"} Hr</p>
+                                                            </div>
+
+
+                                                            <div className={classes.testContentItems}>
+                                                                <NoteRounded color="primary" className={classes.testContentIcons} />
+                                                                <p className={classes.testContentHeading}>{item.numberOfQuestions} Questions</p>
+                                                            </div>
                                                         </div>
-                                                    </div>
 
 
-                                                    {/* Second Content*/}
-                                                    <div className={classes.testContent}>
-                                                        <div className={classes.testContentItems}>
+                                                        {/* Second Content*/}
+                                                        <div className={classes.testContent}>
+                                                            <div className={classes.testContentItems}>
+                                                            </div>
+
+
+                                                            {/*  Test Button*/}
+
+                                                            <div className={classes.testContentItems} style={{ width: "100%", margin: 10 }}>
+                                                                <CButton variant="outline" color="primary"
+                                                                    size="md" block >Start Test</CButton>
+                                                            </div>
                                                         </div>
+                                                    </Paper>
+                                                </Grid>
 
-
-                                                        {/*  Test Button*/}
-
-                                                        <div className={classes.testContentItems} style={{ width: "100%", margin: 10 }}>
-                                                            <CButton variant="outline" color="primary"
-                                                                size="md" block >Start Test</CButton>
-                                                        </div>
-                                                    </div>
-                                                </Paper>
-                                            </Grid>
-
-                                        </>
-                                    ))}
-                            </Grid>
-                        </div>
+                                            </>
+                                        ))}
+                                </Grid>
+                            </div>
                         </Paper>
                     }
 
@@ -636,124 +800,124 @@ export default function Test(props) {
                     {/*Insights IAS */}
 
                     {insightsTestList.length > 0 &&
-                            <Paper className={classes.categorypaper} elevation={3}>
-                     
-                     <div className={classes.categoryContainer}>
-                            <h1 className={classes.testCategory}>Insights IAS</h1>
-                            <Grid container spacing={1}>
-                                {
-                                    insightsTestList.map((item, index) => (
-                                        <>
-                                            <Grid item lg={2} md={4} sm={6} xs={12}>
-                                                <Paper className={classes.paper} elevation={3}>
-                                                    <p className={classes.testHeading}>{item.testName}</p>
+                        <Paper className={classes.categorypaper} elevation={3}>
 
-                                                    {/* First Content*/}
-                                                    <div className={classes.testContent}>
-                                                        <div className={classes.testContentItems}>
-                                                            <p className={classes.testContentHeading}>Category :                 {item.categoryType} </p>
-                                                        </div>
+                            <div className={classes.categoryContainer}>
+                                <h1 className={classes.testCategory}>Insights IAS</h1>
+                                <Grid container spacing={1}>
+                                    {
+                                        insightsTestList.map((item, index) => (
+                                            <>
+                                                <Grid item lg={2} md={4} sm={6} xs={12}>
+                                                    <Paper className={classes.paper} elevation={3}>
+                                                        <p className={classes.testHeading}>{item.testName}</p>
 
-                                                    </div>
+                                                        {/* First Content*/}
+                                                        <div className={classes.testContent}>
+                                                            <div className={classes.testContentItems}>
+                                                                <p className={classes.testContentHeading}>Category :                 {item.categoryType} </p>
+                                                            </div>
 
-
-                                                    {/* Second Content*/}
-                                                    <div className={classes.testContent}>
-                                                        <div className={classes.testContentItems}>
-                                                            <TimerRounded color="primary" className={classes.testContentIcons} />
-                                                            <p className={classes.testContentHeading}>{item.numberOfQuestions >= 50 ? "2" : "1"} Hr</p>
                                                         </div>
 
 
-                                                        <div className={classes.testContentItems}>
-                                                            <NoteRounded color="primary" className={classes.testContentIcons} />
-                                                            <p className={classes.testContentHeading}>{item.numberOfQuestions} Questions</p>
+                                                        {/* Second Content*/}
+                                                        <div className={classes.testContent}>
+                                                            <div className={classes.testContentItems}>
+                                                                <TimerRounded color="primary" className={classes.testContentIcons} />
+                                                                <p className={classes.testContentHeading}>{item.numberOfQuestions >= 50 ? "2" : "1"} Hr</p>
+                                                            </div>
+
+
+                                                            <div className={classes.testContentItems}>
+                                                                <NoteRounded color="primary" className={classes.testContentIcons} />
+                                                                <p className={classes.testContentHeading}>{item.numberOfQuestions} Questions</p>
+                                                            </div>
                                                         </div>
-                                                    </div>
 
 
-                                                    {/* Second Content*/}
-                                                    <div className={classes.testContent}>
-                                                        <div className={classes.testContentItems}>
+                                                        {/* Second Content*/}
+                                                        <div className={classes.testContent}>
+                                                            <div className={classes.testContentItems}>
+                                                            </div>
+
+
+                                                            {/*  Test Button*/}
+
+                                                            <div className={classes.testContentItems} style={{ width: "100%", margin: 10 }}>
+                                                                <CButton variant="outline" color="primary"
+                                                                    size="md" block >Start Test</CButton>
+                                                            </div>
                                                         </div>
+                                                    </Paper>
+                                                </Grid>
 
-
-                                                        {/*  Test Button*/}
-
-                                                        <div className={classes.testContentItems} style={{ width: "100%", margin: 10 }}>
-                                                            <CButton variant="outline" color="primary"
-                                                                size="md" block >Start Test</CButton>
-                                                        </div>
-                                                    </div>
-                                                </Paper>
-                                            </Grid>
-
-                                        </>
-                                    ))}
-                            </Grid>
-                        </div>
+                                            </>
+                                        ))}
+                                </Grid>
+                            </div>
                         </Paper>
                     }
 
 
                     {/*UPSC PYQs */}
                     {upscTestList.length > 0 &&
-                            <Paper className={classes.categorypaper} elevation={3}>
-                     
-                     <div className={classes.categoryContainer}>
-                            <h1 className={classes.testCategory}>UPSC PYQs</h1>
-                            <Grid container spacing={1}>
-                                {
-                                    upscTestList.map((item, index) => (
-                                        <>
-                                           <Grid item lg={2} md={4} sm={6} xs={12}>
-                                                 <Paper className={classes.paper} elevation={3}>
-                                                    <p className={classes.testHeading}>{item.testName}</p>
+                        <Paper className={classes.categorypaper} elevation={3}>
 
-                                                    {/* First Content*/}
-                                                    <div className={classes.testContent}>
-                                                        <div className={classes.testContentItems}>
-                                                            <p className={classes.testContentHeading}>Category :                 {item.categoryType} </p>
-                                                        </div>
+                            <div className={classes.categoryContainer}>
+                                <h1 className={classes.testCategory}>UPSC PYQs</h1>
+                                <Grid container spacing={1}>
+                                    {
+                                        upscTestList.map((item, index) => (
+                                            <>
+                                                <Grid item lg={2} md={4} sm={6} xs={12}>
+                                                    <Paper className={classes.paper} elevation={3}>
+                                                        <p className={classes.testHeading}>{item.testName}</p>
 
-                                                    </div>
+                                                        {/* First Content*/}
+                                                        <div className={classes.testContent}>
+                                                            <div className={classes.testContentItems}>
+                                                                <p className={classes.testContentHeading}>Category :                 {item.categoryType} </p>
+                                                            </div>
 
-
-                                                    {/* Second Content*/}
-                                                    <div className={classes.testContent}>
-                                                        <div className={classes.testContentItems}>
-                                                            <TimerRounded color="primary" className={classes.testContentIcons} />
-                                                            <p className={classes.testContentHeading}>{item.numberOfQuestions >= 50 ? "2" : "1"} Hr</p>
                                                         </div>
 
 
-                                                        <div className={classes.testContentItems}>
-                                                            <NoteRounded color="primary" className={classes.testContentIcons} />
-                                                            <p className={classes.testContentHeading}>{item.numberOfQuestions} Questions</p>
+                                                        {/* Second Content*/}
+                                                        <div className={classes.testContent}>
+                                                            <div className={classes.testContentItems}>
+                                                                <TimerRounded color="primary" className={classes.testContentIcons} />
+                                                                <p className={classes.testContentHeading}>{item.numberOfQuestions >= 50 ? "2" : "1"} Hr</p>
+                                                            </div>
+
+
+                                                            <div className={classes.testContentItems}>
+                                                                <NoteRounded color="primary" className={classes.testContentIcons} />
+                                                                <p className={classes.testContentHeading}>{item.numberOfQuestions} Questions</p>
+                                                            </div>
                                                         </div>
-                                                    </div>
 
 
-                                                    {/* Second Content*/}
-                                                    <div className={classes.testContent}>
-                                                        <div className={classes.testContentItems}>
+                                                        {/* Second Content*/}
+                                                        <div className={classes.testContent}>
+                                                            <div className={classes.testContentItems}>
+                                                            </div>
+
+
+                                                            {/*  Test Button*/}
+
+                                                            <div className={classes.testContentItems} style={{ width: "100%", margin: 10 }}>
+                                                                <CButton variant="outline" color="primary"
+                                                                    size="md" block >Start Test</CButton>
+                                                            </div>
                                                         </div>
+                                                    </Paper>
+                                                </Grid>
 
-
-                                                        {/*  Test Button*/}
-
-                                                        <div className={classes.testContentItems} style={{ width: "100%", margin: 10 }}>
-                                                            <CButton variant="outline" color="primary"
-                                                                size="md" block >Start Test</CButton>
-                                                        </div>
-                                                    </div>
-                                                </Paper>
-                                            </Grid>
-
-                                        </>
-                                    ))}
-                            </Grid>
-                        </div>
+                                            </>
+                                        ))}
+                                </Grid>
+                            </div>
                         </Paper>
                     }
 
@@ -762,61 +926,61 @@ export default function Test(props) {
                     {/*Vision IAS */}
 
                     {visionTestList.length > 0 &&
-                            <Paper className={classes.categorypaper} elevation={3}>
-                     
-                     <div className={classes.categoryContainer}>
-                            <h1 className={classes.testCategory}>Vision IAS</h1>
-                            <Grid container spacing={1}>
-                                {
-                                    visionTestList.map((item, index) => (
-                                        <>
-                                             <Grid item lg={2} md={4} sm={6} xs={6}>
-                                               <Paper className={classes.paper} elevation={3}>
-                                                    <p className={classes.testHeading}>{item.testName}</p>
+                        <Paper className={classes.categorypaper} elevation={3}>
 
-                                                    {/* First Content*/}
-                                                    <div className={classes.testContent}>
-                                                        <div className={classes.testContentItems}>
-                                                            <p className={classes.testContentHeading}>Category :                 {item.categoryType} </p>
-                                                        </div>
+                            <div className={classes.categoryContainer}>
+                                <h1 className={classes.testCategory}>Vision IAS</h1>
+                                <Grid container spacing={1}>
+                                    {
+                                        visionTestList.map((item, index) => (
+                                            <>
+                                                <Grid item lg={2} md={4} sm={6} xs={6}>
+                                                    <Paper className={classes.paper} elevation={3}>
+                                                        <p className={classes.testHeading}>{item.testName}</p>
 
-                                                    </div>
+                                                        {/* First Content*/}
+                                                        <div className={classes.testContent}>
+                                                            <div className={classes.testContentItems}>
+                                                                <p className={classes.testContentHeading}>Category :                 {item.categoryType} </p>
+                                                            </div>
 
-
-                                                    {/* Second Content*/}
-                                                    <div className={classes.testContent}>
-                                                        <div className={classes.testContentItems}>
-                                                            <TimerRounded color="primary" className={classes.testContentIcons} />
-                                                            <p className={classes.testContentHeading}>{item.numberOfQuestions >= 50 ? "2" : "1"} Hr</p>
                                                         </div>
 
 
-                                                        <div className={classes.testContentItems}>
-                                                            <NoteRounded color="primary" className={classes.testContentIcons} />
-                                                            <p className={classes.testContentHeading}>{item.numberOfQuestions} Questions</p>
+                                                        {/* Second Content*/}
+                                                        <div className={classes.testContent}>
+                                                            <div className={classes.testContentItems}>
+                                                                <TimerRounded color="primary" className={classes.testContentIcons} />
+                                                                <p className={classes.testContentHeading}>{item.numberOfQuestions >= 50 ? "2" : "1"} Hr</p>
+                                                            </div>
+
+
+                                                            <div className={classes.testContentItems}>
+                                                                <NoteRounded color="primary" className={classes.testContentIcons} />
+                                                                <p className={classes.testContentHeading}>{item.numberOfQuestions} Questions</p>
+                                                            </div>
                                                         </div>
-                                                    </div>
 
 
-                                                    {/* Second Content*/}
-                                                    <div className={classes.testContent}>
-                                                        <div className={classes.testContentItems}>
+                                                        {/* Second Content*/}
+                                                        <div className={classes.testContent}>
+                                                            <div className={classes.testContentItems}>
+                                                            </div>
+
+
+                                                            {/*  Test Button*/}
+
+                                                            <div className={classes.testContentItems} style={{ width: "100%", margin: 10 }}>
+                                                                <CButton variant="outline" color="primary"
+                                                                    size="md" block >Start Test</CButton>
+                                                            </div>
                                                         </div>
-
-
-                                                        {/*  Test Button*/}
-
-                                                        <div className={classes.testContentItems} style={{ width: "100%", margin: 10 }}>
-                                                            <CButton variant="outline" color="primary"
-                                                                size="md" block >Start Test</CButton>
-                                                        </div>
-                                                    </div>
-                                                </Paper>
-                                            </Grid>
-                                        </>
-                                    ))}
-                            </Grid>
-                        </div>
+                                                    </Paper>
+                                                </Grid>
+                                            </>
+                                        ))}
+                                </Grid>
+                            </div>
                         </Paper>
                     }
 
@@ -835,6 +999,9 @@ const useStyles = makeStyles((theme) => ({
         flexGrow: 1,
         backgroundColor: "#F6F9FC"
     },
+    container: {
+        paddingTop: 70
+    },
     formControl: {
         margin: theme.spacing(3),
     },
@@ -842,22 +1009,22 @@ const useStyles = makeStyles((theme) => ({
         padding: theme.spacing(1),
         color: theme.palette.text.secondary,
         borderRadius: 15,
-        width:165,
-        height:190,
+        width: 165,
+        height: 190,
         [theme.breakpoints.down('xs')]: {
             width: "210px",
-         
-          },
+
+        },
 
 
 
     },
-    categorypaper:{
+    categorypaper: {
 
         padding: theme.spacing(1),
         color: theme.palette.text.secondary,
         borderRadius: 15,
-        margin:20
+        margin: 20
     },
     categoryContainer: {
         margin: 20,
@@ -943,54 +1110,66 @@ const useStyles = makeStyles((theme) => ({
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-      },
-      paper1: {
+    },
+    paper1: {
         backgroundColor: theme.palette.background.paper,
-        border:"none",
-        borderRadius:20,
-        height:300,
-        width:500,
-        outline:"none",
+        border: "none",
+        borderRadius: 20,
+        height: 300,
+        width: 500,
+        outline: "none",
         boxShadow: theme.shadows[5],
         padding: theme.spacing(2, 4, 3),
-        backgroundImage: `url(${ModalBackground})` ,
-        backgroundRepeat:"no-repeat",
-        backgroundSize:"cover",
-        backgroundPosition:"center",
-        margin:40,
-        justifyContent:"center",
-        alignItems:"center",
-        textAlign:"center",
+        backgroundImage: `url(${ModalBackground})`,
+        backgroundRepeat: "no-repeat",
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        margin: 40,
+        justifyContent: "center",
+        alignItems: "center",
+        textAlign: "center",
         [theme.breakpoints.down('xs')]: {
             height: "250px",
             width: "250px",
-         
-          },
 
-      },
-      modalHeading:{
-          fontSize:"30px",
-          fontWeight:"bold"
-      },
-      image:{
+        },
+
+    },
+    modalHeading: {
+        fontSize: "30px",
+        fontWeight: "bold"
+    },
+    image: {
         objectFit: "contain",
-        height:"50px",
-        marginRight:10,
+        height: "50px",
+        marginRight: 10,
         [theme.breakpoints.down('xs')]: {
             height: "30px",
 
-         
-          },
-      },
-      whatsappButton:{
-          height:80,
-          width:300,
-          [theme.breakpoints.down('xs')]: {
-            height:50,
-            width:200,
 
-         
-          },
-      }
+        },
+    },
+    whatsappButton: {
+        height: 80,
+        width: 300,
+        [theme.breakpoints.down('xs')]: {
+            height: 50,
+            width: 200,
+
+
+        },
+    },
+    filterCategoryItems: {
+        position: 'relative',
+        left: -10,
+        top: -25
+    },
+    select: {
+        position: 'relative',
+
+        top: 15
+
+    }
+
 }));
 

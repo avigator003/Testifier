@@ -14,6 +14,11 @@ import AccountCircle from '@material-ui/icons/AccountCircle';
 import MailIcon from '@material-ui/icons/Mail';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import MoreIcon from '@material-ui/icons/MoreVert';
+import ExitToApp from '@material-ui/icons/ExitToApp';
+import AssignmentInd from '@material-ui/icons/AssignmentInd';
+import { logoutUser } from '../../store/Actions';
+import { useDispatch } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
   grow: {
@@ -90,7 +95,10 @@ position:"fixed"
 }));
 
 export default function Header() {
-  const classes = useStyles();
+  const classes = useStyles()
+  const dispatch=useDispatch()
+  const history=useHistory()
+
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
 
@@ -113,6 +121,13 @@ export default function Header() {
   const handleMobileMenuOpen = (event) => {
     setMobileMoreAnchorEl(event.currentTarget);
   };
+  
+  const handleLogout=()=>{
+    setAnchorEl(null);
+    handleMobileMenuClose();
+    dispatch(logoutUser())
+    history.push('/')
+}
 
   const menuId = 'primary-search-account-menu';
   const renderMenu = (
@@ -125,8 +140,11 @@ export default function Header() {
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
-      <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
-      <MenuItem onClick={handleMenuClose}>My account</MenuItem>
+      <MenuItem onClick={handleMenuClose}>
+        <AssignmentInd style={{marginRight:10}}/>Profile</MenuItem>
+      <MenuItem onClick={()=>handleLogout()}>
+      <ExitToApp style={{marginRight:10}}/>  Logout
+        </MenuItem>
     </Menu>
   );
 
@@ -141,6 +159,7 @@ export default function Header() {
       open={isMobileMenuOpen}
       onClose={handleMobileMenuClose}
     >
+    {/*
       <MenuItem>
         <IconButton aria-label="show 4 new mails" color="inherit">
           <Badge badgeContent={4} color="secondary">
@@ -157,7 +176,8 @@ export default function Header() {
         </IconButton>
         <p>Notifications</p>
       </MenuItem>
-      <MenuItem onClick={handleProfileMenuOpen}>
+      */}
+      <MenuItem >
         <IconButton
           aria-label="account of current user"
           aria-controls="primary-search-account-menu"
@@ -167,6 +187,17 @@ export default function Header() {
           <AccountCircle />
         </IconButton>
         <p>Profile</p>
+      </MenuItem>
+      <MenuItem onClick={()=>handleLogout()}>
+        <IconButton
+          aria-label="account of current user"
+          aria-controls="primary-search-account-menu"
+          aria-haspopup="true"
+          color="inherit"
+        >
+          <ExitToApp />
+        </IconButton>
+        <p>Logout</p>
       </MenuItem>
     </Menu>
   );
@@ -193,6 +224,7 @@ export default function Header() {
           </div>
           <div className={classes.grow} />
           <div className={classes.sectionDesktop}>
+            {/* 
             <IconButton aria-label="show 4 new mails" color="inherit">
               <Badge badgeContent={4} color="secondary">
                 <MailIcon className={classes.icon}/>
@@ -203,6 +235,7 @@ export default function Header() {
                 <NotificationsIcon className={classes.icon} />
               </Badge>
             </IconButton>
+            */}
             <IconButton
               edge="end"
               aria-label="account of current user"
@@ -220,9 +253,10 @@ export default function Header() {
               aria-controls={mobileMenuId}
               aria-haspopup="true"
               onClick={handleMobileMenuOpen}
-              color="inherit"
+              color="black"
+              style={{outline:"none"}}
             >
-              <MoreIcon />
+              <MoreIcon  />
             </IconButton>
           </div>
         </Toolbar>

@@ -13,6 +13,7 @@ import TestForm from './Dashboard/src/views/base/tests/TestForm';
 import { useSelector, useDispatch } from "react-redux";
 import EmailConfirm from './Authentication/EmailConfirm';
 import OverallTestAnalysis from './Home/TestComponents/OverallTestAnalysis';
+import AdminLogin from './Authentication/AdminLogin';
 
 const TheLayout = React.lazy(() => import('./Dashboard/src/containers/TheLayout'));
 
@@ -43,7 +44,8 @@ function App() {
               ) :
                 (
                   <Switch>
-                 
+                   <Route exact path="/home" name="Test Page" render={props => <Landing {...props}/>} />
+                
                   <Route exact path="/givetest" name="Test Page" render={props => <Test {...props}/>} />
                   <Route exact path="/givetest/:id" name="Omr Page" render={props => <Omr {...props}/>} />
                   <Route exact path="/overall/:id" name="Test Analysiis" render={props => <OverallTestAnalysis {...props}/>} />
@@ -53,7 +55,8 @@ function App() {
             :
     (
               <Switch>
-                  <Route exact path="/login" name="Login Page" render={props => <Login {...props}/>} />
+                   <Route exact path="/admin" name="Admin Login Page" render={props => <AdminLogin {...props}/>} />
+                   <Route exact path="/login" name="Login Page" render={props => <Login {...props}/>} />
                   <Route exact path="/register" name="Register Page" render={props => <Registration {...props}/>} />
                   <Route exact path="/verified" name="Email Confirm" render={props => <EmailConfirm {...props}/>} />
                 

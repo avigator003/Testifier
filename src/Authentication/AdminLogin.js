@@ -15,7 +15,7 @@ const validEmailRegex = RegExp(
   );
 
   
-function Login(props) {
+function AdminLogin(props) {
     const classes = useStyles()
     const dispatch=useDispatch()
     const [spinner, setSpinner] = useState(false);
@@ -78,12 +78,13 @@ function Login(props) {
               });
             } else {
               dispatch(
-                loginUser({ ...state, type: "user" }, (err, response) => {
+                loginUser({ ...state, type: "admin" }, (err, response) => {
                   if (err) {
                     notification.error(err)
                
                     console.log(err)
                   } else {
+                    notification.success(response)
                     let user = JSON.parse(window.localStorage.getItem('Test.user'))
                     user = user.token.user
                     user.updated_at = new Date()
@@ -140,7 +141,7 @@ function Login(props) {
     )
 }
 
-export default Login
+export default AdminLogin
 const useStyles = makeStyles((theme) => ({
   loginContainer:{
     padding:40,

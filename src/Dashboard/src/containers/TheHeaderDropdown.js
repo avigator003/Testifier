@@ -17,7 +17,6 @@ const TheHeaderDropdown = (props) => {
   const dispatch=useDispatch()
 
   const handleLogout=()=>{
-    console.log("loggin")
     dispatch(logoutUser())
     history.push('/')
 }

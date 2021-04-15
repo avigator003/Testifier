@@ -355,6 +355,7 @@ const TestForm = (props) => {
                       name="testName" value={state['testName']} onChange={(e) => handleChange(e)} />
                   </CCol>
                 </CFormGroup>
+                
                 <CFormGroup row>
                   <CCol md="3">
                     <CLabel htmlFor="select">Test Category</CLabel>
