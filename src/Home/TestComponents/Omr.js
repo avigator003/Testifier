@@ -4,12 +4,13 @@ import { makeStyles, withStyles } from "@material-ui/core/styles";
 import { green, red, orange } from "@material-ui/core/colors"
 import Grid from "@material-ui/core/Grid";
 import { Radio, RadioGroup, Paper } from "@material-ui/core";
-import { getTestById } from '../store/Actions';
+import { getTestById } from '../../store/Actions';
 import { useDispatch } from 'react-redux';
-import Timer from './Timer';
+import Timer from '../../Components/Timer';
 import Backdrop from '@material-ui/core/Backdrop';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { CButton } from '@coreui/react';
+import { useHistory } from 'react-router-dom';
 
 
 const GreenRadio = withStyles({
@@ -50,25 +51,29 @@ const RedRadio = withStyles({
 function Omr(props) {
     const classes = useStyles()
     const dispatch = useDispatch()
+    const history=useHistory()
 
     const [answerArray, setAnswerArray] = useState([])
     const [percentageArray, setPercentageArray] = useState([])
     const [test, setTest] = useState()
     const [spinner, setSpinner] = useState(false);
     const [answerSet,setAnswerSet]=useState([])
-
+    const[numberOfQuestions,setNumberOfQuestions]=useState()
+    const[testId,setTestId]=useState()
+    
 
     // Handle Test id
     useEffect(() => {
         const id = props.match.params.id
+        setTestId(id)
         dispatch(
             getTestById(id, (err, response) => {
                 if (err)
                     console.log(err)
                 else {
                     var object=response.res.data.data
-                    console.log(object.answers.map(item=>item.options),"options")
-                    setAnswerSet(object.answers.map(item=>item.options))
+                    setAnswerSet(object.answers.map(item=>({option:item.options,category:item.category})))
+                    setNumberOfQuestions(object.numberOfQuestions)
                     setTest(object)
                 }
             }))
@@ -81,7 +86,6 @@ function Omr(props) {
         console.log(option, index)
         let array = [...answerArray]
         array[index] = option
-        console.log(array)
         setAnswerArray(array)
     }
 
@@ -89,7 +93,6 @@ function Omr(props) {
     const handleOmrAnswerPercentage = (option, index) => {
         let array = [...percentageArray]
         array[index] = option
-        console.log(array)
         setPercentageArray(array)
     }
 
@@ -100,14 +103,20 @@ function Omr(props) {
      setSpinner(true)
      var array=[]
      for(var i=0;i<answerSet.length;i++)
-     {
-            if(answerSet[i]===answerArray[i]?.toLowerCase())
-                array.push(true)
+     {     
+            if(answerArray[i]==undefined)
+               array.push({type:'s',questionNumber:i+1,category:answerSet[i].category})   
+            else if(answerSet[i].option===answerArray[i]?.toLowerCase())
+                array.push({type:'r',percentage:percentageArray[i],questionNumber:i+1,category:answerSet[i].category})
             else
-                 array.push(false)    
+                array.push({type:'w',percentage:percentageArray[i],questionNumber:i+1,category:answerSet[i].category})    
      }
-        console.log(array)
-       setSpinner(false)
+
+     history.push({
+        pathname: `/overall/${testId}`,
+        state:{array:array,userAnswer:answerArray}
+    });
+   setSpinner(false)
     }
 
     return (
@@ -153,6 +162,9 @@ function Omr(props) {
 
                                     {
                                         [...Array(35),].map((value, i) => (
+                                            <>
+                                            {
+                                                (35 * index) + (i + 1)<=numberOfQuestions &&
                                             <div className={classes.avatarContainer} key={i}>
                                                 <div className={classes.index}>
                                                     <p className={classes.indexText}>
@@ -196,7 +208,7 @@ function Omr(props) {
                                                     <RedRadio
                                                         className={classes.radio}
                                                         size="small"
-                                                        value="10%"
+                                                        value="10"
                                                         name="radio-button-demo"
                                                         inputProps={{ 'aria-label': 'C' }}
                                                         label="10%"
@@ -206,7 +218,7 @@ function Omr(props) {
                                                     <OrangeRadio
                                                         className={classes.radio}
                                                         size="small"
-                                                        value="50%"
+                                                        value="50"
                                                         name="radio-button-demo"
                                                         label="50%"
                                                         labelPlacement="bottom"
@@ -217,7 +229,7 @@ function Omr(props) {
                                                     <GreenRadio
                                                         className={classes.radio}
                                                         size="small"
-                                                        value="100%"
+                                                        value="100"
                                                         name="radio-button-demo"
                                                         inputProps={{ 'aria-label': 'C' }}
                                                         label="100%"
@@ -226,11 +238,11 @@ function Omr(props) {
                                                     />
 
                                                 </RadioGroup>
-                                            </div>
+                                            </div>}
 
-
+                                            </>
                                         ))
-
+                                   
                                     }
                                 </Grid>
                             </>

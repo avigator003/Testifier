@@ -78,17 +78,11 @@ function Login(props) {
               });
             } else {
               dispatch(
-                loginUser({ ...state, type: "admin" }, (err, response) => {
+                loginUser({ ...state, type: "user" }, (err, response) => {
                   if (err) {
                     console.log(err)
-                    notification.error(err);
                   } else {
-               
-                    notification["success"]({
-                      message: response,
-                      duration: 10
-                   });
-                
+                    notification.success(response)
                     let user = JSON.parse(window.localStorage.getItem('Test.user'))
                     user = user.token.user
                     user.updated_at = new Date()
