@@ -28,3 +28,12 @@ export const UNBLOCK_USER = "UNBLOCK_USER"
 export const UNBLOCK_USER_SUCCESS = 'UNBLOCK_USER_SUCCESS'
 
 
+
+//Timer
+export const UPDATE_TIMER = 'UPDATE_TIMER'
+export const RESET_TIMER = 'RESET_TIMER'
+export const SET_TIMER = 'SET_TIMER'
+
+
+//Test
+export const SUBMIT_TEST= 'SUBMIT_TEST'

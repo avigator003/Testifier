@@ -4,13 +4,15 @@ import { makeStyles, withStyles } from "@material-ui/core/styles";
 import { green, red, orange } from "@material-ui/core/colors"
 import Grid from "@material-ui/core/Grid";
 import { Radio, RadioGroup, Paper } from "@material-ui/core";
-import { getTestById } from '../../store/Actions';
-import { useDispatch } from 'react-redux';
+import { getTestById, saveGivenTest } from '../../store/Actions';
+import { useDispatch, useSelector } from 'react-redux';
 import Timer from '../../Components/Timer';
 import Backdrop from '@material-ui/core/Backdrop';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { CButton } from '@coreui/react';
 import { useHistory } from 'react-router-dom';
+import { notification } from "antd";
+
 
 
 const GreenRadio = withStyles({
@@ -53,6 +55,10 @@ function Omr(props) {
     const dispatch = useDispatch()
     const history=useHistory()
 
+    
+    // Logined User
+    const user = useSelector((state) => state.user);
+
     const [answerArray, setAnswerArray] = useState([])
     const [percentageArray, setPercentageArray] = useState([])
     const [test, setTest] = useState()
@@ -82,7 +88,8 @@ function Omr(props) {
 
 
      // Handle Omr Answers
-    const handleOmrAnswer = (option, index) => {
+    const handleOmrAnswer = (event,option, index) => {
+        event.preventDefault()
         console.log(option, index)
         let array = [...answerArray]
         array[index] = option
@@ -90,7 +97,8 @@ function Omr(props) {
     }
 
    // Handle Omr NAswers Percentage
-    const handleOmrAnswerPercentage = (option, index) => {
+    const handleOmrAnswerPercentage = (event,option, index) => {
+        event.preventDefault()
         let array = [...percentageArray]
         array[index] = option
         setPercentageArray(array)
@@ -99,7 +107,12 @@ function Omr(props) {
 
 
     // Handle Test Submit
-    const handleSubmitTest=()=>{
+    const handleSubmitTest=(event)=>{
+      
+
+
+
+     event.preventDefault()
      setSpinner(true)
      var array=[]
      for(var i=0;i<answerSet.length;i++)
@@ -112,29 +125,43 @@ function Omr(props) {
                 array.push({type:'w',percentage:percentageArray[i],questionNumber:i+1,category:answerSet[i].category})    
      }
 
-     history.push({
-        pathname: `/overall/${testId}`,
-        state:{array:array,userAnswer:answerArray}
-    });
-   setSpinner(false)
+     
+     dispatch(
+        saveGivenTest({userId:user.token.user._id,testId:testId}, (err, response) => {
+          if (err) {
+            console.log(err)
+             notification.error(err)
+          } else {
+            console.log(response)
+             const timer = setTimeout(() => {
+                history.push({
+                    pathname: `/overall/${testId}`,
+                    state:{array:array,userAnswer:answerArray}
+                });
+           setSpinner(false)
+            }, 2000);
+            return () => clearTimeout(timer);
+        
+          }
+
+        })
+      )
+/*
+     
+    */
     }
 
     return (
 
         <div className={classes.root}>
-            <Backdrop className={classes.backdrop} open={spinner} onClick={() => setSpinner(false)}>
-                <p style={{ marginRight: 20 }}>Submitting Test</p>
-                <CircularProgress color="inherit" size={100} color="primary" />
-            </Backdrop>
-
+      
         {
         !spinner?
-        <>
+        <div className={classes.omrContainer}>
+            <div className={classes.headingContainer}>
             <h1>{test?.testName}</h1>
-            <Timer  time={test?.numberOfQuestions>50?7200000:3600000}/>
-            <CButton variant="outline" color="primary"
-            size="md" block onClick={() => handleSubmitTest()} >Submit Test</CButton>
-                                                   
+        {/**    <Timer  time={numberOfQuestions>50?7200000:3600000}/> */}
+                           </div>                        
 
             <Paper elevation={3} className={classes.paper}>
 
@@ -174,25 +201,25 @@ function Omr(props) {
                                                 <div className={classes.avatar}>
                                                     <Avatar size="15" round={true} name={"A"} color={answerArray[(35 * index) + i] === "A" ? "black" : "transparent"}
                                                         fgColor={answerArray[(35 * index) + i] === "A" ? "white" : "#DF46DE"} className={classes.avatarLogo}
-                                                        onClick={() => handleOmrAnswer("A", (35 * index) + i)} textSizeRatio={2} />
+                                                        onClick={(e) => handleOmrAnswer(e,"A", (35 * index) + i)} textSizeRatio={2} />
                                                 </div>
                                                 <div className={classes.avatar}>
 
                                                     <Avatar size="15" round={true} name={"B"} color={answerArray[(35 * index) + i] === "B" ? "black" : "transparent"}
                                                         fgColor={answerArray[(35 * index) + i] === "B" ? "white" : "#DF46DE"} className={classes.avatarLogo}
-                                                        onClick={() => handleOmrAnswer("B", (35 * index) + i)} textSizeRatio={2} />
+                                                        onClick={(e) => handleOmrAnswer(e,"B", (35 * index) + i)} textSizeRatio={2} />
                                                 </div>
 
                                                 <div className={classes.avatar}>
                                                     <Avatar size="15" round={true} name={"C"} color={answerArray[(35 * index) + i] === "C" ? "black" : "transparent"}
                                                         fgColor={answerArray[(35 * index) + i] === "C" ? "white" : "#DF46DE"} className={classes.avatarLogo}
-                                                        onClick={() => handleOmrAnswer("C", (35 * index) + i)} textSizeRatio={2} />
+                                                        onClick={(e) => handleOmrAnswer(e,"C", (35 * index) + i)} textSizeRatio={2} />
                                                 </div>
 
                                                 <div className={classes.avatar}>
                                                     <Avatar size="15" round={true} name={"D"} color={answerArray[(35 * index) + i] === "D" ? "black" : "transparent"}
                                                         fgColor={answerArray[(35 * index) + i] === "D" ? "white" : "#DF46DE"} className={classes.avatarLogo}
-                                                        onClick={() => handleOmrAnswer("D", (35 * index) + i)} textSizeRatio={2} />
+                                                        onClick={(e) => handleOmrAnswer(e,"D", (35 * index) + i)} textSizeRatio={2} />
                                                 </div>
 
 
@@ -201,7 +228,7 @@ function Omr(props) {
                                                     aria-label="position"
                                                     name="position"
                                                     value={answerArray[(35 * index) + i]?.percentage}
-                                                    onChange={(e) => handleOmrAnswerPercentage(e.target.value, ((35 * index) + i))}
+                                                    onChange={(e) => handleOmrAnswerPercentage(e,e.target.value, ((35 * index) + i))}
                                                     className={classes.feedback}
                                                     row
                                                 >
@@ -251,12 +278,18 @@ function Omr(props) {
                     <Grid item xs={12} sm={12} md={1} lg={1} />
 
                 </Grid>
-            </Paper>
-            </>:
-              <Backdrop className={classes.backdrop} open={spinner} onClick={()=>setSpinner(false)}>
-              <p style={{marginRight:20}}>Preparing OMR Sheet</p>
-              <CircularProgress color="inherit" size={100} color="primary" />
-            </Backdrop>
+            </Paper> 
+            <div className={classes.submitButton}>
+            <CButton variant="outline" color="primary" 
+            size="md" block onClick={(e) => handleSubmitTest(e)} >Submit Test</CButton>
+            </div>
+           
+            </div>:
+                  <Backdrop className={classes.backdrop} open={spinner} onClick={() => setSpinner(false)}>
+                  <p style={{ marginRight: 20 }}>Submitting Test</p>
+                  <CircularProgress color="inherit" size={100} color="primary" />
+              </Backdrop>
+  
       
                                 }
         </div>
@@ -267,6 +300,10 @@ export default Omr
 
 
 const useStyles = makeStyles((theme) => ({
+    omrContainer:{
+    display:"flex",
+    flexDirection:"column"
+    },
     root: {
         flexGrow: 1,
         padding: "50px",
@@ -305,7 +342,12 @@ const useStyles = makeStyles((theme) => ({
             width: "900px",
 
         },
-
+        [theme.breakpoints.down('xs')]: {
+            margin: "0px",
+            marginBottom:10
+      
+        },
+      
     },
     avatarContainer: {
         display: "flex",
@@ -388,13 +430,33 @@ const useStyles = makeStyles((theme) => ({
         }
     },
 
-    radios: {
+    submitButton: {
+        width:300,
+        marginTop:50,
+        marginBottom:50,
+        alignItems:"center",
+        justifyContent:"center",
+
+        [theme.breakpoints.down('xs')]: {
+            width:200,
+            position:"relative",
+            left:30
+
+        }
     },
     
     backdrop: {
         zIndex: theme.zIndex.drawer + 1,
         color: '#fff',
       },
+      headingContainer:{
+          display:"flex",
+          flexDirection:"row",
+        alignItems:"center",
+        justifyContent:"space-between",
+        marginBottom:50
+
+      }
 
 
 

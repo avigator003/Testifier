@@ -41,7 +41,8 @@ export default function Test(props) {
     const [spinner, setSpinner] = useState(false);
     const [open, setOpen] = useState(false)
     const [currentTestId, setCurrentTestId] = useState()
-    const [state, setState] = React.useState({
+    const [count,setCount]=useState()
+    const [state, setState] = useState({
         polity: false,
         environment: false,
         geography: false,
@@ -54,6 +55,7 @@ export default function Test(props) {
 
 
     const handleChange = (event) => {
+        setCount(count+1)
         var name = event.target.name
         if (name == 'polity') {
             setState({
@@ -165,7 +167,7 @@ export default function Test(props) {
                 }))
 
         }
-        else {
+        else if(testCategory == "Sectional"){
 
             dispatch(
                 getTests((err, response) => {
@@ -230,8 +232,7 @@ export default function Test(props) {
                     }
                 }))
         }
-
-    }, [testCategory, state])
+    }, [testCategory,count])
 
 
     // Logined User
@@ -313,20 +314,6 @@ export default function Test(props) {
 
 
 
-    //Handle Filteration
-
-    const handleFilter = () => {
-        var trueObjectsArray = []
-
-
-        console.log("true", trueObjectsArray)
-
-        console.log(state, "state")
-
-
-    }
-
-
     return (
         <div className={classes.root}>
             <Header />
@@ -376,7 +363,7 @@ export default function Test(props) {
 
                                 <CSelect custom id="select" name="testCategory" className={classes.select}
                                     value={testCategory} onChange={(e) => setTestCategory(e.target.value)}>
-                                    <option value="0" selected>Please select Test Category</option>
+                                    <option value="0" selected>All Test</option>
 
                                     <option value="Full Length">Full Length</option>
                                     <option value="Sectional">Sectional</option>
@@ -656,9 +643,9 @@ export default function Test(props) {
 
                                                             <div className={classes.testContentItems} style={{ width: "100%", margin: 10 }}>
                                                                 <CButton variant="outline" color="primary"
-                                                                    size="md" block >Start Test</CButton>
+                                                                    size="md" block onClick={() => handleGiveTest(item._id)} >Start Test</CButton>
                                                             </div>
-                                                        </div>
+                                                          </div>
                                                     </Paper>
                                                 </Grid>
 
@@ -716,12 +703,11 @@ export default function Test(props) {
 
 
                                                             {/*  Test Button*/}
-
                                                             <div className={classes.testContentItems} style={{ width: "100%", margin: 10 }}>
                                                                 <CButton variant="outline" color="primary"
-                                                                    size="md" block >Start Test</CButton>
+                                                                    size="md" block onClick={() => handleGiveTest(item._id)} >Start Test</CButton>
                                                             </div>
-                                                        </div>
+                                                                                                                </div>
                                                     </Paper>
                                                 </Grid>
 
@@ -779,10 +765,9 @@ export default function Test(props) {
 
 
                                                             {/*  Test Button*/}
-
                                                             <div className={classes.testContentItems} style={{ width: "100%", margin: 10 }}>
                                                                 <CButton variant="outline" color="primary"
-                                                                    size="md" block >Start Test</CButton>
+                                                                    size="md" block onClick={() => handleGiveTest(item._id)} >Start Test</CButton>
                                                             </div>
                                                         </div>
                                                     </Paper>
@@ -846,7 +831,7 @@ export default function Test(props) {
 
                                                             <div className={classes.testContentItems} style={{ width: "100%", margin: 10 }}>
                                                                 <CButton variant="outline" color="primary"
-                                                                    size="md" block >Start Test</CButton>
+                                                                    size="md" block onClick={() => handleGiveTest(item._id)} >Start Test</CButton>
                                                             </div>
                                                         </div>
                                                     </Paper>
@@ -908,7 +893,7 @@ export default function Test(props) {
 
                                                             <div className={classes.testContentItems} style={{ width: "100%", margin: 10 }}>
                                                                 <CButton variant="outline" color="primary"
-                                                                    size="md" block >Start Test</CButton>
+                                                                    size="md" block onClick={() => handleGiveTest(item._id)} >Start Test</CButton>
                                                             </div>
                                                         </div>
                                                     </Paper>
@@ -972,7 +957,7 @@ export default function Test(props) {
 
                                                             <div className={classes.testContentItems} style={{ width: "100%", margin: 10 }}>
                                                                 <CButton variant="outline" color="primary"
-                                                                    size="md" block >Start Test</CButton>
+                                                                    size="md" block onClick={() => handleGiveTest(item._id)} >Start Test</CButton>
                                                             </div>
                                                         </div>
                                                     </Paper>

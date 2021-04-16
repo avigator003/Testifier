@@ -10,7 +10,9 @@ const initialState = {
         color:'green'
     },
     
-    sidebarShow: 'responsive'
+    sidebarShow: 'responsive',
+    timer: parseInt(localStorage.getItem('timer')) || 0,
+   
     //Timer
     
 }
@@ -37,7 +39,26 @@ const reducer = (state = initialState, action) => {
                 }
                 case 'set':
                 return {...state, sidebarShow:action.sidebarShow}
-   
+
+
+           case actionTypes.UPDATE_TIMER:{
+             return {
+                 ...state,
+                 timer:state.timer++
+             }
+         }
+         case actionTypes.RESET_TIMER:{
+             return {
+                 ...state,
+                 timer : 0
+             }
+         }
+        case actionTypes.SET_TIMER:
+            return {
+                ...state,
+                timer : action.payload
+            }
+     
 
         default:
             return state;

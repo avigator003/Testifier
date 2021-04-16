@@ -16,6 +16,7 @@ import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import { getTestById } from '../../store/Actions';
 import { useDispatch } from 'react-redux';
+import DonutChart from 'react-donut-chart';
 
 
 
@@ -48,6 +49,7 @@ function OverallTestAnalysis(props) {
   const [sectionalArray, setSectionalArray] = useState([])
   const [confidenceArray, setConfidenceArray] = useState([])
   const [infoArray,setInfoArray]=useState([])
+  const[answersCount,setAnswersCount]=useState()
 
 
   // Getting All the Results
@@ -142,6 +144,8 @@ function OverallTestAnalysis(props) {
               {
                 newInfoArray.push({correctAnswer:answerArray[i].toUpperCase(),userAnswer:userAnsArray[i]})
               }
+               console.log(newInfoArray)
+               setAnswersCount(newInfoArray.length)
                setInfoArray(newInfoArray)
            }
       }))
@@ -161,13 +165,19 @@ function OverallTestAnalysis(props) {
 {/* Overall Report*/ }
       <Grid container justify="center" alignItems="center">
 
-        <Grid item lg={12} >
+        <Grid item lg={12} xs={12} >
           <CCard className={classes.overallAnalysisContainer}>
             <CCardHeader>
               Overall Report
-        </CCardHeader>
+           </CCardHeader>
+     
+           <Grid container justify="center" alignItems="center">
+           <Grid item lg={5} md={5} sm={8} xs={12} >
+        
             <CCardBody>
+           
               <CChartDoughnut
+
                 className={classes.chart}
                 datasets={[
                   {
@@ -180,6 +190,7 @@ function OverallTestAnalysis(props) {
                     data: [correctNumber, wrongNumber, skippedNumber]
                   }
                 ]}
+                
                 labels={['Correct', 'Incorrect', 'Skipped']}
                 options={{
                   tooltips: {
@@ -187,7 +198,10 @@ function OverallTestAnalysis(props) {
                   }
                 }}
               />
+              
             </CCardBody>
+            </Grid>
+      </Grid>
           </CCard>
         </Grid>
       </Grid>
@@ -201,19 +215,18 @@ function OverallTestAnalysis(props) {
         </CCardHeader>
         <CCardBody className={classes.section}>
           {sectionalArray.map((item,index)=>(
-          <Grid container justify="center" alignItems="center">
-            <Grid item lg={5} >
+          <Grid container>
+            <Grid item lg={5} md={5} sm={5} xs={12} className={classes.sectionLeft} >
                
-            <h1>{index+1}. {(item.section[0])[0].category}</h1>
+            <h3 className={classes.sectionHeading}>{index+1}. {(item.section[0])[0].category}</h3>
           
               <div className={classes.progress} >
-                <p>Correct %</p>
                 <LinearProgressWithLabel value={item.percentageCorrect} className={classes.progressBar} />
               </div>
             </Grid>
-            <Grid item lg={1}  />
+            <Grid item lg={1} md={1} sm={1} />
           
-            <Grid item lg={6} className={classes.avatarContainers} >
+            <Grid item lg={6} md={6} sm={6} xs={12} className={classes.avatarContainers} >
             {item.section[0].map(ob=>(                            
               
               <Avatar size="30" round={true} name={ob.questionNumber<=9?(ob.questionNumber).toString():
@@ -232,7 +245,7 @@ function OverallTestAnalysis(props) {
 
 
       
-{/* Info Report*/ }
+{/* Confidence Level Report*/ }
 <CCard className={classes.sectionalAnalysisContainer}>
         <CCardHeader>
           Confidence Level Analysis of Test
@@ -240,8 +253,13 @@ function OverallTestAnalysis(props) {
         <CCardBody className={classes.section}>
           <Grid container justify="center" alignItems="center">
             <Grid item lg={12} >
-            <TableContainer component={Paper}>
-         <Table className={classes.table} aria-label="simple table">
+            <Grid container justify="center" alignItems="center">
+            <Grid item lg={12} xs={4} >
+         
+         
+            <TableContainer component={Paper}  >
+         
+              <Table className={classes.table} aria-label="simple table">
         <TableHead>
           <TableRow>
             <TableCell align="center">Confidence Level</TableCell>
@@ -282,8 +300,13 @@ function OverallTestAnalysis(props) {
           ))}
         </TableBody>
       </Table>
+      
     </TableContainer>
           
+      </Grid>
+          
+         
+          </Grid>
             </Grid>
           
          
@@ -291,6 +314,140 @@ function OverallTestAnalysis(props) {
 
         </CCardBody>
       </CCard>
+
+
+
+   
+{/* Info Report*/ }
+<CCard className={classes.sectionalAnalysisContainer}>
+        <CCardHeader>
+          User Answers Analysis of Test
+        </CCardHeader>
+
+        <CCardBody className={classes.section}>
+          <Grid container justify="center"  spacing={2}>
+
+            <Grid item lg={4} >
+            <TableContainer component={Paper}>
+             <Table className={classes.table} aria-label="simple table">
+        <TableHead>
+          <TableRow>
+            <TableCell align="center">Question No.</TableCell>
+            <TableCell align="left">User Answer</TableCell>
+            <TableCell align="left">Correct Answer</TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>     
+          {infoArray.map((row,index)=>(
+            <>
+            {index+1<=30 &&
+            <TableRow key={index}>
+              <TableCell align="center">{index+1}</TableCell>
+              <TableCell align="left">
+             <Avatar size="20" round={true} name={row.userAnswer!==undefined?row.userAnswer:" "} 
+             color={row.userAnswer!==undefined?(row.userAnswer==row.correctAnswer?"#5BB85D":"#DA534F"):"#FDB55A"}
+             fgColor={"white"} className={classes.avatarLogo} textSizeRatio={2} />
+                          
+                    
+              </TableCell>
+              <TableCell align="left">{row.correctAnswer}</TableCell>
+            </TableRow>
+            }
+            </>
+          ))}
+        </TableBody>
+      </Table>
+      
+    </TableContainer>
+          
+      </Grid>
+
+{ answersCount>30  &&
+      <Grid item lg={4} >
+            <TableContainer component={Paper}>
+             <Table className={classes.table} aria-label="simple table">
+        <TableHead>
+          <TableRow>
+            <TableCell align="center">Question No.</TableCell>
+            <TableCell align="left">User Answer</TableCell>
+            <TableCell align="left">Correct Answer</TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>     
+          {infoArray.map((row,index)=>(
+            <>
+            {(index+1>30 && index+1 <=60) &&
+            <TableRow key={index}>
+              <TableCell align="center">{index+1}</TableCell>
+              <TableCell align="left">
+             <Avatar size="20" round={true} name={row.userAnswer!==undefined?row.userAnswer:" "} 
+             color={row.userAnswer!==undefined?(row.userAnswer==row.correctAnswer?"#5BB85D":"#DA534F"):"#FDB55A"}
+             fgColor={"white"} className={classes.avatarLogo} textSizeRatio={2} />
+                          
+                    
+              </TableCell>
+     
+              <TableCell align="left">{row.correctAnswer}</TableCell>
+            </TableRow>
+            }
+            </>
+          ))}
+        </TableBody>
+      </Table>
+      
+    </TableContainer>
+          
+      </Grid>
+} 
+
+{ answersCount>60  &&
+
+      <Grid item lg={4} >
+            <TableContainer component={Paper}>
+             <Table className={classes.table} aria-label="simple table">
+        <TableHead>
+          <TableRow>
+            <TableCell align="center">Question No.</TableCell>
+            <TableCell align="left">User Answer</TableCell>
+            <TableCell align="left">Correct Answer</TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>     
+          {infoArray.map((row,index)=>(
+            <>
+            {index+1>60 &&
+            <TableRow key={index}>
+              <TableCell align="center">{index+1}</TableCell>
+              <TableCell align="left">
+             <Avatar size="20" round={true} name={row.userAnswer!==undefined?row.userAnswer:" "} 
+             color={row.userAnswer!==undefined?(row.userAnswer==row.correctAnswer?"#5BB85D":"#DA534F"):"#FDB55A"}
+             fgColor={"white"} className={classes.avatarLogo} textSizeRatio={2} />
+                          
+                    
+              </TableCell>
+     
+              <TableCell align="left">{row.correctAnswer}</TableCell>
+            </TableRow>
+            }
+            </>
+          ))}
+        </TableBody>
+      </Table>
+      
+    </TableContainer>
+          
+      </Grid>
+}
+          
+         
+          
+         
+          </Grid>
+
+        </CCardBody>
+      </CCard>
+
+
 
 
     </div>
@@ -303,25 +460,31 @@ const useStyles = makeStyles((theme) => ({
   analysisContainer: {
     display: "flex",
     flexDirection: "column",
+    backgroundColor:"#D3D3D3"
+  
   },
   overallAnalysisContainer: {
-    paddingLeft: 60,
-    paddingRight: 20,
-    margin: 30
+    display:"flex",
+    margin: 10,
+    height:"350px", 
+  
   },
   chart: {
+    width: "500px",
+    height:"500px", 
+    paddingRight:5,
+    paddingLeft:5,
     [theme.breakpoints.down('xs')]: {
-
-      width: "200%",
+      width: "315px",
       position: "relative",
-      left: -130
+      left: -60
     },
 
   },
   sectionalAnalysisContainer: {
 
     padding: 20,
-    margin: 30
+    margin: 10
   },
   progess: {
     display: "flex",
@@ -340,14 +503,22 @@ const useStyles = makeStyles((theme) => ({
     margin: 10,
 },
 avatarLogo: {
-marginLeft:10
+marginLeft:5,
+marginRight:5
 },
 avatarContainers:{
   display: "flex",
   flexDirection: "row",
-  marginTop:30
-
-
+  marginTop:0,
+  padding:10,
+  marginBottom:20,
+},
+sectionHeading:{
+  fontSize:15
+},
+sectionLeft:{
+  marginBottom:30
+  
 }
 
 }));

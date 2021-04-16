@@ -8,7 +8,12 @@ import {
   BLOCK_USER_SUCCESS,
   UNBLOCK_USER_SUCCESS,
   TOGGLE_TOASTER,
-  SET_RESET_TOKEN
+  SET_RESET_TOKEN,
+  SET_TIMER,
+  RESET_TIMER,
+  UPDATE_TIMER,
+  SUBMIT_TEST
+ 
  } from "../ActionTypes";
 
 import api from "../../resources/api";
@@ -367,3 +372,32 @@ export const updateTest = (payload, cb) => {
       });
   };
 };
+
+
+
+/************************   Give  Test Block    ********************************/
+
+//Save Test
+export const saveGivenTest = (payload,cb) => {
+  console.log("pay",payload)
+  return (dispatch) => {
+    api
+      .post("/testgiven/savetest",payload)
+      .then((res) => {
+            return cb(null,{
+              testGiven: res.data,
+            });
+        })
+
+             .catch((err) => {
+        console.log(err);
+        cb({
+          message:"Submit Test Failed",
+        });
+      });
+  };
+};
+
+
+
+
