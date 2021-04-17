@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { CCard, CCardBody, CCardHeader } from '@coreui/react'
+import { CButton, CCard, CCardBody, CCardHeader } from '@coreui/react'
 import { CChartDoughnut } from '@coreui/react-chartjs'
 import { makeStyles } from "@material-ui/core/styles";
 import LinearProgress from '@material-ui/core/LinearProgress';
@@ -14,9 +14,11 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
-import { getTestById } from '../../store/Actions';
-import { useDispatch } from 'react-redux';
-import DonutChart from 'react-donut-chart';
+import { getTestById, saveGivenTest } from '../../store/Actions';
+import { useDispatch ,useSelector} from 'react-redux';
+import { notification } from "antd";
+import CheckCircleOutlined from '@material-ui/icons/CheckCircleOutlined';
+import { useHistory } from 'react-router-dom';
 
 
 
@@ -42,6 +44,7 @@ function LinearProgressWithLabel(props) {
 function OverallTestAnalysis(props) {
   const classes = useStyles()
   const dispatch = useDispatch()
+  const history=useHistory()
   
   const [correctNumber, setCorrectNumber] = useState()
   const [wrongNumber, setWrongNumber] = useState()
@@ -49,16 +52,28 @@ function OverallTestAnalysis(props) {
   const [sectionalArray, setSectionalArray] = useState([])
   const [confidenceArray, setConfidenceArray] = useState([])
   const [infoArray,setInfoArray]=useState([])
-  const[answersCount,setAnswersCount]=useState()
+  const[answersCount,setAnswersCount]=useState(0)
+  const[percentageArray,setPercentageArray]=useState([])
+  const[message,setMessage]=useState()
+
+    // Logined User
+    const user = useSelector((state) => state.user);
 
 
   // Getting All the Results
   useEffect(() => {
+
     var state = props.location.state.array
 
 
     const id = props.match.params.id
-    console.log(state, "state")
+
+// Set Percentage Array
+    var newPercentageArray=state.map(item=>item.percentage)
+    setPercentageArray(state.map(item=>item.percentage))
+
+
+    // Total Questions
     var totlaQuestions=state.length
 
 
@@ -73,9 +88,11 @@ function OverallTestAnalysis(props) {
         return a.questionNumber - b.questionNumber;
       });
        
-      var percentageCorrect=(((newArrayObjects.filter(item => item.type == 'r')).length)/newArrayObjects.length)*100
-      newSectionalArray.push({section:[newArrayObjects],percentageCorrect:percentageCorrect})
+      var percentageCorrect=(((newArrayObjects.filter(item => item.value == 'r')).length)/newArrayObjects.length)*100
+      newSectionalArray.push({section:newArrayObjects,percentageCorrect:percentageCorrect})
     }
+    
+  console.log(newSectionalArray,"newSectionalArray")
     setSectionalArray(newSectionalArray)
 
 
@@ -91,8 +108,8 @@ function OverallTestAnalysis(props) {
     var attempts=newArrayObjects.length
 
     
-    var coorectArray=newArrayObjects.filter(item => item.type =='r')
-    var wrongArray=newArrayObjects.filter(item => item.type =='w')
+    var coorectArray=newArrayObjects.filter(item => item.value =='r')
+    var wrongArray=newArrayObjects.filter(item => item.value =='w')
   
     var correct=newArrayObjects.length-wrongArray.length
     var wrong=newArrayObjects.length-coorectArray.length
@@ -104,7 +121,7 @@ function OverallTestAnalysis(props) {
     var avatarArray=[]
     for (var j = 0; j < newArrayObjects.length; j++)
     {
-          avatarArray.push({type:newArrayObjects[j].type,questionNumber:newArrayObjects[j].questionNumber})
+          avatarArray.push({value:newArrayObjects[j].value,questionNumber:newArrayObjects[j].questionNumber})
     }
      avatarArray.sort(function (a, b) {
       return a.questionNumber - b.questionNumber;
@@ -117,15 +134,19 @@ function OverallTestAnalysis(props) {
     return a.percentage - b.percentage;
   });
     
+  console.log(newConfidenceArray,"newConfidenceArray")
   setConfidenceArray(newConfidenceArray)
 
 
 
 
     // OverAll Analysis
-    setCorrectNumber((state.filter(item => item.type == "r")).length)
-    setWrongNumber((state.filter(item => item.type == "w")).length)
-    setSkippedNumber((state.filter(item => item.type == "s")).length)
+    var correctNumber=(state.filter(item => item.value == "r")).length
+    var wrongNumber=(state.filter(item => item.value == "w")).length
+    var SkippedNumber=(state.filter(item => item.value == "s")).length
+    setCorrectNumber(correctNumber)
+    setWrongNumber(wrongNumber)
+    setSkippedNumber(SkippedNumber)
 
 
 
@@ -139,18 +160,34 @@ function OverallTestAnalysis(props) {
               var object=response.res.data.data
               var answerArray=object.answers.map(item=>item.options)
               var userAnsArray=props.location.state.userAnswer
-
               for(var i=0;i<answerArray.length;i++)
               {
                 newInfoArray.push({correctAnswer:answerArray[i].toUpperCase(),userAnswer:userAnsArray[i]})
               }
-               console.log(newInfoArray)
                setAnswersCount(newInfoArray.length)
                setInfoArray(newInfoArray)
+                       
+      dispatch(
+        saveGivenTest({userId:user.token.user._id,testId:id,
+          overallAnalysis:{Correct:correctNumber,Incorrect:wrongNumber,Skipped:SkippedNumber},
+          sectionalAnalysis:newSectionalArray,
+          confidenceLevelAnalysis:newConfidenceArray,
+          userInfoAnalysis:newInfoArray,
+          percentageArray:newPercentageArray
+       }, (err, response) => {
+          if (err) {
+            setMessage("Not Submitted")
+            console.log(err)
+          } else {
+            
+            setMessage("Test Submitted")
+            console.log(response)
+         }}))
+
+
+   
            }
       }))
-
-
 
 
      
@@ -160,8 +197,13 @@ function OverallTestAnalysis(props) {
 
   return (
     <div className={classes.analysisContainer}>
+    
+   <h1 style={{color:message=="Test Submitted"?"#5BB85D":"#DA534F",textAlign:"center",margin:40}}>
+            
+     <CheckCircleOutlined style={{fontSize:40,marginRight:10}}/>
+     {message}</h1>
 
-
+ 
 {/* Overall Report*/ }
       <Grid container justify="center" alignItems="center">
 
@@ -215,10 +257,10 @@ function OverallTestAnalysis(props) {
         </CCardHeader>
         <CCardBody className={classes.section}>
           {sectionalArray.map((item,index)=>(
-          <Grid container>
+          <Grid container >
             <Grid item lg={5} md={5} sm={5} xs={12} className={classes.sectionLeft} >
                
-            <h3 className={classes.sectionHeading}>{index+1}. {(item.section[0])[0].category}</h3>
+            <h3 className={classes.sectionHeading}>{index+1}. {(item.section)[0].category}</h3>
           
               <div className={classes.progress} >
                 <LinearProgressWithLabel value={item.percentageCorrect} className={classes.progressBar} />
@@ -227,15 +269,16 @@ function OverallTestAnalysis(props) {
             <Grid item lg={1} md={1} sm={1} />
           
             <Grid item lg={6} md={6} sm={6} xs={12} className={classes.avatarContainers} >
-            {item.section[0].map(ob=>(                            
-              
+            {item.section.map(ob=>(                            
+            
+            <div className={classes.avatarCont}>
               <Avatar size="30" round={true} name={ob.questionNumber<=9?(ob.questionNumber).toString():
                 (ob.questionNumber<=99?
                 ((ob.questionNumber).toString()).charAt(0)+' '+((ob.questionNumber).toString()).charAt(1):
                 ((ob.questionNumber).toString()).charAt(0)+' '+((ob.questionNumber).toString()).charAt(1)+' '+((ob.questionNumber).toString()).charAt(2))}
-                 color={ob.type=="s"?"#FFA333":(ob.type=="r"?"#5BB85D":"#DA534F")}
-              fgColor={ob.type=="s"?"black":"white"} className={classes.avatarLogo}  textSizeRatio={3} />
-          
+                 color={ob.value=="s"?"#FFA333":(ob.value=="r"?"#5BB85D":"#DA534F")}
+                fgColor={ob.value=="s"?"black":"white"} className={classes.avatarLogo}  textSizeRatio={3} />
+            </div>
         ))}
             </Grid>
           </Grid>
@@ -254,7 +297,7 @@ function OverallTestAnalysis(props) {
           <Grid container justify="center" alignItems="center">
             <Grid item lg={12} >
             <Grid container justify="center" alignItems="center">
-            <Grid item lg={12} xs={4} >
+            <Grid item lg={12} xs={5} >
          
          
             <TableContainer component={Paper}  >
@@ -290,8 +333,8 @@ function OverallTestAnalysis(props) {
                     (ob.questionNumber<=99?
                     ((ob.questionNumber).toString()).charAt(0)+' '+((ob.questionNumber).toString()).charAt(1):
                     ((ob.questionNumber).toString()).charAt(0)+' '+((ob.questionNumber).toString()).charAt(1)+' '+((ob.questionNumber).toString()).charAt(2))}
-                     color={ob.type=="s"?"#FFA333":(ob.type=="r"?"#5BB85D":"#DA534F")}
-                  fgColor={ob.type=="s"?"black":"white"} className={classes.avatarLogo}  textSizeRatio={3} />
+                     color={ob.value=="s"?"#FFA333":(ob.value=="r"?"#5BB85D":"#DA534F")}
+                  fgColor={ob.value=="s"?"black":"white"} className={classes.avatarLogo}  textSizeRatio={3} />
             
                  ))}
                  </TableCell>
@@ -319,7 +362,7 @@ function OverallTestAnalysis(props) {
 
    
 {/* Info Report*/ }
-<CCard className={classes.sectionalAnalysisContainer}>
+<CCard className={classes.infoAnalysisContainer}>
         <CCardHeader>
           User Answers Analysis of Test
         </CCardHeader>
@@ -327,7 +370,7 @@ function OverallTestAnalysis(props) {
         <CCardBody className={classes.section}>
           <Grid container justify="center"  spacing={2}>
 
-            <Grid item lg={4} >
+            <Grid item lg={4} xs={12} >
             <TableContainer component={Paper}>
              <Table className={classes.table} aria-label="simple table">
         <TableHead>
@@ -335,6 +378,7 @@ function OverallTestAnalysis(props) {
             <TableCell align="center">Question No.</TableCell>
             <TableCell align="left">User Answer</TableCell>
             <TableCell align="left">Correct Answer</TableCell>
+            <TableCell align="left">Confidence Level</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>     
@@ -347,10 +391,10 @@ function OverallTestAnalysis(props) {
              <Avatar size="20" round={true} name={row.userAnswer!==undefined?row.userAnswer:" "} 
              color={row.userAnswer!==undefined?(row.userAnswer==row.correctAnswer?"#5BB85D":"#DA534F"):"#FDB55A"}
              fgColor={"white"} className={classes.avatarLogo} textSizeRatio={2} />
-                          
-                    
               </TableCell>
               <TableCell align="left">{row.correctAnswer}</TableCell>
+              <TableCell align="left">{!percentageArray[index]?"MISC.":percentageArray[index]+" %"}</TableCell>
+        
             </TableRow>
             }
             </>
@@ -363,7 +407,7 @@ function OverallTestAnalysis(props) {
       </Grid>
 
 { answersCount>30  &&
-      <Grid item lg={4} >
+          <Grid item lg={4} xs={12} >
             <TableContainer component={Paper}>
              <Table className={classes.table} aria-label="simple table">
         <TableHead>
@@ -371,6 +415,8 @@ function OverallTestAnalysis(props) {
             <TableCell align="center">Question No.</TableCell>
             <TableCell align="left">User Answer</TableCell>
             <TableCell align="left">Correct Answer</TableCell>
+            <TableCell align="left">Confidence Level</TableCell>
+         
           </TableRow>
         </TableHead>
         <TableBody>     
@@ -388,7 +434,8 @@ function OverallTestAnalysis(props) {
               </TableCell>
      
               <TableCell align="left">{row.correctAnswer}</TableCell>
-            </TableRow>
+              <TableCell align="left">{!percentageArray[index]?"MISC.":percentageArray[index]+" %"}</TableCell>
+           </TableRow>
             }
             </>
           ))}
@@ -402,7 +449,7 @@ function OverallTestAnalysis(props) {
 
 { answersCount>60  &&
 
-      <Grid item lg={4} >
+      <Grid item lg={4} xs={12}>
             <TableContainer component={Paper}>
              <Table className={classes.table} aria-label="simple table">
         <TableHead>
@@ -410,6 +457,7 @@ function OverallTestAnalysis(props) {
             <TableCell align="center">Question No.</TableCell>
             <TableCell align="left">User Answer</TableCell>
             <TableCell align="left">Correct Answer</TableCell>
+            <TableCell align="left">Confidence Level</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>     
@@ -427,6 +475,8 @@ function OverallTestAnalysis(props) {
               </TableCell>
      
               <TableCell align="left">{row.correctAnswer}</TableCell>
+              <TableCell align="left">{!percentageArray[index]?"MISC.":percentageArray[index]+" %"}</TableCell>
+        
             </TableRow>
             }
             </>
@@ -448,7 +498,12 @@ function OverallTestAnalysis(props) {
       </CCard>
 
 
-
+      <div className={classes.submitButton}>
+          
+          <CButton variant="outline" color="primary" 
+                 size="md" block onClick={()=>history.push('/givetest')} >Save Analysis</CButton>
+                 </div>
+      
 
     </div>
   )
@@ -468,6 +523,9 @@ const useStyles = makeStyles((theme) => ({
     margin: 10,
     height:"350px", 
   
+  },
+  infoAnalysisContainer:{
+  margin:10
   },
   chart: {
     width: "500px",
@@ -512,13 +570,47 @@ avatarContainers:{
   marginTop:0,
   padding:10,
   marginBottom:20,
-},
+  
+  overflowY: "hidden" ,
+  overflow:"scroll",
+  },
 sectionHeading:{
   fontSize:15
 },
 sectionLeft:{
   marginBottom:30
   
-}
+},
+avatarCont:{
+  width:"40px",
+
+
+},
+submitButton: {
+  width:300,
+  marginTop:50,
+  marginBottom:50,
+  alignItems:"center",
+  justifyContent:"center",
+
+  [theme.breakpoints.down('lg')]: {
+      position:"relative",
+      left:500
+
+  },
+  [theme.breakpoints.down('sm')]: {
+      position:"relative",
+      left:200
+
+  },
+
+  [theme.breakpoints.down('xs')]: {
+      width:200,
+      position:"relative",
+      left:20
+
+  }
+},
+
 
 }));

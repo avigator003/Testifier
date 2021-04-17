@@ -109,30 +109,19 @@ function Omr(props) {
     // Handle Test Submit
     const handleSubmitTest=(event)=>{
       
-
-
-
-     event.preventDefault()
+  event.preventDefault()
      setSpinner(true)
      var array=[]
      for(var i=0;i<answerSet.length;i++)
      {     
             if(answerArray[i]==undefined)
-               array.push({type:'s',questionNumber:i+1,category:answerSet[i].category})   
+               array.push({value:'s',questionNumber:i+1,category:answerSet[i].category})   
             else if(answerSet[i].option===answerArray[i]?.toLowerCase())
-                array.push({type:'r',percentage:percentageArray[i],questionNumber:i+1,category:answerSet[i].category})
+                array.push({value:'r',percentage:percentageArray[i],questionNumber:i+1,category:answerSet[i].category})
             else
-                array.push({type:'w',percentage:percentageArray[i],questionNumber:i+1,category:answerSet[i].category})    
+                array.push({value:'w',percentage:percentageArray[i],questionNumber:i+1,category:answerSet[i].category})    
      }
 
-     console.log("hey",array)
-     dispatch(
-        saveGivenTest({userId:user.token.user._id,testId:testId}, (err, response) => {
-          if (err) {
-            console.log(err)
-             notification.error(err)
-          } else {
-            console.log(response)
              const timer = setTimeout(() => {
                 history.push({
                     pathname: `/overall/${testId}`,
@@ -144,12 +133,8 @@ function Omr(props) {
         
           }
 
-        })
-      )
-/*
-     
-    */
-    }
+        
+    
 
     return (
 
