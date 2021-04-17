@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles ,fade} from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
@@ -17,12 +17,27 @@ import { useHistory } from 'react-router';
 import Backdrop from '@material-ui/core/Backdrop';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import clsx from 'clsx';
-import { Typography } from 'antd';
 import Modal from '@material-ui/core/Modal';
 import Fade from '@material-ui/core/Fade';
 import { WhatsappShareButton, WhatsappIcon } from "react-share";
 import ModalBackground from '../../assests/images/background.png'
 import Header from '../HomeComponents/Header';
+import MenuItem from '@material-ui/core/MenuItem';
+import Menu from '@material-ui/core/Menu';
+import MenuIcon from '@material-ui/icons/Menu';
+import SearchIcon from '@material-ui/icons/Search';
+import AccountCircle from '@material-ui/icons/AccountCircle';
+import MailIcon from '@material-ui/icons/Mail';
+import NotificationsIcon from '@material-ui/icons/Notifications';
+import MoreIcon from '@material-ui/icons/MoreVert';
+import ExitToApp from '@material-ui/icons/ExitToApp';
+import AssignmentInd from '@material-ui/icons/AssignmentInd';
+import AppBar from '@material-ui/core/AppBar';
+import Toolbar from '@material-ui/core/Toolbar';
+import IconButton from '@material-ui/core/IconButton';
+import Typography from '@material-ui/core/Typography';
+import InputBase from '@material-ui/core/InputBase';
+import { logoutUser } from '../../store/Actions';
 
 
 export default function Test(props) {
@@ -41,7 +56,7 @@ export default function Test(props) {
     const [spinner, setSpinner] = useState(false);
     const [open, setOpen] = useState(false)
     const [currentTestId, setCurrentTestId] = useState()
-    const [count,setCount]=useState()
+    const [count,setCount]=useState(0)
     const [state, setState] = useState({
         polity: false,
         environment: false,
@@ -51,7 +66,102 @@ export default function Test(props) {
         currentAffairs: false,
     });
 
-    const [testCategory, setTestCategory] = useState("0")
+    const [testCategory, setTestCategory] = useState("0") 
+    const[search,setSearch]=useState()
+
+      
+    const [anchorEl, setAnchorEl] = React.useState(null);
+    const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
+  
+    const isMenuOpen = Boolean(anchorEl);
+    const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
+  
+    const handleProfileMenuOpen = (event) => {
+      setAnchorEl(event.currentTarget);
+    };
+  
+    const handleMobileMenuClose = () => {
+      setMobileMoreAnchorEl(null);
+    };
+  
+    const handleMenuClose = () => {
+      setAnchorEl(null);
+      handleMobileMenuClose();
+    };
+  
+    const handleMobileMenuOpen = (event) => {
+      setMobileMoreAnchorEl(event.currentTarget);
+    };
+    
+    const handleLogout=()=>{
+      setAnchorEl(null);
+      handleMobileMenuClose();
+      dispatch(logoutUser())
+      history.push('/')
+  }
+  
+
+
+  const menuId = 'primary-search-account-menu';
+  const renderMenu = (
+    <Menu
+      anchorEl={anchorEl}
+      anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+      id={menuId}
+      keepMounted
+      transformOrigin={{ vertical: 'top', horizontal: 'right' }}
+      open={isMenuOpen}
+      onClose={handleMenuClose}
+    >
+      <MenuItem onClick={handleMenuClose}>
+        <AssignmentInd style={{marginRight:10}}/>Profile</MenuItem>
+      <MenuItem onClick={()=>handleLogout()}>
+      <ExitToApp style={{marginRight:10}}/>  Logout
+        </MenuItem>
+    </Menu>
+  );
+
+  const mobileMenuId = 'primary-search-account-menu-mobile';
+  const renderMobileMenu = (
+    <Menu
+      anchorEl={mobileMoreAnchorEl}
+      anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+      id={mobileMenuId}
+      keepMounted
+      transformOrigin={{ vertical: 'top', horizontal: 'right' }}
+      open={isMobileMenuOpen}
+      onClose={handleMobileMenuClose}
+    >
+          <MenuItem >
+        <IconButton
+          aria-label="account of current user"
+          aria-controls="primary-search-account-menu"
+          aria-haspopup="true"
+          color="inherit"
+        >
+          <AccountCircle />
+        </IconButton>
+        <p>Profile</p>
+      </MenuItem>
+      <MenuItem onClick={()=>handleLogout()}>
+        <IconButton
+          aria-label="account of current user"
+          aria-controls="primary-search-account-menu"
+          aria-haspopup="true"
+          color="inherit"
+        >
+          <ExitToApp />
+        </IconButton>
+        <p>Logout</p>
+      </MenuItem>
+    </Menu>
+  );
+
+  
+
+
+
+
 
 
     const handleChange = (event) => {
@@ -119,6 +229,13 @@ export default function Test(props) {
         }
     };
 
+
+    // Handle Saerch
+    const handleSearch=(value)=>{
+        setSearch(value)
+
+
+    }
 
     // Use Effect for Fetching Test (for Not having Same Test Name)
     //Filtering
@@ -316,7 +433,83 @@ export default function Test(props) {
 
     return (
         <div className={classes.root}>
-            <Header />
+         
+         <div className={classes.grow}>
+      <AppBar position="static" className={classes.appbar}>
+        <Toolbar>
+          <Typography className={classes.title} variant="h6" noWrap>
+            Testifier
+          </Typography>
+          {/** 
+          <div className={classes.search}>
+            <div className={classes.searchIcon}>
+              <SearchIcon />
+            </div>
+            <InputBase
+              placeholder="Search…"
+              classes={{
+                root: classes.inputRoot,
+                input: classes.inputInput,
+              }}
+              inputProps={{ 'aria-label': 'search' }}
+              value={search}
+              onChange={(e)=>handleSearch(e.target.value)}
+            />
+          </div>
+          */}
+          <div className={classes.grow} />
+          <div className={classes.sectionDesktop}>
+            {/* 
+            <IconButton aria-label="show 4 new mails" color="inherit">
+              <Badge badgeContent={4} color="secondary">
+                <MailIcon className={classes.icon}/>
+              </Badge>
+            </IconButton>
+            <IconButton aria-label="show 17 new notifications" color="inherit">
+              <Badge badgeContent={17} color="secondary">
+                <NotificationsIcon className={classes.icon} />
+              </Badge>
+            </IconButton>
+            */}
+            <IconButton
+              edge="end"
+              aria-label="account of current user"
+              aria-controls={menuId}
+              aria-haspopup="true"
+              onClick={handleProfileMenuOpen}
+              color="inherit"
+            >
+              <AccountCircle className={classes.icon} />
+            </IconButton>
+          </div>
+          <div className={classes.sectionMobile}>
+            <IconButton
+              aria-label="show more"
+              aria-controls={mobileMenuId}
+              aria-haspopup="true"
+              onClick={handleMobileMenuOpen}
+              color="black"
+              style={{outline:"none"}}
+            >
+              <MoreIcon  />
+            </IconButton>
+          </div>
+        </Toolbar>
+      </AppBar>
+      {renderMobileMenu}
+      {renderMenu}
+    </div>
+
+         
+         
+         
+         
+         
+         
+         
+         
+         
+         
             <Modal
                 aria-labelledby="transition-modal-title"
                 aria-describedby="transition-modal-description"
@@ -1154,7 +1347,79 @@ const useStyles = makeStyles((theme) => ({
 
         top: 15
 
-    }
+    },
+    grow: {
+        flexGrow: 1,
+      },
+      appbar:{
+    backgroundColor:"white",
+    position:"fixed"
+      },
+      menuButton: {
+        marginRight: theme.spacing(2),
+      },
+      title: {
+        display: 'none',
+        color:"black",
+        [theme.breakpoints.up('sm')]: {
+          display: 'block',
+        },
+      },
+      search: {
+        position: 'relative',
+        color:"black",
+        borderRadius: theme.shape.borderRadius,
+        backgroundColor: fade(theme.palette.common.white, 0.15),
+        '&:hover': {
+          backgroundColor: fade(theme.palette.common.white, 0.25),
+        },
+        marginRight: theme.spacing(2),
+        marginLeft: 0,
+        width: '100%',
+        [theme.breakpoints.up('sm')]: {
+          marginLeft: theme.spacing(3),
+          width: 'auto',
+        },
+      },
+      searchIcon: {
+        padding: theme.spacing(0, 2),
+        height: '100%',
+        color:"black",
+        position: 'absolute',
+        pointerEvents: 'none',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+      },
+      inputRoot: {
+        color: 'inherit',
+      },
+      inputInput: {
+        padding: theme.spacing(1, 1, 1, 0),
+        // vertical padding + font size from searchIcon
+        paddingLeft: `calc(1em + ${theme.spacing(4)}px)`,
+        transition: theme.transitions.create('width'),
+        width: '100%',
+        [theme.breakpoints.up('md')]: {
+          width: '20ch',
+        },
+      },
+      sectionDesktop: {
+        display: 'none',
+        [theme.breakpoints.up('md')]: {
+          display: 'flex',
+        },
+      },
+      sectionMobile: {
+        display: 'flex',
+        [theme.breakpoints.up('md')]: {
+          display: 'none',
+        },
+      },
+      icon:{
+        color:"black"
+      }
+    
 
 }));
 

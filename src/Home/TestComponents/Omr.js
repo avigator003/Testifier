@@ -125,7 +125,7 @@ function Omr(props) {
                 array.push({type:'w',percentage:percentageArray[i],questionNumber:i+1,category:answerSet[i].category})    
      }
 
-     
+     console.log("hey",array)
      dispatch(
         saveGivenTest({userId:user.token.user._id,testId:testId}, (err, response) => {
           if (err) {
@@ -437,10 +437,21 @@ const useStyles = makeStyles((theme) => ({
         alignItems:"center",
         justifyContent:"center",
 
+        [theme.breakpoints.down('lg')]: {
+            position:"relative",
+            left:500
+
+        },
+        [theme.breakpoints.down('sm')]: {
+            position:"relative",
+            left:200
+
+        },
+      
         [theme.breakpoints.down('xs')]: {
             width:200,
             position:"relative",
-            left:30
+            left:20
 
         }
     },
