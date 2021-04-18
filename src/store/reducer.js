@@ -27,7 +27,6 @@ const reducer = (state = initialState, action) => {
                 user:action.payload
             }
         case actionTypes.LOGOUT_USER:
-            console.log("lo")
             return {
                 ...state,
                 user:null

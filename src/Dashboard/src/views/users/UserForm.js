@@ -187,7 +187,6 @@ useEffect(()=>{
             return valid;
           };
   
-          console.log("eroor",error)
           if (validateForm(error)) {
             checkValidity();
           } else {

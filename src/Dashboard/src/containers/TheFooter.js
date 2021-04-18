@@ -6,11 +6,11 @@ const TheFooter = () => {
     <CFooter fixed={false}>
       <div>
         <a href="https://coreui.io" target="_blank" rel="noopener noreferrer">Avigator</a>
-        <span className="ml-1">&copy; 2020 avigator corporation.</span>
+        <span className="ml-1">&copy; 2021 Avigator corporation.</span>
       </div>
       <div className="mfs-auto">
         <span className="mr-1">Powered by</span>
-        <a href="https://coreui.io/react" target="_blank" rel="noopener noreferrer">Testifier by Avigator</a>
+        <a href="https://coreui.io/react" target="_blank" rel="noopener noreferrer">Rapid IAS</a>
       </div>
     </CFooter>
   )

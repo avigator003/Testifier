@@ -38,12 +38,17 @@ import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import InputBase from '@material-ui/core/InputBase';
 import { logoutUser } from '../../store/Actions';
+import { notification } from 'antd';
+import Logo from '../../assests/images/logo.png'
 
 
 export default function Test(props) {
     const classes = useStyles();
     const dispatch = useDispatch()
     const history = useHistory()
+
+    // Logined User
+    const user = useSelector((state) => state.user);
 
 
     const [visionTestList, setVisionTestList] = useState([])
@@ -131,7 +136,28 @@ export default function Test(props) {
       transformOrigin={{ vertical: 'top', horizontal: 'right' }}
       open={isMobileMenuOpen}
       onClose={handleMobileMenuClose}
+      style={{width:400}}
     >
+
+{!user?
+            <>
+                <MenuItem className={classes.submitButton1}>
+         
+                <CButton variant="outline" color="primary"  
+                size="md" block  onClick={()=>history.push('/login')}
+                >Login</CButton>
+                   </MenuItem>
+                   <MenuItem className={classes.submitButton1}>
+         
+                <CButton variant="outline" color="primary" 
+                size="md" block  onClick={()=>history.push('/register')}
+                >Signup</CButton>
+                   </MenuItem>
+        
+                </>
+       
+               :
+            <>
           <MenuItem >
         <IconButton
           aria-label="account of current user"
@@ -154,6 +180,8 @@ export default function Test(props) {
         </IconButton>
         <p>Logout</p>
       </MenuItem>
+      </>
+}
     </Menu>
   );
 
@@ -352,13 +380,13 @@ export default function Test(props) {
     }, [testCategory,count])
 
 
-    // Logined User
-    const user = useSelector((state) => state.user);
 
     // Handle Give Test
     const handleGiveTest = (id) => {
-        setCurrentTestId(id)
 
+        if(user)
+        {
+        setCurrentTestId(id)
         const sharedTestItem = user.token.user.numberOfShares.filter(ob => ob.testId == id)
         const countShares = sharedTestItem[0]?.number
 
@@ -375,6 +403,18 @@ export default function Test(props) {
         else {
             setOpen(true)
         }
+    }
+    else{
+        notification.error({
+            message: 'Login First',
+            className: 'custom-class',
+            style: {
+               position:"realtive",
+               top:60, 
+              width: 200,
+            },
+          });
+    }
     }
 
     //Close Modal
@@ -426,7 +466,7 @@ export default function Test(props) {
 
         setCurrentTestId("")
         setOpen(false)
-
+    
     }
 
 
@@ -435,10 +475,13 @@ export default function Test(props) {
         <div className={classes.root}>
          
          <div className={classes.grow}>
+
       <AppBar position="static" className={classes.appbar}>
         <Toolbar>
           <Typography className={classes.title} variant="h6" noWrap>
-            Testifier
+          <img src={Logo} style={{width:60,height:60,marginRight:10}} alt="" />
+          
+            Rapid IAS
           </Typography>
           {/** 
           <div className={classes.search}>
@@ -471,6 +514,24 @@ export default function Test(props) {
               </Badge>
             </IconButton>
             */}
+            {!user?
+            <>
+                <div className={classes.submitButton}>
+         
+                <CButton variant="outline" color="primary"  
+                size="md" block  onClick={()=>history.push('/login')}
+                >Login</CButton>
+                   </div>
+                   <div className={classes.submitButton}>
+         
+                <CButton variant="outline" color="primary" 
+                size="md" block  onClick={()=>history.push('/register')}
+                >Signup</CButton>
+                   </div>
+        
+                </>
+       
+               :
             <IconButton
               edge="end"
               aria-label="account of current user"
@@ -481,6 +542,7 @@ export default function Test(props) {
             >
               <AccountCircle className={classes.icon} />
             </IconButton>
+            }
           </div>
           <div className={classes.sectionMobile}>
             <IconButton
@@ -526,7 +588,7 @@ export default function Test(props) {
                     <div className={classes.paper1}>
                         <h2 id="transition-modal-title" className={classes.modalHeading}>Unlock Test</h2>
                         <p id="transition-modal-description">Share Test to 2 times to unlock</p>
-                        <WhatsappShareButton url={"Hey Testifier Share your tests"}>
+                        <WhatsappShareButton url={"Hey RapidIAS Share your tests"}>
 
                             <CButton shape="pill" color="success" className={classes.whatsappButton} onClick={() => handleWhatsappShare()}>
                                 <WhatsappIcon size={32} round={true} className={classes.image} />
@@ -1418,7 +1480,18 @@ const useStyles = makeStyles((theme) => ({
       },
       icon:{
         color:"black"
-      }
+      },submitButton:{
+          height:40,
+          margin:10,
+          marginTop:20,
+          width:80
+      },
+       submitButton1:{
+           fontSize:20,
+        height:40,
+        margin:10,
+        width:100
+    }
     
 
 }));

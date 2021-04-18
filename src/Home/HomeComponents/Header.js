@@ -207,7 +207,7 @@ export default function Header() {
       <AppBar position="static" className={classes.appbar}>
         <Toolbar>
           <Typography className={classes.title} variant="h6" noWrap>
-            Testifier
+            Rapid IAS
           </Typography>
           <div className={classes.search}>
             <div className={classes.searchIcon}>

@@ -113,7 +113,6 @@ const TestForm = (props) => {
           if (err)
             console.log(err)
           else {
-            console.log(response.res.data.data)
             setState(response.res.data.data)
             setEdit(true)
           }
@@ -128,7 +127,6 @@ const TestForm = (props) => {
           if (err)
             console.log(err)
           else {
-            console.log(response.res.data.data)
             setState(response.res.data.data)
             setEdit(true)
             setEditButton(true)
@@ -215,10 +213,8 @@ const TestForm = (props) => {
     const validateForm = (error) => {
       let valid = true;
       Object.values(error).forEach((val) => val.length > 0 && (valid = false));
-      console.log(valid, "valid")
       return valid;
     };
-    console.log("error", errors)
     if (validateForm(errors)) {
       checkValidity();
     } else {

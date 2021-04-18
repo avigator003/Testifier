@@ -38,7 +38,6 @@ export const loginUser = (payload, cb) => {
     api
       .post("/auth/login", payload)
       .then((res) => {
-        console.log(res)
         let created_at = new Date(res.data.token.user.created_at)
         if(res.data.token.user.registeredOn == undefined){
           res.data.token.user.registeredOn = {
@@ -93,7 +92,6 @@ export const register = (payload, cb) => {
     api
       .post("/auth/register", payload)
       .then((res) => {
-        console.log(res?.data);
         cb(null, {
           message: "Registered Successfully",
         });
@@ -135,7 +133,6 @@ export const verifyEmail = (payload, cb) => {
 // const resetPassSuccess = payload => ({type:RESET_PASS_SUCCESS,payload})
 export const setResetToken = (payload) => ({ type: SET_RESET_TOKEN, payload });
 export const resetPass = (payload, cb) => {
-  console.log(payload);
   return (dispatch) => {
     api
       .post("/user/resetpassword", payload)
@@ -215,7 +212,6 @@ export const unblockUser = (payload, cb) => {
         cb(null, {
           message: "Unblocked Successfully",
         });
-        console.log(res.data);
       })
       .catch((err) => {
         console.log(err); //Dispatch Toaster Notificaton
@@ -291,7 +287,6 @@ export const updateUser = (payload, cb) => {
 
 //Save Test
 export const saveTest = (payload,cb) => {
-  console.log("pay",payload)
   return (dispatch) => {
     api
       .post("/tests/savetest",payload)
@@ -379,7 +374,6 @@ export const updateTest = (payload, cb) => {
 
 //Save Test
 export const saveGivenTest = (payload,cb) => {
-  console.log("pay",payload)
   return (dispatch) => {
     api
       .post("/testgiven/savetest",payload)

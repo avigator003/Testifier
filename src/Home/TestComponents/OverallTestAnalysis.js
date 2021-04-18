@@ -92,7 +92,6 @@ function OverallTestAnalysis(props) {
       newSectionalArray.push({section:newArrayObjects,percentageCorrect:percentageCorrect})
     }
     
-  console.log(newSectionalArray,"newSectionalArray")
     setSectionalArray(newSectionalArray)
 
 
@@ -134,7 +133,6 @@ function OverallTestAnalysis(props) {
     return a.percentage - b.percentage;
   });
     
-  console.log(newConfidenceArray,"newConfidenceArray")
   setConfidenceArray(newConfidenceArray)
 
 
@@ -181,7 +179,6 @@ function OverallTestAnalysis(props) {
           } else {
             
             setMessage("Test Submitted")
-            console.log(response)
          }}))
 
 

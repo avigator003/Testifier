@@ -90,7 +90,6 @@ function Omr(props) {
      // Handle Omr Answers
     const handleOmrAnswer = (event,option, index) => {
         event.preventDefault()
-        console.log(option, index)
         let array = [...answerArray]
         array[index] = option
         setAnswerArray(array)

@@ -70,7 +70,6 @@ function Login(props) {
           };
         
           const checkValidity = () => {
-            console.log("valid")
             if (state["emailAddress"] === "" || state["password"] === "") {
               setSpinner(false);
               return notification.warning({
