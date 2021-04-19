@@ -7,23 +7,48 @@ import {getTests } from "../../../../store/Actions";
 import { useDispatch, useSelector } from "react-redux";
 import { makeStyles } from "@material-ui/core/styles";
 import { useHistory } from 'react-router-dom';
+import {deleteTest } from "../../../../store/Actions";
+import { notification } from 'antd';
+import Snackbar from '@material-ui/core/Snackbar';
+import Backdrop from '@material-ui/core/Backdrop';
+import CircularProgress from '@material-ui/core/CircularProgress';
+import MuiAlert from '@material-ui/lab/Alert';
+
+function Alert(props) {
+  return <MuiAlert elevation={6} variant="filled" {...props} />;
+}
 
 
 const TestBrand = ({withCharts})=>{
+  
   const classes=useStyles()
   const history=useHistory()
   const dispatch=useDispatch()
   const [testList,setTestList]=useState([])
 
+  const [spinner,setSpinner]=useState(false)
+  const [message, setMessage] = useState("")
+  const [notify, setNotify] = useState(false)
+
+    
 
 
   // Use Effect for Fetching Test (for Not having Same Test Name)
   useEffect(()=>{
+    TestDetails()
+     },[])
+
+
+  //get Test Details
+  const TestDetails=()=>{
+    setSpinner(true)
     dispatch(
       getTests((err, response) => {
         setTestList(response.tests)
+        setSpinner(false)
       }))
-  },[])
+
+  }
 
   // View Test Details
   const handleViewTest=(id)=>{
@@ -43,6 +68,31 @@ const TestBrand = ({withCharts})=>{
   }
 
 
+  
+  // Delete Test Details
+  const handleDeleteTest=(id)=>{
+    setSpinner(true)
+    dispatch(
+      deleteTest({ id: id}, (err, response) => {
+        if (err) {
+          setMessage("Deleting Failed")
+
+        } else {
+          setMessage("Deleted Successfully")
+          setNotify(true)
+          TestDetails()
+   
+         }
+      
+      })
+    );
+  }
+
+
+  
+  const handleClose = () => {
+    setSpinner(false);
+  };
   return withCharts ?
   <CRow>
     <CCol sm="6" lg="3">
@@ -137,7 +187,23 @@ const TestBrand = ({withCharts})=>{
       </CWidgetBrand>
     </CCol>
   </CRow> :
- 
+ <>
+   <Backdrop className={classes.backdrop} open={spinner} onClick={handleClose}>
+        <CircularProgress color="inherit" size={100} color="primary" />
+      </Backdrop>
+
+      <Snackbar open={notify}
+        autoHideDuration={6000}
+        anchorOrigin={{
+          vertical: 'top',
+          horizontal: 'center',
+        }}
+        onClose={() => setNotify(false)}>
+        <Alert onClose={() => setNotify(false)} severity="success">
+          {message}
+        </Alert>
+      </Snackbar>
+    
   <CRow>
     {
 testList.map((item,index)=>(      
@@ -146,11 +212,20 @@ testList.map((item,index)=>(
         color="linkedin"
         
         rightFooter=
-        {<CButton variant="outline" color="primary" 
+        {
+        <>
+        <CButton variant="outline" color="primary" 
         size="sm" block onClick={()=>handleViewTest(item._id)}>View Test Details</CButton>
+        
+        <CButton variant="outline" color="danger" 
+        size="sm" block onClick={()=>handleDeleteTest(item._id)}>Delete Test</CButton>
+        </>
       }
-        leftFooter={<CButton variant="outline" color="warning" 
+        leftFooter={
+        <>
+        <CButton variant="outline" color="warning"  style={{marginTop:15}}
         size="sm" block onClick={()=>handleEditTest(item._id)}>Edit Test Details</CButton>
+        </>
       }
         >
           <CCol sm="6" lg="6" style={{padding:20}}>
@@ -158,7 +233,7 @@ testList.map((item,index)=>(
              </CCol> 
              
           <CCol sm="6" lg="6">
-          {(item.created_at)?.substring(0,10).split("-").reverse().join("/")}
+          {item.instituteName}
           </CCol>
          
 
@@ -215,7 +290,7 @@ testList.map((item,index)=>(
     </CCol>
     */}
   </CRow>
-
+</>
   
 }
 

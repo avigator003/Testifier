@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { makeStyles ,fade} from '@material-ui/core/styles';
+import { makeStyles, fade } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
@@ -40,7 +40,7 @@ import InputBase from '@material-ui/core/InputBase';
 import { logoutUser } from '../../store/Actions';
 import { notification } from 'antd';
 import Logo from '../../assests/images/logo.png'
-
+import { Offline, Online } from "react-detect-offline";
 
 export default function Test(props) {
     const classes = useStyles();
@@ -50,6 +50,7 @@ export default function Test(props) {
     // Logined User
     const user = useSelector((state) => state.user);
 
+// Test Hooks
 
     const [visionTestList, setVisionTestList] = useState([])
     const [vajiramTestList, setVajiramTestList] = useState([])
@@ -58,10 +59,18 @@ export default function Test(props) {
     const [iasTestList, setIasTestList] = useState([])
     const [insightsTestList, setInsightsTestList] = useState([])
     const [upscTestList, setUpscTestList] = useState([])
+    const [insightsTestDaysList, setInsightsTestDaysList] = useState([])
+    const [iasBabaTestDaysList, setiasBabaTestDaysList] = useState([])
+    const [rauIasTestList, setrauIasList] = useState([])
+
+
+
+
+
     const [spinner, setSpinner] = useState(false);
     const [open, setOpen] = useState(false)
     const [currentTestId, setCurrentTestId] = useState()
-    const [count,setCount]=useState(0)
+    const [count, setCount] = useState(0)
     const [state, setState] = useState({
         polity: false,
         environment: false,
@@ -69,123 +78,129 @@ export default function Test(props) {
         economy: false,
         history: false,
         currentAffairs: false,
+        artAndCulture:false,
+        scienceAndTechnology:false
     });
 
-    const [testCategory, setTestCategory] = useState("0") 
-    const[search,setSearch]=useState()
+    const [testCategory, setTestCategory] = useState("0")
+    const [search, setSearch] = useState()
 
-      
+
     const [anchorEl, setAnchorEl] = React.useState(null);
     const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
-  
+
     const isMenuOpen = Boolean(anchorEl);
     const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
-  
+
     const handleProfileMenuOpen = (event) => {
-      setAnchorEl(event.currentTarget);
+        setAnchorEl(event.currentTarget);
     };
-  
+
     const handleMobileMenuClose = () => {
-      setMobileMoreAnchorEl(null);
+        setMobileMoreAnchorEl(null);
     };
-  
+
     const handleMenuClose = () => {
-      setAnchorEl(null);
-      handleMobileMenuClose();
+        setAnchorEl(null);
+        handleMobileMenuClose();
     };
-  
+
     const handleMobileMenuOpen = (event) => {
-      setMobileMoreAnchorEl(event.currentTarget);
+        setMobileMoreAnchorEl(event.currentTarget);
     };
-    
-    const handleLogout=()=>{
-      setAnchorEl(null);
-      handleMobileMenuClose();
-      dispatch(logoutUser())
-      history.push('/')
-  }
-  
+
+    const handleLogout = () => {
+        setAnchorEl(null);
+        handleMobileMenuClose();
+        dispatch(logoutUser())
+        history.push('/')
+    }
 
 
-  const menuId = 'primary-search-account-menu';
-  const renderMenu = (
-    <Menu
-      anchorEl={anchorEl}
-      anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
-      id={menuId}
-      keepMounted
-      transformOrigin={{ vertical: 'top', horizontal: 'right' }}
-      open={isMenuOpen}
-      onClose={handleMenuClose}
-    >
-      <MenuItem onClick={handleMenuClose}>
-        <AssignmentInd style={{marginRight:10}}/>Profile</MenuItem>
-      <MenuItem onClick={()=>handleLogout()}>
-      <ExitToApp style={{marginRight:10}}/>  Logout
+
+    const menuId = 'primary-search-account-menu';
+    const renderMenu = (
+        <Menu
+            anchorEl={anchorEl}
+            anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+            id={menuId}
+            keepMounted
+            transformOrigin={{ vertical: 'top', horizontal: 'right' }}
+            open={isMenuOpen}
+            onClose={handleMenuClose}
+        >
+            <MenuItem onClick={handleMenuClose}>
+                <AssignmentInd style={{ marginRight: 10 }} />Profile</MenuItem>
+            <MenuItem onClick={() => handleLogout()}>
+                <ExitToApp style={{ marginRight: 10 }} />  Logout
         </MenuItem>
-    </Menu>
-  );
+        </Menu>
+    );
 
-  const mobileMenuId = 'primary-search-account-menu-mobile';
-  const renderMobileMenu = (
-    <Menu
-      anchorEl={mobileMoreAnchorEl}
-      anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
-      id={mobileMenuId}
-      keepMounted
-      transformOrigin={{ vertical: 'top', horizontal: 'right' }}
-      open={isMobileMenuOpen}
-      onClose={handleMobileMenuClose}
-      style={{width:400}}
-    >
+    const mobileMenuId = 'primary-search-account-menu-mobile';
+    const renderMobileMenu = (
 
-{!user?
-            <>
-                <MenuItem className={classes.submitButton1}>
-         
-                <CButton variant="outline" color="primary"  
-                size="md" block  onClick={()=>history.push('/login')}
-                >Login</CButton>
-                   </MenuItem>
-                   <MenuItem className={classes.submitButton1}>
-         
-                <CButton variant="outline" color="primary" 
-                size="md" block  onClick={()=>history.push('/register')}
-                >Signup</CButton>
-                   </MenuItem>
+
+
         
-                </>
-       
-               :
-            <>
-          <MenuItem >
-        <IconButton
-          aria-label="account of current user"
-          aria-controls="primary-search-account-menu"
-          aria-haspopup="true"
-          color="inherit"
+        <Menu
+            anchorEl={mobileMoreAnchorEl}
+            anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+            id={mobileMenuId}
+            keepMounted
+            transformOrigin={{ vertical: 'top', horizontal: 'right' }}
+            open={isMobileMenuOpen}
+            onClose={handleMobileMenuClose}
+            style={{ width: 400 }}
         >
-          <AccountCircle />
-        </IconButton>
-        <p>Profile</p>
-      </MenuItem>
-      <MenuItem onClick={()=>handleLogout()}>
-        <IconButton
-          aria-label="account of current user"
-          aria-controls="primary-search-account-menu"
-          aria-haspopup="true"
-          color="inherit"
-        >
-          <ExitToApp />
-        </IconButton>
-        <p>Logout</p>
-      </MenuItem>
-      </>
-}
-    </Menu>
-  );
 
-  
+            {!user ?
+                <>
+                    <MenuItem className={classes.submitButton1}>
+
+                        <CButton variant="outline" color="primary"
+                            size="md" block onClick={() => history.push('/login')}
+                        >Login</CButton>
+                    </MenuItem>
+                    <MenuItem className={classes.submitButton1}>
+
+                        <CButton variant="outline" color="primary"
+                            size="md" block onClick={() => history.push('/register')}
+                        >Signup</CButton>
+                    </MenuItem>
+
+                </>
+
+                :
+                <>
+                    <MenuItem >
+                        <IconButton
+                            aria-label="account of current user"
+                            aria-controls="primary-search-account-menu"
+                            aria-haspopup="true"
+                            color="inherit"
+                        >
+                            <AccountCircle />
+                        </IconButton>
+                        <p>Profile</p>
+                    </MenuItem>
+                    <MenuItem onClick={() => handleLogout()}>
+                        <IconButton
+                            aria-label="account of current user"
+                            aria-controls="primary-search-account-menu"
+                            aria-haspopup="true"
+                            color="inherit"
+                        >
+                            <ExitToApp />
+                        </IconButton>
+                        <p>Logout</p>
+                    </MenuItem>
+                </>
+            }
+        </Menu>
+    );
+
+
 
 
 
@@ -193,7 +208,7 @@ export default function Test(props) {
 
 
     const handleChange = (event) => {
-        setCount(count+1)
+        setCount(count + 1)
         var name = event.target.name
         if (name == 'polity') {
             setState({
@@ -203,9 +218,11 @@ export default function Test(props) {
                 economy: false,
                 history: false,
                 currentAffairs: false,
+                artAndCulture:false,
+                scienceAndTechnology:false
             })
         }
-       else if (name == 'history') {
+        else if (name == 'history') {
             setState({
                 polity: false,
                 environment: false,
@@ -213,9 +230,11 @@ export default function Test(props) {
                 economy: false,
                 history: true,
                 currentAffairs: false,
+                artAndCulture:false,
+                scienceAndTechnology:false
             })
         }
-       else if (name == 'economy') {
+        else if (name == 'economy') {
             setState({
                 polity: false,
                 environment: false,
@@ -223,9 +242,11 @@ export default function Test(props) {
                 economy: true,
                 history: false,
                 currentAffairs: false,
+                artAndCulture:false,
+                scienceAndTechnology:false
             })
         }
-       else if (name == 'geography') {
+        else if (name == 'geography') {
             setState({
                 polity: false,
                 environment: false,
@@ -233,9 +254,11 @@ export default function Test(props) {
                 economy: false,
                 history: false,
                 currentAffairs: false,
+                artAndCulture:false,
+                scienceAndTechnology:false
             })
         }
-       else if (name == 'environment') {
+        else if (name == 'environment') {
             setState({
                 polity: false,
                 environment: true,
@@ -243,6 +266,8 @@ export default function Test(props) {
                 economy: false,
                 history: false,
                 currentAffairs: false,
+                artAndCulture:false,
+                scienceAndTechnology:false
             })
         }
         else if (name == 'currentAffairs') {
@@ -253,13 +278,39 @@ export default function Test(props) {
                 economy: false,
                 history: false,
                 currentAffairs: true,
+                artAndCulture:false,
+                scienceAndTechnology:false
+            })
+        }
+        else if (name == 'artAndCulture') {
+            setState({
+                polity: false,
+                environment: false,
+                geography: false,
+                economy: false,
+                history: false,
+                currentAffairs: false,
+                artAndCulture:true,
+                scienceAndTechnology:false
+            })
+        }
+        else if (name == 'scienceAndTechnology') {
+            setState({
+                polity: false,
+                environment: false,
+                geography: false,
+                economy: false,
+                history: false,
+                currentAffairs: false,
+                artAndCulture:false,
+                scienceAndTechnology:true
             })
         }
     };
 
 
     // Handle Saerch
-    const handleSearch=(value)=>{
+    const handleSearch = (value) => {
         setSearch(value)
 
 
@@ -277,8 +328,10 @@ export default function Test(props) {
                 economy: false,
                 history: false,
                 currentAffairs: false,
+                artAndCulture:false,
+                scienceAndTechnology:true
             })
-        
+
             dispatch(
                 getTests((err, response) => {
                     setVisionTestList(response.tests.filter(ob => ob.instituteName == "Vision IAS"))
@@ -288,6 +341,10 @@ export default function Test(props) {
                     setIasTestList(response.tests.filter(ob => ob.instituteName == "IAS Score"))
                     setInsightsTestList(response.tests.filter(ob => ob.instituteName == "Insights IAS"))
                     setUpscTestList(response.tests.filter(ob => ob.instituteName == "UPSC PYQs"))
+                    setInsightsTestDaysList(response.tests.filter(ob => ob.instituteName == "Insights IAS 70 Days"))
+                    setiasBabaTestDaysList(response.tests.filter(ob => ob.instituteName == "IAS Baba 60 Days"))
+                    setrauIasList(response.tests.filter(ob => ob.instituteName == "Rau IAS"))
+              
                 }))
         }
         else if (testCategory == "Full Length") {
@@ -298,8 +355,11 @@ export default function Test(props) {
                 economy: false,
                 history: false,
                 currentAffairs: false,
+                artAndCulture:false,
+                scienceAndTechnology:true
+          
             })
-        
+
             dispatch(
                 getTests((err, response) => {
                     setVisionTestList(response.tests.filter(ob => ob.instituteName == "Vision IAS" && ob.testCategory == "Full Length"))
@@ -309,10 +369,14 @@ export default function Test(props) {
                     setIasTestList(response.tests.filter(ob => ob.instituteName == "IAS Score" && ob.testCategory == "Full Length"))
                     setInsightsTestList(response.tests.filter(ob => ob.instituteName == "Insights IAS" && ob.testCategory == "Full Length"))
                     setUpscTestList(response.tests.filter(ob => ob.instituteName == "UPSC PYQs" && ob.testCategory == "Full Length"))
+                    setInsightsTestDaysList(response.tests.filter(ob => ob.instituteName == "Insights IAS 70 Days" && ob.testCategory == "Full Length"))
+                    setiasBabaTestDaysList(response.tests.filter(ob => ob.instituteName == "IAS Baba 60 Days" && ob.testCategory == "Full Length"))
+                    setrauIasList(response.tests.filter(ob => ob.instituteName == "Rau IAS" && ob.testCategory == "Full Length"))
+              
                 }))
 
         }
-        else if(testCategory == "Sectional"){
+        else if (testCategory == "Sectional") {
 
             dispatch(
                 getTests((err, response) => {
@@ -324,6 +388,10 @@ export default function Test(props) {
                         setIasTestList(response.tests.filter(ob => ob.instituteName == "IAS Score" && ob.testCategory == "Sectional" && ob.categoryType == "Polity"))
                         setInsightsTestList(response.tests.filter(ob => ob.instituteName == "Insights IAS" && ob.testCategory == "Sectional" && ob.categoryType == "Polity"))
                         setUpscTestList(response.tests.filter(ob => ob.instituteName == "UPSC PYQs" && ob.testCategory == "Sectional" && ob.categoryType == "Polity"))
+                        setInsightsTestDaysList(response.tests.filter(ob => ob.instituteName == "Insights IAS 70 Days" && ob.testCategory == "Sectional" && ob.categoryType == "Polity"))
+                        setiasBabaTestDaysList(response.tests.filter(ob => ob.instituteName == "IAS Baba 60 Days" && ob.testCategory == "Sectional" && ob.categoryType == "Polity"))
+                        setrauIasList(response.tests.filter(ob => ob.instituteName == "Rau IAS" && ob.testCategory == "Sectional" && ob.categoryType == "Polity"))
+                  
                     }
                     else if (state['history']) {
                         setVisionTestList(response.tests.filter(ob => ob.instituteName == "Vision IAS" && ob.testCategory == "Sectional" && ob.categoryType == "History"))
@@ -333,7 +401,10 @@ export default function Test(props) {
                         setIasTestList(response.tests.filter(ob => ob.instituteName == "IAS Score" && ob.testCategory == "Sectional" && ob.categoryType == "History"))
                         setInsightsTestList(response.tests.filter(ob => ob.instituteName == "Insights IAS" && ob.testCategory == "Sectional" && ob.categoryType == "History"))
                         setUpscTestList(response.tests.filter(ob => ob.instituteName == "UPSC PYQs" && ob.testCategory == "Sectional" && ob.categoryType == "History"))
-
+                        setInsightsTestDaysList(response.tests.filter(ob => ob.instituteName == "Insights IAS 70 Days" && ob.testCategory == "Sectional" && ob.categoryType == "History"))
+                        setiasBabaTestDaysList(response.tests.filter(ob => ob.instituteName == "IAS Baba 60 Days" && ob.testCategory == "Sectional" && ob.categoryType == "History"))
+                        setrauIasList(response.tests.filter(ob => ob.instituteName == "Rau IAS" && ob.testCategory == "Sectional" && ob.categoryType == "History"))
+                  
                     }
                     else if (state['environment']) {
                         setVisionTestList(response.tests.filter(ob => ob.instituteName == "Vision IAS" && ob.testCategory == "Sectional" && ob.categoryType == "Environment"))
@@ -343,7 +414,10 @@ export default function Test(props) {
                         setIasTestList(response.tests.filter(ob => ob.instituteName == "IAS Score" && ob.testCategory == "Sectional" && ob.categoryType == "Environment"))
                         setInsightsTestList(response.tests.filter(ob => ob.instituteName == "Insights IAS" && ob.testCategory == "Sectional" && ob.categoryType == "Environment"))
                         setUpscTestList(response.tests.filter(ob => ob.instituteName == "UPSC PYQs" && ob.testCategory == "Sectional" && ob.categoryType == "Environment"))
-
+                        setInsightsTestDaysList(response.tests.filter(ob => ob.instituteName == "Insights IAS 70 Days" && ob.testCategory == "Sectional" && ob.categoryType == "Environment"))
+                        setiasBabaTestDaysList(response.tests.filter(ob => ob.instituteName == "IAS Baba 60 Days" && ob.testCategory == "Sectional" && ob.categoryType == "Environment"))
+                        setrauIasList(response.tests.filter(ob => ob.instituteName == "Rau IAS" && ob.testCategory == "Sectional" && ob.categoryType == "Environment"))
+                  
                     }
                     else if (state['economy']) {
                         setVisionTestList(response.tests.filter(ob => ob.instituteName == "Vision IAS" && ob.testCategory == "Sectional" && ob.categoryType == "Economy"))
@@ -353,7 +427,10 @@ export default function Test(props) {
                         setIasTestList(response.tests.filter(ob => ob.instituteName == "IAS Score" && ob.testCategory == "Sectional" && ob.categoryType == "Economy"))
                         setInsightsTestList(response.tests.filter(ob => ob.instituteName == "Insights IAS" && ob.testCategory == "Sectional" && ob.categoryType == "Economy"))
                         setUpscTestList(response.tests.filter(ob => ob.instituteName == "UPSC PYQs" && ob.testCategory == "Sectional" && ob.categoryType == "Economy"))
-
+                        setInsightsTestDaysList(response.tests.filter(ob => ob.instituteName == "Insights IAS 70 Days" && ob.testCategory == "Sectional" && ob.categoryType == "Economy"))
+                        setiasBabaTestDaysList(response.tests.filter(ob => ob.instituteName == "IAS Baba 60 Days" && ob.testCategory == "Sectional" && ob.categoryType == "Economy"))
+                        setrauIasList(response.tests.filter(ob => ob.instituteName == "Rau IAS" && ob.testCategory == "Sectional" && ob.categoryType == "Economy"))
+                  
                     }
                     else if (state['geography']) {
                         setVisionTestList(response.tests.filter(ob => ob.instituteName == "Vision IAS" && ob.testCategory == "Sectional" && ob.categoryType == "Geography"))
@@ -363,7 +440,9 @@ export default function Test(props) {
                         setIasTestList(response.tests.filter(ob => ob.instituteName == "IAS Score" && ob.testCategory == "Sectional" && ob.categoryType == "Geography"))
                         setInsightsTestList(response.tests.filter(ob => ob.instituteName == "Insights IAS" && ob.testCategory == "Sectional" && ob.categoryType == "Geography"))
                         setUpscTestList(response.tests.filter(ob => ob.instituteName == "UPSC PYQs" && ob.testCategory == "Sectional" && ob.categoryType == "Geography"))
-
+                        setInsightsTestDaysList(response.tests.filter(ob => ob.instituteName == "Insights IAS 70 Days" && ob.testCategory == "Sectional" && ob.categoryType == "Geography"))
+                        setiasBabaTestDaysList(response.tests.filter(ob => ob.instituteName == "IAS Baba 60 Days" && ob.testCategory == "Sectional" && ob.categoryType == "Geography"))
+                        setrauIasList(response.tests.filter(ob => ob.instituteName == "Rau IAS" && ob.testCategory == "Sectional" && ob.categoryType == "Geography"))
                     }
                     else if (state['currentAffairs']) {
                         setVisionTestList(response.tests.filter(ob => ob.instituteName == "Vision IAS" && ob.testCategory == "Sectional" && ob.categoryType == "Current Affairs"))
@@ -373,48 +452,73 @@ export default function Test(props) {
                         setIasTestList(response.tests.filter(ob => ob.instituteName == "IAS Score" && ob.testCategory == "Sectional" && ob.categoryType == "Current Affairs"))
                         setInsightsTestList(response.tests.filter(ob => ob.instituteName == "Insights IAS" && ob.testCategory == "Sectional" && ob.categoryType == "Current Affairs"))
                         setUpscTestList(response.tests.filter(ob => ob.instituteName == "UPSC PYQs" && ob.testCategory == "Sectional" && ob.categoryType == "Current Affairs"))
-
+                        setInsightsTestDaysList(response.tests.filter(ob => ob.instituteName == "Insights IAS 70 Days" && ob.testCategory == "Sectional" && ob.categoryType == "Current Affairs"))
+                        setiasBabaTestDaysList(response.tests.filter(ob => ob.instituteName == "IAS Baba 60 Days" && ob.testCategory == "Sectional" && ob.categoryType == "Current Affairs"))
+                        setrauIasList(response.tests.filter(ob => ob.instituteName == "Rau IAS" && ob.testCategory == "Sectional" && ob.categoryType == "Current Affairs"))
+                    }
+                    else if (state['artAndCulture']) {
+                        setVisionTestList(response.tests.filter(ob => ob.instituteName == "Vision IAS" && ob.testCategory == "Sectional" && ob.categoryType == "Current Affairs"))
+                        setVajiramTestList(response.tests.filter(ob => ob.instituteName == "Vajiram and Ravi" && ob.testCategory == "Sectional" && ob.categoryType == "Current Affairs"))
+                        setShankarTestList(response.tests.filter(ob => ob.instituteName == "Shankar IAS Academy" && ob.testCategory == "Sectional" && ob.categoryType == "Current Affairs"))
+                        setForumTestList(response.tests.filter(ob => ob.instituteName == "Forum IAS" && ob.testCategory == "Sectional" && ob.categoryType == "Current Affairs"))
+                        setIasTestList(response.tests.filter(ob => ob.instituteName == "IAS Score" && ob.testCategory == "Sectional" && ob.categoryType == "Current Affairs"))
+                        setInsightsTestList(response.tests.filter(ob => ob.instituteName == "Insights IAS" && ob.testCategory == "Sectional" && ob.categoryType == "Current Affairs"))
+                        setUpscTestList(response.tests.filter(ob => ob.instituteName == "UPSC PYQs" && ob.testCategory == "Sectional" && ob.categoryType == "Current Affairs"))
+                        setInsightsTestDaysList(response.tests.filter(ob => ob.instituteName == "Insights IAS 70 Days" && ob.testCategory == "Sectional" && ob.categoryType == "Art and Culture"))
+                        setiasBabaTestDaysList(response.tests.filter(ob => ob.instituteName == "IAS Baba 60 Days" && ob.testCategory == "Sectional" && ob.categoryType == "Art and Culture"))
+                        setrauIasList(response.tests.filter(ob => ob.instituteName == "Rau IAS" && ob.testCategory == "Sectional" && ob.categoryType == "Art and Culture"))
+                    }
+                    else if (state['scienceAndTechnology']) {
+                        setVisionTestList(response.tests.filter(ob => ob.instituteName == "Vision IAS" && ob.testCategory == "Sectional" && ob.categoryType == "Current Affairs"))
+                        setVajiramTestList(response.tests.filter(ob => ob.instituteName == "Vajiram and Ravi" && ob.testCategory == "Sectional" && ob.categoryType == "Current Affairs"))
+                        setShankarTestList(response.tests.filter(ob => ob.instituteName == "Shankar IAS Academy" && ob.testCategory == "Sectional" && ob.categoryType == "Current Affairs"))
+                        setForumTestList(response.tests.filter(ob => ob.instituteName == "Forum IAS" && ob.testCategory == "Sectional" && ob.categoryType == "Current Affairs"))
+                        setIasTestList(response.tests.filter(ob => ob.instituteName == "IAS Score" && ob.testCategory == "Sectional" && ob.categoryType == "Current Affairs"))
+                        setInsightsTestList(response.tests.filter(ob => ob.instituteName == "Insights IAS" && ob.testCategory == "Sectional" && ob.categoryType == "Current Affairs"))
+                        setUpscTestList(response.tests.filter(ob => ob.instituteName == "UPSC PYQs" && ob.testCategory == "Sectional" && ob.categoryType == "Current Affairs"))
+                        setInsightsTestDaysList(response.tests.filter(ob => ob.instituteName == "Insights IAS 70 Days" && ob.testCategory == "Sectional" && ob.categoryType == "Science and Technology"))
+                        setiasBabaTestDaysList(response.tests.filter(ob => ob.instituteName == "IAS Baba 60 Days" && ob.testCategory == "Sectional" && ob.categoryType == "Science and Technology"))
+                        setrauIasList(response.tests.filter(ob => ob.instituteName == "Rau IAS" && ob.testCategory == "Sectional" && ob.categoryType == "Science and Technology"))
                     }
                 }))
         }
-    }, [testCategory,count])
+    }, [testCategory, count])
 
 
 
     // Handle Give Test
     const handleGiveTest = (id) => {
 
-        if(user)
-        {
-        setCurrentTestId(id)
-        const sharedTestItem = user.token.user.numberOfShares.filter(ob => ob.testId == id)
-        const countShares = sharedTestItem[0]?.number
+        if (user) {
+            setCurrentTestId(id)
+            const sharedTestItem = user.token.user.numberOfShares.filter(ob => ob.testId == id)
+            const countShares = sharedTestItem[0]?.number
 
 
-        if (countShares >= 2) {
-            setSpinner(true)
-            const timer = setTimeout(() => {
-                history.push({
-                    pathname: `/givetest/${id}`,
-                });
-            }, 1000);
-            return () => clearTimeout(timer);
+            if (countShares >= 2) {
+                setSpinner(true)
+                const timer = setTimeout(() => {
+                    history.push({
+                        pathname: `/givetest/${id}`,
+                    });
+                }, 1000);
+                return () => clearTimeout(timer);
+            }
+            else {
+                setOpen(true)
+            }
         }
         else {
-            setOpen(true)
+            notification.error({
+                message: 'Login First',
+                className: 'custom-class',
+                style: {
+                    position: "realtive",
+                    top: 60,
+                    width: 200,
+                },
+            });
         }
-    }
-    else{
-        notification.error({
-            message: 'Login First',
-            className: 'custom-class',
-            style: {
-               position:"realtive",
-               top:60, 
-              width: 200,
-            },
-          });
-    }
     }
 
     //Close Modal
@@ -466,24 +570,24 @@ export default function Test(props) {
 
         setCurrentTestId("")
         setOpen(false)
-    
+
     }
 
 
 
     return (
         <div className={classes.root}>
-         
-         <div className={classes.grow}>
 
-      <AppBar position="static" className={classes.appbar}>
-        <Toolbar>
-          <Typography className={classes.title} variant="h6" noWrap>
-          <img src={Logo} style={{width:60,height:60,marginRight:10}} alt="" />
-          
-            Rapid IAS
-          </Typography>
-          {/** 
+            <div className={classes.grow}>
+
+                <AppBar position="static" className={classes.appbar}>
+                    <Toolbar>
+                        <Typography className={classes.title} variant="h6" noWrap>
+                            <img src={Logo} style={{ width: 60, height: 60, marginRight: 10 }} alt="" />
+
+                    Rapid IAS
+                  </Typography>
+                        {/** 
           <div className={classes.search}>
             <div className={classes.searchIcon}>
               <SearchIcon />
@@ -500,9 +604,9 @@ export default function Test(props) {
             />
           </div>
           */}
-          <div className={classes.grow} />
-          <div className={classes.sectionDesktop}>
-            {/* 
+                        <div className={classes.grow} />
+                        <div className={classes.sectionDesktop}>
+                            {/* 
             <IconButton aria-label="show 4 new mails" color="inherit">
               <Badge badgeContent={4} color="secondary">
                 <MailIcon className={classes.icon}/>
@@ -514,64 +618,107 @@ export default function Test(props) {
               </Badge>
             </IconButton>
             */}
-            {!user?
-            <>
-                <div className={classes.submitButton}>
-         
-                <CButton variant="outline" color="primary"  
-                size="md" block  onClick={()=>history.push('/login')}
-                >Login</CButton>
-                   </div>
-                   <div className={classes.submitButton}>
-         
-                <CButton variant="outline" color="primary" 
-                size="md" block  onClick={()=>history.push('/register')}
-                >Signup</CButton>
-                   </div>
-        
-                </>
-       
-               :
-            <IconButton
-              edge="end"
-              aria-label="account of current user"
-              aria-controls={menuId}
-              aria-haspopup="true"
-              onClick={handleProfileMenuOpen}
-              color="inherit"
-            >
-              <AccountCircle className={classes.icon} />
-            </IconButton>
-            }
-          </div>
-          <div className={classes.sectionMobile}>
-            <IconButton
-              aria-label="show more"
-              aria-controls={mobileMenuId}
-              aria-haspopup="true"
-              onClick={handleMobileMenuOpen}
-              color="black"
-              style={{outline:"none"}}
-            >
-              <MoreIcon  />
-            </IconButton>
-          </div>
-        </Toolbar>
-      </AppBar>
-      {renderMobileMenu}
-      {renderMenu}
-    </div>
+                            {!user ?
+                                <>
+                                    <div className={classes.submitButton}>
 
-         
-         
-         
-         
-         
-         
-         
-         
-         
-         
+                                        <CButton variant="outline" color="primary"
+                                            size="md" block onClick={() => history.push('/login')}
+                                        >Login</CButton>
+                                    </div>
+                                    <div className={classes.submitButton}>
+
+                                        <CButton variant="outline" color="primary"
+                                            size="md" block onClick={() => history.push('/register')}
+                                        >Signup</CButton>
+                                    </div>
+
+                                </>
+
+                                :
+                                <IconButton
+                                    edge="end"
+                                    aria-label="account of current user"
+                                    aria-controls={menuId}
+                                    aria-haspopup="true"
+                                    onClick={handleProfileMenuOpen}
+                                    color="inherit"
+                                >
+                                    <AccountCircle className={classes.icon} />
+                                </IconButton>
+                            }
+                        </div>
+                    
+                    {/*
+                        <div className={classes.sectionMobile}>
+                            <IconButton
+                                aria-label="show more"
+                                aria-controls={mobileMenuId}
+                                aria-haspopup="true"
+                                onClick={handleMobileMenuOpen}
+                                color="black"
+                                style={{ outline: "none" }}
+                            >
+                                <MoreIcon />
+                            </IconButton>
+                        </div>
+                    */}
+
+                         <div className={classes.sectionMobile}>
+                            <IconButton
+                                aria-label="show more"
+                                aria-controls={mobileMenuId}
+                                aria-haspopup="true"
+                                color="black"
+                                style={{ outline: "none" }}
+                            >
+                                 {!user ?
+                                <>
+                                    <div className={classes.submitButton}>
+
+                                        <CButton variant="outline" color="primary"
+                                            size="md" block onClick={() => history.push('/login')}
+                                        >Login</CButton>
+                                    </div>
+                                    <div className={classes.submitButton}>
+
+                                        <CButton variant="outline" color="primary"
+                                            size="md" block onClick={() => history.push('/register')}
+                                        >Signup</CButton>
+                                    </div>
+
+                                </>
+
+                                :
+                                <IconButton
+                                    edge="end"
+                                    aria-label="account of current user"
+                                    aria-controls={menuId}
+                                    aria-haspopup="true"
+                                    onClick={handleProfileMenuOpen}
+                                    color="inherit"
+                                >
+                                    <AccountCircle className={classes.icon} />
+                                </IconButton>
+                            }
+                            </IconButton>
+                        </div>
+                    </Toolbar>
+                </AppBar>
+                {renderMobileMenu}
+                {renderMenu}
+            </div>
+
+
+
+
+
+
+
+
+
+
+
             <Modal
                 aria-labelledby="transition-modal-title"
                 aria-describedby="transition-modal-description"
@@ -606,6 +753,9 @@ export default function Test(props) {
                 <p style={{ marginRight: 20 }}>Preparing Test</p>
                 <CircularProgress color="inherit" size={100} color="primary" />
             </Backdrop>
+
+
+<Online>
 
             <Grid container className={classes.container} >
                 <Grid item lg={2} style={{ paddingTop: 20 }} md={3} sm={3} xs={12}>
@@ -642,7 +792,6 @@ export default function Test(props) {
                                                         disableRipple
                                                         color="default"
                                                         checkedIcon={<span className={clsx(classes.icon, classes.checkedIcon)} />}
-                                                        icon={<span className={classes.icon} />}
                                                         inputProps={{ 'aria-label': 'decorative checkbox' }}
                                                         {...props}
                                                     />
@@ -662,7 +811,6 @@ export default function Test(props) {
                                                         disableRipple
                                                         color="default"
                                                         checkedIcon={<span className={clsx(classes.icon, classes.checkedIcon)} />}
-                                                        icon={<span className={classes.icon} />}
                                                         inputProps={{ 'aria-label': 'decorative checkbox' }}
                                                         {...props}
                                                     />
@@ -681,7 +829,6 @@ export default function Test(props) {
                                                         disableRipple
                                                         color="default"
                                                         checkedIcon={<span className={clsx(classes.icon, classes.checkedIcon)} />}
-                                                        icon={<span className={classes.icon} />}
                                                         inputProps={{ 'aria-label': 'decorative checkbox' }}
                                                         {...props}
                                                     />
@@ -702,7 +849,6 @@ export default function Test(props) {
                                                         disableRipple
                                                         color="default"
                                                         checkedIcon={<span className={clsx(classes.icon, classes.checkedIcon)} />}
-                                                        icon={<span className={classes.icon} />}
                                                         inputProps={{ 'aria-label': 'decorative checkbox' }}
                                                         {...props}
                                                     />
@@ -722,7 +868,6 @@ export default function Test(props) {
                                                         disableRipple
                                                         color="default"
                                                         checkedIcon={<span className={clsx(classes.icon, classes.checkedIcon)} />}
-                                                        icon={<span className={classes.icon} />}
                                                         inputProps={{ 'aria-label': 'decorative checkbox' }}
                                                         {...props}
                                                     />
@@ -744,13 +889,54 @@ export default function Test(props) {
                                                         disableRipple
                                                         color="default"
                                                         checkedIcon={<span className={clsx(classes.icon, classes.checkedIcon)} />}
-                                                        icon={<span className={classes.icon} />}
                                                         inputProps={{ 'aria-label': 'decorative checkbox' }}
                                                         {...props}
                                                     />
                                                 }
                                                 label={<Typography variant="body2" color="textSecondary" className={classes.label}>Current Affairs</Typography>}
                                             />
+
+
+
+
+                                            <FormControlLabel
+                                                input
+                                                control={
+                                                    <Checkbox
+                                                        checked={state['artAndCulture']}
+                                                        onChange={handleChange}
+                                                        name="artAndCulture"
+                                                        className={classes.labelCheckbox}
+                                                        disableRipple
+                                                        color="default"
+                                                        checkedIcon={<span className={clsx(classes.icon, classes.checkedIcon)} />}
+                                                        inputProps={{ 'aria-label': 'decorative checkbox' }}
+                                                        {...props}
+                                                    />
+                                                }
+                                                label={<Typography variant="body2" color="textSecondary" className={classes.label}>Art and Culture</Typography>}
+                                            />
+
+
+
+                                            <FormControlLabel
+                                                input
+                                                control={
+                                                    <Checkbox
+                                                        checked={state['scienceAndTechnology']}
+                                                        onChange={handleChange}
+                                                        name="scienceAndTechnology"
+                                                        className={classes.labelCheckbox}
+                                                        disableRipple
+                                                        color="default"
+                                                        checkedIcon={<span className={clsx(classes.icon, classes.checkedIcon)} />}
+                                                        inputProps={{ 'aria-label': 'decorative checkbox' }}
+                                                        {...props}
+                                                    />
+                                                }
+                                                label={<Typography variant="body2" color="textSecondary" className={classes.label}>Science and Technology</Typography>}
+                                            />
+
                                         </FormGroup>
                                     </FormControl>
                                 }
@@ -791,18 +977,19 @@ export default function Test(props) {
                                     {
                                         vajiramTestList.map((item, index) => (
                                             <>
-                                                <Grid item lg={2} md={4} sm={6} xs={12}>
+                                                <Grid item lg={3} md={4} sm={6} xs={12}>
                                                     <Paper className={classes.paper} elevation={3}>
                                                         <p className={classes.testHeading}>{item.testName}</p>
 
                                                         {/* First Content*/}
                                                         <div className={classes.testContent}>
                                                             <div className={classes.testContentItems}>
-                                                                {item.testCategory == "Sectional" ?
-                                                                    <p className={classes.testContentHeading}>Category :                 {item.categoryType} </p> :
-
+                                                                {item.testCategory == "Sectional" &&
+                                                                    <p className={classes.testContentHeading}>                 {item.categoryType} </p>}
+                                                                {item.testCategory == "Full Length" &&
                                                                     <p className={classes.testContentHeading}>Full Length Test</p>
                                                                 }
+
                                                             </div>
 
                                                         </div>
@@ -810,13 +997,9 @@ export default function Test(props) {
 
                                                         {/* Second Content*/}
                                                         <div className={classes.testContent}>
-                                                            <div className={classes.testContentItems}>
-                                                                <TimerRounded color="primary" className={classes.testContentIcons} />
-                                                                <p className={classes.testContentHeading}>{item.numberOfQuestions > 50 ? "2" : "1"} Hr</p>
-                                                            </div>
 
 
-                                                            <div className={classes.testContentItems}>
+                                                            <div className={classes.testContentItems} style={{ marginTop: item.testCategory ? "-10px" : "25px" }}>
                                                                 <NoteRounded color="primary" className={classes.testContentIcons} />
                                                                 <p className={classes.testContentHeading}>{item.numberOfQuestions} Questions</p>
                                                             </div>
@@ -860,30 +1043,29 @@ export default function Test(props) {
                                     {
                                         shankarTestList.map((item, index) => (
                                             <>
-                                                <Grid item lg={2} md={4} sm={6} xs={12}>
+                                                <Grid item lg={3} md={4} sm={6} xs={12}>
                                                     <Paper className={classes.paper} elevation={3}>
                                                         <p className={classes.testHeading}>{item.testName}</p>
 
-                                                        {/* First Content*/}
                                                         <div className={classes.testContent}>
                                                             <div className={classes.testContentItems}>
-                                                                <p className={classes.testContentHeading}>Category :                 {item.categoryType} </p>
+                                                                {item.testCategory == "Sectional" &&
+                                                                    <p className={classes.testContentHeading}>                 {item.categoryType} </p>}
+                                                                {item.testCategory == "Full Length" &&
+                                                                    <p className={classes.testContentHeading}>Full Length Test</p>
+                                                                }
+
                                                             </div>
 
                                                         </div>
 
-
                                                         {/* Second Content*/}
                                                         <div className={classes.testContent}>
-                                                            <div className={classes.testContentItems}>
-                                                                <TimerRounded color="primary" className={classes.testContentIcons} />
-                                                                <p className={classes.testContentHeading}>{item.numberOfQuestions >= 50 ? "2" : "1"} Hr</p>
-                                                            </div>
 
 
-                                                            <div className={classes.testContentItems}>
+                                                            <div className={classes.testContentItems} style={{ marginTop: item.testCategory ? "-10px" : "25px" }}>
                                                                 <NoteRounded color="primary" className={classes.testContentIcons} />
-                                                                <p className={classes.testContentHeading}>{item.numberOfQuestions} Questions</p>
+                                                                <p className={classes.testContentHeading} >{item.numberOfQuestions} Questions</p>
                                                             </div>
                                                         </div>
 
@@ -900,7 +1082,7 @@ export default function Test(props) {
                                                                 <CButton variant="outline" color="primary"
                                                                     size="md" block onClick={() => handleGiveTest(item._id)} >Start Test</CButton>
                                                             </div>
-                                                          </div>
+                                                        </div>
                                                     </Paper>
                                                 </Grid>
 
@@ -923,28 +1105,26 @@ export default function Test(props) {
                                     {
                                         forumTestList.map((item, index) => (
                                             <>
-                                                <Grid item lg={2} md={4} sm={6} xs={12}>
+                                                <Grid item lg={3} md={4} sm={6} xs={12}>
                                                     <Paper className={classes.paper} elevation={3}>
                                                         <p className={classes.testHeading}>{item.testName}</p>
-
-                                                        {/* First Content*/}
                                                         <div className={classes.testContent}>
                                                             <div className={classes.testContentItems}>
-                                                                <p className={classes.testContentHeading}>Category :                 {item.categoryType} </p>
+                                                                {item.testCategory == "Sectional" &&
+                                                                    <p className={classes.testContentHeading}>                 {item.categoryType} </p>}
+                                                                {item.testCategory == "Full Length" &&
+                                                                    <p className={classes.testContentHeading}>Full Length Test</p>
+                                                                }
+
                                                             </div>
 
                                                         </div>
 
-
                                                         {/* Second Content*/}
                                                         <div className={classes.testContent}>
-                                                            <div className={classes.testContentItems}>
-                                                                <TimerRounded color="primary" className={classes.testContentIcons} />
-                                                                <p className={classes.testContentHeading}>{item.numberOfQuestions >= 50 ? "2" : "1"} Hr</p>
-                                                            </div>
 
 
-                                                            <div className={classes.testContentItems}>
+                                                            <div className={classes.testContentItems} style={{ marginTop: item.testCategory ? "-10px" : "25px" }}>
                                                                 <NoteRounded color="primary" className={classes.testContentIcons} />
                                                                 <p className={classes.testContentHeading}>{item.numberOfQuestions} Questions</p>
                                                             </div>
@@ -962,7 +1142,7 @@ export default function Test(props) {
                                                                 <CButton variant="outline" color="primary"
                                                                     size="md" block onClick={() => handleGiveTest(item._id)} >Start Test</CButton>
                                                             </div>
-                                                                                                                </div>
+                                                        </div>
                                                     </Paper>
                                                 </Grid>
 
@@ -985,28 +1165,26 @@ export default function Test(props) {
                                     {
                                         iasTestList.map((item, index) => (
                                             <>
-                                                <Grid item lg={2} md={4} sm={6} xs={12}>
+                                                <Grid item lg={3} md={4} sm={6} xs={12}>
                                                     <Paper className={classes.paper} elevation={3}>
                                                         <p className={classes.testHeading}>{item.testName}</p>
 
-                                                        {/* First Content*/}
                                                         <div className={classes.testContent}>
                                                             <div className={classes.testContentItems}>
-                                                                <p className={classes.testContentHeading}>Category :                 {item.categoryType} </p>
+                                                                {item.testCategory == "Sectional" &&
+                                                                    <p className={classes.testContentHeading}>                 {item.categoryType} </p>}
+                                                                {item.testCategory == "Full Length" &&
+                                                                    <p className={classes.testContentHeading}>Full Length Test</p>
+                                                                }
+
                                                             </div>
 
                                                         </div>
-
-
                                                         {/* Second Content*/}
                                                         <div className={classes.testContent}>
-                                                            <div className={classes.testContentItems}>
-                                                                <TimerRounded color="primary" className={classes.testContentIcons} />
-                                                                <p className={classes.testContentHeading}>{item.numberOfQuestions >= 50 ? "2" : "1"} Hr</p>
-                                                            </div>
 
 
-                                                            <div className={classes.testContentItems}>
+                                                            <div className={classes.testContentItems} style={{ marginTop: item.testCategory ? "-10px" : "25px" }}>
                                                                 <NoteRounded color="primary" className={classes.testContentIcons} />
                                                                 <p className={classes.testContentHeading}>{item.numberOfQuestions} Questions</p>
                                                             </div>
@@ -1048,28 +1226,27 @@ export default function Test(props) {
                                     {
                                         insightsTestList.map((item, index) => (
                                             <>
-                                                <Grid item lg={2} md={4} sm={6} xs={12}>
+                                                <Grid item lg={3} md={4} sm={6} xs={12}>
                                                     <Paper className={classes.paper} elevation={3}>
                                                         <p className={classes.testHeading}>{item.testName}</p>
 
-                                                        {/* First Content*/}
                                                         <div className={classes.testContent}>
                                                             <div className={classes.testContentItems}>
-                                                                <p className={classes.testContentHeading}>Category :                 {item.categoryType} </p>
+                                                                {item.testCategory == "Sectional" &&
+                                                                    <p className={classes.testContentHeading}>                 {item.categoryType} </p>}
+                                                                {item.testCategory == "Full Length" &&
+                                                                    <p className={classes.testContentHeading}>Full Length Test</p>
+                                                                }
+
                                                             </div>
 
                                                         </div>
 
-
                                                         {/* Second Content*/}
                                                         <div className={classes.testContent}>
-                                                            <div className={classes.testContentItems}>
-                                                                <TimerRounded color="primary" className={classes.testContentIcons} />
-                                                                <p className={classes.testContentHeading}>{item.numberOfQuestions >= 50 ? "2" : "1"} Hr</p>
-                                                            </div>
 
 
-                                                            <div className={classes.testContentItems}>
+                                                            <div className={classes.testContentItems} style={{ marginTop: item.testCategory ? "-10px" : "25px" }}>
                                                                 <NoteRounded color="primary" className={classes.testContentIcons} />
                                                                 <p className={classes.testContentHeading}>{item.numberOfQuestions} Questions</p>
                                                             </div>
@@ -1110,28 +1287,27 @@ export default function Test(props) {
                                     {
                                         upscTestList.map((item, index) => (
                                             <>
-                                                <Grid item lg={2} md={4} sm={6} xs={12}>
+                                                <Grid item lg={3} md={4} sm={6} xs={12}>
                                                     <Paper className={classes.paper} elevation={3}>
                                                         <p className={classes.testHeading}>{item.testName}</p>
 
-                                                        {/* First Content*/}
                                                         <div className={classes.testContent}>
                                                             <div className={classes.testContentItems}>
-                                                                <p className={classes.testContentHeading}>Category :                 {item.categoryType} </p>
+                                                                {item.testCategory == "Sectional" &&
+                                                                    <p className={classes.testContentHeading}>                 {item.categoryType} </p>}
+                                                                {item.testCategory == "Full Length" &&
+                                                                    <p className={classes.testContentHeading}>Full Length Test</p>
+                                                                }
+
                                                             </div>
 
                                                         </div>
 
-
                                                         {/* Second Content*/}
                                                         <div className={classes.testContent}>
-                                                            <div className={classes.testContentItems}>
-                                                                <TimerRounded color="primary" className={classes.testContentIcons} />
-                                                                <p className={classes.testContentHeading}>{item.numberOfQuestions >= 50 ? "2" : "1"} Hr</p>
-                                                            </div>
 
 
-                                                            <div className={classes.testContentItems}>
+                                                            <div className={classes.testContentItems} style={{ marginTop: item.testCategory ? "-10px" : "25px" }}>
                                                                 <NoteRounded color="primary" className={classes.testContentIcons} />
                                                                 <p className={classes.testContentHeading}>{item.numberOfQuestions} Questions</p>
                                                             </div>
@@ -1174,28 +1350,26 @@ export default function Test(props) {
                                     {
                                         visionTestList.map((item, index) => (
                                             <>
-                                                <Grid item lg={2} md={4} sm={6} xs={6}>
+                                                <Grid item lg={3} md={4} sm={6} xs={12}>
                                                     <Paper className={classes.paper} elevation={3}>
                                                         <p className={classes.testHeading}>{item.testName}</p>
 
-                                                        {/* First Content*/}
                                                         <div className={classes.testContent}>
                                                             <div className={classes.testContentItems}>
-                                                                <p className={classes.testContentHeading}>Category :                 {item.categoryType} </p>
+                                                                {item.testCategory == "Sectional" &&
+                                                                    <p className={classes.testContentHeading}>                 {item.categoryType} </p>}
+                                                                {item.testCategory == "Full Length" &&
+                                                                    <p className={classes.testContentHeading}>Full Length Test</p>
+                                                                }
+
                                                             </div>
 
                                                         </div>
-
-
                                                         {/* Second Content*/}
                                                         <div className={classes.testContent}>
-                                                            <div className={classes.testContentItems}>
-                                                                <TimerRounded color="primary" className={classes.testContentIcons} />
-                                                                <p className={classes.testContentHeading}>{item.numberOfQuestions >= 50 ? "2" : "1"} Hr</p>
-                                                            </div>
 
 
-                                                            <div className={classes.testContentItems}>
+                                                            <div className={classes.testContentItems} style={{ marginTop: item.testCategory ? "-10px" : "25px" }}>
                                                                 <NoteRounded color="primary" className={classes.testContentIcons} />
                                                                 <p className={classes.testContentHeading}>{item.numberOfQuestions} Questions</p>
                                                             </div>
@@ -1225,8 +1399,200 @@ export default function Test(props) {
                     }
 
 
+
+
+
+         {/*Insight IAS 70 Days */}
+
+         {insightsTestDaysList.length > 0 &&
+                        <Paper className={classes.categorypaper} elevation={3}>
+
+                            <div className={classes.categoryContainer}>
+                                <h1 className={classes.testCategory}>Insights IAS 70 Days</h1>
+                                <Grid container spacing={1}>
+                                    {
+                                        insightsTestDaysList.map((item, index) => (
+                                            <>
+                                                <Grid item lg={3} md={4} sm={6} xs={12}>
+                                                    <Paper className={classes.paper} elevation={3}>
+                                                        <p className={classes.testHeading}>{item.testName}</p>
+
+                                                        <div className={classes.testContent}>
+                                                            <div className={classes.testContentItems}>
+                                                                {item.testCategory == "Sectional" &&
+                                                                    <p className={classes.testContentHeading}>                 {item.categoryType} </p>}
+                                                                {item.testCategory == "Full Length" &&
+                                                                    <p className={classes.testContentHeading}>Full Length Test</p>
+                                                                }
+
+                                                            </div>
+
+                                                        </div>
+                                                        {/* Second Content*/}
+                                                        <div className={classes.testContent}>
+
+
+                                                            <div className={classes.testContentItems} style={{ marginTop: item.testCategory ? "-10px" : "25px" }}>
+                                                                <NoteRounded color="primary" className={classes.testContentIcons} />
+                                                                <p className={classes.testContentHeading}>{item.numberOfQuestions} Questions</p>
+                                                            </div>
+                                                        </div>
+
+
+                                                        {/* Second Content*/}
+                                                        <div className={classes.testContent}>
+                                                            <div className={classes.testContentItems}>
+                                                            </div>
+
+
+                                                            {/*  Test Button*/}
+
+                                                            <div className={classes.testContentItems} style={{ width: "100%", margin: 10 }}>
+                                                                <CButton variant="outline" color="primary"
+                                                                    size="md" block onClick={() => handleGiveTest(item._id)} >Start Test</CButton>
+                                                            </div>
+                                                        </div>
+                                                    </Paper>
+                                                </Grid>
+                                            </>
+                                        ))}
+                                </Grid>
+                            </div>
+                        </Paper>
+                    }
+
+
+         {/* IAS Baba 60 Days */}
+
+         {iasBabaTestDaysList.length > 0 &&
+                        <Paper className={classes.categorypaper} elevation={3}>
+
+                            <div className={classes.categoryContainer}>
+                                <h1 className={classes.testCategory}>IAS Baba 60 Days</h1>
+                                <Grid container spacing={1}>
+                                    {
+                                        iasBabaTestDaysList.map((item, index) => (
+                                            <>
+                                                <Grid item lg={3} md={4} sm={6} xs={12}>
+                                                    <Paper className={classes.paper} elevation={3}>
+                                                        <p className={classes.testHeading}>{item.testName}</p>
+
+                                                        <div className={classes.testContent}>
+                                                            <div className={classes.testContentItems}>
+                                                                {item.testCategory == "Sectional" &&
+                                                                    <p className={classes.testContentHeading}>                 {item.categoryType} </p>}
+                                                                {item.testCategory == "Full Length" &&
+                                                                    <p className={classes.testContentHeading}>Full Length Test</p>
+                                                                }
+
+                                                            </div>
+
+                                                        </div>
+                                                        {/* Second Content*/}
+                                                        <div className={classes.testContent}>
+
+
+                                                            <div className={classes.testContentItems} style={{ marginTop: item.testCategory ? "-10px" : "25px" }}>
+                                                                <NoteRounded color="primary" className={classes.testContentIcons} />
+                                                                <p className={classes.testContentHeading}>{item.numberOfQuestions} Questions</p>
+                                                            </div>
+                                                        </div>
+
+
+                                                        {/* Second Content*/}
+                                                        <div className={classes.testContent}>
+                                                            <div className={classes.testContentItems}>
+                                                            </div>
+
+
+                                                            {/*  Test Button*/}
+
+                                                            <div className={classes.testContentItems} style={{ width: "100%", margin: 10 }}>
+                                                                <CButton variant="outline" color="primary"
+                                                                    size="md" block onClick={() => handleGiveTest(item._id)} >Start Test</CButton>
+                                                            </div>
+                                                        </div>
+                                                    </Paper>
+                                                </Grid>
+                                            </>
+                                        ))}
+                                </Grid>
+                            </div>
+                        </Paper>
+                    }
+
+
+  {/* Rau IAS */}
+
+  {rauIasTestList.length > 0 &&
+                        <Paper className={classes.categorypaper} elevation={3}>
+
+                            <div className={classes.categoryContainer}>
+                                <h1 className={classes.testCategory}>Rau IAS</h1>
+                                <Grid container spacing={1}>
+                                    {
+                                        rauIasTestList.map((item, index) => (
+                                            <>
+                                                <Grid item lg={3} md={4} sm={6} xs={12}>
+                                                    <Paper className={classes.paper} elevation={3}>
+                                                        <p className={classes.testHeading}>{item.testName}</p>
+
+                                                        <div className={classes.testContent}>
+                                                            <div className={classes.testContentItems}>
+                                                                {item.testCategory == "Sectional" &&
+                                                                    <p className={classes.testContentHeading}>                 {item.categoryType} </p>}
+                                                                {item.testCategory == "Full Length" &&
+                                                                    <p className={classes.testContentHeading}>Full Length Test</p>
+                                                                }
+
+                                                            </div>
+
+                                                        </div>
+                                                        {/* Second Content*/}
+                                                        <div className={classes.testContent}>
+
+
+                                                            <div className={classes.testContentItems} style={{ marginTop: item.testCategory ? "-10px" : "25px" }}>
+                                                                <NoteRounded color="primary" className={classes.testContentIcons} />
+                                                                <p className={classes.testContentHeading}>{item.numberOfQuestions} Questions</p>
+                                                            </div>
+                                                        </div>
+
+
+                                                        {/* Second Content*/}
+                                                        <div className={classes.testContent}>
+                                                            <div className={classes.testContentItems}>
+                                                            </div>
+
+
+                                                            {/*  Test Button*/}
+
+                                                            <div className={classes.testContentItems} style={{ width: "100%", margin: 10 }}>
+                                                                <CButton variant="outline" color="primary"
+                                                                    size="md" block onClick={() => handleGiveTest(item._id)} >Start Test</CButton>
+                                                            </div>
+                                                        </div>
+                                                    </Paper>
+                                                </Grid>
+                                            </>
+                                        ))}
+                                </Grid>
+                            </div>
+                        </Paper>
+                    }
+
+
+
+           
+
                 </Grid>
             </Grid>
+            </Online>
+       <Offline>
+           <div className={classes.container}  >
+           <p style={{fontSize:30,textAlign:"center"}}>Hey Buddy, You are offline check your connection</p>
+           </div>
+           </Offline>
 
         </div>
 
@@ -1240,7 +1606,8 @@ const useStyles = makeStyles((theme) => ({
         backgroundColor: "#F6F9FC"
     },
     container: {
-        paddingTop: 70
+        paddingTop: 70,
+        height:5000
     },
     formControl: {
         margin: theme.spacing(3),
@@ -1249,8 +1616,9 @@ const useStyles = makeStyles((theme) => ({
         padding: theme.spacing(1),
         color: theme.palette.text.secondary,
         borderRadius: 15,
-        width: 165,
+        width: 200,
         height: 190,
+        marginTop: 5,
         [theme.breakpoints.down('xs')]: {
             width: "210px",
 
@@ -1264,7 +1632,8 @@ const useStyles = makeStyles((theme) => ({
         padding: theme.spacing(1),
         color: theme.palette.text.secondary,
         borderRadius: 15,
-        margin: 20
+        margin: 20,
+
     },
     categoryContainer: {
         margin: 20,
@@ -1333,8 +1702,8 @@ const useStyles = makeStyles((theme) => ({
         backgroundImage: 'linear-gradient(180deg,hsla(0,0%,100%,.1),hsla(0,0%,100%,0))',
         '&:before': {
             display: 'block',
-            width: 16,
-            height: 16,
+            width: 18,
+            height: 18,
             backgroundImage:
                 "url(\"data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath" +
                 " fill-rule='evenodd' clip-rule='evenodd' d='M12 5c-.28 0-.53.11-.71.29L7 9.59l-2.29-2.3a1.003 " +
@@ -1412,87 +1781,87 @@ const useStyles = makeStyles((theme) => ({
     },
     grow: {
         flexGrow: 1,
-      },
-      appbar:{
-    backgroundColor:"white",
-    position:"fixed"
-      },
-      menuButton: {
+    },
+    appbar: {
+        backgroundColor: "white",
+        position: "fixed"
+    },
+    menuButton: {
         marginRight: theme.spacing(2),
-      },
-      title: {
+    },
+    title: {
         display: 'none',
-        color:"black",
+        color: "black",
         [theme.breakpoints.up('sm')]: {
-          display: 'block',
+            display: 'block',
         },
-      },
-      search: {
+    },
+    search: {
         position: 'relative',
-        color:"black",
+        color: "black",
         borderRadius: theme.shape.borderRadius,
         backgroundColor: fade(theme.palette.common.white, 0.15),
         '&:hover': {
-          backgroundColor: fade(theme.palette.common.white, 0.25),
+            backgroundColor: fade(theme.palette.common.white, 0.25),
         },
         marginRight: theme.spacing(2),
         marginLeft: 0,
         width: '100%',
         [theme.breakpoints.up('sm')]: {
-          marginLeft: theme.spacing(3),
-          width: 'auto',
+            marginLeft: theme.spacing(3),
+            width: 'auto',
         },
-      },
-      searchIcon: {
+    },
+    searchIcon: {
         padding: theme.spacing(0, 2),
         height: '100%',
-        color:"black",
+        color: "black",
         position: 'absolute',
         pointerEvents: 'none',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-      },
-      inputRoot: {
+    },
+    inputRoot: {
         color: 'inherit',
-      },
-      inputInput: {
+    },
+    inputInput: {
         padding: theme.spacing(1, 1, 1, 0),
         // vertical padding + font size from searchIcon
         paddingLeft: `calc(1em + ${theme.spacing(4)}px)`,
         transition: theme.transitions.create('width'),
         width: '100%',
         [theme.breakpoints.up('md')]: {
-          width: '20ch',
+            width: '20ch',
         },
-      },
-      sectionDesktop: {
+    },
+    sectionDesktop: {
         display: 'none',
         [theme.breakpoints.up('md')]: {
-          display: 'flex',
+            display: 'flex',
         },
-      },
-      sectionMobile: {
+    },
+    sectionMobile: {
         display: 'flex',
         [theme.breakpoints.up('md')]: {
-          display: 'none',
+            display: 'none',
         },
-      },
-      icon:{
-        color:"black"
-      },submitButton:{
-          height:40,
-          margin:10,
-          marginTop:20,
-          width:80
-      },
-       submitButton1:{
-           fontSize:20,
-        height:40,
-        margin:10,
-        width:100
+    },
+    icon: {
+        color: "black"
+    }, submitButton: {
+        height: 40,
+        margin: 10,
+        marginTop: 20,
+        width: 80
+    },
+    submitButton1: {
+        fontSize: 20,
+        height: 40,
+        margin: 10,
+        width: 100
     }
-    
+
 
 }));
 

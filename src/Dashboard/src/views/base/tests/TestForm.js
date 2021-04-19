@@ -83,7 +83,7 @@ const TestForm = (props) => {
   const [state, setState] = useState({
     instituteName: '',
     testName: '',
-    testCategory: '',
+    testCategory: 'Full Length',
     categoryType: '',
     numberOfQuestions: 0,
     questionPaperLink: '',
@@ -336,11 +336,25 @@ const TestForm = (props) => {
                       <option value="IAS Score">IAS Score</option>
                       <option value="Insights IAS">Insights IAS</option>
                       <option value="UPSC PYQs">UPSC PYQs</option>
+                      <option value="Insights IAS 70 Days">Insights IAS 70 Days</option>
+                      <option value="IAS Baba 60 Days">IAS Baba 60 Days</option>
+                      <option value="Rau IAS">Rau IAS</option>
                     </CSelect>
 
                   </CCol>
                 </CFormGroup>
 
+{state['instituteName']=="others" &&
+                <CFormGroup row>
+                  <CCol md="3">
+                    <CLabel htmlFor="email-input">Institute Name</CLabel>
+                  </CCol>
+                  <CCol xs="12" md="9">
+                    <CInput id="email-input" placeholder="Institute Name" disabled={disable}
+                      name="instituteName" value={state['instituteName']} onChange={(e) => handleChange(e)} />
+                  </CCol>
+                </CFormGroup>
+}
 
                 <CFormGroup row>
                   <CCol md="3">
@@ -408,6 +422,18 @@ const TestForm = (props) => {
                           value="Current Affairs"
                           control={<Radio color="primary" size="small" />}
                           label="Current Affairs" />
+
+                          
+                        <FormControlLabel
+                          value="Art and Culture"
+                          control={<Radio color="primary" size="small" />}
+                          label="Art and Culture" />
+
+                          
+                        <FormControlLabel
+                          value="Science and Technology"
+                          control={<Radio color="primary" size="small" />}
+                          label="Science and Technology" />
                       </RadioGroup>
 
                     </CCol>
@@ -524,6 +550,9 @@ const TestForm = (props) => {
                           <option value="Economy">Economy</option>
                           <option value="Geaography">Geography</option>
                           <option value="Current Affairs">Current Affairs</option>
+                          <option value="Art and Culture">Art and Culture</option>
+                          <option value="Science and Technology">Science and Technology</option>
+                    
 
                         </CSelect>
                       </CCol>
@@ -532,7 +561,7 @@ const TestForm = (props) => {
                   :
                   <>
                     {
-                      [...Array((state['numberOfQuestions']) ? state['numberOfQuestions'] : 0)].map((value, index) => (
+                      ([...Array((state['numberOfQuestions']) ? state['numberOfQuestions'] : 0)])?.map((value, index) => (
 
                         <CFormGroup row>
                           <CCol md="2" xs="2" sm="2" lg="4">

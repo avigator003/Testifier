@@ -83,6 +83,13 @@ function Omr(props) {
                     setTest(object)
                 }
             }))
+
+        
+            
+
+
+
+
             setSpinner(false)
      }, [])
 

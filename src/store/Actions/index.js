@@ -369,6 +369,27 @@ export const updateTest = (payload, cb) => {
 };
 
 
+// Delete Test
+export const deleteTest = (payload,cb) => {
+  var {id} = payload;
+  return (dispatch) => {
+    api
+      .get(`/tests/delete/${id}`)
+      .then((res) => {
+        cb(null, {
+          message: "Test Deleted",
+        });
+      })
+      .catch((err) => {
+        console.log(err); //Dispatch Toaster Notificaton
+        cb({
+          message: "Try Again Later",
+        });
+      });
+  };
+};
+
+
 
 /************************   Give  Test Block    ********************************/
 

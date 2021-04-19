@@ -37,3 +37,5 @@ export const SET_TIMER = 'SET_TIMER'
 
 //Test
 export const SUBMIT_TEST= 'SUBMIT_TEST'
+export const GET_OMR_ANSWER= 'GET_OMR_ANSWER'
+export const GET_OMR_PERCENTAGE= 'GET_OMR_PERCENTAGE'

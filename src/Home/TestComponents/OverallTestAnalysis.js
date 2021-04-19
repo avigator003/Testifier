@@ -49,6 +49,11 @@ function OverallTestAnalysis(props) {
   const [correctNumber, setCorrectNumber] = useState()
   const [wrongNumber, setWrongNumber] = useState()
   const [skippedNumber, setSkippedNumber] = useState()
+  const[correctLabel,setCorrectLable]=useState()
+  const[wrongLabel,setWrongLable]=useState()
+  const[skippedLabel,setSkippedLable]=useState()
+
+
   const [sectionalArray, setSectionalArray] = useState([])
   const [confidenceArray, setConfidenceArray] = useState([])
   const [infoArray,setInfoArray]=useState([])
@@ -145,6 +150,14 @@ function OverallTestAnalysis(props) {
     setCorrectNumber(correctNumber)
     setWrongNumber(wrongNumber)
     setSkippedNumber(SkippedNumber)
+    var cLabel=`Correct (${correctNumber} correct-${correctNumber*2} marks)`
+    var wLabel=`Incorrect (${wrongNumber} incorrect-${wrongNumber*0.67} marks)`
+    var sLabel=`Skipped (${SkippedNumber} Questions)`
+   
+    setCorrectLable(cLabel)
+    setWrongLable(wLabel)
+    setSkippedLable(sLabel)
+
 
 
 
@@ -230,7 +243,7 @@ function OverallTestAnalysis(props) {
                   }
                 ]}
                 
-                labels={['Correct', 'Incorrect', 'Skipped']}
+                labels={[correctLabel,wrongLabel,skippedLabel]}
                 options={{
                   tooltips: {
                     enabled: true
@@ -284,78 +297,58 @@ function OverallTestAnalysis(props) {
       </CCard>
 
 
-      
-{/* Confidence Level Report*/ }
+
+
+
+{/* Confidence Leve; Report*/ }
 <CCard className={classes.sectionalAnalysisContainer}>
         <CCardHeader>
-          Confidence Level Analysis of Test
-        </CCardHeader>
+        Confidence Level Analysis of Test
+      </CCardHeader>
         <CCardBody className={classes.section}>
-          <Grid container justify="center" alignItems="center">
-            <Grid item lg={12} >
-            <Grid container justify="center" alignItems="center">
-            <Grid item lg={12} xs={5} >
-         
-         
-            <TableContainer component={Paper}  >
-         
-              <Table className={classes.table} aria-label="simple table">
-        <TableHead>
-          <TableRow>
-            <TableCell align="center">Confidence Level</TableCell>
-            <TableCell align="right">Attempted</TableCell>
-            <TableCell align="right">Correct</TableCell>
-            <TableCell align="right">Wrong</TableCell>
-            <TableCell align="right">Marks</TableCell>
-            <TableCell align="right">Accuracy</TableCell>
-            <TableCell align="center">Questions</TableCell>
-     
-     
-          </TableRow>
-        </TableHead>
-        <TableBody>     
           {confidenceArray.map((row,index)=>(
-     
-            <TableRow key={index}>
-              <TableCell align="center">{row.percentage} %</TableCell>
-              <TableCell align="right">{row.attempted}</TableCell>
-              <TableCell align="right">{row.correct}</TableCell>
-              <TableCell align="right">{row.wrong}</TableCell>
-              <TableCell align="right">{(row.marks).toFixed(2)}</TableCell>
-              <TableCell align="right">{(row.accuracy).toFixed(2)}</TableCell>
-              <TableCell align="left">
-              {
-                row.avatar.map((ob,index)=>(
-                  <Avatar size="30" round={true} name={ob.questionNumber<=9?(ob.questionNumber).toString():
-                    (ob.questionNumber<=99?
-                    ((ob.questionNumber).toString()).charAt(0)+' '+((ob.questionNumber).toString()).charAt(1):
-                    ((ob.questionNumber).toString()).charAt(0)+' '+((ob.questionNumber).toString()).charAt(1)+' '+((ob.questionNumber).toString()).charAt(2))}
-                     color={ob.value=="s"?"#FFA333":(ob.value=="r"?"#5BB85D":"#DA534F")}
-                  fgColor={ob.value=="s"?"black":"white"} className={classes.avatarLogo}  textSizeRatio={3} />
-            
-                 ))}
-                 </TableCell>
-              
-            </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-      
-    </TableContainer>
+            <>
+          <Grid container >
+            <Grid item lg={5} md={5} sm={5} xs={12} className={classes.sectionLeft} >
+            <p style={{fontSize:20,fontWeight:"bold"}}>{row.percentage}%</p>
+            <div className={classes.confidenceHeading} >
+              <p className={classes.confidenceTag}>Attempted</p>
+              <p className={classes.confidenceTag}>Correct</p>
+              <p className={classes.confidenceTag}>Wrong</p>
+              <p className={classes.confidenceTag}>Marks</p>
+              <p className={classes.confidenceTag}>Accuracy</p>
+           </div>
           
-      </Grid>
           
-         
-          </Grid>
+              <div className={classes.confidenceData} >
+              <p className={classes.confidenceTagData}>{row.attempted}</p>
+              <p className={classes.confidenceTagData}>{row.correct}</p>
+              <p className={classes.confidenceTagData}>{row.wrong}</p>
+              <p className={classes.confidenceTagData}>{(row.marks).toFixed(2)}</p>
+              <p className={classes.confidenceTagData}>{(row.accuracy).toFixed(2)}</p>
+           </div>
             </Grid>
+            <Grid item lg={1} md={1} sm={1} />
           
-         
+            <Grid item lg={6} md={6} sm={6} xs={12} className={classes.avatarContainers} >
+            {row.avatar.map(ob=>(                            
+            
+            <div className={classes.avatarCont}>
+              <Avatar size="30" round={true} name={ob.questionNumber<=9?(ob.questionNumber).toString():
+                (ob.questionNumber<=99?
+                ((ob.questionNumber).toString()).charAt(0)+' '+((ob.questionNumber).toString()).charAt(1):
+                ((ob.questionNumber).toString()).charAt(0)+' '+((ob.questionNumber).toString()).charAt(1)+' '+((ob.questionNumber).toString()).charAt(2))}
+                 color={ob.value=="s"?"#FFA333":(ob.value=="r"?"#5BB85D":"#DA534F")}
+                fgColor={ob.value=="s"?"black":"white"} className={classes.avatarLogo}  textSizeRatio={3} />
+            </div>
+        ))}
+            </Grid>
           </Grid>
-
+          <p style={{borderBottom:"1px solid lightgrey"}}></p>
+          </>
+))}
         </CCardBody>
       </CCard>
-
-
 
    
 {/* Info Report*/ }
@@ -549,6 +542,7 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     flexDirection: "column"
   },
+  
   avatar: {
     cursor: "pointer",
     border: "1px solid #DF46DE",
@@ -608,6 +602,40 @@ submitButton: {
 
   }
 },
+avatarCell:{
+  display:"flex",
+  flexDirection:"row",
+  overflowX:"scroll",
+  width:600
+},
+confidenceHeading:{
+  display:"flex",
+  flexDirection:"row",
+  [theme.breakpoints.down('xs')]: {
+  overflow:"scroll",
+  overflowY:"hidden"
+}
+
+},
+confidenceData:{
+  display:"flex",
+  flexDirection:"row",
+  [theme.breakpoints.down('xs')]: {
+    overflow:"scroll",
+    overflowY:"hidden"
+  }
+},
+confidenceTag:{
+  width:100,
+  padding:5,
+  fontWeight:"bold"
+},
+confidenceTagData:{
+  width:100,
+  padding:5,
+  paddingLeft:11
+}
+
 
 
 }));

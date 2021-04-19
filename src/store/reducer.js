@@ -9,7 +9,7 @@ const initialState = {
         timeout:0,
         color:'green'
     },
-    
+    omrAnswers:getPersistedState('omrAnswers') || null,
     sidebarShow: 'responsive',
     timer: parseInt(localStorage.getItem('timer')) || 0,
    
