@@ -14,6 +14,8 @@ import { useSelector, useDispatch } from "react-redux";
 import EmailConfirm from './Authentication/EmailConfirm';
 import OverallTestAnalysis from './Home/TestComponents/OverallTestAnalysis';
 import AdminLogin from './Authentication/AdminLogin';
+import UserProfile from './Home/HomeComponents/UserProfile';
+import UserTestAnalysis from './Home/HomeComponents/UserTestAnalysis';
 
 const TheLayout = React.lazy(() => import('./Dashboard/src/containers/TheLayout'));
 
@@ -48,6 +50,9 @@ function App() {
                   <Route exact path="/givetest" name="Test Page" render={props => <Test {...props}/>} />
                   <Route exact path="/givetest/:id" name="Omr Page" render={props => <Omr {...props}/>} />
                   <Route exact path="/overall/:id" name="Test Analysiis" render={props => <OverallTestAnalysis {...props}/>} />
+                  <Route exact path="/userprofile" name="User Profile" render={props => <UserProfile {...props}/>} />
+                  <Route exact path="/usertestanalysis/:id" name="User Profile" render={props => <UserTestAnalysis {...props}/>} />
+                
                   <Redirect from='*' to='/givetest' />
                   </Switch>
                 ))

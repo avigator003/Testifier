@@ -14,7 +14,7 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
-import { getTestById, saveGivenTest } from '../../store/Actions';
+import { getGivenTestById, getTestById, saveGivenTest } from '../../store/Actions';
 import { useDispatch ,useSelector} from 'react-redux';
 import { notification } from "antd";
 import CheckCircleOutlined from '@material-ui/icons/CheckCircleOutlined';
@@ -42,12 +42,10 @@ function LinearProgressWithLabel(props) {
 
 
 
-function OverallTestAnalysis(props) {
+function UserTestAnalysis(props) {
   const classes = useStyles()
   const dispatch = useDispatch()
   const history=useHistory()
-  
-
   const[totalMarksPaper,setTotalMarksPaper]=useState()
   const[getTotalMarks,setGetTotalMarks]=useState()
   const[accuracy,setAccuracy]=useState()
@@ -80,151 +78,44 @@ function OverallTestAnalysis(props) {
 
   // Getting All the Results
   useEffect(() => {
+  const id = props.match.params.id
 
-    var state = props.location.state.array
+  dispatch(
+    getGivenTestById({id:id},(err, response) => {
+      if (err) {
+        console.log(err)
+      } else {
+          var array=response.testAnalysis.data
+        console.log("re",response.testAnalysis.data)
+        setPercentageArray(array.percentageArray)
+        setSectionalArray(array.sectionalAnalysis)
+        setConfidenceArray(array.confidenceLevelAnalysis)
+        setInfoArray(array.userInfoAnalysis)
 
-
-    const id = props.match.params.id
-
-// Set Percentage Array
-    var newPercentageArray=state.map(item=>item.percentage)
-    setPercentageArray(state.map(item=>item.percentage))
-
-
-    // Total Questions
-    var totlaQuestions=state.length
-    var SkippedNumber=(state.filter(item => item.value == "s")).length
-    var correctNumber=(state.filter(item => item.value == "r")).length
-    var wrongNumber=(state.filter(item => item.value == "w")).length
-  
-     setTotalQuestions(totlaQuestions)
-     setTotalAttempted(totlaQuestions-SkippedNumber)
-     setTotalMarksPaper(totlaQuestions*2)
-     setGetTotalMarks(((correctNumber*2)-(wrongNumber*0.67)).toFixed(2))
-     setAccuracy((correctNumber/totlaQuestions).toFixed(2))
-
-
-
-    // Section Analysis
-    var newSectionalArray = []
-    const uniqueCategoryNames = Array.from(new Set(state.map((item) => item.category)))
-    for (var i = 0; i < uniqueCategoryNames.length; i++) {
-      var newArrayObjects = state.filter(item => item.category == uniqueCategoryNames[i])
-      newArrayObjects.sort(function (a, b) {
-        return a.questionNumber - b.questionNumber;
-      });
+        var correctNumber=array.overallAnalysis.Correct
+        var wrongNumber=array.overallAnalysis.Incorrect
+        var SkippedNumber=array.overallAnalysis.Skipped
        
-      var percentageCorrect=(((newArrayObjects.filter(item => item.value == 'r')).length)/newArrayObjects.length)*100
-      newSectionalArray.push({section:newArrayObjects,percentageCorrect:percentageCorrect})
-    }
+        setCorrectNumber(correctNumber)
+        setWrongNumber(wrongNumber)
+        setSkippedNumber(SkippedNumber)
+        var cLabel=`Correct (${correctNumber} correct-${correctNumber*2} marks)`
+        var wLabel=`Incorrect (${wrongNumber} incorrect-${(wrongNumber*0.67).toFixed(2)} marks)`
+        var sLabel=`Skipped (${SkippedNumber} Questions)`
+       
+        setCorrectLable(cLabel)
+        setWrongLable(wLabel)
+        setSkippedLable(sLabel)
+          
+     setTotalQuestions(array.overall.totalQuestion)
+     setTotalAttempted(array.overall.totalAttempted)
+     setTotalMarksPaper(array.overall.totalMarksPaper)
+     setGetTotalMarks(array.overall.totalMarks)
+     setAccuracy(array.overall.accuracy)
+
     
-    setSectionalArray(newSectionalArray)
-
-
-
-
-  //Confidence Level Analysis
-  var newConfidenceArray = []
-  const uniqueConfidenceObjects = Array.from(new Set(state.map((item) => item.percentage)))
-  const percentageArray=uniqueConfidenceObjects.filter(e => typeof(e)!=='undefined')
-  
-  for (var i = 0; i < percentageArray.length; i++) {
-    var newArrayObjects = state.filter(item => item.percentage == percentageArray[i])
-    var attempts=newArrayObjects.length
-
-    
-    var coorectArray=newArrayObjects.filter(item => item.value =='r')
-    var wrongArray=newArrayObjects.filter(item => item.value =='w')
-  
-    var correct=newArrayObjects.length-wrongArray.length
-    var wrong=newArrayObjects.length-coorectArray.length
-
-    var marks=(correct*2)-(0.667*wrong)
-    
-
-    var accuracy=(correct/attempts)*100
-    var avatarArray=[]
-    for (var j = 0; j < newArrayObjects.length; j++)
-    {
-          avatarArray.push({value:newArrayObjects[j].value,questionNumber:newArrayObjects[j].questionNumber})
-    }
-     avatarArray.sort(function (a, b) {
-      return a.questionNumber - b.questionNumber;
-    });
-  
-    newConfidenceArray.push({percentage:percentageArray[i],attempted:attempts,
-    correct:correct,wrong:wrong,marks:marks,accuracy:accuracy,avatar:avatarArray})
-   }
-   newConfidenceArray.sort(function (a, b) {
-    return a.percentage - b.percentage;
-  });
-    
-  setConfidenceArray(newConfidenceArray)
-
-
-
-
-    // OverAll Analysis
-    var correctNumber=(state.filter(item => item.value == "r")).length
-    var wrongNumber=(state.filter(item => item.value == "w")).length
-    var SkippedNumber=(state.filter(item => item.value == "s")).length
-    setCorrectNumber(correctNumber)
-    setWrongNumber(wrongNumber)
-    setSkippedNumber(SkippedNumber)
-    var cLabel=`Correct (${correctNumber} correct-${correctNumber*2} marks)`
-    var wLabel=`Incorrect (${wrongNumber} incorrect-${(wrongNumber*0.67).toFixed(2)} marks)`
-    var sLabel=`Skipped (${SkippedNumber} Questions)`
+    }}))
    
-    setCorrectLable(cLabel)
-    setWrongLable(wLabel)
-    setSkippedLable(sLabel)
-
-
-
-
-    // Info Analysis
-    var newInfoArray = []
-    dispatch(
-      getTestById(id, (err, response) => {
-          if (err)
-              console.log(err)
-          else {
-              var object=response.res.data.data
-              var answerArray=object.answers.map(item=>item.options)
-              var userAnsArray=props.location.state.userAnswer
-              for(var i=0;i<answerArray.length;i++)
-              {
-                newInfoArray.push({correctAnswer:answerArray[i].toUpperCase(),userAnswer:userAnsArray[i]})
-              }
-               setAnswersCount(newInfoArray.length)
-               setInfoArray(newInfoArray)
-                       
-      dispatch(
-        saveGivenTest({userId:user.token.user._id,testId:id,
-          overallAnalysis:{Correct:correctNumber,Incorrect:wrongNumber,Skipped:SkippedNumber},
-          sectionalAnalysis:newSectionalArray,
-          confidenceLevelAnalysis:newConfidenceArray,
-          userInfoAnalysis:newInfoArray,
-          percentageArray:newPercentageArray,
-          overall:{totalQuestion:totlaQuestions,totalAttempted:totlaQuestions-SkippedNumber,
-            totalMarksPaper:totlaQuestions*2,totalMarks:((correctNumber*2)-(wrongNumber*0.67)).toFixed(2),
-            accuracy:(correctNumber/totlaQuestions).toFixed(2)},
-       }, (err, response) => {
-          if (err) {
-            setMessage("Not Submitted")
-            console.log(err)
-          } else {
-            
-            setMessage("Test Submitted")
-         }}))
-
-
-   
-           }
-      }))
-
-
-     
   }, [])
 
 
@@ -232,12 +123,8 @@ function OverallTestAnalysis(props) {
   return (
     <div className={classes.analysisContainer}>
     
-   <h1 style={{color:message=="Test Submitted"?"#5BB85D":"#DA534F",textAlign:"center",margin:40}}>
-            
-     <CheckCircleOutlined style={{fontSize:40,marginRight:10}}/>
-     {message}</h1>
 
-  <Grid  container  className={classes.card} justify="center" alignItems="center">
+  <Grid  container  className={classes.card} justify="center" alignItems="center" >
     
     <Grid item  className={classes.backgroundImageContainer}>
      <img src={Badge} className={classes.backgroundImage} alt="" />
@@ -566,7 +453,7 @@ function OverallTestAnalysis(props) {
       <div className={classes.submitButton}>
           
           <CButton variant="outline" color="primary" 
-                 size="md" block onClick={()=>history.push('/givetest')} >Save Analysis</CButton>
+                 size="md" block onClick={()=>history.push('/userprofile')} >Back to Profile</CButton>
                  </div>
       
 
@@ -574,7 +461,7 @@ function OverallTestAnalysis(props) {
   )
 }
 
-export default OverallTestAnalysis
+export default UserTestAnalysis
 
 const useStyles = makeStyles((theme) => ({
   analysisContainer: {

@@ -86,121 +86,6 @@ export default function Test(props) {
     const [search, setSearch] = useState()
 
 
-    const [anchorEl, setAnchorEl] = React.useState(null);
-    const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
-
-    const isMenuOpen = Boolean(anchorEl);
-    const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
-
-    const handleProfileMenuOpen = (event) => {
-        setAnchorEl(event.currentTarget);
-    };
-
-    const handleMobileMenuClose = () => {
-        setMobileMoreAnchorEl(null);
-    };
-
-    const handleMenuClose = () => {
-        setAnchorEl(null);
-        handleMobileMenuClose();
-    };
-
-    const handleMobileMenuOpen = (event) => {
-        setMobileMoreAnchorEl(event.currentTarget);
-    };
-
-    const handleLogout = () => {
-        setAnchorEl(null);
-        handleMobileMenuClose();
-        dispatch(logoutUser())
-        history.push('/')
-    }
-
-
-
-    const menuId = 'primary-search-account-menu';
-    const renderMenu = (
-        <Menu
-            anchorEl={anchorEl}
-            anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
-            id={menuId}
-            keepMounted
-            transformOrigin={{ vertical: 'top', horizontal: 'right' }}
-            open={isMenuOpen}
-            onClose={handleMenuClose}
-        >
-            <MenuItem onClick={handleMenuClose}>
-                <AssignmentInd style={{ marginRight: 10 }} />Profile</MenuItem>
-            <MenuItem onClick={() => handleLogout()}>
-                <ExitToApp style={{ marginRight: 10 }} />  Logout
-        </MenuItem>
-        </Menu>
-    );
-
-    const mobileMenuId = 'primary-search-account-menu-mobile';
-    const renderMobileMenu = (
-
-
-
-        
-        <Menu
-            anchorEl={mobileMoreAnchorEl}
-            anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
-            id={mobileMenuId}
-            keepMounted
-            transformOrigin={{ vertical: 'top', horizontal: 'right' }}
-            open={isMobileMenuOpen}
-            onClose={handleMobileMenuClose}
-            style={{ width: 400 }}
-        >
-
-            {!user ?
-                <>
-                    <MenuItem className={classes.submitButton1}>
-
-                        <CButton variant="outline" color="primary"
-                            size="md" block onClick={() => history.push('/login')}
-                        >Login</CButton>
-                    </MenuItem>
-                    <MenuItem className={classes.submitButton1}>
-
-                        <CButton variant="outline" color="primary"
-                            size="md" block onClick={() => history.push('/register')}
-                        >Signup</CButton>
-                    </MenuItem>
-
-                </>
-
-                :
-                <>
-                    <MenuItem >
-                        <IconButton
-                            aria-label="account of current user"
-                            aria-controls="primary-search-account-menu"
-                            aria-haspopup="true"
-                            color="inherit"
-                        >
-                            <AccountCircle />
-                        </IconButton>
-                        <p>Profile</p>
-                    </MenuItem>
-                    <MenuItem onClick={() => handleLogout()}>
-                        <IconButton
-                            aria-label="account of current user"
-                            aria-controls="primary-search-account-menu"
-                            aria-haspopup="true"
-                            color="inherit"
-                        >
-                            <ExitToApp />
-                        </IconButton>
-                        <p>Logout</p>
-                    </MenuItem>
-                </>
-            }
-        </Menu>
-    );
-
-
 
 
 
@@ -578,139 +463,7 @@ export default function Test(props) {
     return (
         <div className={classes.root}>
 
-            <div className={classes.grow}>
-
-                <AppBar position="static" className={classes.appbar}>
-                    <Toolbar>
-                        <Typography className={classes.title} variant="h6" noWrap>
-                            <img src={Logo} style={{ width: 60, height: 60, marginRight: 10 }} alt="" />
-
-                    Rapid IAS
-                  </Typography>
-                        {/** 
-          <div className={classes.search}>
-            <div className={classes.searchIcon}>
-              <SearchIcon />
-            </div>
-            <InputBase
-              placeholder="Search…"
-              classes={{
-                root: classes.inputRoot,
-                input: classes.inputInput,
-              }}
-              inputProps={{ 'aria-label': 'search' }}
-              value={search}
-              onChange={(e)=>handleSearch(e.target.value)}
-            />
-          </div>
-          */}
-                        <div className={classes.grow} />
-                        <div className={classes.sectionDesktop}>
-                            {/* 
-            <IconButton aria-label="show 4 new mails" color="inherit">
-              <Badge badgeContent={4} color="secondary">
-                <MailIcon className={classes.icon}/>
-              </Badge>
-            </IconButton>
-            <IconButton aria-label="show 17 new notifications" color="inherit">
-              <Badge badgeContent={17} color="secondary">
-                <NotificationsIcon className={classes.icon} />
-              </Badge>
-            </IconButton>
-            */}
-                            {!user ?
-                                <>
-                                    <div className={classes.submitButton}>
-
-                                        <CButton variant="outline" color="primary"
-                                            size="md" block onClick={() => history.push('/login')}
-                                        >Login</CButton>
-                                    </div>
-                                    <div className={classes.submitButton}>
-
-                                        <CButton variant="outline" color="primary"
-                                            size="md" block onClick={() => history.push('/register')}
-                                        >Signup</CButton>
-                                    </div>
-
-                                </>
-
-                                :
-                                <IconButton
-                                    edge="end"
-                                    aria-label="account of current user"
-                                    aria-controls={menuId}
-                                    aria-haspopup="true"
-                                    onClick={handleProfileMenuOpen}
-                                    color="inherit"
-                                >
-                                    <AccountCircle className={classes.icon} />
-                                </IconButton>
-                            }
-                        </div>
-                    
-                    {/*
-                        <div className={classes.sectionMobile}>
-                            <IconButton
-                                aria-label="show more"
-                                aria-controls={mobileMenuId}
-                                aria-haspopup="true"
-                                onClick={handleMobileMenuOpen}
-                                color="black"
-                                style={{ outline: "none" }}
-                            >
-                                <MoreIcon />
-                            </IconButton>
-                        </div>
-                    */}
-
-                         <div className={classes.sectionMobile}>
-                            <IconButton
-                                aria-label="show more"
-                                aria-controls={mobileMenuId}
-                                aria-haspopup="true"
-                                color="black"
-                                style={{ outline: "none" }}
-                            >
-                                 {!user ?
-                                <>
-                                    <div className={classes.submitButton}>
-
-                                        <CButton variant="outline" color="primary"
-                                            size="md" block onClick={() => history.push('/login')}
-                                        >Login</CButton>
-                                    </div>
-                                    <div className={classes.submitButton}>
-
-                                        <CButton variant="outline" color="primary"
-                                            size="md" block onClick={() => history.push('/register')}
-                                        >Signup</CButton>
-                                    </div>
-
-                                </>
-
-                                :
-                                <IconButton
-                                    edge="end"
-                                    aria-label="account of current user"
-                                    aria-controls={menuId}
-                                    aria-haspopup="true"
-                                    onClick={handleProfileMenuOpen}
-                                    color="inherit"
-                                >
-                                    <AccountCircle className={classes.icon} />
-                                </IconButton>
-                            }
-                            </IconButton>
-                        </div>
-                    </Toolbar>
-                </AppBar>
-                {renderMobileMenu}
-                {renderMenu}
-            </div>
-
-
-
+<Header/>
 
 
 
@@ -755,9 +508,9 @@ export default function Test(props) {
             </Backdrop>
 
 
-<Online>
+           <Online>
 
-            <Grid container className={classes.container} >
+            <Grid container className={classes.container} spacing={1} >
                 <Grid item lg={2} style={{ paddingTop: 20 }} md={3} sm={3} xs={12}>
                     <Paper elevation={3} className={classes.filterContainer}>
                         <p className={classes.filterHeading}>FILTER</p>
@@ -962,7 +715,7 @@ export default function Test(props) {
 
                 </Grid>
 
-                <Grid item lg={10} md={7} sm={8} xs={12}>
+                <Grid item lg={10} md={7} sm={8} xs={12} className={classes.testContainer}>
 
 
 
@@ -1607,7 +1360,7 @@ const useStyles = makeStyles((theme) => ({
     },
     container: {
         paddingTop: 70,
-        height:5000
+        height:"100%"
     },
     formControl: {
         margin: theme.spacing(3),
@@ -1860,6 +1613,10 @@ const useStyles = makeStyles((theme) => ({
         height: 40,
         margin: 10,
         width: 100
+    },
+    testContainer:{
+        
+   
     }
 
 

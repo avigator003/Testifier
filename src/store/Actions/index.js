@@ -395,6 +395,7 @@ export const deleteTest = (payload,cb) => {
 
 //Save Test
 export const saveGivenTest = (payload,cb) => {
+  console.log("payload",payload)
   return (dispatch) => {
     api
       .post("/testgiven/savetest",payload)
@@ -414,5 +415,45 @@ export const saveGivenTest = (payload,cb) => {
 };
 
 
+// Get Test Given
+export const getGivenTest = (payload,cb) => {
+  var {id}=payload
+  return (dispatch) => {
+    api
+      .get(`/testgiven/show/${id}`)
+      .then((res) => {
+            return cb(null,{
+              testGiven: res.data,
+            });
+        })
 
+             .catch((err) => {
+        console.log(err);
+        cb({
+          message:"Fetched Fail",
+        });
+      });
+  };
+};
+
+
+// Get Test Given By Id
+export const getGivenTestById = (payload, cb) => {
+  var { id} = payload;
+  return (dispatch) => {
+    api
+      .get(`/testgiven/view/${id}`)
+      .then((res) => {
+        cb(null, {
+          testAnalysis: res.data,
+        });
+      })
+      .catch((err) => {
+        console.log(err); //Dispatch Toaster Notificaton
+        cb({
+          message: err,
+        });
+      });
+  };
+};
 
