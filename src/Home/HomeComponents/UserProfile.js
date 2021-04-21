@@ -38,7 +38,8 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: 5,
     marginTop: 10,
     marginLeft:5,
-    marginRight:5
+    marginRight:5,
+    width:250
   },
 heading:{
   display:"flex",
@@ -105,6 +106,10 @@ const testAnalysis=(id)=>{
 
 
      <Header/>
+     
+<CButton variant="outline" color="danger"  style={{width:200,position:"relative",top:80,marginBottom:50,marginLeft:10}}
+                 size="md" block onClick={()=>history.push('/give test')} >Get Back</CButton>
+         
      {!spinner &&
        <Grid container className={classes.cardContainer} spacing={2}> 
        {test.map((item,index)=>(
@@ -127,6 +132,7 @@ const testAnalysis=(id)=>{
      
        </Grid>
 }
+
 </div>
     )
 }

@@ -91,7 +91,6 @@ function UserTestAnalysis(props) {
         setSectionalArray(array.sectionalAnalysis)
         setConfidenceArray(array.confidenceLevelAnalysis)
         setInfoArray(array.userInfoAnalysis)
-
         var correctNumber=array.overallAnalysis.Correct
         var wrongNumber=array.overallAnalysis.Incorrect
         var SkippedNumber=array.overallAnalysis.Skipped
@@ -113,7 +112,8 @@ function UserTestAnalysis(props) {
      setGetTotalMarks(array.overall.totalMarks)
      setAccuracy(array.overall.accuracy)
 
-    
+     setAnswersCount(array.overall.totalQuestion)
+      
     }}))
    
   }, [])
@@ -336,7 +336,7 @@ function UserTestAnalysis(props) {
         <TableBody>     
           {infoArray.map((row,index)=>(
             <>
-            {index+1<=30 &&
+            {index+1<=34 &&
             <TableRow key={index}>
               <TableCell align="center">{index+1}</TableCell>
               <TableCell align="left">
@@ -358,7 +358,7 @@ function UserTestAnalysis(props) {
           
       </Grid>
 
-{ answersCount>30  &&
+{ answersCount>34  &&
           <Grid item lg={4} xs={12} >
             <TableContainer component={Paper}>
              <Table className={classes.table} aria-label="simple table">
@@ -374,7 +374,7 @@ function UserTestAnalysis(props) {
         <TableBody>     
           {infoArray.map((row,index)=>(
             <>
-            {(index+1>30 && index+1 <=60) &&
+            {(index+1>34 && index+1 <=68) &&
             <TableRow key={index}>
               <TableCell align="center">{index+1}</TableCell>
               <TableCell align="left">
@@ -399,7 +399,7 @@ function UserTestAnalysis(props) {
       </Grid>
 } 
 
-{ answersCount>60  &&
+{ answersCount>68 &&
 
       <Grid item lg={4} xs={12}>
             <TableContainer component={Paper}>
@@ -415,7 +415,7 @@ function UserTestAnalysis(props) {
         <TableBody>     
           {infoArray.map((row,index)=>(
             <>
-            {index+1>60 &&
+            {index+1>68 &&
             <TableRow key={index}>
               <TableCell align="center">{index+1}</TableCell>
               <TableCell align="left">

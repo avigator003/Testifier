@@ -18,7 +18,7 @@ import ExitToApp from '@material-ui/icons/ExitToApp';
 import AssignmentInd from '@material-ui/icons/AssignmentInd';
 import { logoutUser } from '../../store/Actions';
 import { useDispatch, useSelector } from 'react-redux';
-import { useHistory } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { CButton, CCol, CFormGroup, CLabel, CSelect } from '@coreui/react';
 import Logo from '../../assests/images/logo.png'
 
@@ -27,23 +27,23 @@ const useStyles = makeStyles((theme) => ({
   grow: {
     flexGrow: 1,
   },
-  appbar:{
-backgroundColor:"white",
-position:"fixed"
+  appbar: {
+    backgroundColor: "white",
+    position: "fixed"
   },
   menuButton: {
     marginRight: theme.spacing(2),
   },
   title: {
     display: 'none',
-    color:"black",
+    color: "black",
     [theme.breakpoints.up('sm')]: {
       display: 'block',
     },
   },
   search: {
     position: 'relative',
-    color:"black",
+    color: "black",
     borderRadius: theme.shape.borderRadius,
     backgroundColor: fade(theme.palette.common.white, 0.15),
     '&:hover': {
@@ -60,7 +60,7 @@ position:"fixed"
   searchIcon: {
     padding: theme.spacing(0, 2),
     height: '100%',
-    color:"black",
+    color: "black",
     position: 'absolute',
     pointerEvents: 'none',
     display: 'flex',
@@ -92,18 +92,52 @@ position:"fixed"
       display: 'none',
     },
   },
-  icon:{
-    color:"black"
-  }
+  icon: {
+    color: "black"
+  },
+  submitButton: {
+    height: 40,
+    margin: 5,
+    marginTop: 20,
+    width: "100%"
+  },
+  aboutButton: {
+    height: 40,
+    margin: 5,
+    marginTop: 20,
+    width: "100%"
+  },privacyButton: {
+    height: 40,
+    margin: 5,
+    marginTop: 20,
+    width: "100%"
+  },contactButton: {
+    height: 40,
+    margin: 5,
+    marginTop: 20,
+    width: "300px"
+  },courseButton: {
+
+    height: 40,
+    margin: 5,
+    marginTop: 20,
+    width: 150
+  },
+  submitButton1: {
+    fontSize: 20,
+    height: 40,
+    margin: 10,
+    width: 100
+  },
 }));
 
 export default function Header() {
   const classes = useStyles()
-  const dispatch=useDispatch()
-  const history=useHistory()
+  const dispatch = useDispatch()
+  const history = useHistory()
 
 
-    // Logined User
+  // Logined User
   const user = useSelector((state) => state.user);
 
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -113,111 +147,115 @@ export default function Header() {
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
 
   const handleProfileMenuOpen = (event) => {
-      setAnchorEl(event.currentTarget);
+    setAnchorEl(event.currentTarget);
   };
 
   const handleMobileMenuClose = () => {
-      setMobileMoreAnchorEl(null);
+    setMobileMoreAnchorEl(null);
   };
 
   const handleMenuClose = () => {
-      setAnchorEl(null);
-      handleMobileMenuClose();
+    setAnchorEl(null);
+    handleMobileMenuClose();
   };
 
   const handleMobileMenuOpen = (event) => {
-      setMobileMoreAnchorEl(event.currentTarget);
+    setMobileMoreAnchorEl(event.currentTarget);
   };
 
 
-const handleLogout=()=>{
+  const handleLogout = () => {
     setAnchorEl(null);
     handleMobileMenuClose();
     dispatch(logoutUser())
     history.push('/')
-}
-    const menuId = 'primary-search-account-menu';
-    const renderMenu = (
-        <Menu
-            anchorEl={anchorEl}
-            anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
-            id={menuId}
-            keepMounted
-            transformOrigin={{ vertical: 'top', horizontal: 'right' }}
-            open={isMenuOpen}
-            onClose={handleMenuClose}
-        >
-            <MenuItem onClick={()=>history.push('/userprofile')}>
-                <AssignmentInd style={{ marginRight: 10 }} />Profile</MenuItem>
-            <MenuItem onClick={() => handleLogout()}>
-                <ExitToApp style={{ marginRight: 10 }} />  Logout
+  }
+  const menuId = 'primary-search-account-menu';
+  const renderMenu = (
+    <Menu
+      anchorEl={anchorEl}
+      anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+      id={menuId}
+      keepMounted
+      transformOrigin={{ vertical: 'top', horizontal: 'right' }}
+      open={isMenuOpen}
+      onClose={handleMenuClose}
+    >
+      <MenuItem onClick={() => history.push('/userprofile')}>
+        <AssignmentInd style={{ marginRight: 10 }} />Profile</MenuItem>
+      <MenuItem onClick={() => handleLogout()}>
+        <ExitToApp style={{ marginRight: 10 }} />  Logout
         </MenuItem>
-        </Menu>
-    );
+    </Menu>
+  );
 
-    const mobileMenuId = 'primary-search-account-menu-mobile';
-    const renderMobileMenu = (
+  const mobileMenuId = 'primary-search-account-menu-mobile';
+  const renderMobileMenu = (
 
 
 
-        
-        <Menu
-            anchorEl={mobileMoreAnchorEl}
-            anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
-            id={mobileMenuId}
-            keepMounted
-            transformOrigin={{ vertical: 'top', horizontal: 'right' }}
-            open={isMobileMenuOpen}
-            onClose={handleMobileMenuClose}
-            style={{ width: 400 }}
-        >
 
-            {!user ?
-                <>
-                    <MenuItem className={classes.submitButton1}>
+    <Menu
+      anchorEl={mobileMoreAnchorEl}
+      anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+      id={mobileMenuId}
+      keepMounted
+      transformOrigin={{ vertical: 'top', horizontal: 'right' }}
+      open={isMobileMenuOpen}
+      onClose={handleMobileMenuClose}
+      style={{ width: 400 }}
+    >
 
-                        <CButton variant="outline" color="primary"
-                            size="md" block onClick={() => history.push('/login')}
-                        >Login</CButton>
-                    </MenuItem>
-                    <MenuItem className={classes.submitButton1}>
+      {!user ?
+        <>
 
-                        <CButton variant="outline" color="primary"
-                            size="md" block onClick={() => history.push('/register')}
-                        >Signup</CButton>
-                    </MenuItem>
 
-                </>
 
-                :
-                <>
-                    <MenuItem  >
-                        <IconButton
-                            aria-label="account of current user"
-                            aria-controls="primary-search-account-menu"
-                            aria-haspopup="true"
-                            color="inherit"
-                            onClick={()=>history.push('/userprofile')}
-                        >
-                            <AccountCircle />
-                        </IconButton>
-                        <p>Profile</p>
-                    </MenuItem>
-                    <MenuItem onClick={() => handleLogout()}>
-                        <IconButton
-                            aria-label="account of current user"
-                            aria-controls="primary-search-account-menu"
-                            aria-haspopup="true"
-                            color="inherit"
-                        >
-                            <ExitToApp />
-                        </IconButton>
-                        <p>Logout</p>
-                    </MenuItem>
-                </>
-            }
-        </Menu>
-    );
+
+          <MenuItem className={classes.submitButton1}>
+
+            <CButton variant="outline" color="primary"
+              size="md" block onClick={() => history.push('/login')}
+            >Login</CButton>
+          </MenuItem>
+          <MenuItem className={classes.submitButton1}>
+
+            <CButton variant="outline" color="primary"
+              size="md" block onClick={() => history.push('/register')}
+            >Signup</CButton>
+          </MenuItem>
+
+        </>
+
+        :
+        <>
+          <MenuItem  >
+            <IconButton
+              aria-label="account of current user"
+              aria-controls="primary-search-account-menu"
+              aria-haspopup="true"
+              color="inherit"
+              onClick={() => history.push('/userprofile')}
+            >
+              <AccountCircle />
+            </IconButton>
+            <p>Profile</p>
+          </MenuItem>
+          <MenuItem onClick={() => handleLogout()}>
+            <IconButton
+              aria-label="account of current user"
+              aria-controls="primary-search-account-menu"
+              aria-haspopup="true"
+              color="inherit"
+            >
+              <ExitToApp />
+            </IconButton>
+            <p>Logout</p>
+          </MenuItem>
+        </>
+      }
+    </Menu>
+  );
 
 
 
@@ -227,14 +265,14 @@ const handleLogout=()=>{
   return (
     <div className={classes.grow}>
 
-    <AppBar position="static" className={classes.appbar}>
+      <AppBar position="static" className={classes.appbar}>
         <Toolbar>
-            <Typography className={classes.title} variant="h6" noWrap>
-                <img src={Logo} style={{ width: 60, height: 60, marginRight: 10 }} alt="" />
+          <Typography className={classes.title} variant="h6" noWrap>
+            <img src={Logo} style={{ width: 60, height: 60, marginRight: 10 }} alt="" />
 
         Rapid IAS
       </Typography>
-            {/** 
+          {/** 
 <div className={classes.search}>
 <div className={classes.searchIcon}>
   <SearchIcon />
@@ -251,9 +289,9 @@ const handleLogout=()=>{
 />
 </div>
 */}
-            <div className={classes.grow} />
-            <div className={classes.sectionDesktop}>
-                {/* 
+          <div className={classes.grow} />
+          <div className={classes.sectionDesktop}>
+            {/* 
 <IconButton aria-label="show 4 new mails" color="inherit">
   <Badge badgeContent={4} color="secondary">
     <MailIcon className={classes.icon}/>
@@ -265,38 +303,71 @@ const handleLogout=()=>{
   </Badge>
 </IconButton>
 */}
-                {!user ?
-                    <>
-                        <div className={classes.submitButton}>
+            {!user ?
+              <div style={{display:"flex",flexDirection:"row",justifyContent:"space-between"}}>
+              
+              
+              <div style={{display:"flex",flexDirection:"row",position:"relative",left:-280}} >
+              
+                <div className={classes.submitButton}>
+                  <Link to="/Login" style={{textDecoration:"none"}}>
+                  <p  style={{width:60}}>Home</p></Link>
+                </div>
 
-                            <CButton variant="outline" color="primary"
-                                size="md" block onClick={() => history.push('/login')}
-                            >Login</CButton>
-                        </div>
-                        <div className={classes.submitButton}>
+                <div className={classes.submitButton} >
+                  <Link to="/Login" style={{textDecoration:"none"}}>
+                    <p  style={{width:100}}>More Courses</p></Link>
+                </div>
 
-                            <CButton variant="outline" color="primary"
-                                size="md" block onClick={() => history.push('/register')}
-                            >Signup</CButton>
-                        </div>
+                <div className={classes.submitButton}>
+                  <Link to="/Login" style={{textDecoration:"none"}}>
+                  <p  style={{width:70}}>About Us</p></Link>
+                </div>
 
-                    </>
+                <div className={classes.submitButton}>
+                  <Link to="/Login" style={{textDecoration:"none"}}>
+                  <p  style={{width:80}}>Contact Us</p></Link>
+                </div>
 
-                    :
-                    <IconButton
-                        edge="end"
-                        aria-label="account of current user"
-                        aria-controls={menuId}
-                        aria-haspopup="true"
-                        onClick={handleProfileMenuOpen}
-                        color="inherit"
-                    >
-                        <AccountCircle className={classes.icon} />
-                    </IconButton>
-                }
-            </div>
-        
-        {/*
+                
+                <div className={classes.submitButton}>
+                  <Link to="/Login" style={{textDecoration:"none"}}>
+                  <p  style={{width:100}}>Privacy Policy</p></Link>
+                </div>
+
+</div>
+
+<div style={{display:"flex",flexDirection:"row",justifyContent:"space-between"}}>
+                <div className={classes.submitButton}>
+                  <CButton variant="outline" color="primary"
+                    size="md" block onClick={() => history.push('/login')}
+                  >Login</CButton>
+                </div>
+                <div className={classes.submitButton}>
+
+                  <CButton variant="outline" color="primary"
+                    size="md" block onClick={() => history.push('/register')}
+                  >Signup</CButton>
+                </div>
+
+</div>
+              </div>
+
+              :
+              <IconButton
+                edge="end"
+                aria-label="account of current user"
+                aria-controls={menuId}
+                aria-haspopup="true"
+                onClick={handleProfileMenuOpen}
+                color="inherit"
+              >
+                <AccountCircle className={classes.icon} />
+              </IconButton>
+            }
+          </div>
+
+          {/*
             <div className={classes.sectionMobile}>
                 <IconButton
                     aria-label="show more"
@@ -311,50 +382,50 @@ const handleLogout=()=>{
             </div>
         */}
 
-             <div className={classes.sectionMobile}>
+          <div className={classes.sectionMobile}>
+            <IconButton
+              aria-label="show more"
+              aria-controls={mobileMenuId}
+              aria-haspopup="true"
+              color="black"
+              style={{ outline: "none" }}
+            >
+              {!user ?
+                <>
+                  <div className={classes.submitButton}>
+
+                    <CButton variant="outline" color="primary"
+                      size="md" block onClick={() => history.push('/login')}
+                    >Login</CButton>
+                  </div>
+                  <div className={classes.submitButton}>
+
+                    <CButton variant="outline" color="primary"
+                      size="md" block onClick={() => history.push('/register')}
+                    >Signup</CButton>
+                  </div>
+
+                </>
+
+                :
                 <IconButton
-                    aria-label="show more"
-                    aria-controls={mobileMenuId}
-                    aria-haspopup="true"
-                    color="black"
-                    style={{ outline: "none" }}
+                  edge="end"
+                  aria-label="account of current user"
+                  aria-controls={menuId}
+                  aria-haspopup="true"
+                  onClick={handleProfileMenuOpen}
+                  color="inherit"
                 >
-                     {!user ?
-                    <>
-                        <div className={classes.submitButton}>
-
-                            <CButton variant="outline" color="primary"
-                                size="md" block onClick={() => history.push('/login')}
-                            >Login</CButton>
-                        </div>
-                        <div className={classes.submitButton}>
-
-                            <CButton variant="outline" color="primary"
-                                size="md" block onClick={() => history.push('/register')}
-                            >Signup</CButton>
-                        </div>
-
-                    </>
-
-                    :
-                    <IconButton
-                        edge="end"
-                        aria-label="account of current user"
-                        aria-controls={menuId}
-                        aria-haspopup="true"
-                        onClick={handleProfileMenuOpen}
-                        color="inherit"
-                    >
-                        <AccountCircle className={classes.icon} />
-                    </IconButton>
-                }
+                  <AccountCircle className={classes.icon} />
                 </IconButton>
-            </div>
+              }
+            </IconButton>
+          </div>
         </Toolbar>
-    </AppBar>
-    {renderMobileMenu}
-    {renderMenu}
-</div>
+      </AppBar>
+      {renderMobileMenu}
+      {renderMenu}
+    </div>
 
 
 

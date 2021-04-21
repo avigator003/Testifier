@@ -101,7 +101,7 @@ function OverallTestAnalysis(props) {
      setTotalAttempted(totlaQuestions-SkippedNumber)
      setTotalMarksPaper(totlaQuestions*2)
      setGetTotalMarks(((correctNumber*2)-(wrongNumber*0.67)).toFixed(2))
-     setAccuracy((correctNumber/totlaQuestions).toFixed(2))
+     setAccuracy((correctNumber/(totlaQuestions-SkippedNumber)).toFixed(2))
 
 
 
@@ -449,7 +449,7 @@ function OverallTestAnalysis(props) {
         <TableBody>     
           {infoArray.map((row,index)=>(
             <>
-            {index+1<=30 &&
+            {index+1<=34  &&
             <TableRow key={index}>
               <TableCell align="center">{index+1}</TableCell>
               <TableCell align="left">
@@ -471,7 +471,7 @@ function OverallTestAnalysis(props) {
           
       </Grid>
 
-{ answersCount>30  &&
+{ answersCount>34  &&
           <Grid item lg={4} xs={12} >
             <TableContainer component={Paper}>
              <Table className={classes.table} aria-label="simple table">
@@ -487,7 +487,7 @@ function OverallTestAnalysis(props) {
         <TableBody>     
           {infoArray.map((row,index)=>(
             <>
-            {(index+1>30 && index+1 <=60) &&
+            {(index+1>34 && index+1 <=68) &&
             <TableRow key={index}>
               <TableCell align="center">{index+1}</TableCell>
               <TableCell align="left">
@@ -512,7 +512,7 @@ function OverallTestAnalysis(props) {
       </Grid>
 } 
 
-{ answersCount>60  &&
+{ answersCount>68  &&
 
       <Grid item lg={4} xs={12}>
             <TableContainer component={Paper}>
@@ -528,7 +528,7 @@ function OverallTestAnalysis(props) {
         <TableBody>     
           {infoArray.map((row,index)=>(
             <>
-            {index+1>60 &&
+            {index+1>68 &&
             <TableRow key={index}>
               <TableCell align="center">{index+1}</TableCell>
               <TableCell align="left">

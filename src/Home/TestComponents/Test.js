@@ -4,7 +4,7 @@ import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
 import { useDispatch, useSelector } from 'react-redux';
-import { getTests, setLoginSuccess, updateUser } from "../../store/Actions";
+import { getGivenTest, getTests, setLoginSuccess, updateUser } from "../../store/Actions";
 import { CalendarToday, ArrowRightAltRounded, TimerRounded, NoteRounded, PeopleAltOutlined } from '@material-ui/icons';
 import { CButton, CCol, CFormGroup, CLabel, CSelect } from '@coreui/react';
 import FormLabel from '@material-ui/core/FormLabel';
@@ -40,6 +40,7 @@ import InputBase from '@material-ui/core/InputBase';
 import { logoutUser } from '../../store/Actions';
 import { notification } from 'antd';
 import Logo from '../../assests/images/logo.png'
+import Qr from '../../assests/images/qrcode.jpeg'
 import { Offline, Online } from "react-detect-offline";
 
 export default function Test(props) {
@@ -62,6 +63,8 @@ export default function Test(props) {
     const [insightsTestDaysList, setInsightsTestDaysList] = useState([])
     const [iasBabaTestDaysList, setiasBabaTestDaysList] = useState([])
     const [rauIasTestList, setrauIasList] = useState([])
+
+    const [counter,setCounter]=useState()
 
 
 
@@ -87,6 +90,19 @@ export default function Test(props) {
 
 
 
+    //Set Count
+    useEffect(()=>{
+        dispatch(
+            getGivenTest({id:user?.token.user._id},(err, response) => {
+              if (err) {
+                console.log(err)
+              } else {
+                  console.log(response,"re")
+                setCounter((response.testGiven.data).length)
+             }}))
+    
+       
+    },[])
 
 
 
@@ -376,11 +392,8 @@ export default function Test(props) {
 
         if (user) {
             setCurrentTestId(id)
-            const sharedTestItem = user.token.user.numberOfShares.filter(ob => ob.testId == id)
-            const countShares = sharedTestItem[0]?.number
 
-
-            if (countShares >= 2) {
+            if (counter<1) {
                 setSpinner(true)
                 const timer = setTimeout(() => {
                     history.push({
@@ -390,6 +403,7 @@ export default function Test(props) {
                 return () => clearTimeout(timer);
             }
             else {
+                console.log("true")
                 setOpen(true)
             }
         }
@@ -479,6 +493,7 @@ export default function Test(props) {
                 open={open}
                 onClose={() => handleCloseModal()}
                 closeAfterTransition
+
                 BackdropComponent={Backdrop}
                 BackdropProps={{
                     timeout: 500,
@@ -487,16 +502,12 @@ export default function Test(props) {
                 <Fade in={open}>
                     <div className={classes.paper1}>
                         <h2 id="transition-modal-title" className={classes.modalHeading}>Unlock Test</h2>
-                        <p id="transition-modal-description">Share Test to 2 times to unlock</p>
-                        <WhatsappShareButton url={"Hey RapidIAS Share your tests"}>
+                        <p id="transition-modal-description">Scan QR Code to pay</p>
 
-                            <CButton shape="pill" color="success" className={classes.whatsappButton} onClick={() => handleWhatsappShare()}>
-                                <WhatsappIcon size={32} round={true} className={classes.image} />
-
-              Share to Whatsapp
+<img src={Qr} className={classes.qrcode}/>
+                            <CButton shape="pill" color="success" className={classes.whatsappButton} >
+               Click to See Offers
               </CButton>
-                        </WhatsappShareButton>
-
 
 
                     </div>
@@ -1477,7 +1488,7 @@ const useStyles = makeStyles((theme) => ({
         backgroundColor: theme.palette.background.paper,
         border: "none",
         borderRadius: 20,
-        height: 300,
+        height: 500,
         width: 500,
         outline: "none",
         boxShadow: theme.shadows[5],
@@ -1511,9 +1522,10 @@ const useStyles = makeStyles((theme) => ({
 
         },
     },
-    whatsappButton: {
-        height: 80,
-        width: 300,
+    
+    qrcode: {
+        height: 250,
+        width: 350,
         [theme.breakpoints.down('xs')]: {
             height: 50,
             width: 200,
@@ -1614,9 +1626,9 @@ const useStyles = makeStyles((theme) => ({
         margin: 10,
         width: 100
     },
-    testContainer:{
+    whatsappButton:{
         
-   
+     marginTop:30
     }
 
 
