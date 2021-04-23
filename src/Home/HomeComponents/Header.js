@@ -30,7 +30,8 @@ const useStyles = makeStyles((theme) => ({
   },
   appbar: {
     backgroundColor: "white",
-    position: "fixed"
+    position: "fixed",
+    marginTop:-30
   },
   menuButton: {
     marginRight: theme.spacing(2),
@@ -200,22 +201,18 @@ export default function Header() {
       transformOrigin={{ vertical: 'top', horizontal: 'right' }}
       open={isMobileMenuOpen}
       onClose={handleMobileMenuClose}
-      style={{ width: 400 ,display:"flex",flexDirection:"column" }}
+      style={{ width: 400 ,display:"flex",flexDirection:"column",backgroundColor:"transparent" }}
     >
 
-      {!user ?
-        <div   style={{display:"flex",flexDirection:"column" }}>
- 
-                <MenuItem className={classes.submitButton}>
-                  <Link to="/home" style={{textDecoration:"none"}}>
+             <MenuItem className={classes.submitButton}>
+               <Link to="/home" style={{textDecoration:"none"}}>
                   <p  style={{width:60}}>Home</p></Link>
-                </MenuItem>
-
-                
-                <MenuItem className={classes.submitButton}>
+            </MenuItem>
+        
+            <MenuItem className={classes.submitButton}>
                   <Link to="/givetest" style={{textDecoration:"none"}}>
                   <p  style={{width:135}}> UPSC Prelims Tests</p></Link>
-                </MenuItem>
+            </MenuItem>
 
 
 
@@ -236,62 +233,7 @@ export default function Header() {
 
 
                 <MenuItem className={classes.submitButton}>
-                  <Link to="/home" style={{textDecoration:"none"}}>
-                  <p  style={{width:60}}>Offers</p></Link>
-                </MenuItem>
-                
-                <MenuItem className={classes.submitButton}>
-                  <Link to="/privacy" style={{textDecoration:"none"}}>
-                  <p  style={{width:100}}>Privacy Policy</p></Link>
-                </MenuItem>
-             <MenuItem className={classes.submitButton1}>
-
-            <CButton variant="outline" color="primary"
-              size="md" block onClick={() => history.push('/login')}
-            >Login</CButton>
-          </MenuItem>
-          <MenuItem className={classes.submitButton1}>
-           <CButton variant="outline" color="primary"
-              size="md" block onClick={() => history.push('/register')}
-            >Signup</CButton>
-          </MenuItem>
-
-        </div>
-
-        :
-        <div   style={{display:"flex",flexDirection:"column" }}>
-    
-                <MenuItem className={classes.submitButton}>
-                  <Link to="/home" style={{textDecoration:"none"}}>
-                  <p  style={{width:60}}>Home</p></Link>
-                </MenuItem>
-
-                
-                <MenuItem className={classes.submitButton}>
-                  <Link to="/givetest" style={{textDecoration:"none"}}>
-                  <p  style={{width:135}}> UPSC Prelims Tests</p></Link>
-                </MenuItem>
-
-
-
-                <MenuItem className={classes.submitButton} >
-                  <Link to="/coming" style={{textDecoration:"none"}}>
-                    <p  style={{width:100}}>More Courses</p></Link>
-                </MenuItem>
-
-                <MenuItem className={classes.submitButton}>
-                  <Link to="/aboutus" style={{textDecoration:"none"}}>
-                  <p  style={{width:70}}>About Us</p></Link>
-                </MenuItem>
-
-                <MenuItem className={classes.submitButton}>
-                  <Link to="/contact" style={{textDecoration:"none"}}>
-                  <p  style={{width:80}}>Contact Us</p></Link>
-                </MenuItem>
-
-
-                <MenuItem className={classes.submitButton}>
-                  <Link to="/home" style={{textDecoration:"none"}}>
+                  <Link to="/offers" style={{textDecoration:"none"}}>
                   <p  style={{width:60}}>Offers</p></Link>
                 </MenuItem>
                 
@@ -300,9 +242,7 @@ export default function Header() {
                   <p  style={{width:100}}>Privacy Policy</p></Link>
                 </MenuItem>
 
-         
-          </div>
-      }
+
     </Menu>
   );
 
@@ -388,7 +328,7 @@ export default function Header() {
 
 
                 <div className={classes.submitButton}>
-                  <Link to="/home" style={{textDecoration:"none"}}>
+                  <Link to="/offers" style={{textDecoration:"none"}}>
                   <p  style={{width:60}}>Offers</p></Link>
                 </div>
                 
@@ -397,7 +337,7 @@ export default function Header() {
                   <p  style={{width:100}}>Privacy Policy</p></Link>
                 </div>
 
-</div>
+           </div>
 
 <div style={{display:"flex",flexDirection:"row",justifyContent:"space-between"}}>
                 <div className={classes.submitButton}>
@@ -452,7 +392,7 @@ export default function Header() {
 
 
                 <div className={classes.submitButton}>
-                  <Link to="/home" style={{textDecoration:"none"}}>
+                  <Link to="/offers" style={{textDecoration:"none"}}>
                   <p  style={{width:60}}>Offers</p></Link>
                 </div>
                 
@@ -470,6 +410,8 @@ export default function Header() {
                 aria-haspopup="true"
                 onClick={handleProfileMenuOpen}
                 color="inherit"
+                
+                style={{ outline: "none" ,backgroundColor:"transparent"}}
               >
                 <AccountCircle className={classes.icon} />
               </IconButton>
@@ -486,9 +428,9 @@ export default function Header() {
                     aria-haspopup="true"
                     onClick={handleMobileMenuOpen}
                     color="black"
-                    style={{ outline: "none" }}
+                    style={{ outline: "none" ,backgroundColor:"transparent"}}
                 >
-               <List/>
+               <List style={{marginRight:100}}/>
                 </IconButton>
             </div>
       
@@ -499,58 +441,11 @@ export default function Header() {
               aria-controls={mobileMenuId}
               aria-haspopup="true"
               color="black"
-              style={{ outline: "none" }}
+              style={{ outline: "none",backgroundColor:"transparent" }}
             >
               {!user ?
                 <>
                   <div className={classes.submitButton}>
-                  <div style={{display:"flex",flexDirection:"row",justifyContent:"space-between"}}>
-              
-              
-              <div style={{display:"flex",flexDirection:"row",position:"relative",left:-180}} >
-              
-                <div className={classes.submitButton}>
-                  <Link to="/home" style={{textDecoration:"none"}}>
-                  <p  style={{width:60}}>Home</p></Link>
-                </div>
-
-                
-                <div className={classes.submitButton}>
-                  <Link to="/givetest" style={{textDecoration:"none"}}>
-                  <p  style={{width:135}}> UPSC Prelims Tests</p></Link>
-                </div>
-
-
-
-                <div className={classes.submitButton} >
-                  <Link to="/coming" style={{textDecoration:"none"}}>
-                    <p  style={{width:100}}>More Courses</p></Link>
-                </div>
-
-                <div className={classes.submitButton}>
-                  <Link to="/aboutus" style={{textDecoration:"none"}}>
-                  <p  style={{width:70}}>About Us</p></Link>
-                </div>
-
-                <div className={classes.submitButton}>
-                  <Link to="/contact" style={{textDecoration:"none"}}>
-                  <p  style={{width:80}}>Contact Us</p></Link>
-                </div>
-
-
-                <div className={classes.submitButton}>
-                  <Link to="/home" style={{textDecoration:"none"}}>
-                  <p  style={{width:60}}>Offers</p></Link>
-                </div>
-                
-                <div className={classes.submitButton}>
-                  <Link to="/privacy" style={{textDecoration:"none"}}>
-                  <p  style={{width:100}}>Privacy Policy</p></Link>
-                </div>
-
-</div>
-</div>
-
 
                     <CButton variant="outline" color="primary"
                       size="md" block onClick={() => history.push('/login')}

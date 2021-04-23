@@ -21,6 +21,7 @@ import PrivacyPolicy from './Home/HomeComponents/PrivacyPolicy';
 import Header from './Home/HomeComponents/Header';
 import ContactUs from './Home/HomeComponents/ContactUs';
 import ComingSoon from './Home/HomeComponents/ComingSoon';
+import Offers from './Home/HomeComponents/Offers';
 
 const TheLayout = React.lazy(() => import('./Dashboard/src/containers/TheLayout'));
 
@@ -56,6 +57,7 @@ function App() {
                    <Route exact path="/privacy" name="Privacy Policy" render={props => <PrivacyPolicy {...props}/>} />
                    <Route exact path="/contact" name="Contact Us" render={props => <ContactUs {...props}/>} />
                    <Route exact path="/coming" name="Comming Soon" render={props => <ComingSoon {...props}/>} />
+                   <Route exact path="/offers" name="Offers" render={props => <Offers {...props}/>} />
                    <Route exact path="/givetest" name="Test Page" render={props => <Test {...props}/>} />
                    <Route exact path="/givetest/:id" name="Omr Page" render={props => <Omr {...props}/>} />
                    <Route exact path="/overall/:id" name="Test Analysiis" render={props => <OverallTestAnalysis {...props}/>} />
@@ -73,7 +75,8 @@ function App() {
                    <Route exact path="/privacy" name="Privacy Policy" render={props => <PrivacyPolicy {...props}/>} />
                    <Route exact path="/contact" name="Contact Us" render={props => <ContactUs {...props}/>} />
                    <Route exact path="/coming" name="Comming Soon" render={props => <ComingSoon {...props}/>} />
-                   <Route exact path="/admin" name="Admin Login Page" render={props => <AdminLogin {...props}/>} />
+                   <Route exact path="/offers" name="Offers" render={props => <Offers {...props}/>} />
+                  <Route exact path="/admin" name="Admin Login Page" render={props => <AdminLogin {...props}/>} />
                    <Route exact path="/login" name="Login Page" render={props => <Login {...props}/>} />
                   <Route exact path="/register" name="Register Page" render={props => <Registration {...props}/>} />
                   <Route exact path="/verified" name="Email Confirm" render={props => <EmailConfirm {...props}/>} />
