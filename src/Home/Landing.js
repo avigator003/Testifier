@@ -4,6 +4,8 @@ import { Paper, Button } from '@material-ui/core'
 import { makeStyles } from "@material-ui/core/styles";
 import Header from './HomeComponents/Header';
 import ContactUs from './HomeComponents/ContactUs';
+import First from '../assests/images/First.jpg'
+import Second from '../assests/images/Second.jpg'
 
 
 function Item(props)
@@ -22,31 +24,29 @@ export default function Landing(props){
     var items = [
         {
             name: "Random Name #1",
-            url: "https://via.placeholder.com/150/771796"
+            url: First
         },
         {
             name: "Random Name #2",
-            url:"https://via.placeholder.com/150/771796"
+            url:Second
         }
     ]
 
     return (
         <>
         <Header/>
-        <Carousel>
+        <Carousel className={classes.loginContainer}>
             {
                 items.map( (item, i) => <Item key={i} item={item} /> )
             }
         </Carousel>
-        <ContactUs/>
         </>
     )
 }
 
 const useStyles = makeStyles((theme) => ({
     loginContainer:{
-      padding:40,
-      paddingTop:80
+      height:620
     },
   
       backgroundImage: {

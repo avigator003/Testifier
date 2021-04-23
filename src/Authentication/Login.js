@@ -7,6 +7,8 @@ import { notification } from "antd";
 import { Spin } from "antd";
 import api from "../resources/api";
 import { useDispatch, useSelector } from "react-redux";
+import { Link } from 'react-router-dom';
+import Header from '../Home/HomeComponents/Header';
 
 
 
@@ -102,6 +104,9 @@ function Login(props) {
         
 
     return (
+      <>
+      <Header/>
+
         <Grid container className={classes.loginContainer} justify="center" alignItems="center">
             <Grid item xs={12} md={8} lg={8} sm={8} className={classes.imageContainer}>
                 <img src={loginBackground} className={classes.backgroundImage} alt="" />
@@ -129,12 +134,16 @@ function Login(props) {
                 <Button variant="contained" color="primary" className={classes.button} onClick={(e)=>handleLogin(e)} >
                     Login
                 </Button>
+                <Link to="/register" style={{textDecoration:"none"}}>
+         
                 <h4>Don't Have an Account ? Click Here!</h4>
+                </Link>
                
             </Grid>
             <Grid item xs={12} md={1} lg={1} sm={1} className={classes.formContainer} />
 
         </Grid>
+        </>
 
     )
 }
@@ -143,7 +152,7 @@ export default Login
 const useStyles = makeStyles((theme) => ({
   loginContainer:{
     padding:40,
-    paddingTop:100,
+     height:620
   },
 
     backgroundImage: {

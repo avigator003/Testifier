@@ -21,6 +21,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link, useHistory } from 'react-router-dom';
 import { CButton, CCol, CFormGroup, CLabel, CSelect } from '@coreui/react';
 import Logo from '../../assests/images/logo.png'
+import List from '@material-ui/icons/List';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -191,11 +192,7 @@ export default function Header() {
 
   const mobileMenuId = 'primary-search-account-menu-mobile';
   const renderMobileMenu = (
-
-
-
-
-    <Menu
+   <Menu
       anchorEl={mobileMoreAnchorEl}
       anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
       id={mobileMenuId}
@@ -203,56 +200,108 @@ export default function Header() {
       transformOrigin={{ vertical: 'top', horizontal: 'right' }}
       open={isMobileMenuOpen}
       onClose={handleMobileMenuClose}
-      style={{ width: 400 }}
+      style={{ width: 400 ,display:"flex",flexDirection:"column" }}
     >
 
       {!user ?
-        <>
+        <div   style={{display:"flex",flexDirection:"column" }}>
+ 
+                <MenuItem className={classes.submitButton}>
+                  <Link to="/home" style={{textDecoration:"none"}}>
+                  <p  style={{width:60}}>Home</p></Link>
+                </MenuItem>
+
+                
+                <MenuItem className={classes.submitButton}>
+                  <Link to="/givetest" style={{textDecoration:"none"}}>
+                  <p  style={{width:135}}> UPSC Prelims Tests</p></Link>
+                </MenuItem>
 
 
 
+                <MenuItem className={classes.submitButton} >
+                  <Link to="/coming" style={{textDecoration:"none"}}>
+                    <p  style={{width:100}}>More Courses</p></Link>
+                </MenuItem>
 
-          <MenuItem className={classes.submitButton1}>
+                <MenuItem className={classes.submitButton}>
+                  <Link to="/aboutus" style={{textDecoration:"none"}}>
+                  <p  style={{width:70}}>About Us</p></Link>
+                </MenuItem>
+
+                <MenuItem className={classes.submitButton}>
+                  <Link to="/contact" style={{textDecoration:"none"}}>
+                  <p  style={{width:80}}>Contact Us</p></Link>
+                </MenuItem>
+
+
+                <MenuItem className={classes.submitButton}>
+                  <Link to="/home" style={{textDecoration:"none"}}>
+                  <p  style={{width:60}}>Offers</p></Link>
+                </MenuItem>
+                
+                <MenuItem className={classes.submitButton}>
+                  <Link to="/privacy" style={{textDecoration:"none"}}>
+                  <p  style={{width:100}}>Privacy Policy</p></Link>
+                </MenuItem>
+             <MenuItem className={classes.submitButton1}>
 
             <CButton variant="outline" color="primary"
               size="md" block onClick={() => history.push('/login')}
             >Login</CButton>
           </MenuItem>
           <MenuItem className={classes.submitButton1}>
-
-            <CButton variant="outline" color="primary"
+           <CButton variant="outline" color="primary"
               size="md" block onClick={() => history.push('/register')}
             >Signup</CButton>
           </MenuItem>
 
-        </>
+        </div>
 
         :
-        <>
-          <MenuItem  >
-            <IconButton
-              aria-label="account of current user"
-              aria-controls="primary-search-account-menu"
-              aria-haspopup="true"
-              color="inherit"
-              onClick={() => history.push('/userprofile')}
-            >
-              <AccountCircle />
-            </IconButton>
-            <p>Profile</p>
-          </MenuItem>
-          <MenuItem onClick={() => handleLogout()}>
-            <IconButton
-              aria-label="account of current user"
-              aria-controls="primary-search-account-menu"
-              aria-haspopup="true"
-              color="inherit"
-            >
-              <ExitToApp />
-            </IconButton>
-            <p>Logout</p>
-          </MenuItem>
-        </>
+        <div   style={{display:"flex",flexDirection:"column" }}>
+    
+                <MenuItem className={classes.submitButton}>
+                  <Link to="/home" style={{textDecoration:"none"}}>
+                  <p  style={{width:60}}>Home</p></Link>
+                </MenuItem>
+
+                
+                <MenuItem className={classes.submitButton}>
+                  <Link to="/givetest" style={{textDecoration:"none"}}>
+                  <p  style={{width:135}}> UPSC Prelims Tests</p></Link>
+                </MenuItem>
+
+
+
+                <MenuItem className={classes.submitButton} >
+                  <Link to="/coming" style={{textDecoration:"none"}}>
+                    <p  style={{width:100}}>More Courses</p></Link>
+                </MenuItem>
+
+                <MenuItem className={classes.submitButton}>
+                  <Link to="/aboutus" style={{textDecoration:"none"}}>
+                  <p  style={{width:70}}>About Us</p></Link>
+                </MenuItem>
+
+                <MenuItem className={classes.submitButton}>
+                  <Link to="/contact" style={{textDecoration:"none"}}>
+                  <p  style={{width:80}}>Contact Us</p></Link>
+                </MenuItem>
+
+
+                <MenuItem className={classes.submitButton}>
+                  <Link to="/home" style={{textDecoration:"none"}}>
+                  <p  style={{width:60}}>Offers</p></Link>
+                </MenuItem>
+                
+                <MenuItem className={classes.submitButton}>
+                  <Link to="/privacy" style={{textDecoration:"none"}}>
+                  <p  style={{width:100}}>Privacy Policy</p></Link>
+                </MenuItem>
+
+         
+          </div>
       }
     </Menu>
   );
@@ -307,31 +356,44 @@ export default function Header() {
               <div style={{display:"flex",flexDirection:"row",justifyContent:"space-between"}}>
               
               
-              <div style={{display:"flex",flexDirection:"row",position:"relative",left:-280}} >
+              <div style={{display:"flex",flexDirection:"row",position:"relative",left:-180}} >
               
                 <div className={classes.submitButton}>
-                  <Link to="/Login" style={{textDecoration:"none"}}>
+                  <Link to="/home" style={{textDecoration:"none"}}>
                   <p  style={{width:60}}>Home</p></Link>
-                </div>
-
-                <div className={classes.submitButton} >
-                  <Link to="/Login" style={{textDecoration:"none"}}>
-                    <p  style={{width:100}}>More Courses</p></Link>
-                </div>
-
-                <div className={classes.submitButton}>
-                  <Link to="/Login" style={{textDecoration:"none"}}>
-                  <p  style={{width:70}}>About Us</p></Link>
-                </div>
-
-                <div className={classes.submitButton}>
-                  <Link to="/Login" style={{textDecoration:"none"}}>
-                  <p  style={{width:80}}>Contact Us</p></Link>
                 </div>
 
                 
                 <div className={classes.submitButton}>
-                  <Link to="/Login" style={{textDecoration:"none"}}>
+                  <Link to="/givetest" style={{textDecoration:"none"}}>
+                  <p  style={{width:135}}> UPSC Prelims Tests</p></Link>
+                </div>
+
+
+
+                <div className={classes.submitButton} >
+                  <Link to="/coming" style={{textDecoration:"none"}}>
+                    <p  style={{width:100}}>More Courses</p></Link>
+                </div>
+
+                <div className={classes.submitButton}>
+                  <Link to="/aboutus" style={{textDecoration:"none"}}>
+                  <p  style={{width:70}}>About Us</p></Link>
+                </div>
+
+                <div className={classes.submitButton}>
+                  <Link to="/contact" style={{textDecoration:"none"}}>
+                  <p  style={{width:80}}>Contact Us</p></Link>
+                </div>
+
+
+                <div className={classes.submitButton}>
+                  <Link to="/home" style={{textDecoration:"none"}}>
+                  <p  style={{width:60}}>Offers</p></Link>
+                </div>
+                
+                <div className={classes.submitButton}>
+                  <Link to="/privacy" style={{textDecoration:"none"}}>
                   <p  style={{width:100}}>Privacy Policy</p></Link>
                 </div>
 
@@ -354,6 +416,53 @@ export default function Header() {
               </div>
 
               :
+              <>
+                      <div style={{display:"flex",flexDirection:"row",justifyContent:"space-between"}}>
+              
+              
+              <div style={{display:"flex",flexDirection:"row",position:"relative",left:-290}} >
+              
+                <div className={classes.submitButton}>
+                  <Link to="/home" style={{textDecoration:"none"}}>
+                  <p  style={{width:60}}>Home</p></Link>
+                </div>
+
+                
+                <div className={classes.submitButton}>
+                  <Link to="/givetest" style={{textDecoration:"none"}}>
+                  <p  style={{width:135}}> UPSC Prelims Tests</p></Link>
+                </div>
+
+
+
+                <div className={classes.submitButton} >
+                  <Link to="/coming" style={{textDecoration:"none"}}>
+                    <p  style={{width:100}}>More Courses</p></Link>
+                </div>
+
+                <div className={classes.submitButton}>
+                  <Link to="/aboutus" style={{textDecoration:"none"}}>
+                  <p  style={{width:70}}>About Us</p></Link>
+                </div>
+
+                <div className={classes.submitButton}>
+                  <Link to="/contact" style={{textDecoration:"none"}}>
+                  <p  style={{width:80}}>Contact Us</p></Link>
+                </div>
+
+
+                <div className={classes.submitButton}>
+                  <Link to="/home" style={{textDecoration:"none"}}>
+                  <p  style={{width:60}}>Offers</p></Link>
+                </div>
+                
+                <div className={classes.submitButton}>
+                  <Link to="/privacy" style={{textDecoration:"none"}}>
+                  <p  style={{width:100}}>Privacy Policy</p></Link>
+                </div>
+
+</div>
+</div>
               <IconButton
                 edge="end"
                 aria-label="account of current user"
@@ -364,10 +473,12 @@ export default function Header() {
               >
                 <AccountCircle className={classes.icon} />
               </IconButton>
+              </>
             }
           </div>
+          
 
-          {/*
+          
             <div className={classes.sectionMobile}>
                 <IconButton
                     aria-label="show more"
@@ -377,10 +488,10 @@ export default function Header() {
                     color="black"
                     style={{ outline: "none" }}
                 >
-                    <MoreIcon />
+               <List/>
                 </IconButton>
             </div>
-        */}
+      
 
           <div className={classes.sectionMobile}>
             <IconButton
@@ -393,6 +504,53 @@ export default function Header() {
               {!user ?
                 <>
                   <div className={classes.submitButton}>
+                  <div style={{display:"flex",flexDirection:"row",justifyContent:"space-between"}}>
+              
+              
+              <div style={{display:"flex",flexDirection:"row",position:"relative",left:-180}} >
+              
+                <div className={classes.submitButton}>
+                  <Link to="/home" style={{textDecoration:"none"}}>
+                  <p  style={{width:60}}>Home</p></Link>
+                </div>
+
+                
+                <div className={classes.submitButton}>
+                  <Link to="/givetest" style={{textDecoration:"none"}}>
+                  <p  style={{width:135}}> UPSC Prelims Tests</p></Link>
+                </div>
+
+
+
+                <div className={classes.submitButton} >
+                  <Link to="/coming" style={{textDecoration:"none"}}>
+                    <p  style={{width:100}}>More Courses</p></Link>
+                </div>
+
+                <div className={classes.submitButton}>
+                  <Link to="/aboutus" style={{textDecoration:"none"}}>
+                  <p  style={{width:70}}>About Us</p></Link>
+                </div>
+
+                <div className={classes.submitButton}>
+                  <Link to="/contact" style={{textDecoration:"none"}}>
+                  <p  style={{width:80}}>Contact Us</p></Link>
+                </div>
+
+
+                <div className={classes.submitButton}>
+                  <Link to="/home" style={{textDecoration:"none"}}>
+                  <p  style={{width:60}}>Offers</p></Link>
+                </div>
+                
+                <div className={classes.submitButton}>
+                  <Link to="/privacy" style={{textDecoration:"none"}}>
+                  <p  style={{width:100}}>Privacy Policy</p></Link>
+                </div>
+
+</div>
+</div>
+
 
                     <CButton variant="outline" color="primary"
                       size="md" block onClick={() => history.push('/login')}

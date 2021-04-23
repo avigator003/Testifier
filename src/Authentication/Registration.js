@@ -8,7 +8,8 @@ import { notification } from "antd";
 import { register } from "../store/Actions";
 import { Spin } from "antd";
 import api from "../resources/api";
-import { useHistory } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
+import Header from '../Home/HomeComponents/Header';
 
 
 const validEmailRegex = RegExp(
@@ -94,12 +95,8 @@ function Registration(props) {
          break;
         case "userName":
           errors.userName =
-            (value.length == 0) 
-            ? "" 
-            : (!validNameRegex.test(value))
-            ? "User Name must be in characters!"
-            : (value.length > 20) 
-            ? "User Name must be less than 20 characters long!" 
+            (value.length == 0) ? "" : (value.length > 20) 
+             ? "User Name must be less than 20 characters long!" 
             : "";
           break;
         case "emailAddress":
@@ -178,23 +175,15 @@ function Registration(props) {
     
     return (
         <>
-        <Stepper activeStep={activeStep} alternativeLabel>
+      <Header/>
+
+        <Stepper activeStep={activeStep} alternativeLabel style={{paddingTop:100}}>
         {steps.map((label) => (
           <Step key={label}>
             <StepLabel>{label}</StepLabel>
           </Step>
         ))}
       </Stepper>
-      <div>
-        {activeStep === steps.length ? (
-          <div>
-            <Typography className={classes.instructions}>All steps completed</Typography>
-            <Button onClick={handleReset}>Reset</Button>
-          </div>
-        ) : (<></>
-        )}
-      </div>
-
         <Grid container className={classes.loginContainer} justify="center" alignItems="center">
         <Grid item xs={12} md={8} lg={8} sm={8} className={classes.imageContainer}>
             <img src={registerBackground} className={classes.backgroundImage}  alt="" />
@@ -211,7 +200,9 @@ function Registration(props) {
             <TextField id="standard-basic" label="Password" color="primary" className={classes.input} name="password" value={state['password']} onChange={(e)=>handleChange(e)}/>
             
             <div className={classes.checkbox}>
+              <Link to="/login" style={{textDecoration:"none"}}>
             <h4 className={classes.login}>Have an Account ? Click Here!</h4>
+            </Link>
             </div>
             <Button variant="contained" color="primary" className={classes.button} onClick={handleNext} >
                 Proceed
@@ -228,7 +219,7 @@ function Registration(props) {
             
         <h2>Complete Profile !!</h2>
         <TextField id="standard-basic" label="Phone Number" color="primary" className={classes.input} name="phoneNumber" value={state['phoneNumber']} onChange={(e)=>handleChange(e)}/>
-        <TextField id="standard-basic" label="UPSC Attempts" color="primary" className={classes.input} name="upscAttempts" value={state['upscAttempts']} onChange={(e)=>handleChange(e)}/>
+        <TextField id="standard-basic" type="number" label="UPSC Attempts" color="primary" className={classes.input} name="upscAttempts" value={state['upscAttempts']} onChange={(e)=>handleChange(e)}/>
         <TextField id="standard-basic" label="Additional Subjects" color="primary" className={classes.input} name="additionalSubjects" value={state['additionalSubjects']} onChange={(e)=>handleChange(e)}/>
         
         <div className={classes.checkbox}>

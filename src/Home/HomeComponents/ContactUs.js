@@ -3,16 +3,22 @@ import { makeStyles } from "@material-ui/core/styles";
 import { Paper, Button ,TextField,Grid} from '@material-ui/core'
 import emailBackground from '../../assests/images/email.png'
 import EmailIcon from '@material-ui/icons/Email';
+import Header from './Header';
 function ContactUs() {
     const classes=useStyles()
     return (
+      <>
+      <Header/>
+      
+
     <Grid container className={classes.container} justify="center" alignItems="center">
         <Grid item xs={12} md={6} lg={6} sm={6} className={classes.imageContainer}>
+          
         <img src={emailBackground} className={classes.backgroundImage} alt="" />
         </Grid>
 
      <Grid item xs={12} md={6} lg={6} sm={6} className={classes.formContainer}>
-         <EmailIcon className={classes.emailIcon}/>
+        <h1 style={{color:"white",marginLeft:20}}>CONTACT US<EmailIcon className={classes.emailIcon}/></h1> 
          <TextField
           id="outlined-name-input"
           label="Name"
@@ -45,6 +51,7 @@ function ContactUs() {
 
         </Grid>
         </Grid>
+        </>
     )
 }
 
@@ -55,7 +62,8 @@ const useStyles = makeStyles((theme) => ({
      backgroundColor: "#191919",
      padding:50,
      display:"flex",
-     flexDirection:"row"
+     flexDirection:"row",
+     paddingTop:146
   },
   contactHeading:{
    color:"white",
