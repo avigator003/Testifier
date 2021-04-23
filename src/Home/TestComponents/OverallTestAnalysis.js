@@ -103,7 +103,7 @@ function OverallTestAnalysis(props) {
      setTotalAttempted(totlaQuestions-SkippedNumber)
      setTotalMarksPaper(totlaQuestions*2)
      setGetTotalMarks(((correctNumber*2)-(wrongNumber*0.67)).toFixed(2))
-     setAccuracy((correctNumber/(totlaQuestions-SkippedNumber)).toFixed(2))
+     setAccuracy(((correctNumber/(totlaQuestions-SkippedNumber)).toFixed(2))*100)
 
 
 

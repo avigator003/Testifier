@@ -729,6 +729,9 @@ export default function Test(props) {
 
                     <Grid item lg={10} md={7} sm={8} xs={12} className={classes.testContainer}>
 
+              <h3 style={{padding:10,margin:10}}>Official Telegram Channel Link:<a href="https://t.me/rapidias_in" target="_blank">https://t.me/rapidias_in</a> </h3>
+              <h3 style={{padding:10}}>Test Series Private Discussion group:<a href="https://t.me/TestsDiscussion_RapidIAS" target="_blank">https://t.me/TestsDiscussion_RapidIAS</a> </h3>          
+
                         {/*Vision IAS */}
 
                         {visionTestList.length > 0 &&

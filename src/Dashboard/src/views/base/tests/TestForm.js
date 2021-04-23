@@ -548,7 +548,7 @@ const TestForm = (props) => {
                           <option value="Polity">Polity</option>
                           <option value="Environment">Environment</option>
                           <option value="Economy">Economy</option>
-                          <option value="Geaography">Geography</option>
+                          <option value="Geography">Geography</option>
                           <option value="Current Affairs">Current Affairs</option>
                           <option value="Art and Culture">Art and Culture</option>
                           <option value="Science and Technology">Science and Technology</option>
@@ -585,7 +585,7 @@ const TestForm = (props) => {
                               <option value="Polity">Polity</option>
                               <option value="Environment">Environment</option>
                               <option value="Economy">Economy</option>
-                              <option value="Geaography">Geography</option>
+                              <option value="Geography">Geography</option>
                               <option value="Current Affairs">Current Affairs</option>
 
                             </CSelect>

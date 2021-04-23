@@ -370,7 +370,7 @@ export default function Header() {
                 
                 <div className={classes.submitButton}>
                   <Link to="/givetest" style={{textDecoration:"none"}}>
-                  <p  style={{width:135}}> UPSC Prelims Tests</p></Link>
+                  <p  style={{width:80}}>Take Tests</p></Link>
                 </div>
 
 
