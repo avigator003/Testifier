@@ -42,6 +42,7 @@ import { notification } from 'antd';
 import Logo from '../../assests/images/logo.png'
 import Qr from '../../assests/images/qrcode.jpeg'
 import { Offline, Online } from "react-detect-offline";
+import { Link } from 'react-router-dom';
 
 export default function Test(props) {
     const classes = useStyles();
@@ -51,7 +52,7 @@ export default function Test(props) {
     // Logined User
     const user = useSelector((state) => state.user);
 
-// Test Hooks
+    // Test Hooks
 
     const [visionTestList, setVisionTestList] = useState([])
     const [vajiramTestList, setVajiramTestList] = useState([])
@@ -64,7 +65,7 @@ export default function Test(props) {
     const [iasBabaTestDaysList, setiasBabaTestDaysList] = useState([])
     const [rauIasTestList, setrauIasList] = useState([])
 
-    const [counter,setCounter]=useState()
+    const [counter, setCounter] = useState()
 
 
 
@@ -81,8 +82,8 @@ export default function Test(props) {
         economy: false,
         history: false,
         currentAffairs: false,
-        artAndCulture:false,
-        scienceAndTechnology:false
+        artAndCulture: false,
+        scienceAndTechnology: false
     });
 
     const [testCategory, setTestCategory] = useState("0")
@@ -91,18 +92,19 @@ export default function Test(props) {
 
 
     //Set Count
-    useEffect(()=>{
+    useEffect(() => {
         dispatch(
-            getGivenTest({id:user?.token.user._id},(err, response) => {
-              if (err) {
-                console.log(err)
-              } else {
-                  console.log(response,"re")
-                setCounter((response.testGiven.data).length)
-             }}))
-    
-       
-    },[])
+            getGivenTest({ id: user?.token.user._id }, (err, response) => {
+                if (err) {
+                    console.log(err)
+                } else {
+                    console.log(response, "re")
+                    setCounter((response.testGiven.data).length)
+                }
+            }))
+
+
+    }, [])
 
 
 
@@ -119,8 +121,8 @@ export default function Test(props) {
                 economy: false,
                 history: false,
                 currentAffairs: false,
-                artAndCulture:false,
-                scienceAndTechnology:false
+                artAndCulture: false,
+                scienceAndTechnology: false
             })
         }
         else if (name == 'history') {
@@ -131,8 +133,8 @@ export default function Test(props) {
                 economy: false,
                 history: true,
                 currentAffairs: false,
-                artAndCulture:false,
-                scienceAndTechnology:false
+                artAndCulture: false,
+                scienceAndTechnology: false
             })
         }
         else if (name == 'economy') {
@@ -143,8 +145,8 @@ export default function Test(props) {
                 economy: true,
                 history: false,
                 currentAffairs: false,
-                artAndCulture:false,
-                scienceAndTechnology:false
+                artAndCulture: false,
+                scienceAndTechnology: false
             })
         }
         else if (name == 'geography') {
@@ -155,8 +157,8 @@ export default function Test(props) {
                 economy: false,
                 history: false,
                 currentAffairs: false,
-                artAndCulture:false,
-                scienceAndTechnology:false
+                artAndCulture: false,
+                scienceAndTechnology: false
             })
         }
         else if (name == 'environment') {
@@ -167,8 +169,8 @@ export default function Test(props) {
                 economy: false,
                 history: false,
                 currentAffairs: false,
-                artAndCulture:false,
-                scienceAndTechnology:false
+                artAndCulture: false,
+                scienceAndTechnology: false
             })
         }
         else if (name == 'currentAffairs') {
@@ -179,8 +181,8 @@ export default function Test(props) {
                 economy: false,
                 history: false,
                 currentAffairs: true,
-                artAndCulture:false,
-                scienceAndTechnology:false
+                artAndCulture: false,
+                scienceAndTechnology: false
             })
         }
         else if (name == 'artAndCulture') {
@@ -191,8 +193,8 @@ export default function Test(props) {
                 economy: false,
                 history: false,
                 currentAffairs: false,
-                artAndCulture:true,
-                scienceAndTechnology:false
+                artAndCulture: true,
+                scienceAndTechnology: false
             })
         }
         else if (name == 'scienceAndTechnology') {
@@ -203,8 +205,8 @@ export default function Test(props) {
                 economy: false,
                 history: false,
                 currentAffairs: false,
-                artAndCulture:false,
-                scienceAndTechnology:true
+                artAndCulture: false,
+                scienceAndTechnology: true
             })
         }
     };
@@ -229,8 +231,8 @@ export default function Test(props) {
                 economy: false,
                 history: false,
                 currentAffairs: false,
-                artAndCulture:false,
-                scienceAndTechnology:true
+                artAndCulture: false,
+                scienceAndTechnology: true
             })
 
             dispatch(
@@ -245,7 +247,7 @@ export default function Test(props) {
                     setInsightsTestDaysList(response.tests.filter(ob => ob.instituteName == "Insights IAS 70 Days"))
                     setiasBabaTestDaysList(response.tests.filter(ob => ob.instituteName == "IAS Baba 60 Days"))
                     setrauIasList(response.tests.filter(ob => ob.instituteName == "Rau IAS"))
-              
+
                 }))
         }
         else if (testCategory == "Full Length") {
@@ -256,9 +258,9 @@ export default function Test(props) {
                 economy: false,
                 history: false,
                 currentAffairs: false,
-                artAndCulture:false,
-                scienceAndTechnology:true
-          
+                artAndCulture: false,
+                scienceAndTechnology: true
+
             })
 
             dispatch(
@@ -273,7 +275,7 @@ export default function Test(props) {
                     setInsightsTestDaysList(response.tests.filter(ob => ob.instituteName == "Insights IAS 70 Days" && ob.testCategory == "Full Length"))
                     setiasBabaTestDaysList(response.tests.filter(ob => ob.instituteName == "IAS Baba 60 Days" && ob.testCategory == "Full Length"))
                     setrauIasList(response.tests.filter(ob => ob.instituteName == "Rau IAS" && ob.testCategory == "Full Length"))
-              
+
                 }))
 
         }
@@ -292,7 +294,7 @@ export default function Test(props) {
                         setInsightsTestDaysList(response.tests.filter(ob => ob.instituteName == "Insights IAS 70 Days" && ob.testCategory == "Sectional" && ob.categoryType == "Polity"))
                         setiasBabaTestDaysList(response.tests.filter(ob => ob.instituteName == "IAS Baba 60 Days" && ob.testCategory == "Sectional" && ob.categoryType == "Polity"))
                         setrauIasList(response.tests.filter(ob => ob.instituteName == "Rau IAS" && ob.testCategory == "Sectional" && ob.categoryType == "Polity"))
-                  
+
                     }
                     else if (state['history']) {
                         setVisionTestList(response.tests.filter(ob => ob.instituteName == "Vision IAS" && ob.testCategory == "Sectional" && ob.categoryType == "History"))
@@ -305,7 +307,7 @@ export default function Test(props) {
                         setInsightsTestDaysList(response.tests.filter(ob => ob.instituteName == "Insights IAS 70 Days" && ob.testCategory == "Sectional" && ob.categoryType == "History"))
                         setiasBabaTestDaysList(response.tests.filter(ob => ob.instituteName == "IAS Baba 60 Days" && ob.testCategory == "Sectional" && ob.categoryType == "History"))
                         setrauIasList(response.tests.filter(ob => ob.instituteName == "Rau IAS" && ob.testCategory == "Sectional" && ob.categoryType == "History"))
-                  
+
                     }
                     else if (state['environment']) {
                         setVisionTestList(response.tests.filter(ob => ob.instituteName == "Vision IAS" && ob.testCategory == "Sectional" && ob.categoryType == "Environment"))
@@ -318,7 +320,7 @@ export default function Test(props) {
                         setInsightsTestDaysList(response.tests.filter(ob => ob.instituteName == "Insights IAS 70 Days" && ob.testCategory == "Sectional" && ob.categoryType == "Environment"))
                         setiasBabaTestDaysList(response.tests.filter(ob => ob.instituteName == "IAS Baba 60 Days" && ob.testCategory == "Sectional" && ob.categoryType == "Environment"))
                         setrauIasList(response.tests.filter(ob => ob.instituteName == "Rau IAS" && ob.testCategory == "Sectional" && ob.categoryType == "Environment"))
-                  
+
                     }
                     else if (state['economy']) {
                         setVisionTestList(response.tests.filter(ob => ob.instituteName == "Vision IAS" && ob.testCategory == "Sectional" && ob.categoryType == "Economy"))
@@ -331,7 +333,7 @@ export default function Test(props) {
                         setInsightsTestDaysList(response.tests.filter(ob => ob.instituteName == "Insights IAS 70 Days" && ob.testCategory == "Sectional" && ob.categoryType == "Economy"))
                         setiasBabaTestDaysList(response.tests.filter(ob => ob.instituteName == "IAS Baba 60 Days" && ob.testCategory == "Sectional" && ob.categoryType == "Economy"))
                         setrauIasList(response.tests.filter(ob => ob.instituteName == "Rau IAS" && ob.testCategory == "Sectional" && ob.categoryType == "Economy"))
-                  
+
                     }
                     else if (state['geography']) {
                         setVisionTestList(response.tests.filter(ob => ob.instituteName == "Vision IAS" && ob.testCategory == "Sectional" && ob.categoryType == "Geography"))
@@ -393,7 +395,7 @@ export default function Test(props) {
         if (user) {
             setCurrentTestId(id)
 
-            if (counter<1) {
+            if (counter < 10) {
                 setSpinner(true)
                 const timer = setTimeout(() => {
                     history.push({
@@ -477,7 +479,7 @@ export default function Test(props) {
     return (
         <div className={classes.root}>
 
-<Header/>
+            <Header />
 
 
 
@@ -501,13 +503,13 @@ export default function Test(props) {
             >
                 <Fade in={open}>
                     <div className={classes.paper1}>
-                        <h2 id="transition-modal-title" className={classes.modalHeading}>Unlock Test</h2>
-                        <p id="transition-modal-description">Scan QR Code to pay</p>
-
-<img src={Qr} className={classes.qrcode}/>
+                        <h2 id="transition-modal-title" className={classes.modalHeading}>1st Test is free for everyone</h2>
+                        <p id="transition-modal-description"> For more tests please choose a plan in the offers page. </p>
+                        <Link to="/offers" style={{ textDecoration: "none" }}>
                             <CButton shape="pill" color="success" className={classes.whatsappButton} >
-               Click to See Offers
-              </CButton>
+                                Click to See Offers
+                            </CButton>
+                        </Link>
 
 
                     </div>
@@ -519,844 +521,837 @@ export default function Test(props) {
             </Backdrop>
 
 
-           <Online>
 
-            <Grid container className={classes.container} spacing={1} >
-                <Grid item lg={2} style={{ paddingTop: 20 }} md={3} sm={3} xs={12}>
-                    <Paper elevation={3} className={classes.filterContainer}>
-                        <p className={classes.filterHeading}>FILTER</p>
-                        {/* First Filter*/}
-                        <div className={classes.filterCategoryContainer}>
-                            <p className={classes.filterCategoryHeading}>SUBJECT FILTER</p>
-                            <div className={classes.filterCategoryItems}>
+                <Grid container className={classes.container} spacing={1} >
+                    <Grid item lg={2} style={{ paddingTop: 20 }} md={3} sm={3} xs={12}>
+                        <Paper elevation={3} className={classes.filterContainer}>
+                            <p className={classes.filterHeading}>FILTER</p>
+                            {/* First Filter*/}
+                            <div className={classes.filterCategoryContainer}>
+                                <p className={classes.filterCategoryHeading}>SUBJECT FILTER</p>
+                                <div className={classes.filterCategoryItems}>
 
-                                <CSelect custom id="select" name="testCategory" className={classes.select}
-                                    value={testCategory} onChange={(e) => setTestCategory(e.target.value)}>
-                                    <option value="0" selected>All Test</option>
+                                    <CSelect custom id="select" name="testCategory" className={classes.select}
+                                        value={testCategory} onChange={(e) => setTestCategory(e.target.value)}>
+                                        <option value="0" selected>All Test</option>
 
-                                    <option value="Full Length">Full Length</option>
-                                    <option value="Sectional">Sectional</option>
-                                </CSelect>
+                                        <option value="Full Length">Full Length</option>
+                                        <option value="Sectional">Sectional</option>
+                                    </CSelect>
 
-                                {testCategory == "Sectional" &&
-                                    <FormControl component="fieldset" className={classes.formControl} >
-                                        <FormGroup >
-
-
-
-
-                                            <FormControlLabel
-                                                input
-                                                control={
-                                                    <Checkbox
-                                                        checked={state['polity']}
-                                                        onChange={handleChange}
-                                                        name="polity"
-                                                        className={classes.labelCheckbox}
-                                                        disableRipple
-                                                        color="default"
-                                                        checkedIcon={<span className={clsx(classes.icon, classes.checkedIcon)} />}
-                                                        inputProps={{ 'aria-label': 'decorative checkbox' }}
-                                                        {...props}
-                                                    />
-                                                }
-                                                label={<Typography variant="body2" color="textSecondary" className={classes.label}>Polity</Typography>}
-                                            />
-
-
-                                            <FormControlLabel
-                                                input
-                                                control={
-                                                    <Checkbox
-                                                        checked={state['environment']}
-                                                        onChange={handleChange}
-                                                        name="environment"
-                                                        className={classes.labelCheckbox}
-                                                        disableRipple
-                                                        color="default"
-                                                        checkedIcon={<span className={clsx(classes.icon, classes.checkedIcon)} />}
-                                                        inputProps={{ 'aria-label': 'decorative checkbox' }}
-                                                        {...props}
-                                                    />
-                                                }
-                                                label={<Typography variant="body2" color="textSecondary" className={classes.label}>Environment</Typography>}
-                                            />
-
-                                            <FormControlLabel
-                                                input
-                                                control={
-                                                    <Checkbox
-                                                        checked={state['history']}
-                                                        onChange={handleChange}
-                                                        name="history"
-                                                        className={classes.labelCheckbox}
-                                                        disableRipple
-                                                        color="default"
-                                                        checkedIcon={<span className={clsx(classes.icon, classes.checkedIcon)} />}
-                                                        inputProps={{ 'aria-label': 'decorative checkbox' }}
-                                                        {...props}
-                                                    />
-                                                }
-                                                label={<Typography variant="body2" color="textSecondary" className={classes.label}>History</Typography>}
-                                            />
-
-
-
-                                            <FormControlLabel
-                                                input
-                                                control={
-                                                    <Checkbox
-                                                        checked={state['economy']}
-                                                        onChange={handleChange}
-                                                        name="economy"
-                                                        className={classes.labelCheckbox}
-                                                        disableRipple
-                                                        color="default"
-                                                        checkedIcon={<span className={clsx(classes.icon, classes.checkedIcon)} />}
-                                                        inputProps={{ 'aria-label': 'decorative checkbox' }}
-                                                        {...props}
-                                                    />
-                                                }
-                                                label={<Typography variant="body2" color="textSecondary" className={classes.label}>Economy</Typography>}
-                                            />
-
-
-                                            <FormControlLabel
-                                                input
-                                                control={
-                                                    <Checkbox
-                                                        checked={state['geography']}
-                                                        onChange={handleChange}
-                                                        name="geography"
-                                                        className={classes.labelCheckbox}
-                                                        disableRipple
-                                                        color="default"
-                                                        checkedIcon={<span className={clsx(classes.icon, classes.checkedIcon)} />}
-                                                        inputProps={{ 'aria-label': 'decorative checkbox' }}
-                                                        {...props}
-                                                    />
-                                                }
-                                                label={<Typography variant="body2" color="textSecondary" className={classes.label}>Geography</Typography>}
-                                            />
+                                    {testCategory == "Sectional" &&
+                                        <FormControl component="fieldset" className={classes.formControl} >
+                                            <FormGroup >
 
 
 
 
-                                            <FormControlLabel
-                                                input
-                                                control={
-                                                    <Checkbox
-                                                        checked={state['currentAffairs']}
-                                                        onChange={handleChange}
-                                                        name="currentAffairs"
-                                                        className={classes.labelCheckbox}
-                                                        disableRipple
-                                                        color="default"
-                                                        checkedIcon={<span className={clsx(classes.icon, classes.checkedIcon)} />}
-                                                        inputProps={{ 'aria-label': 'decorative checkbox' }}
-                                                        {...props}
-                                                    />
-                                                }
-                                                label={<Typography variant="body2" color="textSecondary" className={classes.label}>Current Affairs</Typography>}
-                                            />
+                                                <FormControlLabel
+                                                    input
+                                                    control={
+                                                        <Checkbox
+                                                            checked={state['polity']}
+                                                            onChange={handleChange}
+                                                            name="polity"
+                                                            className={classes.labelCheckbox}
+                                                            disableRipple
+                                                            color="default"
+                                                            checkedIcon={<span className={clsx(classes.icon, classes.checkedIcon)} />}
+                                                            inputProps={{ 'aria-label': 'decorative checkbox' }}
+                                                            {...props}
+                                                        />
+                                                    }
+                                                    label={<Typography variant="body2" color="textSecondary" className={classes.label}>Polity</Typography>}
+                                                />
+
+
+                                                <FormControlLabel
+                                                    input
+                                                    control={
+                                                        <Checkbox
+                                                            checked={state['environment']}
+                                                            onChange={handleChange}
+                                                            name="environment"
+                                                            className={classes.labelCheckbox}
+                                                            disableRipple
+                                                            color="default"
+                                                            checkedIcon={<span className={clsx(classes.icon, classes.checkedIcon)} />}
+                                                            inputProps={{ 'aria-label': 'decorative checkbox' }}
+                                                            {...props}
+                                                        />
+                                                    }
+                                                    label={<Typography variant="body2" color="textSecondary" className={classes.label}>Environment</Typography>}
+                                                />
+
+                                                <FormControlLabel
+                                                    input
+                                                    control={
+                                                        <Checkbox
+                                                            checked={state['history']}
+                                                            onChange={handleChange}
+                                                            name="history"
+                                                            className={classes.labelCheckbox}
+                                                            disableRipple
+                                                            color="default"
+                                                            checkedIcon={<span className={clsx(classes.icon, classes.checkedIcon)} />}
+                                                            inputProps={{ 'aria-label': 'decorative checkbox' }}
+                                                            {...props}
+                                                        />
+                                                    }
+                                                    label={<Typography variant="body2" color="textSecondary" className={classes.label}>History</Typography>}
+                                                />
+
+
+
+                                                <FormControlLabel
+                                                    input
+                                                    control={
+                                                        <Checkbox
+                                                            checked={state['economy']}
+                                                            onChange={handleChange}
+                                                            name="economy"
+                                                            className={classes.labelCheckbox}
+                                                            disableRipple
+                                                            color="default"
+                                                            checkedIcon={<span className={clsx(classes.icon, classes.checkedIcon)} />}
+                                                            inputProps={{ 'aria-label': 'decorative checkbox' }}
+                                                            {...props}
+                                                        />
+                                                    }
+                                                    label={<Typography variant="body2" color="textSecondary" className={classes.label}>Economy</Typography>}
+                                                />
+
+
+                                                <FormControlLabel
+                                                    input
+                                                    control={
+                                                        <Checkbox
+                                                            checked={state['geography']}
+                                                            onChange={handleChange}
+                                                            name="geography"
+                                                            className={classes.labelCheckbox}
+                                                            disableRipple
+                                                            color="default"
+                                                            checkedIcon={<span className={clsx(classes.icon, classes.checkedIcon)} />}
+                                                            inputProps={{ 'aria-label': 'decorative checkbox' }}
+                                                            {...props}
+                                                        />
+                                                    }
+                                                    label={<Typography variant="body2" color="textSecondary" className={classes.label}>Geography</Typography>}
+                                                />
 
 
 
 
-                                            <FormControlLabel
-                                                input
-                                                control={
-                                                    <Checkbox
-                                                        checked={state['artAndCulture']}
-                                                        onChange={handleChange}
-                                                        name="artAndCulture"
-                                                        className={classes.labelCheckbox}
-                                                        disableRipple
-                                                        color="default"
-                                                        checkedIcon={<span className={clsx(classes.icon, classes.checkedIcon)} />}
-                                                        inputProps={{ 'aria-label': 'decorative checkbox' }}
-                                                        {...props}
-                                                    />
-                                                }
-                                                label={<Typography variant="body2" color="textSecondary" className={classes.label}>Art and Culture</Typography>}
-                                            />
+                                                <FormControlLabel
+                                                    input
+                                                    control={
+                                                        <Checkbox
+                                                            checked={state['currentAffairs']}
+                                                            onChange={handleChange}
+                                                            name="currentAffairs"
+                                                            className={classes.labelCheckbox}
+                                                            disableRipple
+                                                            color="default"
+                                                            checkedIcon={<span className={clsx(classes.icon, classes.checkedIcon)} />}
+                                                            inputProps={{ 'aria-label': 'decorative checkbox' }}
+                                                            {...props}
+                                                        />
+                                                    }
+                                                    label={<Typography variant="body2" color="textSecondary" className={classes.label}>Current Affairs</Typography>}
+                                                />
 
 
 
-                                            <FormControlLabel
-                                                input
-                                                control={
-                                                    <Checkbox
-                                                        checked={state['scienceAndTechnology']}
-                                                        onChange={handleChange}
-                                                        name="scienceAndTechnology"
-                                                        className={classes.labelCheckbox}
-                                                        disableRipple
-                                                        color="default"
-                                                        checkedIcon={<span className={clsx(classes.icon, classes.checkedIcon)} />}
-                                                        inputProps={{ 'aria-label': 'decorative checkbox' }}
-                                                        {...props}
-                                                    />
-                                                }
-                                                label={<Typography variant="body2" color="textSecondary" className={classes.label}>Science and Technology</Typography>}
-                                            />
 
-                                        </FormGroup>
-                                    </FormControl>
-                                }
+                                                <FormControlLabel
+                                                    input
+                                                    control={
+                                                        <Checkbox
+                                                            checked={state['artAndCulture']}
+                                                            onChange={handleChange}
+                                                            name="artAndCulture"
+                                                            className={classes.labelCheckbox}
+                                                            disableRipple
+                                                            color="default"
+                                                            checkedIcon={<span className={clsx(classes.icon, classes.checkedIcon)} />}
+                                                            inputProps={{ 'aria-label': 'decorative checkbox' }}
+                                                            {...props}
+                                                        />
+                                                    }
+                                                    label={<Typography variant="body2" color="textSecondary" className={classes.label}>Art and Culture</Typography>}
+                                                />
+
+
+
+                                                <FormControlLabel
+                                                    input
+                                                    control={
+                                                        <Checkbox
+                                                            checked={state['scienceAndTechnology']}
+                                                            onChange={handleChange}
+                                                            name="scienceAndTechnology"
+                                                            className={classes.labelCheckbox}
+                                                            disableRipple
+                                                            color="default"
+                                                            checkedIcon={<span className={clsx(classes.icon, classes.checkedIcon)} />}
+                                                            inputProps={{ 'aria-label': 'decorative checkbox' }}
+                                                            {...props}
+                                                        />
+                                                    }
+                                                    label={<Typography variant="body2" color="textSecondary" className={classes.label}>Science and Technology</Typography>}
+                                                />
+
+                                            </FormGroup>
+                                        </FormControl>
+                                    }
+                                </div>
+
                             </div>
 
-                        </div>
 
+                            {/* Second Filter*/}
+                            <div className={classes.filterCategoryContainer}>
 
-                        {/* Second Filter*/}
-                        <div className={classes.filterCategoryContainer}>
+                                <div className={classes.filterCategoryItemsContainer}>
+                                    <div className={classes.filterCategoryItems}>
 
-                            <div className={classes.filterCategoryItemsContainer}>
-                                <div className={classes.filterCategoryItems}>
+                                    </div>
 
                                 </div>
 
                             </div>
 
-                        </div>
+
+                        </Paper>
+
+                    </Grid>
+
+                    <Grid item lg={10} md={7} sm={8} xs={12} className={classes.testContainer}>
 
 
-                    </Paper>
 
+                        {/*Vajiram and Ravi */}
+
+                        {vajiramTestList.length > 0 &&
+                            <Paper className={classes.categorypaper} elevation={3}>
+
+                                <div className={classes.categoryContainer}>
+                                    <h1 className={classes.testCategory}>Vajiram and Ravi</h1>
+                                    <Grid container spacing={1}>
+                                        {
+                                            vajiramTestList.map((item, index) => (
+                                                <>
+                                                    <Grid item lg={3} md={4} sm={6} xs={12}>
+                                                        <Paper className={classes.paper} elevation={3}>
+                                                            <p className={classes.testHeading}>{item.testName}</p>
+
+                                                            {/* First Content*/}
+                                                            <div className={classes.testContent}>
+                                                                <div className={classes.testContentItems}>
+                                                                    {item.testCategory == "Sectional" &&
+                                                                        <p className={classes.testContentHeading}>                 {item.categoryType} </p>}
+                                                                    {item.testCategory == "Full Length" &&
+                                                                        <p className={classes.testContentHeading}>Full Length Test</p>
+                                                                    }
+
+                                                                </div>
+
+                                                            </div>
+
+
+                                                            {/* Second Content*/}
+                                                            <div className={classes.testContent}>
+
+
+                                                                <div className={classes.testContentItems} style={{ marginTop: item.testCategory ? "-10px" : "25px" }}>
+                                                                    <NoteRounded color="primary" className={classes.testContentIcons} />
+                                                                    <p className={classes.testContentHeading}>{item.numberOfQuestions} Questions</p>
+                                                                </div>
+                                                            </div>
+
+
+                                                            {/* Second Content*/}
+                                                            <div className={classes.testContent}>
+                                                                <div className={classes.testContentItems}>
+                                                                </div>
+
+
+                                                                {/*  Test Button*/}
+
+                                                                <div className={classes.testContentItems} style={{ width: "100%", margin: 10 }}>
+                                                                    <CButton variant="outline" color="primary"
+                                                                        size="md" block onClick={() => handleGiveTest(item._id)} >Start Test</CButton>
+                                                                </div>
+                                                            </div>
+                                                        </Paper>
+                                                    </Grid>
+
+                                                </>
+                                            ))}
+                                    </Grid>
+                                </div>
+                            </Paper>
+
+                        }
+
+
+
+                        {/*Shankar IAS Academy */}
+
+                        {shankarTestList.length > 0 &&
+                            <Paper className={classes.categorypaper} elevation={3}>
+
+                                <div className={classes.categoryContainer}>
+                                    <h1 className={classes.testCategory}>Shankar IAS Academy</h1>
+                                    <Grid container spacing={1}>
+                                        {
+                                            shankarTestList.map((item, index) => (
+                                                <>
+                                                    <Grid item lg={3} md={4} sm={6} xs={12}>
+                                                        <Paper className={classes.paper} elevation={3}>
+                                                            <p className={classes.testHeading}>{item.testName}</p>
+
+                                                            <div className={classes.testContent}>
+                                                                <div className={classes.testContentItems}>
+                                                                    {item.testCategory == "Sectional" &&
+                                                                        <p className={classes.testContentHeading}>                 {item.categoryType} </p>}
+                                                                    {item.testCategory == "Full Length" &&
+                                                                        <p className={classes.testContentHeading}>Full Length Test</p>
+                                                                    }
+
+                                                                </div>
+
+                                                            </div>
+
+                                                            {/* Second Content*/}
+                                                            <div className={classes.testContent}>
+
+
+                                                                <div className={classes.testContentItems} style={{ marginTop: item.testCategory ? "-10px" : "25px" }}>
+                                                                    <NoteRounded color="primary" className={classes.testContentIcons} />
+                                                                    <p className={classes.testContentHeading} >{item.numberOfQuestions} Questions</p>
+                                                                </div>
+                                                            </div>
+
+
+                                                            {/* Second Content*/}
+                                                            <div className={classes.testContent}>
+                                                                <div className={classes.testContentItems}>
+                                                                </div>
+
+
+                                                                {/*  Test Button*/}
+
+                                                                <div className={classes.testContentItems} style={{ width: "100%", margin: 10 }}>
+                                                                    <CButton variant="outline" color="primary"
+                                                                        size="md" block onClick={() => handleGiveTest(item._id)} >Start Test</CButton>
+                                                                </div>
+                                                            </div>
+                                                        </Paper>
+                                                    </Grid>
+
+                                                </>
+                                            ))}
+                                    </Grid>
+                                </div>
+                            </Paper>
+                        }
+
+
+                        {/*Forum IAS */}
+
+                        {forumTestList.length > 0 &&
+                            <Paper className={classes.categorypaper} elevation={3}>
+
+                                <div className={classes.categoryContainer}>
+                                    <h1 className={classes.testCategory}>Forum IAS</h1>
+                                    <Grid container spacing={1}>
+                                        {
+                                            forumTestList.map((item, index) => (
+                                                <>
+                                                    <Grid item lg={3} md={4} sm={6} xs={12}>
+                                                        <Paper className={classes.paper} elevation={3}>
+                                                            <p className={classes.testHeading}>{item.testName}</p>
+                                                            <div className={classes.testContent}>
+                                                                <div className={classes.testContentItems}>
+                                                                    {item.testCategory == "Sectional" &&
+                                                                        <p className={classes.testContentHeading}>                 {item.categoryType} </p>}
+                                                                    {item.testCategory == "Full Length" &&
+                                                                        <p className={classes.testContentHeading}>Full Length Test</p>
+                                                                    }
+
+                                                                </div>
+
+                                                            </div>
+
+                                                            {/* Second Content*/}
+                                                            <div className={classes.testContent}>
+
+
+                                                                <div className={classes.testContentItems} style={{ marginTop: item.testCategory ? "-10px" : "25px" }}>
+                                                                    <NoteRounded color="primary" className={classes.testContentIcons} />
+                                                                    <p className={classes.testContentHeading}>{item.numberOfQuestions} Questions</p>
+                                                                </div>
+                                                            </div>
+
+
+                                                            {/* Second Content*/}
+                                                            <div className={classes.testContent}>
+                                                                <div className={classes.testContentItems}>
+                                                                </div>
+
+
+                                                                {/*  Test Button*/}
+                                                                <div className={classes.testContentItems} style={{ width: "100%", margin: 10 }}>
+                                                                    <CButton variant="outline" color="primary"
+                                                                        size="md" block onClick={() => handleGiveTest(item._id)} >Start Test</CButton>
+                                                                </div>
+                                                            </div>
+                                                        </Paper>
+                                                    </Grid>
+
+                                                </>
+                                            ))}
+                                    </Grid>
+                                </div>
+                            </Paper>
+                        }
+
+
+                        {/*IAS Score */}
+
+                        {iasTestList.length > 0 &&
+                            <Paper className={classes.categorypaper} elevation={3}>
+
+                                <div className={classes.categoryContainer}>
+                                    <h1 className={classes.testCategory}>IAS Score</h1>
+                                    <Grid container spacing={1}>
+                                        {
+                                            iasTestList.map((item, index) => (
+                                                <>
+                                                    <Grid item lg={3} md={4} sm={6} xs={12}>
+                                                        <Paper className={classes.paper} elevation={3}>
+                                                            <p className={classes.testHeading}>{item.testName}</p>
+
+                                                            <div className={classes.testContent}>
+                                                                <div className={classes.testContentItems}>
+                                                                    {item.testCategory == "Sectional" &&
+                                                                        <p className={classes.testContentHeading}>                 {item.categoryType} </p>}
+                                                                    {item.testCategory == "Full Length" &&
+                                                                        <p className={classes.testContentHeading}>Full Length Test</p>
+                                                                    }
+
+                                                                </div>
+
+                                                            </div>
+                                                            {/* Second Content*/}
+                                                            <div className={classes.testContent}>
+
+
+                                                                <div className={classes.testContentItems} style={{ marginTop: item.testCategory ? "-10px" : "25px" }}>
+                                                                    <NoteRounded color="primary" className={classes.testContentIcons} />
+                                                                    <p className={classes.testContentHeading}>{item.numberOfQuestions} Questions</p>
+                                                                </div>
+                                                            </div>
+
+
+                                                            {/* Second Content*/}
+                                                            <div className={classes.testContent}>
+                                                                <div className={classes.testContentItems}>
+                                                                </div>
+
+
+                                                                {/*  Test Button*/}
+                                                                <div className={classes.testContentItems} style={{ width: "100%", margin: 10 }}>
+                                                                    <CButton variant="outline" color="primary"
+                                                                        size="md" block onClick={() => handleGiveTest(item._id)} >Start Test</CButton>
+                                                                </div>
+                                                            </div>
+                                                        </Paper>
+                                                    </Grid>
+
+                                                </>
+                                            ))}
+                                    </Grid>
+                                </div>
+                            </Paper>
+                        }
+
+
+
+                        {/*Insights IAS */}
+
+                        {insightsTestList.length > 0 &&
+                            <Paper className={classes.categorypaper} elevation={3}>
+
+                                <div className={classes.categoryContainer}>
+                                    <h1 className={classes.testCategory}>Insights IAS</h1>
+                                    <Grid container spacing={1}>
+                                        {
+                                            insightsTestList.map((item, index) => (
+                                                <>
+                                                    <Grid item lg={3} md={4} sm={6} xs={12}>
+                                                        <Paper className={classes.paper} elevation={3}>
+                                                            <p className={classes.testHeading}>{item.testName}</p>
+
+                                                            <div className={classes.testContent}>
+                                                                <div className={classes.testContentItems}>
+                                                                    {item.testCategory == "Sectional" &&
+                                                                        <p className={classes.testContentHeading}>                 {item.categoryType} </p>}
+                                                                    {item.testCategory == "Full Length" &&
+                                                                        <p className={classes.testContentHeading}>Full Length Test</p>
+                                                                    }
+
+                                                                </div>
+
+                                                            </div>
+
+                                                            {/* Second Content*/}
+                                                            <div className={classes.testContent}>
+
+
+                                                                <div className={classes.testContentItems} style={{ marginTop: item.testCategory ? "-10px" : "25px" }}>
+                                                                    <NoteRounded color="primary" className={classes.testContentIcons} />
+                                                                    <p className={classes.testContentHeading}>{item.numberOfQuestions} Questions</p>
+                                                                </div>
+                                                            </div>
+
+
+                                                            {/* Second Content*/}
+                                                            <div className={classes.testContent}>
+                                                                <div className={classes.testContentItems}>
+                                                                </div>
+
+
+                                                                {/*  Test Button*/}
+
+                                                                <div className={classes.testContentItems} style={{ width: "100%", margin: 10 }}>
+                                                                    <CButton variant="outline" color="primary"
+                                                                        size="md" block onClick={() => handleGiveTest(item._id)} >Start Test</CButton>
+                                                                </div>
+                                                            </div>
+                                                        </Paper>
+                                                    </Grid>
+
+                                                </>
+                                            ))}
+                                    </Grid>
+                                </div>
+                            </Paper>
+                        }
+
+
+                        {/*UPSC PYQs */}
+                        {upscTestList.length > 0 &&
+                            <Paper className={classes.categorypaper} elevation={3}>
+
+                                <div className={classes.categoryContainer}>
+                                    <h1 className={classes.testCategory}>UPSC PYQs</h1>
+                                    <Grid container spacing={1}>
+                                        {
+                                            upscTestList.map((item, index) => (
+                                                <>
+                                                    <Grid item lg={3} md={4} sm={6} xs={12}>
+                                                        <Paper className={classes.paper} elevation={3}>
+                                                            <p className={classes.testHeading}>{item.testName}</p>
+
+                                                            <div className={classes.testContent}>
+                                                                <div className={classes.testContentItems}>
+                                                                    {item.testCategory == "Sectional" &&
+                                                                        <p className={classes.testContentHeading}>                 {item.categoryType} </p>}
+                                                                    {item.testCategory == "Full Length" &&
+                                                                        <p className={classes.testContentHeading}>Full Length Test</p>
+                                                                    }
+
+                                                                </div>
+
+                                                            </div>
+
+                                                            {/* Second Content*/}
+                                                            <div className={classes.testContent}>
+
+
+                                                                <div className={classes.testContentItems} style={{ marginTop: item.testCategory ? "-10px" : "25px" }}>
+                                                                    <NoteRounded color="primary" className={classes.testContentIcons} />
+                                                                    <p className={classes.testContentHeading}>{item.numberOfQuestions} Questions</p>
+                                                                </div>
+                                                            </div>
+
+
+                                                            {/* Second Content*/}
+                                                            <div className={classes.testContent}>
+                                                                <div className={classes.testContentItems}>
+                                                                </div>
+
+
+                                                                {/*  Test Button*/}
+
+                                                                <div className={classes.testContentItems} style={{ width: "100%", margin: 10 }}>
+                                                                    <CButton variant="outline" color="primary"
+                                                                        size="md" block onClick={() => handleGiveTest(item._id)} >Start Test</CButton>
+                                                                </div>
+                                                            </div>
+                                                        </Paper>
+                                                    </Grid>
+
+                                                </>
+                                            ))}
+                                    </Grid>
+                                </div>
+                            </Paper>
+                        }
+
+
+
+                        {/*Vision IAS */}
+
+                        {visionTestList.length > 0 &&
+                            <Paper className={classes.categorypaper} elevation={3}>
+
+                                <div className={classes.categoryContainer}>
+                                    <h1 className={classes.testCategory}>Vision IAS</h1>
+                                    <Grid container spacing={1}>
+                                        {
+                                            visionTestList.map((item, index) => (
+                                                <>
+                                                    <Grid item lg={3} md={4} sm={6} xs={12}>
+                                                        <Paper className={classes.paper} elevation={3}>
+                                                            <p className={classes.testHeading}>{item.testName}</p>
+
+                                                            <div className={classes.testContent}>
+                                                                <div className={classes.testContentItems}>
+                                                                    {item.testCategory == "Sectional" &&
+                                                                        <p className={classes.testContentHeading}>                 {item.categoryType} </p>}
+                                                                    {item.testCategory == "Full Length" &&
+                                                                        <p className={classes.testContentHeading}>Full Length Test</p>
+                                                                    }
+
+                                                                </div>
+
+                                                            </div>
+                                                            {/* Second Content*/}
+                                                            <div className={classes.testContent}>
+
+
+                                                                <div className={classes.testContentItems} style={{ marginTop: item.testCategory ? "-10px" : "25px" }}>
+                                                                    <NoteRounded color="primary" className={classes.testContentIcons} />
+                                                                    <p className={classes.testContentHeading}>{item.numberOfQuestions} Questions</p>
+                                                                </div>
+                                                            </div>
+
+
+                                                            {/* Second Content*/}
+                                                            <div className={classes.testContent}>
+                                                                <div className={classes.testContentItems}>
+                                                                </div>
+
+
+                                                                {/*  Test Button*/}
+
+                                                                <div className={classes.testContentItems} style={{ width: "100%", margin: 10 }}>
+                                                                    <CButton variant="outline" color="primary"
+                                                                        size="md" block onClick={() => handleGiveTest(item._id)} >Start Test</CButton>
+                                                                </div>
+                                                            </div>
+                                                        </Paper>
+                                                    </Grid>
+                                                </>
+                                            ))}
+                                    </Grid>
+                                </div>
+                            </Paper>
+                        }
+
+
+
+
+
+                        {/*Insight IAS 70 Days */}
+
+                        {insightsTestDaysList.length > 0 &&
+                            <Paper className={classes.categorypaper} elevation={3}>
+
+                                <div className={classes.categoryContainer}>
+                                    <h1 className={classes.testCategory}>Insights IAS 70 Days</h1>
+                                    <Grid container spacing={1}>
+                                        {
+                                            insightsTestDaysList.map((item, index) => (
+                                                <>
+                                                    <Grid item lg={3} md={4} sm={6} xs={12}>
+                                                        <Paper className={classes.paper} elevation={3}>
+                                                            <p className={classes.testHeading}>{item.testName}</p>
+
+                                                            <div className={classes.testContent}>
+                                                                <div className={classes.testContentItems}>
+                                                                    {item.testCategory == "Sectional" &&
+                                                                        <p className={classes.testContentHeading}>                 {item.categoryType} </p>}
+                                                                    {item.testCategory == "Full Length" &&
+                                                                        <p className={classes.testContentHeading}>Full Length Test</p>
+                                                                    }
+
+                                                                </div>
+
+                                                            </div>
+                                                            {/* Second Content*/}
+                                                            <div className={classes.testContent}>
+
+
+                                                                <div className={classes.testContentItems} style={{ marginTop: item.testCategory ? "-10px" : "25px" }}>
+                                                                    <NoteRounded color="primary" className={classes.testContentIcons} />
+                                                                    <p className={classes.testContentHeading}>{item.numberOfQuestions} Questions</p>
+                                                                </div>
+                                                            </div>
+
+
+                                                            {/* Second Content*/}
+                                                            <div className={classes.testContent}>
+                                                                <div className={classes.testContentItems}>
+                                                                </div>
+
+
+                                                                {/*  Test Button*/}
+
+                                                                <div className={classes.testContentItems} style={{ width: "100%", margin: 10 }}>
+                                                                    <CButton variant="outline" color="primary"
+                                                                        size="md" block onClick={() => handleGiveTest(item._id)} >Start Test</CButton>
+                                                                </div>
+                                                            </div>
+                                                        </Paper>
+                                                    </Grid>
+                                                </>
+                                            ))}
+                                    </Grid>
+                                </div>
+                            </Paper>
+                        }
+
+
+                        {/* IAS Baba 60 Days */}
+
+                        {iasBabaTestDaysList.length > 0 &&
+                            <Paper className={classes.categorypaper} elevation={3}>
+
+                                <div className={classes.categoryContainer}>
+                                    <h1 className={classes.testCategory}>IAS Baba 60 Days</h1>
+                                    <Grid container spacing={1}>
+                                        {
+                                            iasBabaTestDaysList.map((item, index) => (
+                                                <>
+                                                    <Grid item lg={3} md={4} sm={6} xs={12}>
+                                                        <Paper className={classes.paper} elevation={3}>
+                                                            <p className={classes.testHeading}>{item.testName}</p>
+
+                                                            <div className={classes.testContent}>
+                                                                <div className={classes.testContentItems}>
+                                                                    {item.testCategory == "Sectional" &&
+                                                                        <p className={classes.testContentHeading}>                 {item.categoryType} </p>}
+                                                                    {item.testCategory == "Full Length" &&
+                                                                        <p className={classes.testContentHeading}>Full Length Test</p>
+                                                                    }
+
+                                                                </div>
+
+                                                            </div>
+                                                            {/* Second Content*/}
+                                                            <div className={classes.testContent}>
+
+
+                                                                <div className={classes.testContentItems} style={{ marginTop: item.testCategory ? "-10px" : "25px" }}>
+                                                                    <NoteRounded color="primary" className={classes.testContentIcons} />
+                                                                    <p className={classes.testContentHeading}>{item.numberOfQuestions} Questions</p>
+                                                                </div>
+                                                            </div>
+
+
+                                                            {/* Second Content*/}
+                                                            <div className={classes.testContent}>
+                                                                <div className={classes.testContentItems}>
+                                                                </div>
+
+
+                                                                {/*  Test Button*/}
+
+                                                                <div className={classes.testContentItems} style={{ width: "100%", margin: 10 }}>
+                                                                    <CButton variant="outline" color="primary"
+                                                                        size="md" block onClick={() => handleGiveTest(item._id)} >Start Test</CButton>
+                                                                </div>
+                                                            </div>
+                                                        </Paper>
+                                                    </Grid>
+                                                </>
+                                            ))}
+                                    </Grid>
+                                </div>
+                            </Paper>
+                        }
+
+
+                        {/* Rau IAS */}
+
+                        {rauIasTestList.length > 0 &&
+                            <Paper className={classes.categorypaper} elevation={3}>
+
+                                <div className={classes.categoryContainer}>
+                                    <h1 className={classes.testCategory}>Rau IAS</h1>
+                                    <Grid container spacing={1}>
+                                        {
+                                            rauIasTestList.map((item, index) => (
+                                                <>
+                                                    <Grid item lg={3} md={4} sm={6} xs={12}>
+                                                        <Paper className={classes.paper} elevation={3}>
+                                                            <p className={classes.testHeading}>{item.testName}</p>
+
+                                                            <div className={classes.testContent}>
+                                                                <div className={classes.testContentItems}>
+                                                                    {item.testCategory == "Sectional" &&
+                                                                        <p className={classes.testContentHeading}>                 {item.categoryType} </p>}
+                                                                    {item.testCategory == "Full Length" &&
+                                                                        <p className={classes.testContentHeading}>Full Length Test</p>
+                                                                    }
+
+                                                                </div>
+
+                                                            </div>
+                                                            {/* Second Content*/}
+                                                            <div className={classes.testContent}>
+
+
+                                                                <div className={classes.testContentItems} style={{ marginTop: item.testCategory ? "-10px" : "25px" }}>
+                                                                    <NoteRounded color="primary" className={classes.testContentIcons} />
+                                                                    <p className={classes.testContentHeading}>{item.numberOfQuestions} Questions</p>
+                                                                </div>
+                                                            </div>
+
+
+                                                            {/* Second Content*/}
+                                                            <div className={classes.testContent}>
+                                                                <div className={classes.testContentItems}>
+                                                                </div>
+
+
+                                                                {/*  Test Button*/}
+
+                                                                <div className={classes.testContentItems} style={{ width: "100%", margin: 10 }}>
+                                                                    <CButton variant="outline" color="primary"
+                                                                        size="md" block onClick={() => handleGiveTest(item._id)} >Start Test</CButton>
+                                                                </div>
+                                                            </div>
+                                                        </Paper>
+                                                    </Grid>
+                                                </>
+                                            ))}
+                                    </Grid>
+                                </div>
+                            </Paper>
+                        }
+
+
+
+
+
+                    </Grid>
                 </Grid>
-
-                <Grid item lg={10} md={7} sm={8} xs={12} className={classes.testContainer}>
-
-
-
-                    {/*Vajiram and Ravi */}
-
-                    {vajiramTestList.length > 0 &&
-                        <Paper className={classes.categorypaper} elevation={3}>
-
-                            <div className={classes.categoryContainer}>
-                                <h1 className={classes.testCategory}>Vajiram and Ravi</h1>
-                                <Grid container spacing={1}>
-                                    {
-                                        vajiramTestList.map((item, index) => (
-                                            <>
-                                                <Grid item lg={3} md={4} sm={6} xs={12}>
-                                                    <Paper className={classes.paper} elevation={3}>
-                                                        <p className={classes.testHeading}>{item.testName}</p>
-
-                                                        {/* First Content*/}
-                                                        <div className={classes.testContent}>
-                                                            <div className={classes.testContentItems}>
-                                                                {item.testCategory == "Sectional" &&
-                                                                    <p className={classes.testContentHeading}>                 {item.categoryType} </p>}
-                                                                {item.testCategory == "Full Length" &&
-                                                                    <p className={classes.testContentHeading}>Full Length Test</p>
-                                                                }
-
-                                                            </div>
-
-                                                        </div>
-
-
-                                                        {/* Second Content*/}
-                                                        <div className={classes.testContent}>
-
-
-                                                            <div className={classes.testContentItems} style={{ marginTop: item.testCategory ? "-10px" : "25px" }}>
-                                                                <NoteRounded color="primary" className={classes.testContentIcons} />
-                                                                <p className={classes.testContentHeading}>{item.numberOfQuestions} Questions</p>
-                                                            </div>
-                                                        </div>
-
-
-                                                        {/* Second Content*/}
-                                                        <div className={classes.testContent}>
-                                                            <div className={classes.testContentItems}>
-                                                            </div>
-
-
-                                                            {/*  Test Button*/}
-
-                                                            <div className={classes.testContentItems} style={{ width: "100%", margin: 10 }}>
-                                                                <CButton variant="outline" color="primary"
-                                                                    size="md" block onClick={() => handleGiveTest(item._id)} >Start Test</CButton>
-                                                            </div>
-                                                        </div>
-                                                    </Paper>
-                                                </Grid>
-
-                                            </>
-                                        ))}
-                                </Grid>
-                            </div>
-                        </Paper>
-
-                    }
-
-
-
-                    {/*Shankar IAS Academy */}
-
-                    {shankarTestList.length > 0 &&
-                        <Paper className={classes.categorypaper} elevation={3}>
-
-                            <div className={classes.categoryContainer}>
-                                <h1 className={classes.testCategory}>Shankar IAS Academy</h1>
-                                <Grid container spacing={1}>
-                                    {
-                                        shankarTestList.map((item, index) => (
-                                            <>
-                                                <Grid item lg={3} md={4} sm={6} xs={12}>
-                                                    <Paper className={classes.paper} elevation={3}>
-                                                        <p className={classes.testHeading}>{item.testName}</p>
-
-                                                        <div className={classes.testContent}>
-                                                            <div className={classes.testContentItems}>
-                                                                {item.testCategory == "Sectional" &&
-                                                                    <p className={classes.testContentHeading}>                 {item.categoryType} </p>}
-                                                                {item.testCategory == "Full Length" &&
-                                                                    <p className={classes.testContentHeading}>Full Length Test</p>
-                                                                }
-
-                                                            </div>
-
-                                                        </div>
-
-                                                        {/* Second Content*/}
-                                                        <div className={classes.testContent}>
-
-
-                                                            <div className={classes.testContentItems} style={{ marginTop: item.testCategory ? "-10px" : "25px" }}>
-                                                                <NoteRounded color="primary" className={classes.testContentIcons} />
-                                                                <p className={classes.testContentHeading} >{item.numberOfQuestions} Questions</p>
-                                                            </div>
-                                                        </div>
-
-
-                                                        {/* Second Content*/}
-                                                        <div className={classes.testContent}>
-                                                            <div className={classes.testContentItems}>
-                                                            </div>
-
-
-                                                            {/*  Test Button*/}
-
-                                                            <div className={classes.testContentItems} style={{ width: "100%", margin: 10 }}>
-                                                                <CButton variant="outline" color="primary"
-                                                                    size="md" block onClick={() => handleGiveTest(item._id)} >Start Test</CButton>
-                                                            </div>
-                                                        </div>
-                                                    </Paper>
-                                                </Grid>
-
-                                            </>
-                                        ))}
-                                </Grid>
-                            </div>
-                        </Paper>
-                    }
-
-
-                    {/*Forum IAS */}
-
-                    {forumTestList.length > 0 &&
-                        <Paper className={classes.categorypaper} elevation={3}>
-
-                            <div className={classes.categoryContainer}>
-                                <h1 className={classes.testCategory}>Forum IAS</h1>
-                                <Grid container spacing={1}>
-                                    {
-                                        forumTestList.map((item, index) => (
-                                            <>
-                                                <Grid item lg={3} md={4} sm={6} xs={12}>
-                                                    <Paper className={classes.paper} elevation={3}>
-                                                        <p className={classes.testHeading}>{item.testName}</p>
-                                                        <div className={classes.testContent}>
-                                                            <div className={classes.testContentItems}>
-                                                                {item.testCategory == "Sectional" &&
-                                                                    <p className={classes.testContentHeading}>                 {item.categoryType} </p>}
-                                                                {item.testCategory == "Full Length" &&
-                                                                    <p className={classes.testContentHeading}>Full Length Test</p>
-                                                                }
-
-                                                            </div>
-
-                                                        </div>
-
-                                                        {/* Second Content*/}
-                                                        <div className={classes.testContent}>
-
-
-                                                            <div className={classes.testContentItems} style={{ marginTop: item.testCategory ? "-10px" : "25px" }}>
-                                                                <NoteRounded color="primary" className={classes.testContentIcons} />
-                                                                <p className={classes.testContentHeading}>{item.numberOfQuestions} Questions</p>
-                                                            </div>
-                                                        </div>
-
-
-                                                        {/* Second Content*/}
-                                                        <div className={classes.testContent}>
-                                                            <div className={classes.testContentItems}>
-                                                            </div>
-
-
-                                                            {/*  Test Button*/}
-                                                            <div className={classes.testContentItems} style={{ width: "100%", margin: 10 }}>
-                                                                <CButton variant="outline" color="primary"
-                                                                    size="md" block onClick={() => handleGiveTest(item._id)} >Start Test</CButton>
-                                                            </div>
-                                                        </div>
-                                                    </Paper>
-                                                </Grid>
-
-                                            </>
-                                        ))}
-                                </Grid>
-                            </div>
-                        </Paper>
-                    }
-
-
-                    {/*IAS Score */}
-
-                    {iasTestList.length > 0 &&
-                        <Paper className={classes.categorypaper} elevation={3}>
-
-                            <div className={classes.categoryContainer}>
-                                <h1 className={classes.testCategory}>IAS Score</h1>
-                                <Grid container spacing={1}>
-                                    {
-                                        iasTestList.map((item, index) => (
-                                            <>
-                                                <Grid item lg={3} md={4} sm={6} xs={12}>
-                                                    <Paper className={classes.paper} elevation={3}>
-                                                        <p className={classes.testHeading}>{item.testName}</p>
-
-                                                        <div className={classes.testContent}>
-                                                            <div className={classes.testContentItems}>
-                                                                {item.testCategory == "Sectional" &&
-                                                                    <p className={classes.testContentHeading}>                 {item.categoryType} </p>}
-                                                                {item.testCategory == "Full Length" &&
-                                                                    <p className={classes.testContentHeading}>Full Length Test</p>
-                                                                }
-
-                                                            </div>
-
-                                                        </div>
-                                                        {/* Second Content*/}
-                                                        <div className={classes.testContent}>
-
-
-                                                            <div className={classes.testContentItems} style={{ marginTop: item.testCategory ? "-10px" : "25px" }}>
-                                                                <NoteRounded color="primary" className={classes.testContentIcons} />
-                                                                <p className={classes.testContentHeading}>{item.numberOfQuestions} Questions</p>
-                                                            </div>
-                                                        </div>
-
-
-                                                        {/* Second Content*/}
-                                                        <div className={classes.testContent}>
-                                                            <div className={classes.testContentItems}>
-                                                            </div>
-
-
-                                                            {/*  Test Button*/}
-                                                            <div className={classes.testContentItems} style={{ width: "100%", margin: 10 }}>
-                                                                <CButton variant="outline" color="primary"
-                                                                    size="md" block onClick={() => handleGiveTest(item._id)} >Start Test</CButton>
-                                                            </div>
-                                                        </div>
-                                                    </Paper>
-                                                </Grid>
-
-                                            </>
-                                        ))}
-                                </Grid>
-                            </div>
-                        </Paper>
-                    }
-
-
-
-                    {/*Insights IAS */}
-
-                    {insightsTestList.length > 0 &&
-                        <Paper className={classes.categorypaper} elevation={3}>
-
-                            <div className={classes.categoryContainer}>
-                                <h1 className={classes.testCategory}>Insights IAS</h1>
-                                <Grid container spacing={1}>
-                                    {
-                                        insightsTestList.map((item, index) => (
-                                            <>
-                                                <Grid item lg={3} md={4} sm={6} xs={12}>
-                                                    <Paper className={classes.paper} elevation={3}>
-                                                        <p className={classes.testHeading}>{item.testName}</p>
-
-                                                        <div className={classes.testContent}>
-                                                            <div className={classes.testContentItems}>
-                                                                {item.testCategory == "Sectional" &&
-                                                                    <p className={classes.testContentHeading}>                 {item.categoryType} </p>}
-                                                                {item.testCategory == "Full Length" &&
-                                                                    <p className={classes.testContentHeading}>Full Length Test</p>
-                                                                }
-
-                                                            </div>
-
-                                                        </div>
-
-                                                        {/* Second Content*/}
-                                                        <div className={classes.testContent}>
-
-
-                                                            <div className={classes.testContentItems} style={{ marginTop: item.testCategory ? "-10px" : "25px" }}>
-                                                                <NoteRounded color="primary" className={classes.testContentIcons} />
-                                                                <p className={classes.testContentHeading}>{item.numberOfQuestions} Questions</p>
-                                                            </div>
-                                                        </div>
-
-
-                                                        {/* Second Content*/}
-                                                        <div className={classes.testContent}>
-                                                            <div className={classes.testContentItems}>
-                                                            </div>
-
-
-                                                            {/*  Test Button*/}
-
-                                                            <div className={classes.testContentItems} style={{ width: "100%", margin: 10 }}>
-                                                                <CButton variant="outline" color="primary"
-                                                                    size="md" block onClick={() => handleGiveTest(item._id)} >Start Test</CButton>
-                                                            </div>
-                                                        </div>
-                                                    </Paper>
-                                                </Grid>
-
-                                            </>
-                                        ))}
-                                </Grid>
-                            </div>
-                        </Paper>
-                    }
-
-
-                    {/*UPSC PYQs */}
-                    {upscTestList.length > 0 &&
-                        <Paper className={classes.categorypaper} elevation={3}>
-
-                            <div className={classes.categoryContainer}>
-                                <h1 className={classes.testCategory}>UPSC PYQs</h1>
-                                <Grid container spacing={1}>
-                                    {
-                                        upscTestList.map((item, index) => (
-                                            <>
-                                                <Grid item lg={3} md={4} sm={6} xs={12}>
-                                                    <Paper className={classes.paper} elevation={3}>
-                                                        <p className={classes.testHeading}>{item.testName}</p>
-
-                                                        <div className={classes.testContent}>
-                                                            <div className={classes.testContentItems}>
-                                                                {item.testCategory == "Sectional" &&
-                                                                    <p className={classes.testContentHeading}>                 {item.categoryType} </p>}
-                                                                {item.testCategory == "Full Length" &&
-                                                                    <p className={classes.testContentHeading}>Full Length Test</p>
-                                                                }
-
-                                                            </div>
-
-                                                        </div>
-
-                                                        {/* Second Content*/}
-                                                        <div className={classes.testContent}>
-
-
-                                                            <div className={classes.testContentItems} style={{ marginTop: item.testCategory ? "-10px" : "25px" }}>
-                                                                <NoteRounded color="primary" className={classes.testContentIcons} />
-                                                                <p className={classes.testContentHeading}>{item.numberOfQuestions} Questions</p>
-                                                            </div>
-                                                        </div>
-
-
-                                                        {/* Second Content*/}
-                                                        <div className={classes.testContent}>
-                                                            <div className={classes.testContentItems}>
-                                                            </div>
-
-
-                                                            {/*  Test Button*/}
-
-                                                            <div className={classes.testContentItems} style={{ width: "100%", margin: 10 }}>
-                                                                <CButton variant="outline" color="primary"
-                                                                    size="md" block onClick={() => handleGiveTest(item._id)} >Start Test</CButton>
-                                                            </div>
-                                                        </div>
-                                                    </Paper>
-                                                </Grid>
-
-                                            </>
-                                        ))}
-                                </Grid>
-                            </div>
-                        </Paper>
-                    }
-
-
-
-                    {/*Vision IAS */}
-
-                    {visionTestList.length > 0 &&
-                        <Paper className={classes.categorypaper} elevation={3}>
-
-                            <div className={classes.categoryContainer}>
-                                <h1 className={classes.testCategory}>Vision IAS</h1>
-                                <Grid container spacing={1}>
-                                    {
-                                        visionTestList.map((item, index) => (
-                                            <>
-                                                <Grid item lg={3} md={4} sm={6} xs={12}>
-                                                    <Paper className={classes.paper} elevation={3}>
-                                                        <p className={classes.testHeading}>{item.testName}</p>
-
-                                                        <div className={classes.testContent}>
-                                                            <div className={classes.testContentItems}>
-                                                                {item.testCategory == "Sectional" &&
-                                                                    <p className={classes.testContentHeading}>                 {item.categoryType} </p>}
-                                                                {item.testCategory == "Full Length" &&
-                                                                    <p className={classes.testContentHeading}>Full Length Test</p>
-                                                                }
-
-                                                            </div>
-
-                                                        </div>
-                                                        {/* Second Content*/}
-                                                        <div className={classes.testContent}>
-
-
-                                                            <div className={classes.testContentItems} style={{ marginTop: item.testCategory ? "-10px" : "25px" }}>
-                                                                <NoteRounded color="primary" className={classes.testContentIcons} />
-                                                                <p className={classes.testContentHeading}>{item.numberOfQuestions} Questions</p>
-                                                            </div>
-                                                        </div>
-
-
-                                                        {/* Second Content*/}
-                                                        <div className={classes.testContent}>
-                                                            <div className={classes.testContentItems}>
-                                                            </div>
-
-
-                                                            {/*  Test Button*/}
-
-                                                            <div className={classes.testContentItems} style={{ width: "100%", margin: 10 }}>
-                                                                <CButton variant="outline" color="primary"
-                                                                    size="md" block onClick={() => handleGiveTest(item._id)} >Start Test</CButton>
-                                                            </div>
-                                                        </div>
-                                                    </Paper>
-                                                </Grid>
-                                            </>
-                                        ))}
-                                </Grid>
-                            </div>
-                        </Paper>
-                    }
-
-
-
-
-
-         {/*Insight IAS 70 Days */}
-
-         {insightsTestDaysList.length > 0 &&
-                        <Paper className={classes.categorypaper} elevation={3}>
-
-                            <div className={classes.categoryContainer}>
-                                <h1 className={classes.testCategory}>Insights IAS 70 Days</h1>
-                                <Grid container spacing={1}>
-                                    {
-                                        insightsTestDaysList.map((item, index) => (
-                                            <>
-                                                <Grid item lg={3} md={4} sm={6} xs={12}>
-                                                    <Paper className={classes.paper} elevation={3}>
-                                                        <p className={classes.testHeading}>{item.testName}</p>
-
-                                                        <div className={classes.testContent}>
-                                                            <div className={classes.testContentItems}>
-                                                                {item.testCategory == "Sectional" &&
-                                                                    <p className={classes.testContentHeading}>                 {item.categoryType} </p>}
-                                                                {item.testCategory == "Full Length" &&
-                                                                    <p className={classes.testContentHeading}>Full Length Test</p>
-                                                                }
-
-                                                            </div>
-
-                                                        </div>
-                                                        {/* Second Content*/}
-                                                        <div className={classes.testContent}>
-
-
-                                                            <div className={classes.testContentItems} style={{ marginTop: item.testCategory ? "-10px" : "25px" }}>
-                                                                <NoteRounded color="primary" className={classes.testContentIcons} />
-                                                                <p className={classes.testContentHeading}>{item.numberOfQuestions} Questions</p>
-                                                            </div>
-                                                        </div>
-
-
-                                                        {/* Second Content*/}
-                                                        <div className={classes.testContent}>
-                                                            <div className={classes.testContentItems}>
-                                                            </div>
-
-
-                                                            {/*  Test Button*/}
-
-                                                            <div className={classes.testContentItems} style={{ width: "100%", margin: 10 }}>
-                                                                <CButton variant="outline" color="primary"
-                                                                    size="md" block onClick={() => handleGiveTest(item._id)} >Start Test</CButton>
-                                                            </div>
-                                                        </div>
-                                                    </Paper>
-                                                </Grid>
-                                            </>
-                                        ))}
-                                </Grid>
-                            </div>
-                        </Paper>
-                    }
-
-
-         {/* IAS Baba 60 Days */}
-
-         {iasBabaTestDaysList.length > 0 &&
-                        <Paper className={classes.categorypaper} elevation={3}>
-
-                            <div className={classes.categoryContainer}>
-                                <h1 className={classes.testCategory}>IAS Baba 60 Days</h1>
-                                <Grid container spacing={1}>
-                                    {
-                                        iasBabaTestDaysList.map((item, index) => (
-                                            <>
-                                                <Grid item lg={3} md={4} sm={6} xs={12}>
-                                                    <Paper className={classes.paper} elevation={3}>
-                                                        <p className={classes.testHeading}>{item.testName}</p>
-
-                                                        <div className={classes.testContent}>
-                                                            <div className={classes.testContentItems}>
-                                                                {item.testCategory == "Sectional" &&
-                                                                    <p className={classes.testContentHeading}>                 {item.categoryType} </p>}
-                                                                {item.testCategory == "Full Length" &&
-                                                                    <p className={classes.testContentHeading}>Full Length Test</p>
-                                                                }
-
-                                                            </div>
-
-                                                        </div>
-                                                        {/* Second Content*/}
-                                                        <div className={classes.testContent}>
-
-
-                                                            <div className={classes.testContentItems} style={{ marginTop: item.testCategory ? "-10px" : "25px" }}>
-                                                                <NoteRounded color="primary" className={classes.testContentIcons} />
-                                                                <p className={classes.testContentHeading}>{item.numberOfQuestions} Questions</p>
-                                                            </div>
-                                                        </div>
-
-
-                                                        {/* Second Content*/}
-                                                        <div className={classes.testContent}>
-                                                            <div className={classes.testContentItems}>
-                                                            </div>
-
-
-                                                            {/*  Test Button*/}
-
-                                                            <div className={classes.testContentItems} style={{ width: "100%", margin: 10 }}>
-                                                                <CButton variant="outline" color="primary"
-                                                                    size="md" block onClick={() => handleGiveTest(item._id)} >Start Test</CButton>
-                                                            </div>
-                                                        </div>
-                                                    </Paper>
-                                                </Grid>
-                                            </>
-                                        ))}
-                                </Grid>
-                            </div>
-                        </Paper>
-                    }
-
-
-  {/* Rau IAS */}
-
-  {rauIasTestList.length > 0 &&
-                        <Paper className={classes.categorypaper} elevation={3}>
-
-                            <div className={classes.categoryContainer}>
-                                <h1 className={classes.testCategory}>Rau IAS</h1>
-                                <Grid container spacing={1}>
-                                    {
-                                        rauIasTestList.map((item, index) => (
-                                            <>
-                                                <Grid item lg={3} md={4} sm={6} xs={12}>
-                                                    <Paper className={classes.paper} elevation={3}>
-                                                        <p className={classes.testHeading}>{item.testName}</p>
-
-                                                        <div className={classes.testContent}>
-                                                            <div className={classes.testContentItems}>
-                                                                {item.testCategory == "Sectional" &&
-                                                                    <p className={classes.testContentHeading}>                 {item.categoryType} </p>}
-                                                                {item.testCategory == "Full Length" &&
-                                                                    <p className={classes.testContentHeading}>Full Length Test</p>
-                                                                }
-
-                                                            </div>
-
-                                                        </div>
-                                                        {/* Second Content*/}
-                                                        <div className={classes.testContent}>
-
-
-                                                            <div className={classes.testContentItems} style={{ marginTop: item.testCategory ? "-10px" : "25px" }}>
-                                                                <NoteRounded color="primary" className={classes.testContentIcons} />
-                                                                <p className={classes.testContentHeading}>{item.numberOfQuestions} Questions</p>
-                                                            </div>
-                                                        </div>
-
-
-                                                        {/* Second Content*/}
-                                                        <div className={classes.testContent}>
-                                                            <div className={classes.testContentItems}>
-                                                            </div>
-
-
-                                                            {/*  Test Button*/}
-
-                                                            <div className={classes.testContentItems} style={{ width: "100%", margin: 10 }}>
-                                                                <CButton variant="outline" color="primary"
-                                                                    size="md" block onClick={() => handleGiveTest(item._id)} >Start Test</CButton>
-                                                            </div>
-                                                        </div>
-                                                    </Paper>
-                                                </Grid>
-                                            </>
-                                        ))}
-                                </Grid>
-                            </div>
-                        </Paper>
-                    }
-
-
-
-           
-
-                </Grid>
-            </Grid>
-            </Online>
-       <Offline>
-           <div className={classes.container}  >
-           <p style={{fontSize:30,textAlign:"center"}}>Hey Buddy, You are offline check your connection</p>
-           </div>
-           </Offline>
 
         </div>
 
@@ -1371,7 +1366,7 @@ const useStyles = makeStyles((theme) => ({
     },
     container: {
         paddingTop: 70,
-        height:"100%"
+        height: "100%"
     },
     formControl: {
         margin: theme.spacing(3),
@@ -1488,8 +1483,8 @@ const useStyles = makeStyles((theme) => ({
         backgroundColor: theme.palette.background.paper,
         border: "none",
         borderRadius: 20,
-        height: 500,
-        width: 500,
+        height: 300,
+        width: 380,
         outline: "none",
         boxShadow: theme.shadows[5],
         padding: theme.spacing(2, 4, 3),
@@ -1522,7 +1517,7 @@ const useStyles = makeStyles((theme) => ({
 
         },
     },
-    
+
     qrcode: {
         height: 250,
         width: 350,
@@ -1626,9 +1621,9 @@ const useStyles = makeStyles((theme) => ({
         margin: 10,
         width: 100
     },
-    whatsappButton:{
-        
-     marginTop:30
+    whatsappButton: {
+
+        marginTop: 30
     }
 
 

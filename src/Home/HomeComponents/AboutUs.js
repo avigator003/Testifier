@@ -3,7 +3,7 @@ import Header from './Header'
 
 function AboutUs() {
     return (
-        <>
+        <div>
             <Header/>
             
         <div style={{padding:60,paddingTop:150}}>
@@ -29,7 +29,11 @@ function AboutUs() {
 
  
         </div>
-        </>
+        <div style={{padding:30,paddingLeft:80,paddingRight:80}}>
+    <p style={{fontWeight:"bold"}}>Disclaimer: Our platform provides you OMR based exam environment and Micro analysis based on your inputs.  We don't provide test papers of various institutes. We just provide the link to the papers that is already publicly available at various platforms. 
+</p>
+</div>
+        </div>
     )
 }
 

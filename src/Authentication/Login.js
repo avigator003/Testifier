@@ -65,9 +65,16 @@ function Login(props) {
               checkValidity();
             } else {
               setSpinner(false);
-              return notification.error({
-                message: "Failed to Login.",
-              });
+              return    notification.error({
+                message: "Failed To Login",
+                className: 'custom-class',
+                style: {
+                    position: "realtive",
+                    top: 60,
+                    width: 200,
+                },
+            });
+          
             }
           };
         

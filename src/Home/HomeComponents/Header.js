@@ -430,7 +430,7 @@ export default function Header() {
                     color="black"
                     style={{ outline: "none" ,backgroundColor:"transparent"}}
                 >
-               <List style={{marginRight:100}}/>
+               <List style={{position:"relative",left:-30,top:5,marginRight:10}}/>
                 </IconButton>
             </div>
       

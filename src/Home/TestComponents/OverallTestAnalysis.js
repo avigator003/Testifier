@@ -20,7 +20,7 @@ import { notification } from "antd";
 import CheckCircleOutlined from '@material-ui/icons/CheckCircleOutlined';
 import { useHistory } from 'react-router-dom';
 import Badge from '../../assests/images/badge.png'
-
+import Header from '../HomeComponents/Header'
 
 
 function LinearProgressWithLabel(props) {
@@ -54,6 +54,7 @@ function OverallTestAnalysis(props) {
   const[totalQuestion,setTotalQuestions]=useState()
   const[totalAttempted,setTotalAttempted]=useState()
   const[timeSpent,totalTimeSpent]=useState()
+  const[currentTest,setCurrentTest]=useState()
 
 
 
@@ -190,6 +191,7 @@ function OverallTestAnalysis(props) {
               console.log(err)
           else {
               var object=response.res.data.data
+              setCurrentTest(object)
               var answerArray=object.answers.map(item=>item.options)
               var userAnsArray=props.location.state.userAnswer
               for(var i=0;i<answerArray.length;i++)
@@ -230,10 +232,15 @@ function OverallTestAnalysis(props) {
 
 
   return (
+    <>
+    <Header/>
     <div className={classes.analysisContainer}>
     
    <h1 style={{color:message=="Test Submitted"?"#5BB85D":"#DA534F",textAlign:"center",margin:40}}>
-            
+   <a href={currentTest?.answerPaperLink} target="_blank" style={{textDecoration:"none",marginTop:50}}>  
+                      <h5 style={{textDecoration:"none",marginTop:20}}>View Answers (Click Here)</h5>
+                      </a>
+                          
      <CheckCircleOutlined style={{fontSize:40,marginRight:10}}/>
      {message}</h1>
 
@@ -571,6 +578,7 @@ function OverallTestAnalysis(props) {
       
 
     </div>
+    </>
   )
 }
 

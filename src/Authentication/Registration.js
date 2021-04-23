@@ -141,10 +141,15 @@ function Registration(props) {
         if (validateForm(error)) {
           checkValidity();
         } else {
-          return notification.warning({
-            message: "Failed to Register.",
-          });
-        }
+          return      notification.error({
+            message: 'Failed To Register',
+            className: 'custom-class',
+            style: {
+                position: "realtive",
+                top: 60,
+                width: 300,
+            },
+        });        }
       
     };
   
@@ -161,7 +166,15 @@ function Registration(props) {
             } else {
               
               props.history.push('/login')
-              notification.success(response);
+              notification.error({
+                message: response,
+                className: 'custom-class',
+                style: {
+                    position: "realtive",
+                    top: 60,
+                    width: 200,
+                },
+            });
             }
           })
         );

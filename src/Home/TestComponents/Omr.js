@@ -12,6 +12,7 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import { CButton } from '@coreui/react';
 import { useHistory } from 'react-router-dom';
 import { notification } from "antd";
+import Header from '../HomeComponents/Header';
 
 
 
@@ -140,18 +141,27 @@ function Omr(props) {
           }
 
         
-    
-
+          const time = new Date();
+          time.setSeconds(time.getSeconds() + 600);
     return (
-
+<>
+<Header/>
+       
         <div className={classes.root}>
-      
+        <p style={{color:"red",fontWeight:"bold",fontSize:30,padding:10}}>Please don’t refresh the page or click back button.</p>
+   
         {
         !spinner?
         <div className={classes.omrContainer}>
             <div className={classes.headingContainer}>
-            <h1>{test?.testName}</h1>
+                  <h1>{test?.testName}</h1>
+                  <a href={test?.questionPaperLink} target="_blank" style={{textDecoration:"none",}}>  
+                      <h5>Question Paper (Click Here)</h5>
+                      </a>
+                
+
         {/**    <Timer  time={numberOfQuestions>50?7200000:3600000}/> */}
+        <Timer expiryTimestamp={time} autoStart={true}/>
                            </div>                        
 
             <Paper elevation={3} className={classes.paper}>
@@ -284,6 +294,7 @@ function Omr(props) {
       
                                 }
         </div>
+        </>
     )
 }
 
@@ -454,9 +465,14 @@ const useStyles = makeStyles((theme) => ({
       headingContainer:{
           display:"flex",
           flexDirection:"row",
-        alignItems:"center",
-        justifyContent:"space-between",
-        marginBottom:50
+          alignItems:"center",
+          justifyContent:"space-between",
+          marginBottom:50,
+          [theme.breakpoints.down('xs')]: {
+            display:"flex",
+            flexDirection:"column",
+         
+        }
 
       }
 
