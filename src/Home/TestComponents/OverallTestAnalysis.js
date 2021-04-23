@@ -21,6 +21,7 @@ import CheckCircleOutlined from '@material-ui/icons/CheckCircleOutlined';
 import { useHistory } from 'react-router-dom';
 import Badge from '../../assests/images/badge.png'
 import Header from '../HomeComponents/Header'
+import TextArea from 'antd/lib/input/TextArea';
 
 
 function LinearProgressWithLabel(props) {
@@ -268,12 +269,6 @@ function OverallTestAnalysis(props) {
      <p className={classes.totalScore}>{totalAttempted}/{totalQuestion}</p> 
       <p className={classes.border}></p>
       <p className={classes.scoreHeading}>Qs Attempted</p>
-   
-     </Grid>  
-     <Grid item lg={2} className={classes.score} xs={12}>
-     <p className={classes.totalScore}>15 m 22s </p> 
-      <p className={classes.border}></p>
-      <p className={classes.scoreHeading}>Time Spent</p>
    
      </Grid>  
      <Grid item lg={2} className={classes.score} xs={12}>
@@ -568,6 +563,30 @@ function OverallTestAnalysis(props) {
 
         </CCardBody>
       </CCard>
+
+
+
+{/* Overall Report*/ }
+<Grid container justify="center" alignItems="center">
+
+<Grid item lg={12} xs={12} >
+  <CCard className={classes.overallAnalysisContainer}>
+    <CCardHeader>
+      Test Feedback 
+   </CCardHeader>
+
+   <Grid container justify="center" alignItems="center">
+   <Grid item lg={5} md={5} sm={8} xs={12} >
+
+    <CCardBody>
+   
+  Feedback :<TextArea rows={10}/>
+    </CCardBody>
+    </Grid>
+</Grid>
+  </CCard>
+</Grid>
+</Grid>
 
 
       <div className={classes.submitButton}>

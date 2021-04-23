@@ -1,11 +1,88 @@
-import React from 'react'
+import React ,{useState,useEffect}from 'react'
 import '../../assests/css/style.css'
 import Header from './Header'
+import Backdrop from '@material-ui/core/Backdrop';
+import Modal from '@material-ui/core/Modal';
+import { makeStyles } from '@material-ui/core/styles';
+import Fade from '@material-ui/core/Fade';
+import Qr from '../../assests/images/qrcode.jpeg'
+import { Link } from 'react-router-dom';
+import { CButton } from '@coreui/react';
+import ModalBackground from '../../assests/images/background.png'
 
+const useStyles = makeStyles((theme) => ({
+    backdrop: {
+        zIndex: theme.zIndex.drawer + 1,
+        color: '#fff',
+    },
+    modal: {
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    paper1: {
+        backgroundColor: theme.palette.background.paper,
+        border: "none",
+        borderRadius: 20,
+        height: 400,
+        width: 480,
+        outline: "none",
+        boxShadow: theme.shadows[5],
+        padding: theme.spacing(2, 4, 3),
+        backgroundImage: `url(${ModalBackground})`,
+        backgroundRepeat: "no-repeat",
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        margin: 40,
+        justifyContent: "center",
+        alignItems: "center",
+        textAlign: "center",
+        [theme.breakpoints.down('xs')]: {
+            height: "250px",
+            width: "250px",
+
+        },
+
+    },
+    
+}))
 function Offers() {
+    const [open,setOpen]=useState(false)
+    const classes=useStyles()
+   
     return (
         <div>
         <Header />
+
+        <Modal
+        aria-labelledby="transition-modal-title"
+                aria-describedby="transition-modal-description"
+                className={classes.modal}
+                open={open}
+                onClose={() => setOpen(false)}
+                closeAfterTransition
+                BackdropComponent={Backdrop}
+                BackdropProps={{
+                    timeout: 500,
+                }}
+            >
+                <Fade in={open}>
+                    <div className={classes.paper1}>
+                        <h2 id="transition-modal-title" className={classes.modalHeading}>UNLOCK TESTS</h2>
+                        <p id="transition-modal-description"> Scan QR Code to Pay </p>
+                      <img src={Qr} style={{height:250,width:250}}/>
+                       <Link to="/givetest" style={{ textDecoration: "none" }}>
+                            <CButton shape="pill" color="success" className={classes.whatsappButton} >
+                                Back to Home
+                            </CButton>
+                        </Link>
+
+
+                    </div>
+                </Fade>
+            </Modal>
+         
+         
         <div className="demo" >
     <div className="container">
         <div className="row">
@@ -24,9 +101,10 @@ function Offers() {
                             <li>All India Rankings</li>
                         </ul>
                     </div>
-                    <div className="pricingTable-signup">
-                        <a href="#">Choose Plan</a>
-                    </div>
+                        <button onClick={()=>setOpen(true)} style={{outline:"none",border:"none",backgroundColor:"transparent"}} className="pricingTable-signup">
+                      <a href="#">  Choose Plan</a>
+                        </button>
+                    
                 </div>
             </div>
 
@@ -45,9 +123,10 @@ function Offers() {
                             <li>All India Rankings</li>                        
                             </ul>
                     </div>
-                    <div className="pricingTable-signup">
-                    <a href="#">Choose Plan</a>
-                  </div>
+                    <button onClick={()=>setOpen(true)} style={{outline:"none",border:"none",backgroundColor:"transparent"}} className="pricingTable-signup">
+                      <a href="#">  Choose Plan</a>
+                        </button>
+                    
                 </div>
             </div>
             <div className="col-md-4 col-sm-6">
@@ -56,7 +135,7 @@ function Offers() {
                         <i className="fa fa-diamond"></i>
                        <div className="price-value"> ₹999 <span className="month" style={{textDecoration:"line-through"}}>₹6000</span> </div>
                      </div>
-                    <h3 className="heading">Premium</h3>
+                    <h3 className="heading">Gold Member</h3>
                     <div className="pricing-content">
                         <ul>
                            
@@ -66,9 +145,10 @@ function Offers() {
                             <li>All India Rankings</li>                       
                              </ul>
                     </div>
-                    <div className="pricingTable-signup">
-                    <a href="#">Choose Plan</a>
-                  </div>
+                    <button onClick={()=>setOpen(true)} style={{outline:"none",border:"none",backgroundColor:"transparent"}} className="pricingTable-signup">
+                      <a href="#">  Choose Plan</a>
+                        </button>
+                    
                 </div>
             </div>
             

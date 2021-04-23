@@ -67,7 +67,7 @@ function Omr(props) {
     const [answerSet,setAnswerSet]=useState([])
     const[numberOfQuestions,setNumberOfQuestions]=useState()
     const[testId,setTestId]=useState()
-    
+    const[time,setTime]=useState()
 
     // Handle Test id
     useEffect(() => {
@@ -82,6 +82,15 @@ function Omr(props) {
                     setAnswerSet(object.answers.map(item=>({option:item.options,category:item.category})))
                     setNumberOfQuestions(object.numberOfQuestions)
                     setTest(object)
+                    
+          var seconds=3600;
+          if(object.numberOfQuestions<=50)
+              seconds=3600
+          else
+              seconds=7200
+          console.log(seconds)
+          const tim = new Date();
+          setTime(tim.setSeconds(tim.getSeconds() + seconds))
                 }
             }))
 
@@ -114,9 +123,8 @@ function Omr(props) {
 
 
     // Handle Test Submit
-    const handleSubmitTest=(event)=>{
+    const handleSubmitTest=()=>{
       
-  event.preventDefault()
      setSpinner(true)
      var array=[]
      for(var i=0;i<answerSet.length;i++)
@@ -139,16 +147,13 @@ function Omr(props) {
             return () => clearTimeout(timer);
         
           }
-
-        
-          const time = new Date();
-          time.setSeconds(time.getSeconds() + 600);
+           
     return (
 <>
 <Header/>
        
         <div className={classes.root}>
-        <p style={{color:"red",fontWeight:"bold",fontSize:30,padding:10}}>Please don’t refresh the page or click back button.</p>
+        <p style={{color:"red",fontWeight:"bold",fontSize:30,padding:10,paddingTop:40}}>Please don’t refresh the page or click back button.</p>
    
         {
         !spinner?
@@ -161,7 +166,11 @@ function Omr(props) {
                 
 
         {/**    <Timer  time={numberOfQuestions>50?7200000:3600000}/> */}
-        <Timer expiryTimestamp={time} autoStart={true}/>
+    {time&&    
+    <div style={{padding:20,backgroundColor:"white",borderRadius:10,height:60}}>
+    <Timer expiryTimestamp={time} handleAnalysis={handleSubmitTest} style={{position:"retive",top:-40}}/>
+    </div>
+    }
                            </div>                        
 
             <Paper elevation={3} className={classes.paper}>
