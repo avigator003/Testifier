@@ -84,9 +84,9 @@ useEffect(()=>{
           } else {
             console.log("repsonse",response.testGiven.data)
             setTest(response.testGiven.data)
+            setSpinner(false)
          }}))
 
-         setSpinner(false)
 
 },[])
 

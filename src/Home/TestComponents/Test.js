@@ -395,11 +395,12 @@ export default function Test(props) {
 
     // Handle Give Test
     const handleGiveTest = (id) => {
-       var testNumber=user.token.user?.allowedTests
-       console.log("user",user)
-        if (user) {
+         if (user) {
+            var testNumber=user.token.user?.allowedTests
+            console.log("user",testNumber,counter)
+         
             setCurrentTestId(id)
-           if ((user.token.user?.testsGiven).length < testNumber) {
+           if (counter< testNumber) {
                 setSpinner(true)
                 const timer = setTimeout(() => {
                     history.push({
@@ -1505,7 +1506,7 @@ const useStyles = makeStyles((theme) => ({
         alignItems: "center",
         textAlign: "center",
         [theme.breakpoints.down('xs')]: {
-            height: "250px",
+            height: "300px",
             width: "250px",
 
         },

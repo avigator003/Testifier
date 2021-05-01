@@ -39,7 +39,7 @@ const RecentTests = () => {
   const [testsData,setTestsData]=useState()
   const[blocking,setBlocking]=useState(true)
   const pageChange = newPage => {
-    currentPage !== newPage && history.push(`/users?page=${newPage}`)
+    currentPage !== newPage && history.push(`/test/recent?page=${newPage}`)
   }
 
   useEffect(() => {
@@ -50,8 +50,7 @@ const RecentTests = () => {
 useEffect(()=>{
   dispatch(
     getAllTestsGiven((err, response) => {
-      console.log(response.testsGiven)
-      setTestsData(response.testsGiven)
+      setTestsData(response?.testsGiven)
     }))
 
 },[])
@@ -116,7 +115,7 @@ const handleViewAnalysis=(id)=>{
                 (item)=>(
                   <td>
                     {
-                   item.userId.userName
+                   item.userId?.userName
                    }
                   </td>
                 ),

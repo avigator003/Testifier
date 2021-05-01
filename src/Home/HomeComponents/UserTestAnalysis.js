@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react'
-import { CButton, CCard, CCardBody, CCardHeader } from '@coreui/react'
+import { CButton, CCard, CCardBody, CCardHeader,CRow,CCol,CDataTable,CPagination } from '@coreui/react'
 import { CChartDoughnut } from '@coreui/react-chartjs'
 import { makeStyles } from "@material-ui/core/styles";
 import LinearProgress from '@material-ui/core/LinearProgress';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
-import { Grid, TextField, FormControlLabel, Checkbox, Button } from "@material-ui/core";
+import { Grid, TextField, FormControlLabel, Checkbox, Button, CircularProgress } from "@material-ui/core";
 import Avatar from 'react-avatar'
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -14,13 +14,13 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
-import { getGivenTestById, getTestById, saveGivenTest } from '../../store/Actions';
+import { getAllTestsGiven, getGivenTestById, getTestById, saveGivenTest } from '../../store/Actions';
 import { useDispatch ,useSelector} from 'react-redux';
 import { notification } from "antd";
 import CheckCircleOutlined from '@material-ui/icons/CheckCircleOutlined';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 import Badge from '../../assests/images/badge.png'
-
+import Backdrop from '@material-ui/core/Backdrop';
 
 
 function LinearProgressWithLabel(props) {
@@ -74,7 +74,22 @@ function UserTestAnalysis(props) {
 
     // Logined User
     const user = useSelector((state) => state.user);
-
+    const queryPage = useLocation().search.match(/page=([0-9]+)/, '')
+    const currentPage = Number(queryPage && queryPage[1] ? queryPage[1] : 1)
+   
+    const [testsData,setTestsData]=useState()
+    const [page, setPage] = useState(currentPage)
+    const[spinner,setSpinner]=useState(true)
+ 
+   
+    const pageChange = newPage => {
+      currentPage !== newPage && history.push(`/usertestanalysis/${props.match.params.id}?page=${newPage}`)
+    }
+  
+    useEffect(() => {
+      currentPage !== page && setPage(currentPage)
+    }, [currentPage, page])
+  
 
   // Getting All the Results
   useEffect(() => {
@@ -85,7 +100,9 @@ function UserTestAnalysis(props) {
       if (err) {
         console.log(err)
       } else {
-          var array=response.testAnalysis.data
+        var array=response.testAnalysis.data
+        
+        var TestName=response.testAnalysis.data.testId.testName
         console.log("re",response.testAnalysis.data)
         setPercentageArray(array.percentageArray)
         setSectionalArray(array.sectionalAnalysis)
@@ -114,6 +131,18 @@ function UserTestAnalysis(props) {
 
      setAnswersCount(array.overall.totalQuestion)
       
+     dispatch(
+      getAllTestsGiven((err, response) => {
+          var newArray=(response.testsGiven)?.filter(test=>test.testId?.testName==TestName)
+          var array=  newArray?.sort(function(a, b) {
+          return b.overall.totalMarks-a.overall.totalMarks
+      });
+      console.log(array)
+      setTestsData(array)
+      setSpinner(false)
+    }))
+
+
     }}))
    
   }, [])
@@ -122,7 +151,11 @@ function UserTestAnalysis(props) {
 
   return (
     <div className={classes.analysisContainer}>
-    
+            <Backdrop className={classes.backdrop} open={spinner} onClick={() => setSpinner(false)}>
+                <CircularProgress color="inherit" size={100} color="primary" />
+            </Backdrop>
+
+
 
   <Grid  container  className={classes.card} justify="center" alignItems="center" >
     
@@ -449,6 +482,148 @@ function UserTestAnalysis(props) {
         </CCardBody>
       </CCard>
 
+      <CRow>
+                <CCol xl={12} >
+                    <CCard >
+                        <CCardHeader size={50}>
+                            Leaderboard
+                        </CCardHeader>
+                        <CCardBody>
+                            <CDataTable
+                                items={testsData}
+                                fields={[
+                                    { key: 'studentName', _classes: 'font-weight-bold' },
+                                     'Marks', 'Correct','Incorrect','accuracy'
+                                ]}
+                                hover
+                                striped
+                                itemsPerPage={10}
+                                activePage={page}
+                                clickableRows
+                                //   onRowClick={(item) => history.push(`/users/${item.id}`)}
+                                scopedSlots={{
+                                    'studentName':
+                                        (item) => (
+                                            <td>
+                                                {
+                                                    item?.userId?.userName
+                                                }
+                                            </td>
+                                        ),
+                                    'Marks':
+                                        (item) => (
+                                            <td>
+                                                  <div style={{display:"flex",flexDirection:"row"}}>
+                                                             <p style={{paddingLeft:20,paddingRight:10}}>{item.overallAnalysis?.Correct} Correct</p>
+                                                            <p style={{paddingLeft:40,paddingRight:10}}>{item.overallAnalysis?.Incorrect} Incorrect</p>
+                                                            <p style={{paddingLeft:30,paddingRight:10}}>{item.overallAnalysis?.Skipped} Skipped</p>
+                                                   </div>
+                               
+                                                {
+                                                  <span style={{padding:10,borderRadius:5,border:"1px solid grey",marginLeft:40}}>{item?.overall?.totalMarks} Marks
+                                                  </span>
+                                                     }
+                                            </td>
+                                        ),
+                                    'Correct':
+                                        (item,index) => (
+                                            
+                                            <td>
+                                                {
+                                                    index==0&&
+                                                   <div style={{display:"flex",flexDirection:"row"}}>
+                                                             <p style={{paddingLeft:20,paddingRight:10}}>10%</p>
+                                                            <p style={{paddingLeft:40,paddingRight:10}}>50%</p>
+                                                            <p style={{paddingLeft:30,paddingRight:10}}>100%</p>
+                                                   </div>
+                                }
+                                      <div style={{display:"flex",flexDirection:"row"}}>
+                                                  
+                                                {
+                                                    item?.confidenceLevelAnalysis?.map(item=>(
+                                                        <p style={{paddingLeft:10,paddingRight:10}}>
+                                                        {item.correct?item.correct:"0"} Ques.
+                                                        </p>
+                                                    ))
+                                                }
+                                                
+                                                </div>
+                                            </td>
+                                        
+                                        
+                                        ),
+
+
+                                    'Incorrect':
+                                            (item,index) => (
+                                               <td>
+                                                    {
+                                                        index==0&&
+                                                       <div style={{display:"flex",flexDirection:"row"}}>
+                                                            <p style={{paddingLeft:20,paddingRight:10}}>10%</p>
+                                                            <p style={{paddingLeft:40,paddingRight:10}}>50%</p>
+                                                            <p style={{paddingLeft:30,paddingRight:10}}>100%</p>
+                                                        </div>
+                                    }
+                                          <div style={{display:"flex",flexDirection:"row"}}>
+                                                      
+                                                    {
+                                                        item?.confidenceLevelAnalysis?.map(item=>(
+                                                            <p style={{paddingLeft:10,paddingRight:10}}>
+                                                            {item.wrong?item.wrong:"0"} Ques.
+                                                            </p>
+                                                        ))
+                                                    }
+                                                    
+                                                    </div>
+                                                </td>
+                                            
+                                               ),
+                                    "accuracy":
+                                    (item,index) => (
+                                            
+                                        <td>
+                                            {
+                                                index==0&&
+                                               <div style={{display:"flex",flexDirection:"row"}}>
+                                                         <p style={{paddingLeft:20,paddingRight:10}}>10%</p>
+                                                        <p style={{paddingLeft:40,paddingRight:10}}>50%</p>
+                                                        <p style={{paddingLeft:30,paddingRight:10}}>100%</p>
+                                               </div>
+                            }
+                                  <div style={{display:"flex",flexDirection:"row"}}>
+                                              
+                                            {
+                                                item.confidenceLevelAnalysis?.map(item=>(
+                                                    <p style={{paddingLeft:10,paddingRight:10}}>
+                                                    {item?.accuracy?(item.accuracy).toFixed(2):"0"} %
+                                                    </p>
+                                                ))
+                                            }
+                                            
+                                            </div>
+                                        </td>
+                                    
+                                    ),
+
+
+                                }}
+                            />
+                            <CPagination
+                                limit={5}
+                                activePage={page}
+                                onActivePageChange={pageChange}
+                                pages={40}
+                                doubleArrows={false}
+                                align="center"
+                            />
+                        </CCardBody>
+                    </CCard>
+                </CCol>
+            </CRow>
+  
+
+
 
       <div className={classes.submitButton}>
           
@@ -676,6 +851,10 @@ score:{
   marginRight:5,
   marginLeft:5,
   marginTop:10
+},
+backdrop: {
+  zIndex: theme.zIndex.drawer + 1,
+  color: '#fff',
 },
 border:{
   borderBottom:"1px solid #273864",

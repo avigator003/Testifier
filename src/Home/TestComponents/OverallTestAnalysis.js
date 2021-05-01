@@ -5,7 +5,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import LinearProgress from '@material-ui/core/LinearProgress';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
-import { Grid, TextField, FormControlLabel, Checkbox, Button } from "@material-ui/core";
+import { Grid, TextField, FormControlLabel, Checkbox, Button, Backdrop } from "@material-ui/core";
 import Avatar from 'react-avatar'
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -29,6 +29,7 @@ import {
   CDropdownToggle,
   CImg,
 } from '@coreui/react'
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 function LinearProgressWithLabel(props) {
   return (
@@ -82,6 +83,7 @@ function OverallTestAnalysis(props) {
   const[answersCount,setAnswersCount]=useState(0)
   const[percentageArray,setPercentageArray]=useState([])
   const[message,setMessage]=useState()
+  const[spinner,setSpinner]=useState(true)
 
   const queryPage = useLocation().search.match(/page=([0-9]+)/, '')
   const currentPage = Number(queryPage && queryPage[1] ? queryPage[1] : 1)
@@ -240,25 +242,26 @@ function OverallTestAnalysis(props) {
             setMessage("Not Submitted")
             console.log(err)
           } else {
-            
             setMessage("Test Submitted")
+            dispatch(
+              getAllTestsGiven((err, response) => {
+                var TestName=props.location.state.testName
+                  console.log("reposme",response)
+                  
+                   var newArray=(response?.testsGiven)?.filter(test=>test.testId?.testName==TestName)
+                  var array=  newArray?.sort(function(a, b) {
+                  return b.overall.totalMarks-a.overall.totalMarks
+              });
+              console.log(array)
+              setTestsData(array)
+              setSpinner(false)
+            }))
+        
+    
          }}))
 
 
-         dispatch(
-          getAllTestsGiven((err, response) => {
-            var TestName=props.location.state.testName
-              console.log("reposme",response)
-              
-               var newArray=(response?.testsGiven)?.filter(test=>test.testId.testName==TestName)
-              var array=  newArray?.sort(function(a, b) {
-              return b.overall.totalMarks-a.overall.totalMarks
-          });
-          console.log(array)
-          setTestsData(array)
-        }))
-    
-
+     
 
    
            }
@@ -285,6 +288,10 @@ function OverallTestAnalysis(props) {
 
   return (
     <>
+       <Backdrop className={classes.backdrop} open={spinner} onClick={() => setSpinner(false)}>
+                <CircularProgress color="inherit" size={100} color="primary" />
+            </Backdrop>
+
     <Header/>
     <div className={classes.analysisContainer}>
     
@@ -1022,7 +1029,11 @@ scoreHeading:{
   position:"relative",
   top:-10,
   
-}
+},
+backdrop: {
+  zIndex: theme.zIndex.drawer + 1,
+  color: '#fff',
+},
 
 
 
