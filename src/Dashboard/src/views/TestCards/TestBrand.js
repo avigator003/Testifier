@@ -1,6 +1,6 @@
 import React,{useState,useEffect} from 'react';
 import PropTypes from 'prop-types';
-import { CWidgetBrand, CRow, CCol, CButton } from '@coreui/react';
+import { CWidgetBrand, CRow, CCol, CButton, CInput } from '@coreui/react';
 import CIcon from '@coreui/icons-react';
 import ChartLineSimple from '../charts/ChartLineSimple';
 import {getTests } from "../../../../store/Actions";
@@ -25,10 +25,14 @@ const TestBrand = ({withCharts})=>{
   const history=useHistory()
   const dispatch=useDispatch()
   const [testList,setTestList]=useState([])
+  const [filteredTestList,setFilteredTestList]=useState([])
+
 
   const [spinner,setSpinner]=useState(false)
   const [message, setMessage] = useState("")
   const [notify, setNotify] = useState(false)
+
+  const[filterString,setFilterString]=useState("")
 
     
 
@@ -45,6 +49,7 @@ const TestBrand = ({withCharts})=>{
     dispatch(
       getTests((err, response) => {
         setTestList(response.tests)
+        setFilteredTestList(response.tests)
         setSpinner(false)
       }))
 
@@ -89,104 +94,22 @@ const TestBrand = ({withCharts})=>{
   }
 
 
+  // Filter Test
+  const filter=(value)=>{
+    setFilterString(value)
+    var array=[...testList]
+    const newArray = array.filter(item => (
+      ((item.testName).toLowerCase()).includes(value.toLowerCase())) || ((item.instituteName).toLowerCase()).includes(value.toLowerCase())
+      )
+     
+      setFilteredTestList(newArray)
+
+  }
   
   const handleClose = () => {
     setSpinner(false);
   };
-  return withCharts ?
-  <CRow>
-    <CCol sm="6" lg="3">
-      <CWidgetBrand
-        color="facebook"
-        rightHeader="89k"
-        rightFooter="friends"
-        leftHeader="Edit Test"
-        leftFooter="feeds"
-      >
-        <CIcon
-          name="cib-facebook"
-          height="52"
-          className="my-4"
-        />
-        <ChartLineSimple
-          className="position-absolute w-100 h-100"
-          backgroundColor="rgba(255,255,255,.1)"
-          dataPoints={[65, 59, 84, 84, 51, 55, 40]}
-          label="Friends"
-          labels="months"
-        />
-      </CWidgetBrand>
-    </CCol>
-
-    <CCol sm="6" lg="3">
-      <CWidgetBrand
-        color="twitter"
-        rightHeader="973k"
-        rightFooter="followers"
-        leftHeader="1.792"
-        leftFooter="tweets"
-      >
-        <CIcon
-          name="cib-twitter"
-          height="52"
-          className="my-4"
-        />
-        <ChartLineSimple
-          className="position-absolute w-100 h-100"
-          backgroundColor="rgba(255,255,255,.1)"
-          dataPoints={[1, 13, 9, 17, 34, 41, 38]}
-          label="Followers"
-          labels="months"
-        />
-      </CWidgetBrand>
-    </CCol>
-
-    <CCol sm="6" lg="3">
-      <CWidgetBrand
-        color="linkedin"
-        rightHeader="500+"
-        rightFooter="contracts"
-        leftHeader="292"
-        leftFooter="feeds"
-      >
-        <CIcon
-          name="cib-linkedin"
-          height="52"
-          className="my-4"
-        />
-        <ChartLineSimple
-          className="position-absolute w-100 h-100"
-          backgroundColor="rgba(255,255,255,.1)"
-          dataPoints={[78, 81, 80, 45, 34, 12, 40]}
-          label="Contracts"
-          labels="months"
-        />
-      </CWidgetBrand>
-    </CCol> 
-
-    <CCol sm="6" lg="3">
-      <CWidgetBrand
-        rightHeader="12"
-        rightFooter="events"
-        leftHeader="4"
-        leftFooter="meetings"
-        color="gradient-warning"
-      >
-        <CIcon
-          name="cil-calendar"
-          height="52"
-          className="my-4"
-        />
-        <ChartLineSimple
-          className="position-absolute w-100 h-100"
-          backgroundColor="rgba(255,255,255,.1)"
-          dataPoints={[35, 23, 56, 22, 97, 23, 64]}
-          label="Followers"
-          labels="months"
-        />
-      </CWidgetBrand>
-    </CCol>
-  </CRow> :
+  return (
  <>
    <Backdrop className={classes.backdrop} open={spinner} onClick={handleClose}>
         <CircularProgress color="inherit" size={100} color="primary" />
@@ -203,15 +126,15 @@ const TestBrand = ({withCharts})=>{
           {message}
         </Alert>
       </Snackbar>
-    
+      <CInput id="text-input" placeholder="Filter Test" name="filter" style={{marginBottom:50}} value={filterString} onChange={(e)=>filter(e.target.value)}/>
+   
   <CRow>
     {
-testList.map((item,index)=>(      
+filteredTestList.map((item,index)=>(      
     <CCol sm="6" lg="4">
       <CWidgetBrand
         color="linkedin"
-        
-        rightFooter=
+         rightFooter=
         {
         <>
         <CButton variant="outline" color="primary" 
@@ -291,6 +214,7 @@ testList.map((item,index)=>(
     */}
   </CRow>
 </>
+)
   
 }
 
@@ -310,5 +234,9 @@ const useStyles = makeStyles((theme) => ({
    alignItems:"flex-start",
    justifyContent:"flex-end"
   },
+  backdrop: {
+    zIndex: theme.zIndex.drawer + 1,
+    color: '#fff',
+},
 
 }));

@@ -140,7 +140,7 @@ function Omr(props) {
              const timer = setTimeout(() => {
                 history.push({
                     pathname: `/overall/${testId}`,
-                    state:{array:array,userAnswer:answerArray}
+                    state:{array:array,userAnswer:answerArray,testName:test?.testName}
                 });
            setSpinner(false)
             }, 2000);

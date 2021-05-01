@@ -66,7 +66,7 @@ const handleEditUser=(id)=>{
       {
         const editUser=response.res.data.data
         const editUserId=response.res.data.data._id
-      history.push({
+        history.push({
           pathname: `/user/edit/${editUserId}`,
        });
       }
@@ -109,14 +109,15 @@ const handleUnBlockUser=(id)=>{
           </CCardHeader>
           <CCardBody>
           <CDataTable
+           tableFilter
             items={usersData}
             fields={[
               { key: 'name', _classes: 'font-weight-bold' },
-              'emailAddress', 'status','Block User','Edit Details'
+              'emailAddress', 'phoneNumber','upscAttempts','additionalSubjects','status','Block User','Edit Details'
             ]}
             hover
             striped
-            itemsPerPage={5}
+            itemsPerPage={10}
             activePage={page}
             clickableRows
          //   onRowClick={(item) => history.push(`/users/${item.id}`)}
@@ -157,9 +158,10 @@ const handleUnBlockUser=(id)=>{
              }}
           />
           <CPagination
+            limit={5}
             activePage={page}
             onActivePageChange={pageChange}
-            pages={5}
+            pages={40}
             doubleArrows={false} 
             align="center"
           />

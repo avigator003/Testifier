@@ -38,6 +38,12 @@ const _nav =  [
         name: 'Test Details',
         to: '/test/details',
       },
+      {
+        _tag: 'CSidebarNavItem',
+        name: 'Recent Tests',
+        to: '/test/recent',
+      },
+      
       
    
       
@@ -131,12 +137,7 @@ const _nav =  [
     ],
   },
   */
-  {
-    _tag: 'CSidebarNavItem',
-    name: 'Charts',
-    to: '/charts',
-    icon: 'cil-chart-pie'
-  },
+  
   /*
   {
     _tag: 'CSidebarNavDropdown',

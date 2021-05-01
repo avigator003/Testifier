@@ -90,7 +90,8 @@ const UserForm = (props) => {
         password: "",
         phoneNumber: "",
         upscAttempts:"",
-        additionalSubjects:""
+        additionalSubjects:"",
+        allowedTests:''
       });
    const [error, setError] = useState({
         name: "",
@@ -99,7 +100,8 @@ const UserForm = (props) => {
         password: "",
         phoneNumber: "",
         upscAttempts:"",
-        additionalSubjects:""
+        additionalSubjects:"",
+        allowedTests:""
       });
 
 
@@ -274,6 +276,16 @@ useEffect(()=>{
 
                 <CFormGroup row>
                   <CCol md="3">
+                    <CLabel htmlFor="email-input">Allowed Tests Number</CLabel>
+                  </CCol>
+                  <CCol xs="12" md="9">
+                    <CInput placeholder="Allowed Test Number" type="number" name="allowedTests" value={state['allowedTests']} onChange={(e)=>handleChange(e)} />
+                  </CCol>
+                </CFormGroup>
+
+
+                <CFormGroup row>
+                  <CCol md="3">
                     <CLabel htmlFor="select">Email</CLabel>
                   </CCol>
                   <CCol xs="12" md="9">
@@ -305,7 +317,7 @@ useEffect(()=>{
                     <CLabel htmlFor="select">UPSC Attempts</CLabel>
                   </CCol>
                   <CCol xs="12" md="9">
-                  <CInput placeholder="No. Of Attempts" type="number"  type="upscAttempts" name="upscAttempts" value={state['emailAddress']} onChange={(e)=>handleChange(e)} />
+                  <CInput placeholder="No. Of Attempts" type="number"  type="upscAttempts" name="upscAttempts" value={state['upscAttempts']} onChange={(e)=>handleChange(e)} />
                    </CCol>
                 </CFormGroup>
 

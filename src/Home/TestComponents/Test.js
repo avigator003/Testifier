@@ -71,7 +71,7 @@ export default function Test(props) {
 
 
 
-    const [spinner, setSpinner] = useState(false);
+    const [spinner, setSpinner] = useState(true);
     const [open, setOpen] = useState(false)
     const [currentTestId, setCurrentTestId] = useState()
     const [count, setCount] = useState(0)
@@ -98,7 +98,6 @@ export default function Test(props) {
                 if (err) {
                     console.log(err)
                 } else {
-                    console.log(response, "re")
                     setCounter((response.testGiven.data).length)
                 }
             }))
@@ -248,6 +247,7 @@ export default function Test(props) {
                     setiasBabaTestDaysList(response.tests.filter(ob => ob.instituteName == "IAS Baba 60 Days"))
                     setrauIasList(response.tests.filter(ob => ob.instituteName == "Rau IAS"))
 
+                    setSpinner(false)
                 }))
         }
         else if (testCategory == "Full Length") {
@@ -278,6 +278,7 @@ export default function Test(props) {
 
                 }))
 
+                setSpinner(false)
         }
         else if (testCategory == "Sectional") {
 
@@ -383,19 +384,22 @@ export default function Test(props) {
                         setiasBabaTestDaysList(response.tests.filter(ob => ob.instituteName == "IAS Baba 60 Days" && ob.testCategory == "Sectional" && ob.categoryType == "Science and Technology"))
                         setrauIasList(response.tests.filter(ob => ob.instituteName == "Rau IAS" && ob.testCategory == "Sectional" && ob.categoryType == "Science and Technology"))
                     }
+                    
+        setSpinner(false)
                 }))
         }
+        
     }, [testCategory, count])
 
 
 
     // Handle Give Test
     const handleGiveTest = (id) => {
-
+       var testNumber=user.token.user?.allowedTests
+       console.log("user",user)
         if (user) {
             setCurrentTestId(id)
-
-            if (counter < 10) {
+           if ((user.token.user?.testsGiven).length < testNumber) {
                 setSpinner(true)
                 const timer = setTimeout(() => {
                     history.push({
@@ -405,7 +409,6 @@ export default function Test(props) {
                 return () => clearTimeout(timer);
             }
             else {
-                console.log("true")
                 setOpen(true)
             }
         }
@@ -516,7 +519,6 @@ export default function Test(props) {
                 </Fade>
             </Modal>
             <Backdrop className={classes.backdrop} open={spinner} onClick={() => setSpinner(false)}>
-                <p style={{ marginRight: 20 }}>Preparing Test</p>
                 <CircularProgress color="inherit" size={100} color="primary" />
             </Backdrop>
 
@@ -729,8 +731,8 @@ export default function Test(props) {
 
                     <Grid item lg={10} md={7} sm={8} xs={12} className={classes.testContainer}>
 
-              <h3 style={{padding:10,margin:10}}>Official Telegram Channel Link:<a href="https://t.me/rapidias_in" target="_blank">https://t.me/rapidias_in</a> </h3>
-              <h3 style={{padding:10}}>Test Series Private Discussion group:<a href="https://t.me/TestsDiscussion_RapidIAS" target="_blank">https://t.me/TestsDiscussion_RapidIAS</a> </h3>          
+              <h3 style={{padding:10,fontSize:15}}>Official Telegram Channel Link:<a href="https://t.me/rapidias_in" target="_blank">https://t.me/rapidias_in</a> </h3>
+              <h3 style={{padding:10,fontSize:15}}>Test Series Private Discussion group:<a href="https://t.me/TestsDiscussion_RapidIAS" target="_blank">https://t.me/TestsDiscussion_RapidIAS</a> </h3>          
 
                         {/*Vision IAS */}
 

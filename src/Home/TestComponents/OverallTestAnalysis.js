@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { CButton, CCard, CCardBody, CCardHeader } from '@coreui/react'
+import { CButton, CCard, CCardBody, CCardHeader,CRow,CCol,CDataTable,CPagination } from '@coreui/react'
 import { CChartDoughnut } from '@coreui/react-chartjs'
 import { makeStyles } from "@material-ui/core/styles";
 import LinearProgress from '@material-ui/core/LinearProgress';
@@ -14,15 +14,21 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
-import { getTestById, saveGivenTest } from '../../store/Actions';
+import { getAllTestsGiven, getTestById, saveGivenTest } from '../../store/Actions';
 import { useDispatch ,useSelector} from 'react-redux';
 import { notification } from "antd";
 import CheckCircleOutlined from '@material-ui/icons/CheckCircleOutlined';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 import Badge from '../../assests/images/badge.png'
 import Header from '../HomeComponents/Header'
 import TextArea from 'antd/lib/input/TextArea';
-
+import {
+  CBadge,
+  CDropdownItem,
+  CDropdownMenu,
+  CDropdownToggle,
+  CImg,
+} from '@coreui/react'
 
 function LinearProgressWithLabel(props) {
   return (
@@ -56,6 +62,7 @@ function OverallTestAnalysis(props) {
   const[totalAttempted,setTotalAttempted]=useState()
   const[timeSpent,totalTimeSpent]=useState()
   const[currentTest,setCurrentTest]=useState()
+  const[feedback,setFeedback]=useState("")
 
 
 
@@ -75,6 +82,22 @@ function OverallTestAnalysis(props) {
   const[answersCount,setAnswersCount]=useState(0)
   const[percentageArray,setPercentageArray]=useState([])
   const[message,setMessage]=useState()
+
+  const queryPage = useLocation().search.match(/page=([0-9]+)/, '')
+  const currentPage = Number(queryPage && queryPage[1] ? queryPage[1] : 1)
+
+  const [page, setPage] = useState(currentPage)
+  const [testsData, setTestsData] = useState()
+
+  const pageChange = newPage => {
+      currentPage !== newPage && history.push(`/overall/:id?page=${newPage}`)
+  }
+
+  useEffect(() => {
+      currentPage !== page && setPage(currentPage)
+  }, [currentPage, page])
+
+
 
     // Logined User
     const user = useSelector((state) => state.user);
@@ -222,6 +245,21 @@ function OverallTestAnalysis(props) {
          }}))
 
 
+         dispatch(
+          getAllTestsGiven((err, response) => {
+            var TestName=props.location.state.testName
+              console.log("reposme",response)
+              
+               var newArray=(response?.testsGiven)?.filter(test=>test.testId.testName==TestName)
+              var array=  newArray?.sort(function(a, b) {
+              return b.overall.totalMarks-a.overall.totalMarks
+          });
+          console.log(array)
+          setTestsData(array)
+        }))
+    
+
+
    
            }
       }))
@@ -231,6 +269,19 @@ function OverallTestAnalysis(props) {
   }, [])
 
 
+
+  const handleFeedback=()=>{
+    dispatch(
+      saveGivenTest({feedback:feedback,}, (err, response) => {
+        if (err) {
+          
+          console.log(err)
+        } else {
+          history.push('/givetest')
+       }}))
+
+
+  }
 
   return (
     <>
@@ -580,7 +631,7 @@ function OverallTestAnalysis(props) {
 
     <CCardBody>
    
-  Feedback :<TextArea rows={10}/>
+  Feedback :<TextArea rows={10} value={feedback} onChange={e=>setFeedback(e.target.value)}/>
     </CCardBody>
     </Grid>
 </Grid>
@@ -589,11 +640,153 @@ function OverallTestAnalysis(props) {
 </Grid>
 
 
+<CRow>
+                <CCol xl={12} >
+                    <CCard >
+                        <CCardHeader size={50}>
+                            Leaderboard
+                        </CCardHeader>
+                        <CCardBody>
+                            <CDataTable
+                                items={testsData}
+                                fields={[
+                                    { key: 'studentName', _classes: 'font-weight-bold' },
+                                     'Marks', 'Correct','Incorrect','accuracy'
+                                ]}
+                                hover
+                                striped
+                                itemsPerPage={10}
+                                activePage={page}
+                                clickableRows
+                                //   onRowClick={(item) => history.push(`/users/${item.id}`)}
+                                scopedSlots={{
+                                    'studentName':
+                                        (item) => (
+                                            <td>
+                                                {
+                                                    item?.userId?.userName
+                                                }
+                                            </td>
+                                        ),
+                                    'Marks':
+                                        (item) => (
+                                            <td>
+                                                  <div style={{display:"flex",flexDirection:"row"}}>
+                                                             <p style={{paddingLeft:20,paddingRight:10}}>{item.overallAnalysis?.Correct} Correct</p>
+                                                            <p style={{paddingLeft:40,paddingRight:10}}>{item.overallAnalysis?.Incorrect} Incorrect</p>
+                                                            <p style={{paddingLeft:30,paddingRight:10}}>{item.overallAnalysis?.Skipped} Skipped</p>
+                                                   </div>
+                               
+                                                {
+                                                  <span style={{padding:10,borderRadius:5,border:"1px solid grey",marginLeft:40}}>{item?.overall?.totalMarks} Marks
+                                                  </span>
+                                                     }
+                                            </td>
+                                        ),
+                                    'Correct':
+                                        (item,index) => (
+                                            
+                                            <td>
+                                                {
+                                                    index==0&&
+                                                   <div style={{display:"flex",flexDirection:"row"}}>
+                                                             <p style={{paddingLeft:20,paddingRight:10}}>10%</p>
+                                                            <p style={{paddingLeft:40,paddingRight:10}}>50%</p>
+                                                            <p style={{paddingLeft:30,paddingRight:10}}>100%</p>
+                                                   </div>
+                                }
+                                      <div style={{display:"flex",flexDirection:"row"}}>
+                                                  
+                                                {
+                                                    item?.confidenceLevelAnalysis?.map(item=>(
+                                                        <p style={{paddingLeft:10,paddingRight:10}}>
+                                                        {item.correct?item.correct:"0"} Ques.
+                                                        </p>
+                                                    ))
+                                                }
+                                                
+                                                </div>
+                                            </td>
+                                        
+                                        
+                                        ),
+
+
+                                    'Incorrect':
+                                            (item,index) => (
+                                               <td>
+                                                    {
+                                                        index==0&&
+                                                       <div style={{display:"flex",flexDirection:"row"}}>
+                                                            <p style={{paddingLeft:20,paddingRight:10}}>10%</p>
+                                                            <p style={{paddingLeft:40,paddingRight:10}}>50%</p>
+                                                            <p style={{paddingLeft:30,paddingRight:10}}>100%</p>
+                                                        </div>
+                                    }
+                                          <div style={{display:"flex",flexDirection:"row"}}>
+                                                      
+                                                    {
+                                                        item?.confidenceLevelAnalysis?.map(item=>(
+                                                            <p style={{paddingLeft:10,paddingRight:10}}>
+                                                            {item.wrong?item.wrong:"0"} Ques.
+                                                            </p>
+                                                        ))
+                                                    }
+                                                    
+                                                    </div>
+                                                </td>
+                                            
+                                               ),
+                                    "accuracy":
+                                    (item,index) => (
+                                            
+                                        <td>
+                                            {
+                                                index==0&&
+                                               <div style={{display:"flex",flexDirection:"row"}}>
+                                                         <p style={{paddingLeft:20,paddingRight:10}}>10%</p>
+                                                        <p style={{paddingLeft:40,paddingRight:10}}>50%</p>
+                                                        <p style={{paddingLeft:30,paddingRight:10}}>100%</p>
+                                               </div>
+                            }
+                                  <div style={{display:"flex",flexDirection:"row"}}>
+                                              
+                                            {
+                                                item.confidenceLevelAnalysis?.map(item=>(
+                                                    <p style={{paddingLeft:10,paddingRight:10}}>
+                                                    {item?.accuracy?(item.accuracy).toFixed(2):"0"} %
+                                                    </p>
+                                                ))
+                                            }
+                                            
+                                            </div>
+                                        </td>
+                                    
+                                    ),
+
+
+                                }}
+                            />
+                            <CPagination
+                                limit={5}
+                                activePage={page}
+                                onActivePageChange={pageChange}
+                                pages={40}
+                                doubleArrows={false}
+                                align="center"
+                            />
+                        </CCardBody>
+                    </CCard>
+                </CCol>
+            </CRow>
+  
+
+
       <div className={classes.submitButton}>
           
           <CButton variant="outline" color="primary" 
-                 size="md" block onClick={()=>history.push('/givetest')} >Save Analysis</CButton>
-                 </div>
+                 size="md" block onClick={()=>handleFeedback()} >Save Analysis</CButton>
+      </div>
       
 
     </div>

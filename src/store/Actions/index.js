@@ -457,3 +457,24 @@ export const getGivenTestById = (payload, cb) => {
   };
 };
 
+
+
+//Tests List
+export const getAllTestsGiven = (cb) => {
+  return (dispatch) => {
+    api
+      .get("/testgiven/showall")
+      .then((res) => {
+            return cb(null,{
+              testsGiven: res.data.data,
+            });
+        })
+
+             .catch((err) => {
+        console.log(err);
+        cb({
+          message:"Fetching Failed",
+        });
+      });
+  };
+};
