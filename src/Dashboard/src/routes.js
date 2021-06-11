@@ -35,6 +35,8 @@ const Modals = React.lazy(() => import('./views/notifications/modals/Modals'));
 const Colors = React.lazy(() => import('./views/theme/colors/Colors'));
 const Typography = React.lazy(() => import('./views/theme/typography/Typography'));
 const Tests = React.lazy(() => import('./views/TestCards/TestCards'));
+
+const TestApproval = React.lazy(() => import('./views/base/tests/TestApproval'));
 const Users = React.lazy(() => import('./views/users/Users'));
 const User = React.lazy(() => import('./views/users/User'));
 const UserForm = React.lazy(() => import('./views/users/UserForm'));
@@ -49,6 +51,7 @@ const routes = [
   { path: '/dashboard', name: 'Dashboard', component: Dashboard },
   { path: '/test/details', name: 'Tests', component: Tests },
   { path: '/test/recent', name: 'Recent Tests', component: RecentTests },
+  { path: '/test/approvals', name: 'Tests approvals', component: TestApproval },
   { path: '/test/add', name: 'Add Test', component: TestForm ,exact:true},
   { path: '/test/edit/:id', name: 'Edit Test', component: TestForm },
   { path: '/test/view/:id', name: 'View Test', component: TestForm },

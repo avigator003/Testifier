@@ -236,16 +236,36 @@ export default function Test(props) {
 
             dispatch(
                 getTests((err, response) => {
-                    setVisionTestList(response.tests.filter(ob => ob.instituteName == "Vision IAS"))
-                    setVajiramTestList(response.tests.filter(ob => ob.instituteName == "Vajiram and Ravi"))
-                    setShankarTestList(response.tests.filter(ob => ob.instituteName == "Shankar IAS Academy"))
-                    setForumTestList(response.tests.filter(ob => ob.instituteName == "Forum IAS"))
-                    setIasTestList(response.tests.filter(ob => ob.instituteName == "IAS Score"))
-                    setInsightsTestList(response.tests.filter(ob => ob.instituteName == "Insights IAS"))
-                    setUpscTestList(response.tests.filter(ob => ob.instituteName == "UPSC PYQs"))
-                    setInsightsTestDaysList(response.tests.filter(ob => ob.instituteName == "Insights IAS 70 Days"))
-                    setiasBabaTestDaysList(response.tests.filter(ob => ob.instituteName == "IAS Baba 60 Days"))
-                    setrauIasList(response.tests.filter(ob => ob.instituteName == "Rau IAS"))
+                    setVisionTestList((response.tests.filter(ob => ob.instituteName == "Vision IAS")).sort(function (a,b) {
+                        return a.testName.localeCompare(b.testName, undefined, { numeric: true, sensitivity: 'base' });
+                    }))
+                    setVajiramTestList((response.tests.filter(ob => ob.instituteName == "Vajiram and Ravi")).sort(function (a,b) {
+                        return a.testName.localeCompare(b.testName, undefined, { numeric: true, sensitivity: 'base' });
+                    }))
+                    setShankarTestList((response.tests.filter(ob => ob.instituteName == "Shankar IAS Academy")).sort(function (a,b) {
+                        return a.testName.localeCompare(b.testName, undefined, { numeric: true, sensitivity: 'base' });
+                    }))
+                    setForumTestList((response.tests.filter(ob => ob.instituteName == "Forum IAS")).sort(function (a,b) {
+                        return a.testName.localeCompare(b.testName, undefined, { numeric: true, sensitivity: 'base' });
+                    }))
+                    setIasTestList((response.tests.filter(ob => ob.instituteName == "IAS Score")).sort(function (a,b) {
+                        return a.testName.localeCompare(b.testName, undefined, { numeric: true, sensitivity: 'base' });
+                    }))
+                    setInsightsTestList((response.tests.filter(ob => ob.instituteName == "Insights IAS")).sort(function (a,b) {
+                        return a.testName.localeCompare(b.testName, undefined, { numeric: true, sensitivity: 'base' });
+                    }))
+                    setUpscTestList((response.tests.filter(ob => ob.instituteName == "UPSC PYQs")).sort(function (a,b) {
+                        return a.testName.localeCompare(b.testName, undefined, { numeric: true, sensitivity: 'base' });
+                    }))
+                    setInsightsTestDaysList((response.tests.filter(ob => ob.instituteName == "Insights IAS 70 Days")).sort(function (a,b) {
+                        return a.testName.localeCompare(b.testName, undefined, { numeric: true, sensitivity: 'base' });
+                    }))
+                    setiasBabaTestDaysList((response.tests.filter(ob => ob.instituteName == "IAS Baba 60 Days")).sort(function (a,b) {
+                        return a.testName.localeCompare(b.testName, undefined, { numeric: true, sensitivity: 'base' });
+                    }))
+                    setrauIasList((response.tests.filter(ob => ob.instituteName == "Rau IAS")).sort(function (a,b) {
+                        return a.testName.localeCompare(b.testName, undefined, { numeric: true, sensitivity: 'base' });
+                    }))
 
                     setSpinner(false)
                 }))
@@ -265,16 +285,36 @@ export default function Test(props) {
 
             dispatch(
                 getTests((err, response) => {
-                    setVisionTestList(response.tests.filter(ob => ob.instituteName == "Vision IAS" && ob.testCategory == "Full Length"))
-                    setVajiramTestList(response.tests.filter(ob => ob.instituteName == "Vajiram and Ravi" && ob.testCategory == "Full Length"))
-                    setShankarTestList(response.tests.filter(ob => ob.instituteName == "Shankar IAS Academy" && ob.testCategory == "Full Length"))
-                    setForumTestList(response.tests.filter(ob => ob.instituteName == "Forum IAS" && ob.testCategory == "Full Length"))
-                    setIasTestList(response.tests.filter(ob => ob.instituteName == "IAS Score" && ob.testCategory == "Full Length"))
-                    setInsightsTestList(response.tests.filter(ob => ob.instituteName == "Insights IAS" && ob.testCategory == "Full Length"))
-                    setUpscTestList(response.tests.filter(ob => ob.instituteName == "UPSC PYQs" && ob.testCategory == "Full Length"))
-                    setInsightsTestDaysList(response.tests.filter(ob => ob.instituteName == "Insights IAS 70 Days" && ob.testCategory == "Full Length"))
-                    setiasBabaTestDaysList(response.tests.filter(ob => ob.instituteName == "IAS Baba 60 Days" && ob.testCategory == "Full Length"))
-                    setrauIasList(response.tests.filter(ob => ob.instituteName == "Rau IAS" && ob.testCategory == "Full Length"))
+                    setVisionTestList((response.tests.filter(ob => ob.instituteName == "Vision IAS" && ob.testCategory == "Full Length")).sort(function (a,b) {
+                        return a.testName.localeCompare(b.testName, undefined, { numeric: true, sensitivity: 'base' });
+                    }))
+                    setVajiramTestList((response.tests.filter(ob => ob.instituteName == "Vajiram and Ravi" && ob.testCategory == "Full Length")).sort(function (a,b) {
+                        return a.testName.localeCompare(b.testName, undefined, { numeric: true, sensitivity: 'base' });
+                    }))
+                    setShankarTestList((response.tests.filter(ob => ob.instituteName == "Shankar IAS Academy" && ob.testCategory == "Full Length")).sort(function (a,b) {
+                        return a.testName.localeCompare(b.testName, undefined, { numeric: true, sensitivity: 'base' });
+                    }))
+                    setForumTestList((response.tests.filter(ob => ob.instituteName == "Forum IAS" && ob.testCategory == "Full Length")).sort(function (a,b) {
+                        return a.testName.localeCompare(b.testName, undefined, { numeric: true, sensitivity: 'base' });
+                    }))
+                    setIasTestList((response.tests.filter(ob => ob.instituteName == "IAS Score" && ob.testCategory == "Full Length")).sort(function (a,b) {
+                        return a.testName.localeCompare(b.testName, undefined, { numeric: true, sensitivity: 'base' });
+                    }))
+                    setInsightsTestList((response.tests.filter(ob => ob.instituteName == "Insights IAS" && ob.testCategory == "Full Length")).sort(function (a,b) {
+                        return a.testName.localeCompare(b.testName, undefined, { numeric: true, sensitivity: 'base' });
+                    }))
+                    setUpscTestList((response.tests.filter(ob => ob.instituteName == "UPSC PYQs" && ob.testCategory == "Full Length")).sort(function (a,b) {
+                        return a.testName.localeCompare(b.testName, undefined, { numeric: true, sensitivity: 'base' });
+                    }))
+                    setInsightsTestDaysList((response.tests.filter(ob => ob.instituteName == "Insights IAS 70 Days" && ob.testCategory == "Full Length")).sort(function (a,b) {
+                        return a.testName.localeCompare(b.testName, undefined, { numeric: true, sensitivity: 'base' });
+                    }))
+                    setiasBabaTestDaysList((response.tests.filter(ob => ob.instituteName == "IAS Baba 60 Days" && ob.testCategory == "Full Length")).sort(function (a,b) {
+                        return a.testName.localeCompare(b.testName, undefined, { numeric: true, sensitivity: 'base' });
+                    }))
+                    setrauIasList((response.tests.filter(ob => ob.instituteName == "Rau IAS" && ob.testCategory == "Full Length")).sort(function (a,b) {
+                        return a.testName.localeCompare(b.testName, undefined, { numeric: true, sensitivity: 'base' });
+                    }))
 
                 }))
 
@@ -285,104 +325,264 @@ export default function Test(props) {
             dispatch(
                 getTests((err, response) => {
                     if (state['polity']) {
-                        setVisionTestList(response.tests.filter(ob => ob.instituteName == "Vision IAS" && ob.testCategory == "Sectional" && ob.categoryType == "Polity"))
-                        setVajiramTestList(response.tests.filter(ob => ob.instituteName == "Vajiram and Ravi" && ob.testCategory == "Sectional" && ob.categoryType == "Polity"))
-                        setShankarTestList(response.tests.filter(ob => ob.instituteName == "Shankar IAS Academy" && ob.testCategory == "Sectional" && ob.categoryType == "Polity"))
-                        setForumTestList(response.tests.filter(ob => ob.instituteName == "Forum IAS" && ob.testCategory == "Sectional" && ob.categoryType == "Polity"))
-                        setIasTestList(response.tests.filter(ob => ob.instituteName == "IAS Score" && ob.testCategory == "Sectional" && ob.categoryType == "Polity"))
-                        setInsightsTestList(response.tests.filter(ob => ob.instituteName == "Insights IAS" && ob.testCategory == "Sectional" && ob.categoryType == "Polity"))
-                        setUpscTestList(response.tests.filter(ob => ob.instituteName == "UPSC PYQs" && ob.testCategory == "Sectional" && ob.categoryType == "Polity"))
-                        setInsightsTestDaysList(response.tests.filter(ob => ob.instituteName == "Insights IAS 70 Days" && ob.testCategory == "Sectional" && ob.categoryType == "Polity"))
-                        setiasBabaTestDaysList(response.tests.filter(ob => ob.instituteName == "IAS Baba 60 Days" && ob.testCategory == "Sectional" && ob.categoryType == "Polity"))
-                        setrauIasList(response.tests.filter(ob => ob.instituteName == "Rau IAS" && ob.testCategory == "Sectional" && ob.categoryType == "Polity"))
+                        setVisionTestList((response.tests.filter(ob => ob.instituteName == "Vision IAS" && ob.testCategory == "Sectional" && ob.categoryType == "Polity")).sort(function (a,b) {
+                        return a.testName.localeCompare(b.testName, undefined, { numeric: true, sensitivity: 'base' });
+                    }))
+                        setVajiramTestList((response.tests.filter(ob => ob.instituteName == "Vajiram and Ravi" && ob.testCategory == "Sectional" && ob.categoryType == "Polity")).sort(function (a,b) {
+                        return a.testName.localeCompare(b.testName, undefined, { numeric: true, sensitivity: 'base' });
+                    }))
+                        setShankarTestList((response.tests.filter(ob => ob.instituteName == "Shankar IAS Academy" && ob.testCategory == "Sectional" && ob.categoryType == "Polity")).sort(function (a,b) {
+                        return a.testName.localeCompare(b.testName, undefined, { numeric: true, sensitivity: 'base' });
+                    }))
+                        setForumTestList((response.tests.filter(ob => ob.instituteName == "Forum IAS" && ob.testCategory == "Sectional" && ob.categoryType == "Polity")).sort(function (a,b) {
+                        return a.testName.localeCompare(b.testName, undefined, { numeric: true, sensitivity: 'base' });
+                    }))
+                        setIasTestList((response.tests.filter(ob => ob.instituteName == "IAS Score" && ob.testCategory == "Sectional" && ob.categoryType == "Polity")).sort(function (a,b) {
+                        return a.testName.localeCompare(b.testName, undefined, { numeric: true, sensitivity: 'base' });
+                    }))
+                        setInsightsTestList((response.tests.filter(ob => ob.instituteName == "Insights IAS" && ob.testCategory == "Sectional" && ob.categoryType == "Polity")).sort(function (a,b) {
+                        return a.testName.localeCompare(b.testName, undefined, { numeric: true, sensitivity: 'base' });
+                    }))
+                        setUpscTestList((response.tests.filter(ob => ob.instituteName == "UPSC PYQs" && ob.testCategory == "Sectional" && ob.categoryType == "Polity")).sort(function (a,b) {
+                        return a.testName.localeCompare(b.testName, undefined, { numeric: true, sensitivity: 'base' });
+                    }))
+                        setInsightsTestDaysList((response.tests.filter(ob => ob.instituteName == "Insights IAS 70 Days" && ob.testCategory == "Sectional" && ob.categoryType == "Polity")).sort(function (a,b) {
+                        return a.testName.localeCompare(b.testName, undefined, { numeric: true, sensitivity: 'base' });
+                    }))
+                        setiasBabaTestDaysList((response.tests.filter(ob => ob.instituteName == "IAS Baba 60 Days" && ob.testCategory == "Sectional" && ob.categoryType == "Polity")).sort(function (a,b) {
+                        return a.testName.localeCompare(b.testName, undefined, { numeric: true, sensitivity: 'base' });
+                    }))
+                        setrauIasList((response.tests.filter(ob => ob.instituteName == "Rau IAS" && ob.testCategory == "Sectional" && ob.categoryType == "Polity")).sort(function (a,b) {
+                        return a.testName.localeCompare(b.testName, undefined, { numeric: true, sensitivity: 'base' });
+                    }))
 
                     }
                     else if (state['history']) {
-                        setVisionTestList(response.tests.filter(ob => ob.instituteName == "Vision IAS" && ob.testCategory == "Sectional" && ob.categoryType == "History"))
-                        setVajiramTestList(response.tests.filter(ob => ob.instituteName == "Vajiram and Ravi" && ob.testCategory == "Sectional" && ob.categoryType == "History"))
-                        setShankarTestList(response.tests.filter(ob => ob.instituteName == "Shankar IAS Academy" && ob.testCategory == "Sectional" && ob.categoryType == "History"))
-                        setForumTestList(response.tests.filter(ob => ob.instituteName == "Forum IAS" && ob.testCategory == "Sectional" && ob.categoryType == "History"))
-                        setIasTestList(response.tests.filter(ob => ob.instituteName == "IAS Score" && ob.testCategory == "Sectional" && ob.categoryType == "History"))
-                        setInsightsTestList(response.tests.filter(ob => ob.instituteName == "Insights IAS" && ob.testCategory == "Sectional" && ob.categoryType == "History"))
-                        setUpscTestList(response.tests.filter(ob => ob.instituteName == "UPSC PYQs" && ob.testCategory == "Sectional" && ob.categoryType == "History"))
-                        setInsightsTestDaysList(response.tests.filter(ob => ob.instituteName == "Insights IAS 70 Days" && ob.testCategory == "Sectional" && ob.categoryType == "History"))
-                        setiasBabaTestDaysList(response.tests.filter(ob => ob.instituteName == "IAS Baba 60 Days" && ob.testCategory == "Sectional" && ob.categoryType == "History"))
-                        setrauIasList(response.tests.filter(ob => ob.instituteName == "Rau IAS" && ob.testCategory == "Sectional" && ob.categoryType == "History"))
+                        setVisionTestList((response.tests.filter(ob => ob.instituteName == "Vision IAS" && ob.testCategory == "Sectional" && ob.categoryType == "History")).sort(function (a,b) {
+                        return a.testName.localeCompare(b.testName, undefined, { numeric: true, sensitivity: 'base' });
+                    }))
+                        setVajiramTestList((response.tests.filter(ob => ob.instituteName == "Vajiram and Ravi" && ob.testCategory == "Sectional" && ob.categoryType == "History")).sort(function (a,b) {
+                        return a.testName.localeCompare(b.testName, undefined, { numeric: true, sensitivity: 'base' });
+                    }))
+                        setShankarTestList((response.tests.filter(ob => ob.instituteName == "Shankar IAS Academy" && ob.testCategory == "Sectional" && ob.categoryType == "History")).sort(function (a,b) {
+                        return a.testName.localeCompare(b.testName, undefined, { numeric: true, sensitivity: 'base' });
+                    }))
+                        setForumTestList((response.tests.filter(ob => ob.instituteName == "Forum IAS" && ob.testCategory == "Sectional" && ob.categoryType == "History")).sort(function (a,b) {
+                        return a.testName.localeCompare(b.testName, undefined, { numeric: true, sensitivity: 'base' });
+                    }))
+                        setIasTestList((response.tests.filter(ob => ob.instituteName == "IAS Score" && ob.testCategory == "Sectional" && ob.categoryType == "History")).sort(function (a,b) {
+                        return a.testName.localeCompare(b.testName, undefined, { numeric: true, sensitivity: 'base' });
+                    }))
+                        setInsightsTestList((response.tests.filter(ob => ob.instituteName == "Insights IAS" && ob.testCategory == "Sectional" && ob.categoryType == "History")).sort(function (a,b) {
+                        return a.testName.localeCompare(b.testName, undefined, { numeric: true, sensitivity: 'base' });
+                    }))
+                        setUpscTestList((response.tests.filter(ob => ob.instituteName == "UPSC PYQs" && ob.testCategory == "Sectional" && ob.categoryType == "History")).sort(function (a,b) {
+                        return a.testName.localeCompare(b.testName, undefined, { numeric: true, sensitivity: 'base' });
+                    }))
+                        setInsightsTestDaysList((response.tests.filter(ob => ob.instituteName == "Insights IAS 70 Days" && ob.testCategory == "Sectional" && ob.categoryType == "History")).sort(function (a,b) {
+                        return a.testName.localeCompare(b.testName, undefined, { numeric: true, sensitivity: 'base' });
+                    }))
+                        setiasBabaTestDaysList((response.tests.filter(ob => ob.instituteName == "IAS Baba 60 Days" && ob.testCategory == "Sectional" && ob.categoryType == "History")).sort(function (a,b) {
+                        return a.testName.localeCompare(b.testName, undefined, { numeric: true, sensitivity: 'base' });
+                    }))
+                        setrauIasList((response.tests.filter(ob => ob.instituteName == "Rau IAS" && ob.testCategory == "Sectional" && ob.categoryType == "History")).sort(function (a,b) {
+                        return a.testName.localeCompare(b.testName, undefined, { numeric: true, sensitivity: 'base' });
+                    }))
 
                     }
                     else if (state['environment']) {
-                        setVisionTestList(response.tests.filter(ob => ob.instituteName == "Vision IAS" && ob.testCategory == "Sectional" && ob.categoryType == "Environment"))
-                        setVajiramTestList(response.tests.filter(ob => ob.instituteName == "Vajiram and Ravi" && ob.testCategory == "Sectional" && ob.categoryType == "Environment"))
-                        setShankarTestList(response.tests.filter(ob => ob.instituteName == "Shankar IAS Academy" && ob.testCategory == "Sectional" && ob.categoryType == "Environment"))
-                        setForumTestList(response.tests.filter(ob => ob.instituteName == "Forum IAS" && ob.testCategory == "Sectional" && ob.categoryType == "Environment"))
-                        setIasTestList(response.tests.filter(ob => ob.instituteName == "IAS Score" && ob.testCategory == "Sectional" && ob.categoryType == "Environment"))
-                        setInsightsTestList(response.tests.filter(ob => ob.instituteName == "Insights IAS" && ob.testCategory == "Sectional" && ob.categoryType == "Environment"))
-                        setUpscTestList(response.tests.filter(ob => ob.instituteName == "UPSC PYQs" && ob.testCategory == "Sectional" && ob.categoryType == "Environment"))
-                        setInsightsTestDaysList(response.tests.filter(ob => ob.instituteName == "Insights IAS 70 Days" && ob.testCategory == "Sectional" && ob.categoryType == "Environment"))
-                        setiasBabaTestDaysList(response.tests.filter(ob => ob.instituteName == "IAS Baba 60 Days" && ob.testCategory == "Sectional" && ob.categoryType == "Environment"))
-                        setrauIasList(response.tests.filter(ob => ob.instituteName == "Rau IAS" && ob.testCategory == "Sectional" && ob.categoryType == "Environment"))
+                        setVisionTestList((response.tests.filter(ob => ob.instituteName == "Vision IAS" && ob.testCategory == "Sectional" && ob.categoryType == "Environment")).sort(function (a,b) {
+                        return a.testName.localeCompare(b.testName, undefined, { numeric: true, sensitivity: 'base' });
+                    }))
+                        setVajiramTestList((response.tests.filter(ob => ob.instituteName == "Vajiram and Ravi" && ob.testCategory == "Sectional" && ob.categoryType == "Environment")).sort(function (a,b) {
+                        return a.testName.localeCompare(b.testName, undefined, { numeric: true, sensitivity: 'base' });
+                    }))
+                        setShankarTestList((response.tests.filter(ob => ob.instituteName == "Shankar IAS Academy" && ob.testCategory == "Sectional" && ob.categoryType == "Environment")).sort(function (a,b) {
+                        return a.testName.localeCompare(b.testName, undefined, { numeric: true, sensitivity: 'base' });
+                    }))
+                        setForumTestList((response.tests.filter(ob => ob.instituteName == "Forum IAS" && ob.testCategory == "Sectional" && ob.categoryType == "Environment")).sort(function (a,b) {
+                        return a.testName.localeCompare(b.testName, undefined, { numeric: true, sensitivity: 'base' });
+                    }))
+                        setIasTestList((response.tests.filter(ob => ob.instituteName == "IAS Score" && ob.testCategory == "Sectional" && ob.categoryType == "Environment")).sort(function (a,b) {
+                        return a.testName.localeCompare(b.testName, undefined, { numeric: true, sensitivity: 'base' });
+                    }))
+                        setInsightsTestList((response.tests.filter(ob => ob.instituteName == "Insights IAS" && ob.testCategory == "Sectional" && ob.categoryType == "Environment")).sort(function (a,b) {
+                        return a.testName.localeCompare(b.testName, undefined, { numeric: true, sensitivity: 'base' });
+                    }))
+                        setUpscTestList((response.tests.filter(ob => ob.instituteName == "UPSC PYQs" && ob.testCategory == "Sectional" && ob.categoryType == "Environment")).sort(function (a,b) {
+                        return a.testName.localeCompare(b.testName, undefined, { numeric: true, sensitivity: 'base' });
+                    }))
+                        setInsightsTestDaysList((response.tests.filter(ob => ob.instituteName == "Insights IAS 70 Days" && ob.testCategory == "Sectional" && ob.categoryType == "Environment")).sort(function (a,b) {
+                        return a.testName.localeCompare(b.testName, undefined, { numeric: true, sensitivity: 'base' });
+                    }))
+                        setiasBabaTestDaysList((response.tests.filter(ob => ob.instituteName == "IAS Baba 60 Days" && ob.testCategory == "Sectional" && ob.categoryType == "Environment")).sort(function (a,b) {
+                        return a.testName.localeCompare(b.testName, undefined, { numeric: true, sensitivity: 'base' });
+                    }))
+                        setrauIasList((response.tests.filter(ob => ob.instituteName == "Rau IAS" && ob.testCategory == "Sectional" && ob.categoryType == "Environment")).sort(function (a,b) {
+                        return a.testName.localeCompare(b.testName, undefined, { numeric: true, sensitivity: 'base' });
+                    }))
 
                     }
                     else if (state['economy']) {
-                        setVisionTestList(response.tests.filter(ob => ob.instituteName == "Vision IAS" && ob.testCategory == "Sectional" && ob.categoryType == "Economy"))
-                        setVajiramTestList(response.tests.filter(ob => ob.instituteName == "Vajiram and Ravi" && ob.testCategory == "Sectional" && ob.categoryType == "Economy"))
-                        setShankarTestList(response.tests.filter(ob => ob.instituteName == "Shankar IAS Academy" && ob.testCategory == "Sectional" && ob.categoryType == "Economy"))
-                        setForumTestList(response.tests.filter(ob => ob.instituteName == "Forum IAS" && ob.testCategory == "Sectional" && ob.categoryType == "Economy"))
-                        setIasTestList(response.tests.filter(ob => ob.instituteName == "IAS Score" && ob.testCategory == "Sectional" && ob.categoryType == "Economy"))
-                        setInsightsTestList(response.tests.filter(ob => ob.instituteName == "Insights IAS" && ob.testCategory == "Sectional" && ob.categoryType == "Economy"))
-                        setUpscTestList(response.tests.filter(ob => ob.instituteName == "UPSC PYQs" && ob.testCategory == "Sectional" && ob.categoryType == "Economy"))
-                        setInsightsTestDaysList(response.tests.filter(ob => ob.instituteName == "Insights IAS 70 Days" && ob.testCategory == "Sectional" && ob.categoryType == "Economy"))
-                        setiasBabaTestDaysList(response.tests.filter(ob => ob.instituteName == "IAS Baba 60 Days" && ob.testCategory == "Sectional" && ob.categoryType == "Economy"))
-                        setrauIasList(response.tests.filter(ob => ob.instituteName == "Rau IAS" && ob.testCategory == "Sectional" && ob.categoryType == "Economy"))
+                        setVisionTestList((response.tests.filter(ob => ob.instituteName == "Vision IAS" && ob.testCategory == "Sectional" && ob.categoryType == "Economy")).sort(function (a,b) {
+                        return a.testName.localeCompare(b.testName, undefined, { numeric: true, sensitivity: 'base' });
+                    }))
+                        setVajiramTestList((response.tests.filter(ob => ob.instituteName == "Vajiram and Ravi" && ob.testCategory == "Sectional" && ob.categoryType == "Economy")).sort(function (a,b) {
+                        return a.testName.localeCompare(b.testName, undefined, { numeric: true, sensitivity: 'base' });
+                    }))
+                        setShankarTestList((response.tests.filter(ob => ob.instituteName == "Shankar IAS Academy" && ob.testCategory == "Sectional" && ob.categoryType == "Economy")).sort(function (a,b) {
+                        return a.testName.localeCompare(b.testName, undefined, { numeric: true, sensitivity: 'base' });
+                    }))
+                        setForumTestList((response.tests.filter(ob => ob.instituteName == "Forum IAS" && ob.testCategory == "Sectional" && ob.categoryType == "Economy")).sort(function (a,b) {
+                        return a.testName.localeCompare(b.testName, undefined, { numeric: true, sensitivity: 'base' });
+                    }))
+                        setIasTestList((response.tests.filter(ob => ob.instituteName == "IAS Score" && ob.testCategory == "Sectional" && ob.categoryType == "Economy")).sort(function (a,b) {
+                        return a.testName.localeCompare(b.testName, undefined, { numeric: true, sensitivity: 'base' });
+                    }))
+                        setInsightsTestList((response.tests.filter(ob => ob.instituteName == "Insights IAS" && ob.testCategory == "Sectional" && ob.categoryType == "Economy")).sort(function (a,b) {
+                        return a.testName.localeCompare(b.testName, undefined, { numeric: true, sensitivity: 'base' });
+                    }))
+                        setUpscTestList((response.tests.filter(ob => ob.instituteName == "UPSC PYQs" && ob.testCategory == "Sectional" && ob.categoryType == "Economy")).sort(function (a,b) {
+                        return a.testName.localeCompare(b.testName, undefined, { numeric: true, sensitivity: 'base' });
+                    }))
+                        setInsightsTestDaysList((response.tests.filter(ob => ob.instituteName == "Insights IAS 70 Days" && ob.testCategory == "Sectional" && ob.categoryType == "Economy")).sort(function (a,b) {
+                        return a.testName.localeCompare(b.testName, undefined, { numeric: true, sensitivity: 'base' });
+                    }))
+                        setiasBabaTestDaysList((response.tests.filter(ob => ob.instituteName == "IAS Baba 60 Days" && ob.testCategory == "Sectional" && ob.categoryType == "Economy")).sort(function (a,b) {
+                        return a.testName.localeCompare(b.testName, undefined, { numeric: true, sensitivity: 'base' });
+                    }))
+                        setrauIasList((response.tests.filter(ob => ob.instituteName == "Rau IAS" && ob.testCategory == "Sectional" && ob.categoryType == "Economy")).sort(function (a,b) {
+                        return a.testName.localeCompare(b.testName, undefined, { numeric: true, sensitivity: 'base' });
+                    }))
 
                     }
                     else if (state['geography']) {
-                        setVisionTestList(response.tests.filter(ob => ob.instituteName == "Vision IAS" && ob.testCategory == "Sectional" && ob.categoryType == "Geography"))
-                        setVajiramTestList(response.tests.filter(ob => ob.instituteName == "Vajiram and Ravi" && ob.testCategory == "Sectional" && ob.categoryType == "Geography"))
-                        setShankarTestList(response.tests.filter(ob => ob.instituteName == "Shankar IAS Academy" && ob.testCategory == "Sectional" && ob.categoryType == "Geography"))
-                        setForumTestList(response.tests.filter(ob => ob.instituteName == "Forum IAS" && ob.testCategory == "Sectional" && ob.categoryType == "Geography"))
-                        setIasTestList(response.tests.filter(ob => ob.instituteName == "IAS Score" && ob.testCategory == "Sectional" && ob.categoryType == "Geography"))
-                        setInsightsTestList(response.tests.filter(ob => ob.instituteName == "Insights IAS" && ob.testCategory == "Sectional" && ob.categoryType == "Geography"))
-                        setUpscTestList(response.tests.filter(ob => ob.instituteName == "UPSC PYQs" && ob.testCategory == "Sectional" && ob.categoryType == "Geography"))
-                        setInsightsTestDaysList(response.tests.filter(ob => ob.instituteName == "Insights IAS 70 Days" && ob.testCategory == "Sectional" && ob.categoryType == "Geography"))
-                        setiasBabaTestDaysList(response.tests.filter(ob => ob.instituteName == "IAS Baba 60 Days" && ob.testCategory == "Sectional" && ob.categoryType == "Geography"))
-                        setrauIasList(response.tests.filter(ob => ob.instituteName == "Rau IAS" && ob.testCategory == "Sectional" && ob.categoryType == "Geography"))
+                        setVisionTestList((response.tests.filter(ob => ob.instituteName == "Vision IAS" && ob.testCategory == "Sectional" && ob.categoryType == "Geography")).sort(function (a,b) {
+                        return a.testName.localeCompare(b.testName, undefined, { numeric: true, sensitivity: 'base' });
+                    }))
+                        setVajiramTestList((response.tests.filter(ob => ob.instituteName == "Vajiram and Ravi" && ob.testCategory == "Sectional" && ob.categoryType == "Geography")).sort(function (a,b) {
+                        return a.testName.localeCompare(b.testName, undefined, { numeric: true, sensitivity: 'base' });
+                    }))
+                        setShankarTestList((response.tests.filter(ob => ob.instituteName == "Shankar IAS Academy" && ob.testCategory == "Sectional" && ob.categoryType == "Geography")).sort(function (a,b) {
+                        return a.testName.localeCompare(b.testName, undefined, { numeric: true, sensitivity: 'base' });
+                    }))
+                        setForumTestList((response.tests.filter(ob => ob.instituteName == "Forum IAS" && ob.testCategory == "Sectional" && ob.categoryType == "Geography")).sort(function (a,b) {
+                        return a.testName.localeCompare(b.testName, undefined, { numeric: true, sensitivity: 'base' });
+                    }))
+                        setIasTestList((response.tests.filter(ob => ob.instituteName == "IAS Score" && ob.testCategory == "Sectional" && ob.categoryType == "Geography")).sort(function (a,b) {
+                        return a.testName.localeCompare(b.testName, undefined, { numeric: true, sensitivity: 'base' });
+                    }))
+                        setInsightsTestList((response.tests.filter(ob => ob.instituteName == "Insights IAS" && ob.testCategory == "Sectional" && ob.categoryType == "Geography")).sort(function (a,b) {
+                        return a.testName.localeCompare(b.testName, undefined, { numeric: true, sensitivity: 'base' });
+                    }))
+                        setUpscTestList((response.tests.filter(ob => ob.instituteName == "UPSC PYQs" && ob.testCategory == "Sectional" && ob.categoryType == "Geography")).sort(function (a,b) {
+                        return a.testName.localeCompare(b.testName, undefined, { numeric: true, sensitivity: 'base' });
+                    }))
+                        setInsightsTestDaysList((response.tests.filter(ob => ob.instituteName == "Insights IAS 70 Days" && ob.testCategory == "Sectional" && ob.categoryType == "Geography")).sort(function (a,b) {
+                        return a.testName.localeCompare(b.testName, undefined, { numeric: true, sensitivity: 'base' });
+                    }))
+                        setiasBabaTestDaysList((response.tests.filter(ob => ob.instituteName == "IAS Baba 60 Days" && ob.testCategory == "Sectional" && ob.categoryType == "Geography")).sort(function (a,b) {
+                        return a.testName.localeCompare(b.testName, undefined, { numeric: true, sensitivity: 'base' });
+                    }))
+                        setrauIasList((response.tests.filter(ob => ob.instituteName == "Rau IAS" && ob.testCategory == "Sectional" && ob.categoryType == "Geography")).sort(function (a,b) {
+                        return a.testName.localeCompare(b.testName, undefined, { numeric: true, sensitivity: 'base' });
+                    }))
                     }
                     else if (state['currentAffairs']) {
-                        setVisionTestList(response.tests.filter(ob => ob.instituteName == "Vision IAS" && ob.testCategory == "Sectional" && ob.categoryType == "Current Affairs"))
-                        setVajiramTestList(response.tests.filter(ob => ob.instituteName == "Vajiram and Ravi" && ob.testCategory == "Sectional" && ob.categoryType == "Current Affairs"))
-                        setShankarTestList(response.tests.filter(ob => ob.instituteName == "Shankar IAS Academy" && ob.testCategory == "Sectional" && ob.categoryType == "Current Affairs"))
-                        setForumTestList(response.tests.filter(ob => ob.instituteName == "Forum IAS" && ob.testCategory == "Sectional" && ob.categoryType == "Current Affairs"))
-                        setIasTestList(response.tests.filter(ob => ob.instituteName == "IAS Score" && ob.testCategory == "Sectional" && ob.categoryType == "Current Affairs"))
-                        setInsightsTestList(response.tests.filter(ob => ob.instituteName == "Insights IAS" && ob.testCategory == "Sectional" && ob.categoryType == "Current Affairs"))
-                        setUpscTestList(response.tests.filter(ob => ob.instituteName == "UPSC PYQs" && ob.testCategory == "Sectional" && ob.categoryType == "Current Affairs"))
-                        setInsightsTestDaysList(response.tests.filter(ob => ob.instituteName == "Insights IAS 70 Days" && ob.testCategory == "Sectional" && ob.categoryType == "Current Affairs"))
-                        setiasBabaTestDaysList(response.tests.filter(ob => ob.instituteName == "IAS Baba 60 Days" && ob.testCategory == "Sectional" && ob.categoryType == "Current Affairs"))
-                        setrauIasList(response.tests.filter(ob => ob.instituteName == "Rau IAS" && ob.testCategory == "Sectional" && ob.categoryType == "Current Affairs"))
+                        setVisionTestList((response.tests.filter(ob => ob.instituteName == "Vision IAS" && ob.testCategory == "Sectional" && ob.categoryType == "Current Affairs")).sort(function (a,b) {
+                            return a.testName.localeCompare(b.testName, undefined, { numeric: true, sensitivity: 'base' });
+                        }))
+                        setVajiramTestList((response.tests.filter(ob => ob.instituteName == "Vajiram and Ravi" && ob.testCategory == "Sectional" && ob.categoryType == "Current Affairs")).sort(function (a,b) {
+                            return a.testName.localeCompare(b.testName, undefined, { numeric: true, sensitivity: 'base' });
+                        }))
+                        setShankarTestList((response.tests.filter(ob => ob.instituteName == "Shankar IAS Academy" && ob.testCategory == "Sectional" && ob.categoryType == "Current Affairs")).sort(function (a,b) {
+                            return a.testName.localeCompare(b.testName, undefined, { numeric: true, sensitivity: 'base' });
+                        }))
+                        setForumTestList((response.tests.filter(ob => ob.instituteName == "Forum IAS" && ob.testCategory == "Sectional" && ob.categoryType == "Current Affairs")).sort(function (a,b) {
+                            return a.testName.localeCompare(b.testName, undefined, { numeric: true, sensitivity: 'base' });
+                        }))
+                        setIasTestList((response.tests.filter(ob => ob.instituteName == "IAS Score" && ob.testCategory == "Sectional" && ob.categoryType == "Current Affairs")).sort(function (a,b) {
+                        return a.testName.localeCompare(b.testName, undefined, { numeric: true, sensitivity: 'base' });
+                    }))
+                        setInsightsTestList((response.tests.filter(ob => ob.instituteName == "Insights IAS" && ob.testCategory == "Sectional" && ob.categoryType == "Current Affairs")).sort(function (a,b) {
+                        return a.testName.localeCompare(b.testName, undefined, { numeric: true, sensitivity: 'base' });
+                    }))
+                        setUpscTestList((response.tests.filter(ob => ob.instituteName == "UPSC PYQs" && ob.testCategory == "Sectional" && ob.categoryType == "Current Affairs")).sort(function (a,b) {
+                        return a.testName.localeCompare(b.testName, undefined, { numeric: true, sensitivity: 'base' });
+                    }))
+                        setInsightsTestDaysList((response.tests.filter(ob => ob.instituteName == "Insights IAS 70 Days" && ob.testCategory == "Sectional" && ob.categoryType == "Current Affairs")).sort(function (a,b) {
+                        return a.testName.localeCompare(b.testName, undefined, { numeric: true, sensitivity: 'base' });
+                    }))
+                        setiasBabaTestDaysList((response.tests.filter(ob => ob.instituteName == "IAS Baba 60 Days" && ob.testCategory == "Sectional" && ob.categoryType == "Current Affairs")).sort(function (a,b) {
+                        return a.testName.localeCompare(b.testName, undefined, { numeric: true, sensitivity: 'base' });
+                    }))
+                        setrauIasList((response.tests.filter(ob => ob.instituteName == "Rau IAS" && ob.testCategory == "Sectional" && ob.categoryType == "Current Affairs")).sort(function (a,b) {
+                        return a.testName.localeCompare(b.testName, undefined, { numeric: true, sensitivity: 'base' });
+                    }))
                     }
                     else if (state['artAndCulture']) {
-                        setVisionTestList(response.tests.filter(ob => ob.instituteName == "Vision IAS" && ob.testCategory == "Sectional" && ob.categoryType == "Current Affairs"))
-                        setVajiramTestList(response.tests.filter(ob => ob.instituteName == "Vajiram and Ravi" && ob.testCategory == "Sectional" && ob.categoryType == "Current Affairs"))
-                        setShankarTestList(response.tests.filter(ob => ob.instituteName == "Shankar IAS Academy" && ob.testCategory == "Sectional" && ob.categoryType == "Current Affairs"))
-                        setForumTestList(response.tests.filter(ob => ob.instituteName == "Forum IAS" && ob.testCategory == "Sectional" && ob.categoryType == "Current Affairs"))
-                        setIasTestList(response.tests.filter(ob => ob.instituteName == "IAS Score" && ob.testCategory == "Sectional" && ob.categoryType == "Current Affairs"))
-                        setInsightsTestList(response.tests.filter(ob => ob.instituteName == "Insights IAS" && ob.testCategory == "Sectional" && ob.categoryType == "Current Affairs"))
-                        setUpscTestList(response.tests.filter(ob => ob.instituteName == "UPSC PYQs" && ob.testCategory == "Sectional" && ob.categoryType == "Current Affairs"))
-                        setInsightsTestDaysList(response.tests.filter(ob => ob.instituteName == "Insights IAS 70 Days" && ob.testCategory == "Sectional" && ob.categoryType == "Art and Culture"))
-                        setiasBabaTestDaysList(response.tests.filter(ob => ob.instituteName == "IAS Baba 60 Days" && ob.testCategory == "Sectional" && ob.categoryType == "Art and Culture"))
-                        setrauIasList(response.tests.filter(ob => ob.instituteName == "Rau IAS" && ob.testCategory == "Sectional" && ob.categoryType == "Art and Culture"))
+                        setVisionTestList((response.tests.filter(ob => ob.instituteName == "Vision IAS" && ob.testCategory == "Sectional" && ob.categoryType == "Current Affairs")).sort(function (a,b) {
+                            return a.testName.localeCompare(b.testName, undefined, { numeric: true, sensitivity: 'base' });
+                        }))
+                        setVajiramTestList((response.tests.filter(ob => ob.instituteName == "Vajiram and Ravi" && ob.testCategory == "Sectional" && ob.categoryType == "Current Affairs")).sort(function (a,b) {
+                            return a.testName.localeCompare(b.testName, undefined, { numeric: true, sensitivity: 'base' });
+                        }))
+                        setShankarTestList((response.tests.filter(ob => ob.instituteName == "Shankar IAS Academy" && ob.testCategory == "Sectional" && ob.categoryType == "Current Affairs")).sort(function (a,b) {
+                            return a.testName.localeCompare(b.testName, undefined, { numeric: true, sensitivity: 'base' });
+                        }))
+                        setForumTestList((response.tests.filter(ob => ob.instituteName == "Forum IAS" && ob.testCategory == "Sectional" && ob.categoryType == "Current Affairs")).sort(function (a,b) {
+                            return a.testName.localeCompare(b.testName, undefined, { numeric: true, sensitivity: 'base' });
+                        }))
+                        setIasTestList((response.tests.filter(ob => ob.instituteName == "IAS Score" && ob.testCategory == "Sectional" && ob.categoryType == "Current Affairs")).sort(function (a,b) {
+                            return a.testName.localeCompare(b.testName, undefined, { numeric: true, sensitivity: 'base' });
+                        }))
+                        setInsightsTestList((response.tests.filter(ob => ob.instituteName == "Insights IAS" && ob.testCategory == "Sectional" && ob.categoryType == "Current Affairs")).sort(function (a,b) {
+                            return a.testName.localeCompare(b.testName, undefined, { numeric: true, sensitivity: 'base' });
+                        }))
+                        setUpscTestList((response.tests.filter(ob => ob.instituteName == "UPSC PYQs" && ob.testCategory == "Sectional" && ob.categoryType == "Current Affairs")).sort(function (a,b) {
+                            return a.testName.localeCompare(b.testName, undefined, { numeric: true, sensitivity: 'base' });
+                        }))
+                        setInsightsTestDaysList((response.tests.filter(ob => ob.instituteName == "Insights IAS 70 Days" && ob.testCategory == "Sectional" && ob.categoryType == "Art and Culture")).sort(function (a,b) {
+                            return a.testName.localeCompare(b.testName, undefined, { numeric: true, sensitivity: 'base' });
+                        }))
+                        setiasBabaTestDaysList((response.tests.filter(ob => ob.instituteName == "IAS Baba 60 Days" && ob.testCategory == "Sectional" && ob.categoryType == "Art and Culture")).sort(function (a,b) {
+                            return a.testName.localeCompare(b.testName, undefined, { numeric: true, sensitivity: 'base' });
+                        }))
+                        setrauIasList((response.tests.filter(ob => ob.instituteName == "Rau IAS" && ob.testCategory == "Sectional" && ob.categoryType == "Art and Culture")).sort(function (a,b) {
+                            return a.testName.localeCompare(b.testName, undefined, { numeric: true, sensitivity: 'base' });
+                        }))
                     }
                     else if (state['scienceAndTechnology']) {
-                        setVisionTestList(response.tests.filter(ob => ob.instituteName == "Vision IAS" && ob.testCategory == "Sectional" && ob.categoryType == "Current Affairs"))
-                        setVajiramTestList(response.tests.filter(ob => ob.instituteName == "Vajiram and Ravi" && ob.testCategory == "Sectional" && ob.categoryType == "Current Affairs"))
-                        setShankarTestList(response.tests.filter(ob => ob.instituteName == "Shankar IAS Academy" && ob.testCategory == "Sectional" && ob.categoryType == "Current Affairs"))
-                        setForumTestList(response.tests.filter(ob => ob.instituteName == "Forum IAS" && ob.testCategory == "Sectional" && ob.categoryType == "Current Affairs"))
-                        setIasTestList(response.tests.filter(ob => ob.instituteName == "IAS Score" && ob.testCategory == "Sectional" && ob.categoryType == "Current Affairs"))
-                        setInsightsTestList(response.tests.filter(ob => ob.instituteName == "Insights IAS" && ob.testCategory == "Sectional" && ob.categoryType == "Current Affairs"))
-                        setUpscTestList(response.tests.filter(ob => ob.instituteName == "UPSC PYQs" && ob.testCategory == "Sectional" && ob.categoryType == "Current Affairs"))
-                        setInsightsTestDaysList(response.tests.filter(ob => ob.instituteName == "Insights IAS 70 Days" && ob.testCategory == "Sectional" && ob.categoryType == "Science and Technology"))
-                        setiasBabaTestDaysList(response.tests.filter(ob => ob.instituteName == "IAS Baba 60 Days" && ob.testCategory == "Sectional" && ob.categoryType == "Science and Technology"))
-                        setrauIasList(response.tests.filter(ob => ob.instituteName == "Rau IAS" && ob.testCategory == "Sectional" && ob.categoryType == "Science and Technology"))
+                        setVisionTestList((response.tests.filter(ob => ob.instituteName == "Vision IAS" && ob.testCategory == "Sectional" && ob.categoryType == "Current Affairs")).sort(function (a,b) {
+                            return a.testName.localeCompare(b.testName, undefined, { numeric: true, sensitivity: 'base' });
+                        }))
+                        setVajiramTestList((response.tests.filter(ob => ob.instituteName == "Vajiram and Ravi" && ob.testCategory == "Sectional" && ob.categoryType == "Current Affairs")).sort(function (a,b) {
+                            return a.testName.localeCompare(b.testName, undefined, { numeric: true, sensitivity: 'base' });
+                        }))
+                        setShankarTestList((response.tests.filter(ob => ob.instituteName == "Shankar IAS Academy" && ob.testCategory == "Sectional" && ob.categoryType == "Current Affairs")).sort(function (a,b) {
+                            return a.testName.localeCompare(b.testName, undefined, { numeric: true, sensitivity: 'base' });
+                        }))
+                        setForumTestList((response.tests.filter(ob => ob.instituteName == "Forum IAS" && ob.testCategory == "Sectional" && ob.categoryType == "Current Affairs")).sort(function (a,b) {
+                            return a.testName.localeCompare(b.testName, undefined, { numeric: true, sensitivity: 'base' });
+                        }))
+                        setIasTestList((response.tests.filter(ob => ob.instituteName == "IAS Score" && ob.testCategory == "Sectional" && ob.categoryType == "Current Affairs")).sort(function (a,b) {
+                            return a.testName.localeCompare(b.testName, undefined, { numeric: true, sensitivity: 'base' });
+                        }))
+                        setInsightsTestList((response.tests.filter(ob => ob.instituteName == "Insights IAS" && ob.testCategory == "Sectional" && ob.categoryType == "Current Affairs")).sort(function (a,b) {
+                            return a.testName.localeCompare(b.testName, undefined, { numeric: true, sensitivity: 'base' });
+                        }))
+                        setUpscTestList((response.tests.filter(ob => ob.instituteName == "UPSC PYQs" && ob.testCategory == "Sectional" && ob.categoryType == "Current Affairs")).sort(function (a,b) {
+                            return a.testName.localeCompare(b.testName, undefined, { numeric: true, sensitivity: 'base' });
+                        }))
+                        setInsightsTestDaysList((response.tests.filter(ob => ob.instituteName == "Insights IAS 70 Days" && ob.testCategory == "Sectional" && ob.categoryType == "Science and Technology")).sort(function (a,b) {
+                            return a.testName.localeCompare(b.testName, undefined, { numeric: true, sensitivity: 'base' });
+                        }))
+                        setiasBabaTestDaysList((response.tests.filter(ob => ob.instituteName == "IAS Baba 60 Days" && ob.testCategory == "Sectional" && ob.categoryType == "Science and Technology")).sort(function (a,b) {
+                            return a.testName.localeCompare(b.testName, undefined, { numeric: true, sensitivity: 'base' });
+                        }))
+                        setrauIasList((response.tests.filter(ob => ob.instituteName == "Rau IAS" && ob.testCategory == "Sectional" && ob.categoryType == "Science and Technology")).sort(function (a,b) {
+                            return a.testName.localeCompare(b.testName, undefined, { numeric: true, sensitivity: 'base' });
+                        }))
                     }
                     
         setSpinner(false)

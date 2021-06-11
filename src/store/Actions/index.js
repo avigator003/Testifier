@@ -478,3 +478,91 @@ export const getAllTestsGiven = (cb) => {
       });
   };
 };
+
+
+/************************   Test Approval Block    ********************************/
+
+//Save Test
+export const saveTestApproval = (payload,cb) => {
+ 
+  return (dispatch) => {
+    api
+      .post("/testapproval/saveapproval",payload)
+      .then((res) => {
+            return cb(null,{
+              testApproval: res.data,
+            });
+        })
+
+             .catch((err) => {
+        console.log(err);
+        cb({
+          message:"Submit Test Failed",
+        });
+      });
+  };
+};
+
+
+
+//Approvals List
+export const getTestApprovals = (cb) => {
+  return (dispatch) => {
+    api
+      .get("/testapproval/showall")
+      .then((res) => {
+        console.log("fethcin",res)
+            return cb(null,{
+              approvals: res.data.data,
+            });
+        })
+
+             .catch((err) => {
+      
+        cb({
+          message:"Fetching Failed",
+        });
+      });
+  };
+};
+
+
+
+// Approve Test by Id
+export const getApproveTestById = (payload,cb) => {
+  return (dispatch) => {
+    api
+      .get(`/testapproval/view/${payload}`)
+      .then((res) => {
+        return cb(null,{res
+        });
+
+      })
+      .catch((err) => {
+        console.log(err); //Dispatch Toaster Notificaton
+      });
+  };
+};
+
+
+
+// Delete Approve Test
+export const deleteApproveTest = (payload,cb) => {
+  var {id} = payload;
+  return (dispatch) => {
+    api
+      .get(`/testapproval/deleteapproval/${id}`)
+      .then((res) => {
+        cb(null, {
+          message: "Test Approval Deleted",
+        });
+      })
+      .catch((err) => {
+        console.log(err); //Dispatch Toaster Notificaton
+        cb({
+          message: "Try Again Later",
+        });
+      });
+  };
+};
+

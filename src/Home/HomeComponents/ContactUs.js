@@ -18,37 +18,14 @@ function ContactUs() {
         </Grid>
 
      <Grid item xs={12} md={6} lg={6} sm={6} className={classes.formContainer}>
-        <h1 style={{color:"white",marginLeft:20}}>CONTACT US<EmailIcon className={classes.emailIcon}/></h1> 
-         <TextField
-          id="outlined-name-input"
-          label="Name"
-          variant="outlined"
-          className={classes.root}
-          InputLabelProps={{style:{color:"#fff"}}}
-        /> 
-        <TextField
-          id="outlined-email-input"
-          label="Email"
-          variant="outlined"
-          className={classes.root}
-          InputLabelProps={{
-            style:{color:"#fff"}
-          }}
-        /> 
-        
-        <TextField
-          id="outlined-message-input"
-          label="Message"
-          variant="outlined"
-          multiline
-          rowsMax={5}
-          className={classes.root}
-          InputLabelProps={{
-                style:{color:"#fff"}
-          }}
-        /> 
-        <Button variant="contained" className={classes.button} >SUBMIT</Button>
+        <h3 style={{color:"white",marginLeft:20,marginBottom:30}}>You can also contact us on telegram and whatsapp. 
+                                                 
+</h3> 
+<h5 style={{color:"white",marginLeft:20,marginBottom:30}}>Telegram: <a href="https://t.me/rapidias_admin"> https://t.me/rapidias_admin</a>  </h5> 
 
+<h5 style={{color:"white",marginLeft:20,marginBottom:30}}>Whatsapp:<a href=" https://wa.me/message/ARXIUOKPIV6YD1">   https://wa.me/message/ARXIUOKPIV6YD1 </a> </h5> 
+<h5 style={{color:"white",marginLeft:20,marginBottom:30}}>  Email Address <a href="mailto:rapidiasacademy@gmail.com">  rapidiasacademy@gmail.com</a></h5> 
+<h5 style={{color:"white",marginLeft:20}}>Phone Number - 9284320090</h5> 
         </Grid>
         </Grid>
         </>

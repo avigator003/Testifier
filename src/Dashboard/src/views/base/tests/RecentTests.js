@@ -50,7 +50,8 @@ const RecentTests = () => {
 useEffect(()=>{
   dispatch(
     getAllTestsGiven((err, response) => {
-      setTestsData(response?.testsGiven)
+      console.log("hey",(response?.testsGiven))
+      setTestsData(response?.testsGiven)?.reverse();
     }))
 
 },[])
@@ -89,7 +90,7 @@ const handleViewAnalysis=(id)=>{
               (item)=>(
                 <td>
                   {
-                    item.testId.testName
+                    item?.testId?.testName
           }
                 </td>
               ),
@@ -97,7 +98,7 @@ const handleViewAnalysis=(id)=>{
               (item)=>(
                 <td>
                   {
-                    item.testId.instituteName
+                    item?.testId?.instituteName
           }
                 </td>
               ),
@@ -105,7 +106,7 @@ const handleViewAnalysis=(id)=>{
               (item)=>(
                 <td>
                   {
-                    item.overall.totalMarks
+                    item?.overall?.totalMarks
           }
                 </td>
               ),
@@ -115,7 +116,7 @@ const handleViewAnalysis=(id)=>{
                 (item)=>(
                   <td>
                     {
-                   item.userId?.userName
+                   item?.userId?.userName
                    }
                   </td>
                 ),

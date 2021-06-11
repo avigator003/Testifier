@@ -172,6 +172,13 @@ export default function Header() {
     dispatch(logoutUser())
     history.push('/')
   }
+
+  const handleAddTest = () => {
+    setAnchorEl(null);
+    handleMobileMenuClose();
+    history.push('/test/user/approval')
+  }
+
   const menuId = 'primary-search-account-menu';
   const renderMenu = (
     <Menu
@@ -183,6 +190,10 @@ export default function Header() {
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
+        <MenuItem onClick={() => handleAddTest()}>
+        <ExitToApp style={{ marginRight: 10 }} />  Add Test
+        </MenuItem>
+
       <MenuItem onClick={() => history.push('/userprofile')}>
         <AssignmentInd style={{ marginRight: 10 }} />Profile</MenuItem>
       <MenuItem onClick={() => handleLogout()}>
@@ -204,10 +215,7 @@ export default function Header() {
       style={{ width: 400 ,display:"flex",flexDirection:"column",backgroundColor:"transparent" }}
     >
 
-             <MenuItem className={classes.submitButton}>
-               <Link to="/home" style={{textDecoration:"none"}}>
-                  <p  style={{width:60}}>Home</p></Link>
-            </MenuItem>
+       
         
             <MenuItem className={classes.submitButton}>
                   <Link to="/givetest" style={{textDecoration:"none"}}>
@@ -241,6 +249,12 @@ export default function Header() {
                   <Link to="/privacy" style={{textDecoration:"none"}}>
                   <p  style={{width:100}}>Privacy Policy</p></Link>
                 </MenuItem>
+
+                <MenuItem className={classes.submitButton}>
+                  <Link to="/termsandconditions" style={{textDecoration:"none"}}>
+                  <p  style={{width:150}}>Terms And Conditions</p></Link>
+                </MenuItem>
+
 
 
     </Menu>
@@ -296,13 +310,8 @@ export default function Header() {
               <div style={{display:"flex",flexDirection:"row",justifyContent:"space-between"}}>
               
               
-              <div style={{display:"flex",flexDirection:"row",position:"relative",left:-180}} >
-              
-                <div className={classes.submitButton}>
-                  <Link to="/home" style={{textDecoration:"none"}}>
-                  <p  style={{width:60}}>Home</p></Link>
-                </div>
-
+              <div style={{display:"flex",flexDirection:"row",position:"relative",left:-10}} >
+       
                 
                 <div className={classes.submitButton}>
                   <Link to="/givetest" style={{textDecoration:"none"}}>
@@ -336,6 +345,16 @@ export default function Header() {
                   <Link to="/privacy" style={{textDecoration:"none"}}>
                   <p  style={{width:100}}>Privacy Policy</p></Link>
                 </div>
+                      
+                <div className={classes.submitButton}>
+                  <Link to="/termsandconditions" style={{textDecoration:"none"}}>
+                  <p  style={{width:150}}>Terms And Conditions</p></Link>
+                </div>
+                
+                <div className={classes.submitButton}>
+                  <Link to="/policy" style={{textDecoration:"none"}}>
+                  <p  style={{width:180}}>Return Policy and Refunds</p></Link>
+                </div>
 
            </div>
 
@@ -360,12 +379,8 @@ export default function Header() {
                       <div style={{display:"flex",flexDirection:"row",justifyContent:"space-between"}}>
               
               
-              <div style={{display:"flex",flexDirection:"row",position:"relative",left:-290}} >
-              
-                <div className={classes.submitButton}>
-                  <Link to="/home" style={{textDecoration:"none"}}>
-                  <p  style={{width:60}}>Home</p></Link>
-                </div>
+              <div style={{display:"flex",flexDirection:"row",position:"relative",left:-150}} >
+           
 
                 
                 <div className={classes.submitButton}>
@@ -399,6 +414,18 @@ export default function Header() {
                 <div className={classes.submitButton}>
                   <Link to="/privacy" style={{textDecoration:"none"}}>
                   <p  style={{width:100}}>Privacy Policy</p></Link>
+                </div>
+
+                <div className={classes.submitButton}>
+                  <Link to="/termsandconditions" style={{textDecoration:"none"}}>
+                  <p  style={{width:150}}>Terms And Conditions</p></Link>
+                </div>
+
+                
+
+                <div className={classes.submitButton}>
+                  <Link to="/policy" style={{textDecoration:"none"}}>
+                  <p  style={{width:180}}>Return Policy and Refunds</p></Link>
                 </div>
 
 </div>

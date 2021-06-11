@@ -71,7 +71,7 @@ function UserTestAnalysis(props) {
   const[answersCount,setAnswersCount]=useState(0)
   const[percentageArray,setPercentageArray]=useState([])
   const[message,setMessage]=useState()
-
+  const[test,setTest]=useState()
     // Logined User
     const user = useSelector((state) => state.user);
     const queryPage = useLocation().search.match(/page=([0-9]+)/, '')
@@ -104,6 +104,7 @@ function UserTestAnalysis(props) {
         
         var TestName=response.testAnalysis.data.testId.testName
         console.log("re",response.testAnalysis.data)
+        setTest(response.testAnalysis.data)
         setPercentageArray(array.percentageArray)
         setSectionalArray(array.sectionalAnalysis)
         setConfidenceArray(array.confidenceLevelAnalysis)
@@ -154,8 +155,15 @@ function UserTestAnalysis(props) {
             <Backdrop className={classes.backdrop} open={spinner} onClick={() => setSpinner(false)}>
                 <CircularProgress color="inherit" size={100} color="primary" />
             </Backdrop>
-
-
+            <h1 style={{textAlign:"center",margin:40}}>
+            <a href={test?.testId?.questionPaperLink} target="_blank" style={{textDecoration:"none",marginTop:50}}>  
+                      <h5 style={{textDecoration:"none",marginTop:20}}>View Question Paper (Click Here)</h5>
+                      </a>
+            <a href={test?.testId?.answerPaperLink} target="_blank" style={{textDecoration:"none",marginTop:50}}>  
+                      <h5 style={{textDecoration:"none",marginTop:20}}>View Answers (Click Here)</h5>
+                      </a>
+                      
+</h1>
 
   <Grid  container  className={classes.card} justify="center" alignItems="center" >
     
@@ -183,12 +191,7 @@ function UserTestAnalysis(props) {
       <p className={classes.scoreHeading}>Qs Attempted</p>
    
      </Grid>  
-     <Grid item lg={2} className={classes.score} xs={12}>
-     <p className={classes.totalScore}>15 m 22s </p> 
-      <p className={classes.border}></p>
-      <p className={classes.scoreHeading}>Time Spent</p>
-   
-     </Grid>  
+    
      <Grid item lg={2} className={classes.score} xs={12}>
      <p className={classes.totalScore}>{accuracy} %</p> 
       <p className={classes.border}></p>

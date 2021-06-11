@@ -43,6 +43,11 @@ const _nav =  [
         name: 'Recent Tests',
         to: '/test/recent',
       },
+      {
+        _tag: 'CSidebarNavItem',
+        name: 'Test Approvals',
+        to: '/test/approvals',
+      },
       
       
    
