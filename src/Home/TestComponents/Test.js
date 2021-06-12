@@ -236,34 +236,34 @@ export default function Test(props) {
 
             dispatch(
                 getTests((err, response) => {
-                    setVisionTestList((response.tests.filter(ob => ob.instituteName == "Vision IAS")).sort(function (a,b) {
+                    setVisionTestList((response.tests.filter(ob => ob.instituteName == "Vision IAS")).sort(function (a, b) {
                         return a.testName.localeCompare(b.testName, undefined, { numeric: true, sensitivity: 'base' });
                     }))
-                    setVajiramTestList((response.tests.filter(ob => ob.instituteName == "Vajiram and Ravi")).sort(function (a,b) {
+                    setVajiramTestList((response.tests.filter(ob => ob.instituteName == "Vajiram and Ravi")).sort(function (a, b) {
                         return a.testName.localeCompare(b.testName, undefined, { numeric: true, sensitivity: 'base' });
                     }))
-                    setShankarTestList((response.tests.filter(ob => ob.instituteName == "Shankar IAS Academy")).sort(function (a,b) {
+                    setShankarTestList((response.tests.filter(ob => ob.instituteName == "Shankar IAS Academy")).sort(function (a, b) {
                         return a.testName.localeCompare(b.testName, undefined, { numeric: true, sensitivity: 'base' });
                     }))
-                    setForumTestList((response.tests.filter(ob => ob.instituteName == "Forum IAS")).sort(function (a,b) {
+                    setForumTestList((response.tests.filter(ob => ob.instituteName == "Forum IAS")).sort(function (a, b) {
                         return a.testName.localeCompare(b.testName, undefined, { numeric: true, sensitivity: 'base' });
                     }))
-                    setIasTestList((response.tests.filter(ob => ob.instituteName == "IAS Score")).sort(function (a,b) {
+                    setIasTestList((response.tests.filter(ob => ob.instituteName == "IAS Score")).sort(function (a, b) {
                         return a.testName.localeCompare(b.testName, undefined, { numeric: true, sensitivity: 'base' });
                     }))
-                    setInsightsTestList((response.tests.filter(ob => ob.instituteName == "Insights IAS")).sort(function (a,b) {
+                    setInsightsTestList((response.tests.filter(ob => ob.instituteName == "Insights IAS")).sort(function (a, b) {
                         return a.testName.localeCompare(b.testName, undefined, { numeric: true, sensitivity: 'base' });
                     }))
-                    setUpscTestList((response.tests.filter(ob => ob.instituteName == "UPSC PYQs")).sort(function (a,b) {
+                    setUpscTestList((response.tests.filter(ob => ob.instituteName == "UPSC PYQs")).sort(function (a, b) {
                         return a.testName.localeCompare(b.testName, undefined, { numeric: true, sensitivity: 'base' });
                     }))
-                    setInsightsTestDaysList((response.tests.filter(ob => ob.instituteName == "Insights IAS 70 Days")).sort(function (a,b) {
+                    setInsightsTestDaysList((response.tests.filter(ob => ob.instituteName == "Insights IAS 70 Days")).sort(function (a, b) {
                         return a.testName.localeCompare(b.testName, undefined, { numeric: true, sensitivity: 'base' });
                     }))
-                    setiasBabaTestDaysList((response.tests.filter(ob => ob.instituteName == "IAS Baba 60 Days")).sort(function (a,b) {
+                    setiasBabaTestDaysList((response.tests.filter(ob => ob.instituteName == "IAS Baba 60 Days")).sort(function (a, b) {
                         return a.testName.localeCompare(b.testName, undefined, { numeric: true, sensitivity: 'base' });
                     }))
-                    setrauIasList((response.tests.filter(ob => ob.instituteName == "Rau IAS")).sort(function (a,b) {
+                    setrauIasList((response.tests.filter(ob => ob.instituteName == "Rau IAS")).sort(function (a, b) {
                         return a.testName.localeCompare(b.testName, undefined, { numeric: true, sensitivity: 'base' });
                     }))
 
@@ -285,322 +285,322 @@ export default function Test(props) {
 
             dispatch(
                 getTests((err, response) => {
-                    setVisionTestList((response.tests.filter(ob => ob.instituteName == "Vision IAS" && ob.testCategory == "Full Length")).sort(function (a,b) {
+                    setVisionTestList((response.tests.filter(ob => ob.instituteName == "Vision IAS" && ob.testCategory == "Full Length")).sort(function (a, b) {
                         return a.testName.localeCompare(b.testName, undefined, { numeric: true, sensitivity: 'base' });
                     }))
-                    setVajiramTestList((response.tests.filter(ob => ob.instituteName == "Vajiram and Ravi" && ob.testCategory == "Full Length")).sort(function (a,b) {
+                    setVajiramTestList((response.tests.filter(ob => ob.instituteName == "Vajiram and Ravi" && ob.testCategory == "Full Length")).sort(function (a, b) {
                         return a.testName.localeCompare(b.testName, undefined, { numeric: true, sensitivity: 'base' });
                     }))
-                    setShankarTestList((response.tests.filter(ob => ob.instituteName == "Shankar IAS Academy" && ob.testCategory == "Full Length")).sort(function (a,b) {
+                    setShankarTestList((response.tests.filter(ob => ob.instituteName == "Shankar IAS Academy" && ob.testCategory == "Full Length")).sort(function (a, b) {
                         return a.testName.localeCompare(b.testName, undefined, { numeric: true, sensitivity: 'base' });
                     }))
-                    setForumTestList((response.tests.filter(ob => ob.instituteName == "Forum IAS" && ob.testCategory == "Full Length")).sort(function (a,b) {
+                    setForumTestList((response.tests.filter(ob => ob.instituteName == "Forum IAS" && ob.testCategory == "Full Length")).sort(function (a, b) {
                         return a.testName.localeCompare(b.testName, undefined, { numeric: true, sensitivity: 'base' });
                     }))
-                    setIasTestList((response.tests.filter(ob => ob.instituteName == "IAS Score" && ob.testCategory == "Full Length")).sort(function (a,b) {
+                    setIasTestList((response.tests.filter(ob => ob.instituteName == "IAS Score" && ob.testCategory == "Full Length")).sort(function (a, b) {
                         return a.testName.localeCompare(b.testName, undefined, { numeric: true, sensitivity: 'base' });
                     }))
-                    setInsightsTestList((response.tests.filter(ob => ob.instituteName == "Insights IAS" && ob.testCategory == "Full Length")).sort(function (a,b) {
+                    setInsightsTestList((response.tests.filter(ob => ob.instituteName == "Insights IAS" && ob.testCategory == "Full Length")).sort(function (a, b) {
                         return a.testName.localeCompare(b.testName, undefined, { numeric: true, sensitivity: 'base' });
                     }))
-                    setUpscTestList((response.tests.filter(ob => ob.instituteName == "UPSC PYQs" && ob.testCategory == "Full Length")).sort(function (a,b) {
+                    setUpscTestList((response.tests.filter(ob => ob.instituteName == "UPSC PYQs" && ob.testCategory == "Full Length")).sort(function (a, b) {
                         return a.testName.localeCompare(b.testName, undefined, { numeric: true, sensitivity: 'base' });
                     }))
-                    setInsightsTestDaysList((response.tests.filter(ob => ob.instituteName == "Insights IAS 70 Days" && ob.testCategory == "Full Length")).sort(function (a,b) {
+                    setInsightsTestDaysList((response.tests.filter(ob => ob.instituteName == "Insights IAS 70 Days" && ob.testCategory == "Full Length")).sort(function (a, b) {
                         return a.testName.localeCompare(b.testName, undefined, { numeric: true, sensitivity: 'base' });
                     }))
-                    setiasBabaTestDaysList((response.tests.filter(ob => ob.instituteName == "IAS Baba 60 Days" && ob.testCategory == "Full Length")).sort(function (a,b) {
+                    setiasBabaTestDaysList((response.tests.filter(ob => ob.instituteName == "IAS Baba 60 Days" && ob.testCategory == "Full Length")).sort(function (a, b) {
                         return a.testName.localeCompare(b.testName, undefined, { numeric: true, sensitivity: 'base' });
                     }))
-                    setrauIasList((response.tests.filter(ob => ob.instituteName == "Rau IAS" && ob.testCategory == "Full Length")).sort(function (a,b) {
+                    setrauIasList((response.tests.filter(ob => ob.instituteName == "Rau IAS" && ob.testCategory == "Full Length")).sort(function (a, b) {
                         return a.testName.localeCompare(b.testName, undefined, { numeric: true, sensitivity: 'base' });
                     }))
 
                 }))
 
-                setSpinner(false)
+            setSpinner(false)
         }
         else if (testCategory == "Sectional") {
 
             dispatch(
                 getTests((err, response) => {
                     if (state['polity']) {
-                        setVisionTestList((response.tests.filter(ob => ob.instituteName == "Vision IAS" && ob.testCategory == "Sectional" && ob.categoryType == "Polity")).sort(function (a,b) {
-                        return a.testName.localeCompare(b.testName, undefined, { numeric: true, sensitivity: 'base' });
-                    }))
-                        setVajiramTestList((response.tests.filter(ob => ob.instituteName == "Vajiram and Ravi" && ob.testCategory == "Sectional" && ob.categoryType == "Polity")).sort(function (a,b) {
-                        return a.testName.localeCompare(b.testName, undefined, { numeric: true, sensitivity: 'base' });
-                    }))
-                        setShankarTestList((response.tests.filter(ob => ob.instituteName == "Shankar IAS Academy" && ob.testCategory == "Sectional" && ob.categoryType == "Polity")).sort(function (a,b) {
-                        return a.testName.localeCompare(b.testName, undefined, { numeric: true, sensitivity: 'base' });
-                    }))
-                        setForumTestList((response.tests.filter(ob => ob.instituteName == "Forum IAS" && ob.testCategory == "Sectional" && ob.categoryType == "Polity")).sort(function (a,b) {
-                        return a.testName.localeCompare(b.testName, undefined, { numeric: true, sensitivity: 'base' });
-                    }))
-                        setIasTestList((response.tests.filter(ob => ob.instituteName == "IAS Score" && ob.testCategory == "Sectional" && ob.categoryType == "Polity")).sort(function (a,b) {
-                        return a.testName.localeCompare(b.testName, undefined, { numeric: true, sensitivity: 'base' });
-                    }))
-                        setInsightsTestList((response.tests.filter(ob => ob.instituteName == "Insights IAS" && ob.testCategory == "Sectional" && ob.categoryType == "Polity")).sort(function (a,b) {
-                        return a.testName.localeCompare(b.testName, undefined, { numeric: true, sensitivity: 'base' });
-                    }))
-                        setUpscTestList((response.tests.filter(ob => ob.instituteName == "UPSC PYQs" && ob.testCategory == "Sectional" && ob.categoryType == "Polity")).sort(function (a,b) {
-                        return a.testName.localeCompare(b.testName, undefined, { numeric: true, sensitivity: 'base' });
-                    }))
-                        setInsightsTestDaysList((response.tests.filter(ob => ob.instituteName == "Insights IAS 70 Days" && ob.testCategory == "Sectional" && ob.categoryType == "Polity")).sort(function (a,b) {
-                        return a.testName.localeCompare(b.testName, undefined, { numeric: true, sensitivity: 'base' });
-                    }))
-                        setiasBabaTestDaysList((response.tests.filter(ob => ob.instituteName == "IAS Baba 60 Days" && ob.testCategory == "Sectional" && ob.categoryType == "Polity")).sort(function (a,b) {
-                        return a.testName.localeCompare(b.testName, undefined, { numeric: true, sensitivity: 'base' });
-                    }))
-                        setrauIasList((response.tests.filter(ob => ob.instituteName == "Rau IAS" && ob.testCategory == "Sectional" && ob.categoryType == "Polity")).sort(function (a,b) {
-                        return a.testName.localeCompare(b.testName, undefined, { numeric: true, sensitivity: 'base' });
-                    }))
+                        setVisionTestList((response.tests.filter(ob => ob.instituteName == "Vision IAS" && ob.testCategory == "Sectional" && ob.categoryType == "Polity")).sort(function (a, b) {
+                            return a.testName.localeCompare(b.testName, undefined, { numeric: true, sensitivity: 'base' });
+                        }))
+                        setVajiramTestList((response.tests.filter(ob => ob.instituteName == "Vajiram and Ravi" && ob.testCategory == "Sectional" && ob.categoryType == "Polity")).sort(function (a, b) {
+                            return a.testName.localeCompare(b.testName, undefined, { numeric: true, sensitivity: 'base' });
+                        }))
+                        setShankarTestList((response.tests.filter(ob => ob.instituteName == "Shankar IAS Academy" && ob.testCategory == "Sectional" && ob.categoryType == "Polity")).sort(function (a, b) {
+                            return a.testName.localeCompare(b.testName, undefined, { numeric: true, sensitivity: 'base' });
+                        }))
+                        setForumTestList((response.tests.filter(ob => ob.instituteName == "Forum IAS" && ob.testCategory == "Sectional" && ob.categoryType == "Polity")).sort(function (a, b) {
+                            return a.testName.localeCompare(b.testName, undefined, { numeric: true, sensitivity: 'base' });
+                        }))
+                        setIasTestList((response.tests.filter(ob => ob.instituteName == "IAS Score" && ob.testCategory == "Sectional" && ob.categoryType == "Polity")).sort(function (a, b) {
+                            return a.testName.localeCompare(b.testName, undefined, { numeric: true, sensitivity: 'base' });
+                        }))
+                        setInsightsTestList((response.tests.filter(ob => ob.instituteName == "Insights IAS" && ob.testCategory == "Sectional" && ob.categoryType == "Polity")).sort(function (a, b) {
+                            return a.testName.localeCompare(b.testName, undefined, { numeric: true, sensitivity: 'base' });
+                        }))
+                        setUpscTestList((response.tests.filter(ob => ob.instituteName == "UPSC PYQs" && ob.testCategory == "Sectional" && ob.categoryType == "Polity")).sort(function (a, b) {
+                            return a.testName.localeCompare(b.testName, undefined, { numeric: true, sensitivity: 'base' });
+                        }))
+                        setInsightsTestDaysList((response.tests.filter(ob => ob.instituteName == "Insights IAS 70 Days" && ob.testCategory == "Sectional" && ob.categoryType == "Polity")).sort(function (a, b) {
+                            return a.testName.localeCompare(b.testName, undefined, { numeric: true, sensitivity: 'base' });
+                        }))
+                        setiasBabaTestDaysList((response.tests.filter(ob => ob.instituteName == "IAS Baba 60 Days" && ob.testCategory == "Sectional" && ob.categoryType == "Polity")).sort(function (a, b) {
+                            return a.testName.localeCompare(b.testName, undefined, { numeric: true, sensitivity: 'base' });
+                        }))
+                        setrauIasList((response.tests.filter(ob => ob.instituteName == "Rau IAS" && ob.testCategory == "Sectional" && ob.categoryType == "Polity")).sort(function (a, b) {
+                            return a.testName.localeCompare(b.testName, undefined, { numeric: true, sensitivity: 'base' });
+                        }))
 
                     }
                     else if (state['history']) {
-                        setVisionTestList((response.tests.filter(ob => ob.instituteName == "Vision IAS" && ob.testCategory == "Sectional" && ob.categoryType == "History")).sort(function (a,b) {
-                        return a.testName.localeCompare(b.testName, undefined, { numeric: true, sensitivity: 'base' });
-                    }))
-                        setVajiramTestList((response.tests.filter(ob => ob.instituteName == "Vajiram and Ravi" && ob.testCategory == "Sectional" && ob.categoryType == "History")).sort(function (a,b) {
-                        return a.testName.localeCompare(b.testName, undefined, { numeric: true, sensitivity: 'base' });
-                    }))
-                        setShankarTestList((response.tests.filter(ob => ob.instituteName == "Shankar IAS Academy" && ob.testCategory == "Sectional" && ob.categoryType == "History")).sort(function (a,b) {
-                        return a.testName.localeCompare(b.testName, undefined, { numeric: true, sensitivity: 'base' });
-                    }))
-                        setForumTestList((response.tests.filter(ob => ob.instituteName == "Forum IAS" && ob.testCategory == "Sectional" && ob.categoryType == "History")).sort(function (a,b) {
-                        return a.testName.localeCompare(b.testName, undefined, { numeric: true, sensitivity: 'base' });
-                    }))
-                        setIasTestList((response.tests.filter(ob => ob.instituteName == "IAS Score" && ob.testCategory == "Sectional" && ob.categoryType == "History")).sort(function (a,b) {
-                        return a.testName.localeCompare(b.testName, undefined, { numeric: true, sensitivity: 'base' });
-                    }))
-                        setInsightsTestList((response.tests.filter(ob => ob.instituteName == "Insights IAS" && ob.testCategory == "Sectional" && ob.categoryType == "History")).sort(function (a,b) {
-                        return a.testName.localeCompare(b.testName, undefined, { numeric: true, sensitivity: 'base' });
-                    }))
-                        setUpscTestList((response.tests.filter(ob => ob.instituteName == "UPSC PYQs" && ob.testCategory == "Sectional" && ob.categoryType == "History")).sort(function (a,b) {
-                        return a.testName.localeCompare(b.testName, undefined, { numeric: true, sensitivity: 'base' });
-                    }))
-                        setInsightsTestDaysList((response.tests.filter(ob => ob.instituteName == "Insights IAS 70 Days" && ob.testCategory == "Sectional" && ob.categoryType == "History")).sort(function (a,b) {
-                        return a.testName.localeCompare(b.testName, undefined, { numeric: true, sensitivity: 'base' });
-                    }))
-                        setiasBabaTestDaysList((response.tests.filter(ob => ob.instituteName == "IAS Baba 60 Days" && ob.testCategory == "Sectional" && ob.categoryType == "History")).sort(function (a,b) {
-                        return a.testName.localeCompare(b.testName, undefined, { numeric: true, sensitivity: 'base' });
-                    }))
-                        setrauIasList((response.tests.filter(ob => ob.instituteName == "Rau IAS" && ob.testCategory == "Sectional" && ob.categoryType == "History")).sort(function (a,b) {
-                        return a.testName.localeCompare(b.testName, undefined, { numeric: true, sensitivity: 'base' });
-                    }))
+                        setVisionTestList((response.tests.filter(ob => ob.instituteName == "Vision IAS" && ob.testCategory == "Sectional" && ob.categoryType == "History")).sort(function (a, b) {
+                            return a.testName.localeCompare(b.testName, undefined, { numeric: true, sensitivity: 'base' });
+                        }))
+                        setVajiramTestList((response.tests.filter(ob => ob.instituteName == "Vajiram and Ravi" && ob.testCategory == "Sectional" && ob.categoryType == "History")).sort(function (a, b) {
+                            return a.testName.localeCompare(b.testName, undefined, { numeric: true, sensitivity: 'base' });
+                        }))
+                        setShankarTestList((response.tests.filter(ob => ob.instituteName == "Shankar IAS Academy" && ob.testCategory == "Sectional" && ob.categoryType == "History")).sort(function (a, b) {
+                            return a.testName.localeCompare(b.testName, undefined, { numeric: true, sensitivity: 'base' });
+                        }))
+                        setForumTestList((response.tests.filter(ob => ob.instituteName == "Forum IAS" && ob.testCategory == "Sectional" && ob.categoryType == "History")).sort(function (a, b) {
+                            return a.testName.localeCompare(b.testName, undefined, { numeric: true, sensitivity: 'base' });
+                        }))
+                        setIasTestList((response.tests.filter(ob => ob.instituteName == "IAS Score" && ob.testCategory == "Sectional" && ob.categoryType == "History")).sort(function (a, b) {
+                            return a.testName.localeCompare(b.testName, undefined, { numeric: true, sensitivity: 'base' });
+                        }))
+                        setInsightsTestList((response.tests.filter(ob => ob.instituteName == "Insights IAS" && ob.testCategory == "Sectional" && ob.categoryType == "History")).sort(function (a, b) {
+                            return a.testName.localeCompare(b.testName, undefined, { numeric: true, sensitivity: 'base' });
+                        }))
+                        setUpscTestList((response.tests.filter(ob => ob.instituteName == "UPSC PYQs" && ob.testCategory == "Sectional" && ob.categoryType == "History")).sort(function (a, b) {
+                            return a.testName.localeCompare(b.testName, undefined, { numeric: true, sensitivity: 'base' });
+                        }))
+                        setInsightsTestDaysList((response.tests.filter(ob => ob.instituteName == "Insights IAS 70 Days" && ob.testCategory == "Sectional" && ob.categoryType == "History")).sort(function (a, b) {
+                            return a.testName.localeCompare(b.testName, undefined, { numeric: true, sensitivity: 'base' });
+                        }))
+                        setiasBabaTestDaysList((response.tests.filter(ob => ob.instituteName == "IAS Baba 60 Days" && ob.testCategory == "Sectional" && ob.categoryType == "History")).sort(function (a, b) {
+                            return a.testName.localeCompare(b.testName, undefined, { numeric: true, sensitivity: 'base' });
+                        }))
+                        setrauIasList((response.tests.filter(ob => ob.instituteName == "Rau IAS" && ob.testCategory == "Sectional" && ob.categoryType == "History")).sort(function (a, b) {
+                            return a.testName.localeCompare(b.testName, undefined, { numeric: true, sensitivity: 'base' });
+                        }))
 
                     }
                     else if (state['environment']) {
-                        setVisionTestList((response.tests.filter(ob => ob.instituteName == "Vision IAS" && ob.testCategory == "Sectional" && ob.categoryType == "Environment")).sort(function (a,b) {
-                        return a.testName.localeCompare(b.testName, undefined, { numeric: true, sensitivity: 'base' });
-                    }))
-                        setVajiramTestList((response.tests.filter(ob => ob.instituteName == "Vajiram and Ravi" && ob.testCategory == "Sectional" && ob.categoryType == "Environment")).sort(function (a,b) {
-                        return a.testName.localeCompare(b.testName, undefined, { numeric: true, sensitivity: 'base' });
-                    }))
-                        setShankarTestList((response.tests.filter(ob => ob.instituteName == "Shankar IAS Academy" && ob.testCategory == "Sectional" && ob.categoryType == "Environment")).sort(function (a,b) {
-                        return a.testName.localeCompare(b.testName, undefined, { numeric: true, sensitivity: 'base' });
-                    }))
-                        setForumTestList((response.tests.filter(ob => ob.instituteName == "Forum IAS" && ob.testCategory == "Sectional" && ob.categoryType == "Environment")).sort(function (a,b) {
-                        return a.testName.localeCompare(b.testName, undefined, { numeric: true, sensitivity: 'base' });
-                    }))
-                        setIasTestList((response.tests.filter(ob => ob.instituteName == "IAS Score" && ob.testCategory == "Sectional" && ob.categoryType == "Environment")).sort(function (a,b) {
-                        return a.testName.localeCompare(b.testName, undefined, { numeric: true, sensitivity: 'base' });
-                    }))
-                        setInsightsTestList((response.tests.filter(ob => ob.instituteName == "Insights IAS" && ob.testCategory == "Sectional" && ob.categoryType == "Environment")).sort(function (a,b) {
-                        return a.testName.localeCompare(b.testName, undefined, { numeric: true, sensitivity: 'base' });
-                    }))
-                        setUpscTestList((response.tests.filter(ob => ob.instituteName == "UPSC PYQs" && ob.testCategory == "Sectional" && ob.categoryType == "Environment")).sort(function (a,b) {
-                        return a.testName.localeCompare(b.testName, undefined, { numeric: true, sensitivity: 'base' });
-                    }))
-                        setInsightsTestDaysList((response.tests.filter(ob => ob.instituteName == "Insights IAS 70 Days" && ob.testCategory == "Sectional" && ob.categoryType == "Environment")).sort(function (a,b) {
-                        return a.testName.localeCompare(b.testName, undefined, { numeric: true, sensitivity: 'base' });
-                    }))
-                        setiasBabaTestDaysList((response.tests.filter(ob => ob.instituteName == "IAS Baba 60 Days" && ob.testCategory == "Sectional" && ob.categoryType == "Environment")).sort(function (a,b) {
-                        return a.testName.localeCompare(b.testName, undefined, { numeric: true, sensitivity: 'base' });
-                    }))
-                        setrauIasList((response.tests.filter(ob => ob.instituteName == "Rau IAS" && ob.testCategory == "Sectional" && ob.categoryType == "Environment")).sort(function (a,b) {
-                        return a.testName.localeCompare(b.testName, undefined, { numeric: true, sensitivity: 'base' });
-                    }))
+                        setVisionTestList((response.tests.filter(ob => ob.instituteName == "Vision IAS" && ob.testCategory == "Sectional" && ob.categoryType == "Environment")).sort(function (a, b) {
+                            return a.testName.localeCompare(b.testName, undefined, { numeric: true, sensitivity: 'base' });
+                        }))
+                        setVajiramTestList((response.tests.filter(ob => ob.instituteName == "Vajiram and Ravi" && ob.testCategory == "Sectional" && ob.categoryType == "Environment")).sort(function (a, b) {
+                            return a.testName.localeCompare(b.testName, undefined, { numeric: true, sensitivity: 'base' });
+                        }))
+                        setShankarTestList((response.tests.filter(ob => ob.instituteName == "Shankar IAS Academy" && ob.testCategory == "Sectional" && ob.categoryType == "Environment")).sort(function (a, b) {
+                            return a.testName.localeCompare(b.testName, undefined, { numeric: true, sensitivity: 'base' });
+                        }))
+                        setForumTestList((response.tests.filter(ob => ob.instituteName == "Forum IAS" && ob.testCategory == "Sectional" && ob.categoryType == "Environment")).sort(function (a, b) {
+                            return a.testName.localeCompare(b.testName, undefined, { numeric: true, sensitivity: 'base' });
+                        }))
+                        setIasTestList((response.tests.filter(ob => ob.instituteName == "IAS Score" && ob.testCategory == "Sectional" && ob.categoryType == "Environment")).sort(function (a, b) {
+                            return a.testName.localeCompare(b.testName, undefined, { numeric: true, sensitivity: 'base' });
+                        }))
+                        setInsightsTestList((response.tests.filter(ob => ob.instituteName == "Insights IAS" && ob.testCategory == "Sectional" && ob.categoryType == "Environment")).sort(function (a, b) {
+                            return a.testName.localeCompare(b.testName, undefined, { numeric: true, sensitivity: 'base' });
+                        }))
+                        setUpscTestList((response.tests.filter(ob => ob.instituteName == "UPSC PYQs" && ob.testCategory == "Sectional" && ob.categoryType == "Environment")).sort(function (a, b) {
+                            return a.testName.localeCompare(b.testName, undefined, { numeric: true, sensitivity: 'base' });
+                        }))
+                        setInsightsTestDaysList((response.tests.filter(ob => ob.instituteName == "Insights IAS 70 Days" && ob.testCategory == "Sectional" && ob.categoryType == "Environment")).sort(function (a, b) {
+                            return a.testName.localeCompare(b.testName, undefined, { numeric: true, sensitivity: 'base' });
+                        }))
+                        setiasBabaTestDaysList((response.tests.filter(ob => ob.instituteName == "IAS Baba 60 Days" && ob.testCategory == "Sectional" && ob.categoryType == "Environment")).sort(function (a, b) {
+                            return a.testName.localeCompare(b.testName, undefined, { numeric: true, sensitivity: 'base' });
+                        }))
+                        setrauIasList((response.tests.filter(ob => ob.instituteName == "Rau IAS" && ob.testCategory == "Sectional" && ob.categoryType == "Environment")).sort(function (a, b) {
+                            return a.testName.localeCompare(b.testName, undefined, { numeric: true, sensitivity: 'base' });
+                        }))
 
                     }
                     else if (state['economy']) {
-                        setVisionTestList((response.tests.filter(ob => ob.instituteName == "Vision IAS" && ob.testCategory == "Sectional" && ob.categoryType == "Economy")).sort(function (a,b) {
-                        return a.testName.localeCompare(b.testName, undefined, { numeric: true, sensitivity: 'base' });
-                    }))
-                        setVajiramTestList((response.tests.filter(ob => ob.instituteName == "Vajiram and Ravi" && ob.testCategory == "Sectional" && ob.categoryType == "Economy")).sort(function (a,b) {
-                        return a.testName.localeCompare(b.testName, undefined, { numeric: true, sensitivity: 'base' });
-                    }))
-                        setShankarTestList((response.tests.filter(ob => ob.instituteName == "Shankar IAS Academy" && ob.testCategory == "Sectional" && ob.categoryType == "Economy")).sort(function (a,b) {
-                        return a.testName.localeCompare(b.testName, undefined, { numeric: true, sensitivity: 'base' });
-                    }))
-                        setForumTestList((response.tests.filter(ob => ob.instituteName == "Forum IAS" && ob.testCategory == "Sectional" && ob.categoryType == "Economy")).sort(function (a,b) {
-                        return a.testName.localeCompare(b.testName, undefined, { numeric: true, sensitivity: 'base' });
-                    }))
-                        setIasTestList((response.tests.filter(ob => ob.instituteName == "IAS Score" && ob.testCategory == "Sectional" && ob.categoryType == "Economy")).sort(function (a,b) {
-                        return a.testName.localeCompare(b.testName, undefined, { numeric: true, sensitivity: 'base' });
-                    }))
-                        setInsightsTestList((response.tests.filter(ob => ob.instituteName == "Insights IAS" && ob.testCategory == "Sectional" && ob.categoryType == "Economy")).sort(function (a,b) {
-                        return a.testName.localeCompare(b.testName, undefined, { numeric: true, sensitivity: 'base' });
-                    }))
-                        setUpscTestList((response.tests.filter(ob => ob.instituteName == "UPSC PYQs" && ob.testCategory == "Sectional" && ob.categoryType == "Economy")).sort(function (a,b) {
-                        return a.testName.localeCompare(b.testName, undefined, { numeric: true, sensitivity: 'base' });
-                    }))
-                        setInsightsTestDaysList((response.tests.filter(ob => ob.instituteName == "Insights IAS 70 Days" && ob.testCategory == "Sectional" && ob.categoryType == "Economy")).sort(function (a,b) {
-                        return a.testName.localeCompare(b.testName, undefined, { numeric: true, sensitivity: 'base' });
-                    }))
-                        setiasBabaTestDaysList((response.tests.filter(ob => ob.instituteName == "IAS Baba 60 Days" && ob.testCategory == "Sectional" && ob.categoryType == "Economy")).sort(function (a,b) {
-                        return a.testName.localeCompare(b.testName, undefined, { numeric: true, sensitivity: 'base' });
-                    }))
-                        setrauIasList((response.tests.filter(ob => ob.instituteName == "Rau IAS" && ob.testCategory == "Sectional" && ob.categoryType == "Economy")).sort(function (a,b) {
-                        return a.testName.localeCompare(b.testName, undefined, { numeric: true, sensitivity: 'base' });
-                    }))
+                        setVisionTestList((response.tests.filter(ob => ob.instituteName == "Vision IAS" && ob.testCategory == "Sectional" && ob.categoryType == "Economy")).sort(function (a, b) {
+                            return a.testName.localeCompare(b.testName, undefined, { numeric: true, sensitivity: 'base' });
+                        }))
+                        setVajiramTestList((response.tests.filter(ob => ob.instituteName == "Vajiram and Ravi" && ob.testCategory == "Sectional" && ob.categoryType == "Economy")).sort(function (a, b) {
+                            return a.testName.localeCompare(b.testName, undefined, { numeric: true, sensitivity: 'base' });
+                        }))
+                        setShankarTestList((response.tests.filter(ob => ob.instituteName == "Shankar IAS Academy" && ob.testCategory == "Sectional" && ob.categoryType == "Economy")).sort(function (a, b) {
+                            return a.testName.localeCompare(b.testName, undefined, { numeric: true, sensitivity: 'base' });
+                        }))
+                        setForumTestList((response.tests.filter(ob => ob.instituteName == "Forum IAS" && ob.testCategory == "Sectional" && ob.categoryType == "Economy")).sort(function (a, b) {
+                            return a.testName.localeCompare(b.testName, undefined, { numeric: true, sensitivity: 'base' });
+                        }))
+                        setIasTestList((response.tests.filter(ob => ob.instituteName == "IAS Score" && ob.testCategory == "Sectional" && ob.categoryType == "Economy")).sort(function (a, b) {
+                            return a.testName.localeCompare(b.testName, undefined, { numeric: true, sensitivity: 'base' });
+                        }))
+                        setInsightsTestList((response.tests.filter(ob => ob.instituteName == "Insights IAS" && ob.testCategory == "Sectional" && ob.categoryType == "Economy")).sort(function (a, b) {
+                            return a.testName.localeCompare(b.testName, undefined, { numeric: true, sensitivity: 'base' });
+                        }))
+                        setUpscTestList((response.tests.filter(ob => ob.instituteName == "UPSC PYQs" && ob.testCategory == "Sectional" && ob.categoryType == "Economy")).sort(function (a, b) {
+                            return a.testName.localeCompare(b.testName, undefined, { numeric: true, sensitivity: 'base' });
+                        }))
+                        setInsightsTestDaysList((response.tests.filter(ob => ob.instituteName == "Insights IAS 70 Days" && ob.testCategory == "Sectional" && ob.categoryType == "Economy")).sort(function (a, b) {
+                            return a.testName.localeCompare(b.testName, undefined, { numeric: true, sensitivity: 'base' });
+                        }))
+                        setiasBabaTestDaysList((response.tests.filter(ob => ob.instituteName == "IAS Baba 60 Days" && ob.testCategory == "Sectional" && ob.categoryType == "Economy")).sort(function (a, b) {
+                            return a.testName.localeCompare(b.testName, undefined, { numeric: true, sensitivity: 'base' });
+                        }))
+                        setrauIasList((response.tests.filter(ob => ob.instituteName == "Rau IAS" && ob.testCategory == "Sectional" && ob.categoryType == "Economy")).sort(function (a, b) {
+                            return a.testName.localeCompare(b.testName, undefined, { numeric: true, sensitivity: 'base' });
+                        }))
 
                     }
                     else if (state['geography']) {
-                        setVisionTestList((response.tests.filter(ob => ob.instituteName == "Vision IAS" && ob.testCategory == "Sectional" && ob.categoryType == "Geography")).sort(function (a,b) {
-                        return a.testName.localeCompare(b.testName, undefined, { numeric: true, sensitivity: 'base' });
-                    }))
-                        setVajiramTestList((response.tests.filter(ob => ob.instituteName == "Vajiram and Ravi" && ob.testCategory == "Sectional" && ob.categoryType == "Geography")).sort(function (a,b) {
-                        return a.testName.localeCompare(b.testName, undefined, { numeric: true, sensitivity: 'base' });
-                    }))
-                        setShankarTestList((response.tests.filter(ob => ob.instituteName == "Shankar IAS Academy" && ob.testCategory == "Sectional" && ob.categoryType == "Geography")).sort(function (a,b) {
-                        return a.testName.localeCompare(b.testName, undefined, { numeric: true, sensitivity: 'base' });
-                    }))
-                        setForumTestList((response.tests.filter(ob => ob.instituteName == "Forum IAS" && ob.testCategory == "Sectional" && ob.categoryType == "Geography")).sort(function (a,b) {
-                        return a.testName.localeCompare(b.testName, undefined, { numeric: true, sensitivity: 'base' });
-                    }))
-                        setIasTestList((response.tests.filter(ob => ob.instituteName == "IAS Score" && ob.testCategory == "Sectional" && ob.categoryType == "Geography")).sort(function (a,b) {
-                        return a.testName.localeCompare(b.testName, undefined, { numeric: true, sensitivity: 'base' });
-                    }))
-                        setInsightsTestList((response.tests.filter(ob => ob.instituteName == "Insights IAS" && ob.testCategory == "Sectional" && ob.categoryType == "Geography")).sort(function (a,b) {
-                        return a.testName.localeCompare(b.testName, undefined, { numeric: true, sensitivity: 'base' });
-                    }))
-                        setUpscTestList((response.tests.filter(ob => ob.instituteName == "UPSC PYQs" && ob.testCategory == "Sectional" && ob.categoryType == "Geography")).sort(function (a,b) {
-                        return a.testName.localeCompare(b.testName, undefined, { numeric: true, sensitivity: 'base' });
-                    }))
-                        setInsightsTestDaysList((response.tests.filter(ob => ob.instituteName == "Insights IAS 70 Days" && ob.testCategory == "Sectional" && ob.categoryType == "Geography")).sort(function (a,b) {
-                        return a.testName.localeCompare(b.testName, undefined, { numeric: true, sensitivity: 'base' });
-                    }))
-                        setiasBabaTestDaysList((response.tests.filter(ob => ob.instituteName == "IAS Baba 60 Days" && ob.testCategory == "Sectional" && ob.categoryType == "Geography")).sort(function (a,b) {
-                        return a.testName.localeCompare(b.testName, undefined, { numeric: true, sensitivity: 'base' });
-                    }))
-                        setrauIasList((response.tests.filter(ob => ob.instituteName == "Rau IAS" && ob.testCategory == "Sectional" && ob.categoryType == "Geography")).sort(function (a,b) {
-                        return a.testName.localeCompare(b.testName, undefined, { numeric: true, sensitivity: 'base' });
-                    }))
+                        setVisionTestList((response.tests.filter(ob => ob.instituteName == "Vision IAS" && ob.testCategory == "Sectional" && ob.categoryType == "Geography")).sort(function (a, b) {
+                            return a.testName.localeCompare(b.testName, undefined, { numeric: true, sensitivity: 'base' });
+                        }))
+                        setVajiramTestList((response.tests.filter(ob => ob.instituteName == "Vajiram and Ravi" && ob.testCategory == "Sectional" && ob.categoryType == "Geography")).sort(function (a, b) {
+                            return a.testName.localeCompare(b.testName, undefined, { numeric: true, sensitivity: 'base' });
+                        }))
+                        setShankarTestList((response.tests.filter(ob => ob.instituteName == "Shankar IAS Academy" && ob.testCategory == "Sectional" && ob.categoryType == "Geography")).sort(function (a, b) {
+                            return a.testName.localeCompare(b.testName, undefined, { numeric: true, sensitivity: 'base' });
+                        }))
+                        setForumTestList((response.tests.filter(ob => ob.instituteName == "Forum IAS" && ob.testCategory == "Sectional" && ob.categoryType == "Geography")).sort(function (a, b) {
+                            return a.testName.localeCompare(b.testName, undefined, { numeric: true, sensitivity: 'base' });
+                        }))
+                        setIasTestList((response.tests.filter(ob => ob.instituteName == "IAS Score" && ob.testCategory == "Sectional" && ob.categoryType == "Geography")).sort(function (a, b) {
+                            return a.testName.localeCompare(b.testName, undefined, { numeric: true, sensitivity: 'base' });
+                        }))
+                        setInsightsTestList((response.tests.filter(ob => ob.instituteName == "Insights IAS" && ob.testCategory == "Sectional" && ob.categoryType == "Geography")).sort(function (a, b) {
+                            return a.testName.localeCompare(b.testName, undefined, { numeric: true, sensitivity: 'base' });
+                        }))
+                        setUpscTestList((response.tests.filter(ob => ob.instituteName == "UPSC PYQs" && ob.testCategory == "Sectional" && ob.categoryType == "Geography")).sort(function (a, b) {
+                            return a.testName.localeCompare(b.testName, undefined, { numeric: true, sensitivity: 'base' });
+                        }))
+                        setInsightsTestDaysList((response.tests.filter(ob => ob.instituteName == "Insights IAS 70 Days" && ob.testCategory == "Sectional" && ob.categoryType == "Geography")).sort(function (a, b) {
+                            return a.testName.localeCompare(b.testName, undefined, { numeric: true, sensitivity: 'base' });
+                        }))
+                        setiasBabaTestDaysList((response.tests.filter(ob => ob.instituteName == "IAS Baba 60 Days" && ob.testCategory == "Sectional" && ob.categoryType == "Geography")).sort(function (a, b) {
+                            return a.testName.localeCompare(b.testName, undefined, { numeric: true, sensitivity: 'base' });
+                        }))
+                        setrauIasList((response.tests.filter(ob => ob.instituteName == "Rau IAS" && ob.testCategory == "Sectional" && ob.categoryType == "Geography")).sort(function (a, b) {
+                            return a.testName.localeCompare(b.testName, undefined, { numeric: true, sensitivity: 'base' });
+                        }))
                     }
                     else if (state['currentAffairs']) {
-                        setVisionTestList((response.tests.filter(ob => ob.instituteName == "Vision IAS" && ob.testCategory == "Sectional" && ob.categoryType == "Current Affairs")).sort(function (a,b) {
+                        setVisionTestList((response.tests.filter(ob => ob.instituteName == "Vision IAS" && ob.testCategory == "Sectional" && ob.categoryType == "Current Affairs")).sort(function (a, b) {
                             return a.testName.localeCompare(b.testName, undefined, { numeric: true, sensitivity: 'base' });
                         }))
-                        setVajiramTestList((response.tests.filter(ob => ob.instituteName == "Vajiram and Ravi" && ob.testCategory == "Sectional" && ob.categoryType == "Current Affairs")).sort(function (a,b) {
+                        setVajiramTestList((response.tests.filter(ob => ob.instituteName == "Vajiram and Ravi" && ob.testCategory == "Sectional" && ob.categoryType == "Current Affairs")).sort(function (a, b) {
                             return a.testName.localeCompare(b.testName, undefined, { numeric: true, sensitivity: 'base' });
                         }))
-                        setShankarTestList((response.tests.filter(ob => ob.instituteName == "Shankar IAS Academy" && ob.testCategory == "Sectional" && ob.categoryType == "Current Affairs")).sort(function (a,b) {
+                        setShankarTestList((response.tests.filter(ob => ob.instituteName == "Shankar IAS Academy" && ob.testCategory == "Sectional" && ob.categoryType == "Current Affairs")).sort(function (a, b) {
                             return a.testName.localeCompare(b.testName, undefined, { numeric: true, sensitivity: 'base' });
                         }))
-                        setForumTestList((response.tests.filter(ob => ob.instituteName == "Forum IAS" && ob.testCategory == "Sectional" && ob.categoryType == "Current Affairs")).sort(function (a,b) {
+                        setForumTestList((response.tests.filter(ob => ob.instituteName == "Forum IAS" && ob.testCategory == "Sectional" && ob.categoryType == "Current Affairs")).sort(function (a, b) {
                             return a.testName.localeCompare(b.testName, undefined, { numeric: true, sensitivity: 'base' });
                         }))
-                        setIasTestList((response.tests.filter(ob => ob.instituteName == "IAS Score" && ob.testCategory == "Sectional" && ob.categoryType == "Current Affairs")).sort(function (a,b) {
-                        return a.testName.localeCompare(b.testName, undefined, { numeric: true, sensitivity: 'base' });
-                    }))
-                        setInsightsTestList((response.tests.filter(ob => ob.instituteName == "Insights IAS" && ob.testCategory == "Sectional" && ob.categoryType == "Current Affairs")).sort(function (a,b) {
-                        return a.testName.localeCompare(b.testName, undefined, { numeric: true, sensitivity: 'base' });
-                    }))
-                        setUpscTestList((response.tests.filter(ob => ob.instituteName == "UPSC PYQs" && ob.testCategory == "Sectional" && ob.categoryType == "Current Affairs")).sort(function (a,b) {
-                        return a.testName.localeCompare(b.testName, undefined, { numeric: true, sensitivity: 'base' });
-                    }))
-                        setInsightsTestDaysList((response.tests.filter(ob => ob.instituteName == "Insights IAS 70 Days" && ob.testCategory == "Sectional" && ob.categoryType == "Current Affairs")).sort(function (a,b) {
-                        return a.testName.localeCompare(b.testName, undefined, { numeric: true, sensitivity: 'base' });
-                    }))
-                        setiasBabaTestDaysList((response.tests.filter(ob => ob.instituteName == "IAS Baba 60 Days" && ob.testCategory == "Sectional" && ob.categoryType == "Current Affairs")).sort(function (a,b) {
-                        return a.testName.localeCompare(b.testName, undefined, { numeric: true, sensitivity: 'base' });
-                    }))
-                        setrauIasList((response.tests.filter(ob => ob.instituteName == "Rau IAS" && ob.testCategory == "Sectional" && ob.categoryType == "Current Affairs")).sort(function (a,b) {
-                        return a.testName.localeCompare(b.testName, undefined, { numeric: true, sensitivity: 'base' });
-                    }))
+                        setIasTestList((response.tests.filter(ob => ob.instituteName == "IAS Score" && ob.testCategory == "Sectional" && ob.categoryType == "Current Affairs")).sort(function (a, b) {
+                            return a.testName.localeCompare(b.testName, undefined, { numeric: true, sensitivity: 'base' });
+                        }))
+                        setInsightsTestList((response.tests.filter(ob => ob.instituteName == "Insights IAS" && ob.testCategory == "Sectional" && ob.categoryType == "Current Affairs")).sort(function (a, b) {
+                            return a.testName.localeCompare(b.testName, undefined, { numeric: true, sensitivity: 'base' });
+                        }))
+                        setUpscTestList((response.tests.filter(ob => ob.instituteName == "UPSC PYQs" && ob.testCategory == "Sectional" && ob.categoryType == "Current Affairs")).sort(function (a, b) {
+                            return a.testName.localeCompare(b.testName, undefined, { numeric: true, sensitivity: 'base' });
+                        }))
+                        setInsightsTestDaysList((response.tests.filter(ob => ob.instituteName == "Insights IAS 70 Days" && ob.testCategory == "Sectional" && ob.categoryType == "Current Affairs")).sort(function (a, b) {
+                            return a.testName.localeCompare(b.testName, undefined, { numeric: true, sensitivity: 'base' });
+                        }))
+                        setiasBabaTestDaysList((response.tests.filter(ob => ob.instituteName == "IAS Baba 60 Days" && ob.testCategory == "Sectional" && ob.categoryType == "Current Affairs")).sort(function (a, b) {
+                            return a.testName.localeCompare(b.testName, undefined, { numeric: true, sensitivity: 'base' });
+                        }))
+                        setrauIasList((response.tests.filter(ob => ob.instituteName == "Rau IAS" && ob.testCategory == "Sectional" && ob.categoryType == "Current Affairs")).sort(function (a, b) {
+                            return a.testName.localeCompare(b.testName, undefined, { numeric: true, sensitivity: 'base' });
+                        }))
                     }
                     else if (state['artAndCulture']) {
-                        setVisionTestList((response.tests.filter(ob => ob.instituteName == "Vision IAS" && ob.testCategory == "Sectional" && ob.categoryType == "Current Affairs")).sort(function (a,b) {
+                        setVisionTestList((response.tests.filter(ob => ob.instituteName == "Vision IAS" && ob.testCategory == "Sectional" && ob.categoryType == "Current Affairs")).sort(function (a, b) {
                             return a.testName.localeCompare(b.testName, undefined, { numeric: true, sensitivity: 'base' });
                         }))
-                        setVajiramTestList((response.tests.filter(ob => ob.instituteName == "Vajiram and Ravi" && ob.testCategory == "Sectional" && ob.categoryType == "Current Affairs")).sort(function (a,b) {
+                        setVajiramTestList((response.tests.filter(ob => ob.instituteName == "Vajiram and Ravi" && ob.testCategory == "Sectional" && ob.categoryType == "Current Affairs")).sort(function (a, b) {
                             return a.testName.localeCompare(b.testName, undefined, { numeric: true, sensitivity: 'base' });
                         }))
-                        setShankarTestList((response.tests.filter(ob => ob.instituteName == "Shankar IAS Academy" && ob.testCategory == "Sectional" && ob.categoryType == "Current Affairs")).sort(function (a,b) {
+                        setShankarTestList((response.tests.filter(ob => ob.instituteName == "Shankar IAS Academy" && ob.testCategory == "Sectional" && ob.categoryType == "Current Affairs")).sort(function (a, b) {
                             return a.testName.localeCompare(b.testName, undefined, { numeric: true, sensitivity: 'base' });
                         }))
-                        setForumTestList((response.tests.filter(ob => ob.instituteName == "Forum IAS" && ob.testCategory == "Sectional" && ob.categoryType == "Current Affairs")).sort(function (a,b) {
+                        setForumTestList((response.tests.filter(ob => ob.instituteName == "Forum IAS" && ob.testCategory == "Sectional" && ob.categoryType == "Current Affairs")).sort(function (a, b) {
                             return a.testName.localeCompare(b.testName, undefined, { numeric: true, sensitivity: 'base' });
                         }))
-                        setIasTestList((response.tests.filter(ob => ob.instituteName == "IAS Score" && ob.testCategory == "Sectional" && ob.categoryType == "Current Affairs")).sort(function (a,b) {
+                        setIasTestList((response.tests.filter(ob => ob.instituteName == "IAS Score" && ob.testCategory == "Sectional" && ob.categoryType == "Current Affairs")).sort(function (a, b) {
                             return a.testName.localeCompare(b.testName, undefined, { numeric: true, sensitivity: 'base' });
                         }))
-                        setInsightsTestList((response.tests.filter(ob => ob.instituteName == "Insights IAS" && ob.testCategory == "Sectional" && ob.categoryType == "Current Affairs")).sort(function (a,b) {
+                        setInsightsTestList((response.tests.filter(ob => ob.instituteName == "Insights IAS" && ob.testCategory == "Sectional" && ob.categoryType == "Current Affairs")).sort(function (a, b) {
                             return a.testName.localeCompare(b.testName, undefined, { numeric: true, sensitivity: 'base' });
                         }))
-                        setUpscTestList((response.tests.filter(ob => ob.instituteName == "UPSC PYQs" && ob.testCategory == "Sectional" && ob.categoryType == "Current Affairs")).sort(function (a,b) {
+                        setUpscTestList((response.tests.filter(ob => ob.instituteName == "UPSC PYQs" && ob.testCategory == "Sectional" && ob.categoryType == "Current Affairs")).sort(function (a, b) {
                             return a.testName.localeCompare(b.testName, undefined, { numeric: true, sensitivity: 'base' });
                         }))
-                        setInsightsTestDaysList((response.tests.filter(ob => ob.instituteName == "Insights IAS 70 Days" && ob.testCategory == "Sectional" && ob.categoryType == "Art and Culture")).sort(function (a,b) {
+                        setInsightsTestDaysList((response.tests.filter(ob => ob.instituteName == "Insights IAS 70 Days" && ob.testCategory == "Sectional" && ob.categoryType == "Art and Culture")).sort(function (a, b) {
                             return a.testName.localeCompare(b.testName, undefined, { numeric: true, sensitivity: 'base' });
                         }))
-                        setiasBabaTestDaysList((response.tests.filter(ob => ob.instituteName == "IAS Baba 60 Days" && ob.testCategory == "Sectional" && ob.categoryType == "Art and Culture")).sort(function (a,b) {
+                        setiasBabaTestDaysList((response.tests.filter(ob => ob.instituteName == "IAS Baba 60 Days" && ob.testCategory == "Sectional" && ob.categoryType == "Art and Culture")).sort(function (a, b) {
                             return a.testName.localeCompare(b.testName, undefined, { numeric: true, sensitivity: 'base' });
                         }))
-                        setrauIasList((response.tests.filter(ob => ob.instituteName == "Rau IAS" && ob.testCategory == "Sectional" && ob.categoryType == "Art and Culture")).sort(function (a,b) {
+                        setrauIasList((response.tests.filter(ob => ob.instituteName == "Rau IAS" && ob.testCategory == "Sectional" && ob.categoryType == "Art and Culture")).sort(function (a, b) {
                             return a.testName.localeCompare(b.testName, undefined, { numeric: true, sensitivity: 'base' });
                         }))
                     }
                     else if (state['scienceAndTechnology']) {
-                        setVisionTestList((response.tests.filter(ob => ob.instituteName == "Vision IAS" && ob.testCategory == "Sectional" && ob.categoryType == "Current Affairs")).sort(function (a,b) {
+                        setVisionTestList((response.tests.filter(ob => ob.instituteName == "Vision IAS" && ob.testCategory == "Sectional" && ob.categoryType == "Current Affairs")).sort(function (a, b) {
                             return a.testName.localeCompare(b.testName, undefined, { numeric: true, sensitivity: 'base' });
                         }))
-                        setVajiramTestList((response.tests.filter(ob => ob.instituteName == "Vajiram and Ravi" && ob.testCategory == "Sectional" && ob.categoryType == "Current Affairs")).sort(function (a,b) {
+                        setVajiramTestList((response.tests.filter(ob => ob.instituteName == "Vajiram and Ravi" && ob.testCategory == "Sectional" && ob.categoryType == "Current Affairs")).sort(function (a, b) {
                             return a.testName.localeCompare(b.testName, undefined, { numeric: true, sensitivity: 'base' });
                         }))
-                        setShankarTestList((response.tests.filter(ob => ob.instituteName == "Shankar IAS Academy" && ob.testCategory == "Sectional" && ob.categoryType == "Current Affairs")).sort(function (a,b) {
+                        setShankarTestList((response.tests.filter(ob => ob.instituteName == "Shankar IAS Academy" && ob.testCategory == "Sectional" && ob.categoryType == "Current Affairs")).sort(function (a, b) {
                             return a.testName.localeCompare(b.testName, undefined, { numeric: true, sensitivity: 'base' });
                         }))
-                        setForumTestList((response.tests.filter(ob => ob.instituteName == "Forum IAS" && ob.testCategory == "Sectional" && ob.categoryType == "Current Affairs")).sort(function (a,b) {
+                        setForumTestList((response.tests.filter(ob => ob.instituteName == "Forum IAS" && ob.testCategory == "Sectional" && ob.categoryType == "Current Affairs")).sort(function (a, b) {
                             return a.testName.localeCompare(b.testName, undefined, { numeric: true, sensitivity: 'base' });
                         }))
-                        setIasTestList((response.tests.filter(ob => ob.instituteName == "IAS Score" && ob.testCategory == "Sectional" && ob.categoryType == "Current Affairs")).sort(function (a,b) {
+                        setIasTestList((response.tests.filter(ob => ob.instituteName == "IAS Score" && ob.testCategory == "Sectional" && ob.categoryType == "Current Affairs")).sort(function (a, b) {
                             return a.testName.localeCompare(b.testName, undefined, { numeric: true, sensitivity: 'base' });
                         }))
-                        setInsightsTestList((response.tests.filter(ob => ob.instituteName == "Insights IAS" && ob.testCategory == "Sectional" && ob.categoryType == "Current Affairs")).sort(function (a,b) {
+                        setInsightsTestList((response.tests.filter(ob => ob.instituteName == "Insights IAS" && ob.testCategory == "Sectional" && ob.categoryType == "Current Affairs")).sort(function (a, b) {
                             return a.testName.localeCompare(b.testName, undefined, { numeric: true, sensitivity: 'base' });
                         }))
-                        setUpscTestList((response.tests.filter(ob => ob.instituteName == "UPSC PYQs" && ob.testCategory == "Sectional" && ob.categoryType == "Current Affairs")).sort(function (a,b) {
+                        setUpscTestList((response.tests.filter(ob => ob.instituteName == "UPSC PYQs" && ob.testCategory == "Sectional" && ob.categoryType == "Current Affairs")).sort(function (a, b) {
                             return a.testName.localeCompare(b.testName, undefined, { numeric: true, sensitivity: 'base' });
                         }))
-                        setInsightsTestDaysList((response.tests.filter(ob => ob.instituteName == "Insights IAS 70 Days" && ob.testCategory == "Sectional" && ob.categoryType == "Science and Technology")).sort(function (a,b) {
+                        setInsightsTestDaysList((response.tests.filter(ob => ob.instituteName == "Insights IAS 70 Days" && ob.testCategory == "Sectional" && ob.categoryType == "Science and Technology")).sort(function (a, b) {
                             return a.testName.localeCompare(b.testName, undefined, { numeric: true, sensitivity: 'base' });
                         }))
-                        setiasBabaTestDaysList((response.tests.filter(ob => ob.instituteName == "IAS Baba 60 Days" && ob.testCategory == "Sectional" && ob.categoryType == "Science and Technology")).sort(function (a,b) {
+                        setiasBabaTestDaysList((response.tests.filter(ob => ob.instituteName == "IAS Baba 60 Days" && ob.testCategory == "Sectional" && ob.categoryType == "Science and Technology")).sort(function (a, b) {
                             return a.testName.localeCompare(b.testName, undefined, { numeric: true, sensitivity: 'base' });
                         }))
-                        setrauIasList((response.tests.filter(ob => ob.instituteName == "Rau IAS" && ob.testCategory == "Sectional" && ob.categoryType == "Science and Technology")).sort(function (a,b) {
+                        setrauIasList((response.tests.filter(ob => ob.instituteName == "Rau IAS" && ob.testCategory == "Sectional" && ob.categoryType == "Science and Technology")).sort(function (a, b) {
                             return a.testName.localeCompare(b.testName, undefined, { numeric: true, sensitivity: 'base' });
                         }))
                     }
-                    
-        setSpinner(false)
+
+                    setSpinner(false)
                 }))
         }
-        
+
     }, [testCategory, count])
 
 
 
     // Handle Give Test
     const handleGiveTest = (id) => {
-         if (user) {
-            var testNumber=user.token.user?.allowedTests
-            console.log("user",testNumber,counter)
-         
+        if (user) {
+            var testNumber = user.token.user?.allowedTests
+            console.log("user", testNumber, counter)
+
             setCurrentTestId(id)
-           if (counter< testNumber) {
+            if (counter < testNumber) {
                 setSpinner(true)
                 const timer = setTimeout(() => {
                     history.push({
@@ -725,842 +725,844 @@ export default function Test(props) {
 
 
 
-                <Grid container className={classes.container} spacing={1} >
-                    <Grid item lg={2} style={{ paddingTop: 20 }} md={3} sm={3} xs={12}>
-                        <Paper elevation={3} className={classes.filterContainer}>
-                            <p className={classes.filterHeading}>FILTER</p>
-                            {/* First Filter*/}
-                            <div className={classes.filterCategoryContainer}>
-                                <p className={classes.filterCategoryHeading}>SUBJECT FILTER</p>
+            <Grid container className={classes.container} spacing={1} >
+                <Grid item lg={2} style={{ paddingTop: 20 }} md={3} sm={3} xs={12}>
+                    <Paper elevation={3} className={classes.filterContainer}>
+                        <p className={classes.filterHeading}>FILTER</p>
+                        {/* First Filter*/}
+                        <div className={classes.filterCategoryContainer}>
+                            <p className={classes.filterCategoryHeading}>SUBJECT FILTER</p>
+                            <div className={classes.filterCategoryItems}>
+
+                                <CSelect custom id="select" name="testCategory" className={classes.select}
+                                    value={testCategory} onChange={(e) => setTestCategory(e.target.value)}>
+                                    <option value="0" selected>All Test</option>
+
+                                    <option value="Full Length">Full Length</option>
+                                    <option value="Sectional">Sectional</option>
+                                </CSelect>
+
+                                {testCategory == "Sectional" &&
+                                    <FormControl component="fieldset" className={classes.formControl} >
+                                        <FormGroup >
+
+
+
+
+                                            <FormControlLabel
+                                                input
+                                                control={
+                                                    <Checkbox
+                                                        checked={state['polity']}
+                                                        onChange={handleChange}
+                                                        name="polity"
+                                                        className={classes.labelCheckbox}
+                                                        disableRipple
+                                                        color="default"
+                                                        checkedIcon={<span className={clsx(classes.icon, classes.checkedIcon)} />}
+                                                        inputProps={{ 'aria-label': 'decorative checkbox' }}
+                                                        {...props}
+                                                    />
+                                                }
+                                                label={<Typography variant="body2" color="textSecondary" className={classes.label}>Polity</Typography>}
+                                            />
+
+
+                                            <FormControlLabel
+                                                input
+                                                control={
+                                                    <Checkbox
+                                                        checked={state['environment']}
+                                                        onChange={handleChange}
+                                                        name="environment"
+                                                        className={classes.labelCheckbox}
+                                                        disableRipple
+                                                        color="default"
+                                                        checkedIcon={<span className={clsx(classes.icon, classes.checkedIcon)} />}
+                                                        inputProps={{ 'aria-label': 'decorative checkbox' }}
+                                                        {...props}
+                                                    />
+                                                }
+                                                label={<Typography variant="body2" color="textSecondary" className={classes.label}>Environment</Typography>}
+                                            />
+
+                                            <FormControlLabel
+                                                input
+                                                control={
+                                                    <Checkbox
+                                                        checked={state['history']}
+                                                        onChange={handleChange}
+                                                        name="history"
+                                                        className={classes.labelCheckbox}
+                                                        disableRipple
+                                                        color="default"
+                                                        checkedIcon={<span className={clsx(classes.icon, classes.checkedIcon)} />}
+                                                        inputProps={{ 'aria-label': 'decorative checkbox' }}
+                                                        {...props}
+                                                    />
+                                                }
+                                                label={<Typography variant="body2" color="textSecondary" className={classes.label}>History</Typography>}
+                                            />
+
+
+
+                                            <FormControlLabel
+                                                input
+                                                control={
+                                                    <Checkbox
+                                                        checked={state['economy']}
+                                                        onChange={handleChange}
+                                                        name="economy"
+                                                        className={classes.labelCheckbox}
+                                                        disableRipple
+                                                        color="default"
+                                                        checkedIcon={<span className={clsx(classes.icon, classes.checkedIcon)} />}
+                                                        inputProps={{ 'aria-label': 'decorative checkbox' }}
+                                                        {...props}
+                                                    />
+                                                }
+                                                label={<Typography variant="body2" color="textSecondary" className={classes.label}>Economy</Typography>}
+                                            />
+
+
+                                            <FormControlLabel
+                                                input
+                                                control={
+                                                    <Checkbox
+                                                        checked={state['geography']}
+                                                        onChange={handleChange}
+                                                        name="geography"
+                                                        className={classes.labelCheckbox}
+                                                        disableRipple
+                                                        color="default"
+                                                        checkedIcon={<span className={clsx(classes.icon, classes.checkedIcon)} />}
+                                                        inputProps={{ 'aria-label': 'decorative checkbox' }}
+                                                        {...props}
+                                                    />
+                                                }
+                                                label={<Typography variant="body2" color="textSecondary" className={classes.label}>Geography</Typography>}
+                                            />
+
+
+
+
+                                            <FormControlLabel
+                                                input
+                                                control={
+                                                    <Checkbox
+                                                        checked={state['currentAffairs']}
+                                                        onChange={handleChange}
+                                                        name="currentAffairs"
+                                                        className={classes.labelCheckbox}
+                                                        disableRipple
+                                                        color="default"
+                                                        checkedIcon={<span className={clsx(classes.icon, classes.checkedIcon)} />}
+                                                        inputProps={{ 'aria-label': 'decorative checkbox' }}
+                                                        {...props}
+                                                    />
+                                                }
+                                                label={<Typography variant="body2" color="textSecondary" className={classes.label}>Current Affairs</Typography>}
+                                            />
+
+
+
+
+                                            <FormControlLabel
+                                                input
+                                                control={
+                                                    <Checkbox
+                                                        checked={state['artAndCulture']}
+                                                        onChange={handleChange}
+                                                        name="artAndCulture"
+                                                        className={classes.labelCheckbox}
+                                                        disableRipple
+                                                        color="default"
+                                                        checkedIcon={<span className={clsx(classes.icon, classes.checkedIcon)} />}
+                                                        inputProps={{ 'aria-label': 'decorative checkbox' }}
+                                                        {...props}
+                                                    />
+                                                }
+                                                label={<Typography variant="body2" color="textSecondary" className={classes.label}>Art and Culture</Typography>}
+                                            />
+
+
+
+                                            <FormControlLabel
+                                                input
+                                                control={
+                                                    <Checkbox
+                                                        checked={state['scienceAndTechnology']}
+                                                        onChange={handleChange}
+                                                        name="scienceAndTechnology"
+                                                        className={classes.labelCheckbox}
+                                                        disableRipple
+                                                        color="default"
+                                                        checkedIcon={<span className={clsx(classes.icon, classes.checkedIcon)} />}
+                                                        inputProps={{ 'aria-label': 'decorative checkbox' }}
+                                                        {...props}
+                                                    />
+                                                }
+                                                label={<Typography variant="body2" color="textSecondary" className={classes.label}>Science and Technology</Typography>}
+                                            />
+
+                                        </FormGroup>
+                                    </FormControl>
+                                }
+                            </div>
+
+                        </div>
+
+
+                        {/* Second Filter*/}
+                        <div className={classes.filterCategoryContainer}>
+
+                            <div className={classes.filterCategoryItemsContainer}>
                                 <div className={classes.filterCategoryItems}>
 
-                                    <CSelect custom id="select" name="testCategory" className={classes.select}
-                                        value={testCategory} onChange={(e) => setTestCategory(e.target.value)}>
-                                        <option value="0" selected>All Test</option>
-
-                                        <option value="Full Length">Full Length</option>
-                                        <option value="Sectional">Sectional</option>
-                                    </CSelect>
-
-                                    {testCategory == "Sectional" &&
-                                        <FormControl component="fieldset" className={classes.formControl} >
-                                            <FormGroup >
-
-
-
-
-                                                <FormControlLabel
-                                                    input
-                                                    control={
-                                                        <Checkbox
-                                                            checked={state['polity']}
-                                                            onChange={handleChange}
-                                                            name="polity"
-                                                            className={classes.labelCheckbox}
-                                                            disableRipple
-                                                            color="default"
-                                                            checkedIcon={<span className={clsx(classes.icon, classes.checkedIcon)} />}
-                                                            inputProps={{ 'aria-label': 'decorative checkbox' }}
-                                                            {...props}
-                                                        />
-                                                    }
-                                                    label={<Typography variant="body2" color="textSecondary" className={classes.label}>Polity</Typography>}
-                                                />
-
-
-                                                <FormControlLabel
-                                                    input
-                                                    control={
-                                                        <Checkbox
-                                                            checked={state['environment']}
-                                                            onChange={handleChange}
-                                                            name="environment"
-                                                            className={classes.labelCheckbox}
-                                                            disableRipple
-                                                            color="default"
-                                                            checkedIcon={<span className={clsx(classes.icon, classes.checkedIcon)} />}
-                                                            inputProps={{ 'aria-label': 'decorative checkbox' }}
-                                                            {...props}
-                                                        />
-                                                    }
-                                                    label={<Typography variant="body2" color="textSecondary" className={classes.label}>Environment</Typography>}
-                                                />
-
-                                                <FormControlLabel
-                                                    input
-                                                    control={
-                                                        <Checkbox
-                                                            checked={state['history']}
-                                                            onChange={handleChange}
-                                                            name="history"
-                                                            className={classes.labelCheckbox}
-                                                            disableRipple
-                                                            color="default"
-                                                            checkedIcon={<span className={clsx(classes.icon, classes.checkedIcon)} />}
-                                                            inputProps={{ 'aria-label': 'decorative checkbox' }}
-                                                            {...props}
-                                                        />
-                                                    }
-                                                    label={<Typography variant="body2" color="textSecondary" className={classes.label}>History</Typography>}
-                                                />
-
-
-
-                                                <FormControlLabel
-                                                    input
-                                                    control={
-                                                        <Checkbox
-                                                            checked={state['economy']}
-                                                            onChange={handleChange}
-                                                            name="economy"
-                                                            className={classes.labelCheckbox}
-                                                            disableRipple
-                                                            color="default"
-                                                            checkedIcon={<span className={clsx(classes.icon, classes.checkedIcon)} />}
-                                                            inputProps={{ 'aria-label': 'decorative checkbox' }}
-                                                            {...props}
-                                                        />
-                                                    }
-                                                    label={<Typography variant="body2" color="textSecondary" className={classes.label}>Economy</Typography>}
-                                                />
-
-
-                                                <FormControlLabel
-                                                    input
-                                                    control={
-                                                        <Checkbox
-                                                            checked={state['geography']}
-                                                            onChange={handleChange}
-                                                            name="geography"
-                                                            className={classes.labelCheckbox}
-                                                            disableRipple
-                                                            color="default"
-                                                            checkedIcon={<span className={clsx(classes.icon, classes.checkedIcon)} />}
-                                                            inputProps={{ 'aria-label': 'decorative checkbox' }}
-                                                            {...props}
-                                                        />
-                                                    }
-                                                    label={<Typography variant="body2" color="textSecondary" className={classes.label}>Geography</Typography>}
-                                                />
-
-
-
-
-                                                <FormControlLabel
-                                                    input
-                                                    control={
-                                                        <Checkbox
-                                                            checked={state['currentAffairs']}
-                                                            onChange={handleChange}
-                                                            name="currentAffairs"
-                                                            className={classes.labelCheckbox}
-                                                            disableRipple
-                                                            color="default"
-                                                            checkedIcon={<span className={clsx(classes.icon, classes.checkedIcon)} />}
-                                                            inputProps={{ 'aria-label': 'decorative checkbox' }}
-                                                            {...props}
-                                                        />
-                                                    }
-                                                    label={<Typography variant="body2" color="textSecondary" className={classes.label}>Current Affairs</Typography>}
-                                                />
-
-
-
-
-                                                <FormControlLabel
-                                                    input
-                                                    control={
-                                                        <Checkbox
-                                                            checked={state['artAndCulture']}
-                                                            onChange={handleChange}
-                                                            name="artAndCulture"
-                                                            className={classes.labelCheckbox}
-                                                            disableRipple
-                                                            color="default"
-                                                            checkedIcon={<span className={clsx(classes.icon, classes.checkedIcon)} />}
-                                                            inputProps={{ 'aria-label': 'decorative checkbox' }}
-                                                            {...props}
-                                                        />
-                                                    }
-                                                    label={<Typography variant="body2" color="textSecondary" className={classes.label}>Art and Culture</Typography>}
-                                                />
-
-
-
-                                                <FormControlLabel
-                                                    input
-                                                    control={
-                                                        <Checkbox
-                                                            checked={state['scienceAndTechnology']}
-                                                            onChange={handleChange}
-                                                            name="scienceAndTechnology"
-                                                            className={classes.labelCheckbox}
-                                                            disableRipple
-                                                            color="default"
-                                                            checkedIcon={<span className={clsx(classes.icon, classes.checkedIcon)} />}
-                                                            inputProps={{ 'aria-label': 'decorative checkbox' }}
-                                                            {...props}
-                                                        />
-                                                    }
-                                                    label={<Typography variant="body2" color="textSecondary" className={classes.label}>Science and Technology</Typography>}
-                                                />
-
-                                            </FormGroup>
-                                        </FormControl>
-                                    }
                                 </div>
 
                             </div>
 
+                        </div>
 
-                            {/* Second Filter*/}
-                            <div className={classes.filterCategoryContainer}>
 
-                                <div className={classes.filterCategoryItemsContainer}>
-                                    <div className={classes.filterCategoryItems}>
+                    </Paper>
+                    <CButton variant="outline" color="success" style={{marginLeft:23,width:170}}
+                 size="sm" block onClick={() => history.push('/test/user/approval')} >Add Test</CButton>
 
-                                    </div>
+                </Grid>
+           
+                <Grid item lg={10} md={7} sm={8} xs={12} className={classes.testContainer}>
 
-                                </div>
+                    <h3 style={{ padding: 10, fontSize: 15 }}>Official Telegram Channel Link:<a href="https://t.me/rapidias_in" target="_blank">https://t.me/rapidias_in</a> </h3>
+                    <h3 style={{ padding: 10, fontSize: 15 }}>Test Series Private Discussion group:<a href="https://t.me/TestsDiscussion_RapidIAS" target="_blank">https://t.me/TestsDiscussion_RapidIAS</a> </h3>
 
+                    {/*Vision IAS */}
+
+                    {visionTestList.length > 0 &&
+                        <Paper className={classes.categorypaper} elevation={3}>
+
+                            <div className={classes.categoryContainer}>
+                                <h1 className={classes.testCategory}>Vision IAS</h1>
+                                <Grid container spacing={1}>
+                                    {
+                                        visionTestList.map((item, index) => (
+                                            <>
+                                                <Grid item lg={3} md={4} sm={6} xs={12}>
+                                                    <Paper className={classes.paper} elevation={3}>
+                                                        <p className={classes.testHeading}>{item.testName}</p>
+
+                                                        <div className={classes.testContent}>
+                                                            <div className={classes.testContentItems}>
+                                                                {item.testCategory == "Sectional" &&
+                                                                    <p className={classes.testContentHeading}>                 {item.categoryType} </p>}
+                                                                {item.testCategory == "Full Length" &&
+                                                                    <p className={classes.testContentHeading}>Full Length Test</p>
+                                                                }
+
+                                                            </div>
+
+                                                        </div>
+                                                        {/* Second Content*/}
+                                                        <div className={classes.testContent}>
+
+
+                                                            <div className={classes.testContentItems} style={{ marginTop: item.testCategory ? "-10px" : "25px" }}>
+                                                                <NoteRounded color="primary" className={classes.testContentIcons} />
+                                                                <p className={classes.testContentHeading}>{item.numberOfQuestions} Questions</p>
+                                                            </div>
+                                                        </div>
+
+
+                                                        {/* Second Content*/}
+                                                        <div className={classes.testContent}>
+                                                            <div className={classes.testContentItems}>
+                                                            </div>
+
+
+                                                            {/*  Test Button*/}
+
+                                                            <div className={classes.testContentItems} style={{ width: "100%", margin: 10 }}>
+                                                                <CButton variant="outline" color="primary"
+                                                                    size="md" block onClick={() => handleGiveTest(item._id)} >Start Test</CButton>
+                                                            </div>
+                                                        </div>
+                                                    </Paper>
+                                                </Grid>
+                                            </>
+                                        ))}
+                                </Grid>
                             </div>
+                        </Paper>
+                    }
 
 
+                    {/*Forum IAS */}
+
+                    {forumTestList.length > 0 &&
+                        <Paper className={classes.categorypaper} elevation={3}>
+
+                            <div className={classes.categoryContainer}>
+                                <h1 className={classes.testCategory}>Forum IAS</h1>
+                                <Grid container spacing={1}>
+                                    {
+                                        forumTestList.map((item, index) => (
+                                            <>
+                                                <Grid item lg={3} md={4} sm={6} xs={12}>
+                                                    <Paper className={classes.paper} elevation={3}>
+                                                        <p className={classes.testHeading}>{item.testName}</p>
+                                                        <div className={classes.testContent}>
+                                                            <div className={classes.testContentItems}>
+                                                                {item.testCategory == "Sectional" &&
+                                                                    <p className={classes.testContentHeading}>                 {item.categoryType} </p>}
+                                                                {item.testCategory == "Full Length" &&
+                                                                    <p className={classes.testContentHeading}>Full Length Test</p>
+                                                                }
+
+                                                            </div>
+
+                                                        </div>
+
+                                                        {/* Second Content*/}
+                                                        <div className={classes.testContent}>
+
+
+                                                            <div className={classes.testContentItems} style={{ marginTop: item.testCategory ? "-10px" : "25px" }}>
+                                                                <NoteRounded color="primary" className={classes.testContentIcons} />
+                                                                <p className={classes.testContentHeading}>{item.numberOfQuestions} Questions</p>
+                                                            </div>
+                                                        </div>
+
+
+                                                        {/* Second Content*/}
+                                                        <div className={classes.testContent}>
+                                                            <div className={classes.testContentItems}>
+                                                            </div>
+
+
+                                                            {/*  Test Button*/}
+                                                            <div className={classes.testContentItems} style={{ width: "100%", margin: 10 }}>
+                                                                <CButton variant="outline" color="primary"
+                                                                    size="md" block onClick={() => handleGiveTest(item._id)} >Start Test</CButton>
+                                                            </div>
+                                                        </div>
+                                                    </Paper>
+                                                </Grid>
+
+                                            </>
+                                        ))}
+                                </Grid>
+                            </div>
+                        </Paper>
+                    }
+
+
+
+
+                    {/*UPSC PYQs */}
+                    {upscTestList.length > 0 &&
+                        <Paper className={classes.categorypaper} elevation={3}>
+
+                            <div className={classes.categoryContainer}>
+                                <h1 className={classes.testCategory}>UPSC PYQs</h1>
+                                <Grid container spacing={1}>
+                                    {
+                                        upscTestList.map((item, index) => (
+                                            <>
+                                                <Grid item lg={3} md={4} sm={6} xs={12}>
+                                                    <Paper className={classes.paper} elevation={3}>
+                                                        <p className={classes.testHeading}>{item.testName}</p>
+
+                                                        <div className={classes.testContent}>
+                                                            <div className={classes.testContentItems}>
+                                                                {item.testCategory == "Sectional" &&
+                                                                    <p className={classes.testContentHeading}>                 {item.categoryType} </p>}
+                                                                {item.testCategory == "Full Length" &&
+                                                                    <p className={classes.testContentHeading}>Full Length Test</p>
+                                                                }
+
+                                                            </div>
+
+                                                        </div>
+
+                                                        {/* Second Content*/}
+                                                        <div className={classes.testContent}>
+
+
+                                                            <div className={classes.testContentItems} style={{ marginTop: item.testCategory ? "-10px" : "25px" }}>
+                                                                <NoteRounded color="primary" className={classes.testContentIcons} />
+                                                                <p className={classes.testContentHeading}>{item.numberOfQuestions} Questions</p>
+                                                            </div>
+                                                        </div>
+
+
+                                                        {/* Second Content*/}
+                                                        <div className={classes.testContent}>
+                                                            <div className={classes.testContentItems}>
+                                                            </div>
+
+
+                                                            {/*  Test Button*/}
+
+                                                            <div className={classes.testContentItems} style={{ width: "100%", margin: 10 }}>
+                                                                <CButton variant="outline" color="primary"
+                                                                    size="md" block onClick={() => handleGiveTest(item._id)} >Start Test</CButton>
+                                                            </div>
+                                                        </div>
+                                                    </Paper>
+                                                </Grid>
+
+                                            </>
+                                        ))}
+                                </Grid>
+                            </div>
+                        </Paper>
+                    }
+
+
+
+
+                    {/*Insights IAS */}
+
+                    {insightsTestList.length > 0 &&
+                        <Paper className={classes.categorypaper} elevation={3}>
+
+                            <div className={classes.categoryContainer}>
+                                <h1 className={classes.testCategory}>Insights IAS</h1>
+                                <Grid container spacing={1}>
+                                    {
+                                        insightsTestList.map((item, index) => (
+                                            <>
+                                                <Grid item lg={3} md={4} sm={6} xs={12}>
+                                                    <Paper className={classes.paper} elevation={3}>
+                                                        <p className={classes.testHeading}>{item.testName}</p>
+
+                                                        <div className={classes.testContent}>
+                                                            <div className={classes.testContentItems}>
+                                                                {item.testCategory == "Sectional" &&
+                                                                    <p className={classes.testContentHeading}>                 {item.categoryType} </p>}
+                                                                {item.testCategory == "Full Length" &&
+                                                                    <p className={classes.testContentHeading}>Full Length Test</p>
+                                                                }
+
+                                                            </div>
+
+                                                        </div>
+
+                                                        {/* Second Content*/}
+                                                        <div className={classes.testContent}>
+
+
+                                                            <div className={classes.testContentItems} style={{ marginTop: item.testCategory ? "-10px" : "25px" }}>
+                                                                <NoteRounded color="primary" className={classes.testContentIcons} />
+                                                                <p className={classes.testContentHeading}>{item.numberOfQuestions} Questions</p>
+                                                            </div>
+                                                        </div>
+
+
+                                                        {/* Second Content*/}
+                                                        <div className={classes.testContent}>
+                                                            <div className={classes.testContentItems}>
+                                                            </div>
+
+
+                                                            {/*  Test Button*/}
+
+                                                            <div className={classes.testContentItems} style={{ width: "100%", margin: 10 }}>
+                                                                <CButton variant="outline" color="primary"
+                                                                    size="md" block onClick={() => handleGiveTest(item._id)} >Start Test</CButton>
+                                                            </div>
+                                                        </div>
+                                                    </Paper>
+                                                </Grid>
+
+                                            </>
+                                        ))}
+                                </Grid>
+                            </div>
+                        </Paper>
+                    }
+
+
+                    {/* Rau IAS */}
+
+                    {rauIasTestList.length > 0 &&
+                        <Paper className={classes.categorypaper} elevation={3}>
+
+                            <div className={classes.categoryContainer}>
+                                <h1 className={classes.testCategory}>Rau IAS</h1>
+                                <Grid container spacing={1}>
+                                    {
+                                        rauIasTestList.map((item, index) => (
+                                            <>
+                                                <Grid item lg={3} md={4} sm={6} xs={12}>
+                                                    <Paper className={classes.paper} elevation={3}>
+                                                        <p className={classes.testHeading}>{item.testName}</p>
+
+                                                        <div className={classes.testContent}>
+                                                            <div className={classes.testContentItems}>
+                                                                {item.testCategory == "Sectional" &&
+                                                                    <p className={classes.testContentHeading}>                 {item.categoryType} </p>}
+                                                                {item.testCategory == "Full Length" &&
+                                                                    <p className={classes.testContentHeading}>Full Length Test</p>
+                                                                }
+
+                                                            </div>
+
+                                                        </div>
+                                                        {/* Second Content*/}
+                                                        <div className={classes.testContent}>
+
+
+                                                            <div className={classes.testContentItems} style={{ marginTop: item.testCategory ? "-10px" : "25px" }}>
+                                                                <NoteRounded color="primary" className={classes.testContentIcons} />
+                                                                <p className={classes.testContentHeading}>{item.numberOfQuestions} Questions</p>
+                                                            </div>
+                                                        </div>
+
+
+                                                        {/* Second Content*/}
+                                                        <div className={classes.testContent}>
+                                                            <div className={classes.testContentItems}>
+                                                            </div>
+
+
+                                                            {/*  Test Button*/}
+
+                                                            <div className={classes.testContentItems} style={{ width: "100%", margin: 10 }}>
+                                                                <CButton variant="outline" color="primary"
+                                                                    size="md" block onClick={() => handleGiveTest(item._id)} >Start Test</CButton>
+                                                            </div>
+                                                        </div>
+                                                    </Paper>
+                                                </Grid>
+                                            </>
+                                        ))}
+                                </Grid>
+                            </div>
+                        </Paper>
+                    }
+
+
+
+
+                    {/*IAS Score */}
+
+                    {iasTestList.length > 0 &&
+                        <Paper className={classes.categorypaper} elevation={3}>
+
+                            <div className={classes.categoryContainer}>
+                                <h1 className={classes.testCategory}>IAS Score</h1>
+                                <Grid container spacing={1}>
+                                    {
+                                        iasTestList.map((item, index) => (
+                                            <>
+                                                <Grid item lg={3} md={4} sm={6} xs={12}>
+                                                    <Paper className={classes.paper} elevation={3}>
+                                                        <p className={classes.testHeading}>{item.testName}</p>
+
+                                                        <div className={classes.testContent}>
+                                                            <div className={classes.testContentItems}>
+                                                                {item.testCategory == "Sectional" &&
+                                                                    <p className={classes.testContentHeading}>                 {item.categoryType} </p>}
+                                                                {item.testCategory == "Full Length" &&
+                                                                    <p className={classes.testContentHeading}>Full Length Test</p>
+                                                                }
+
+                                                            </div>
+
+                                                        </div>
+                                                        {/* Second Content*/}
+                                                        <div className={classes.testContent}>
+
+
+                                                            <div className={classes.testContentItems} style={{ marginTop: item.testCategory ? "-10px" : "25px" }}>
+                                                                <NoteRounded color="primary" className={classes.testContentIcons} />
+                                                                <p className={classes.testContentHeading}>{item.numberOfQuestions} Questions</p>
+                                                            </div>
+                                                        </div>
+
+
+                                                        {/* Second Content*/}
+                                                        <div className={classes.testContent}>
+                                                            <div className={classes.testContentItems}>
+                                                            </div>
+
+
+                                                            {/*  Test Button*/}
+                                                            <div className={classes.testContentItems} style={{ width: "100%", margin: 10 }}>
+                                                                <CButton variant="outline" color="primary"
+                                                                    size="md" block onClick={() => handleGiveTest(item._id)} >Start Test</CButton>
+                                                            </div>
+                                                        </div>
+                                                    </Paper>
+                                                </Grid>
+
+                                            </>
+                                        ))}
+                                </Grid>
+                            </div>
+                        </Paper>
+                    }
+
+
+                    {/*Insight IAS 70 Days */}
+
+                    {insightsTestDaysList.length > 0 &&
+                        <Paper className={classes.categorypaper} elevation={3}>
+
+                            <div className={classes.categoryContainer}>
+                                <h1 className={classes.testCategory}>Insights IAS 70 Days</h1>
+                                <Grid container spacing={1}>
+                                    {
+                                        insightsTestDaysList.map((item, index) => (
+                                            <>
+                                                <Grid item lg={3} md={4} sm={6} xs={12}>
+                                                    <Paper className={classes.paper} elevation={3}>
+                                                        <p className={classes.testHeading}>{item.testName}</p>
+
+                                                        <div className={classes.testContent}>
+                                                            <div className={classes.testContentItems}>
+                                                                {item.testCategory == "Sectional" &&
+                                                                    <p className={classes.testContentHeading}>                 {item.categoryType} </p>}
+                                                                {item.testCategory == "Full Length" &&
+                                                                    <p className={classes.testContentHeading}>Full Length Test</p>
+                                                                }
+
+                                                            </div>
+
+                                                        </div>
+                                                        {/* Second Content*/}
+                                                        <div className={classes.testContent}>
+
+
+                                                            <div className={classes.testContentItems} style={{ marginTop: item.testCategory ? "-10px" : "25px" }}>
+                                                                <NoteRounded color="primary" className={classes.testContentIcons} />
+                                                                <p className={classes.testContentHeading}>{item.numberOfQuestions} Questions</p>
+                                                            </div>
+                                                        </div>
+
+
+                                                        {/* Second Content*/}
+                                                        <div className={classes.testContent}>
+                                                            <div className={classes.testContentItems}>
+                                                            </div>
+
+
+                                                            {/*  Test Button*/}
+
+                                                            <div className={classes.testContentItems} style={{ width: "100%", margin: 10 }}>
+                                                                <CButton variant="outline" color="primary"
+                                                                    size="md" block onClick={() => handleGiveTest(item._id)} >Start Test</CButton>
+                                                            </div>
+                                                        </div>
+                                                    </Paper>
+                                                </Grid>
+                                            </>
+                                        ))}
+                                </Grid>
+                            </div>
+                        </Paper>
+                    }
+
+
+                    {/* IAS Baba 60 Days */}
+
+                    {iasBabaTestDaysList.length > 0 &&
+                        <Paper className={classes.categorypaper} elevation={3}>
+
+                            <div className={classes.categoryContainer}>
+                                <h1 className={classes.testCategory}>IAS Baba 60 Days</h1>
+                                <Grid container spacing={1}>
+                                    {
+                                        iasBabaTestDaysList.map((item, index) => (
+                                            <>
+                                                <Grid item lg={3} md={4} sm={6} xs={12}>
+                                                    <Paper className={classes.paper} elevation={3}>
+                                                        <p className={classes.testHeading}>{item.testName}</p>
+
+                                                        <div className={classes.testContent}>
+                                                            <div className={classes.testContentItems}>
+                                                                {item.testCategory == "Sectional" &&
+                                                                    <p className={classes.testContentHeading}>                 {item.categoryType} </p>}
+                                                                {item.testCategory == "Full Length" &&
+                                                                    <p className={classes.testContentHeading}>Full Length Test</p>
+                                                                }
+
+                                                            </div>
+
+                                                        </div>
+                                                        {/* Second Content*/}
+                                                        <div className={classes.testContent}>
+
+
+                                                            <div className={classes.testContentItems} style={{ marginTop: item.testCategory ? "-10px" : "25px" }}>
+                                                                <NoteRounded color="primary" className={classes.testContentIcons} />
+                                                                <p className={classes.testContentHeading}>{item.numberOfQuestions} Questions</p>
+                                                            </div>
+                                                        </div>
+
+
+                                                        {/* Second Content*/}
+                                                        <div className={classes.testContent}>
+                                                            <div className={classes.testContentItems}>
+                                                            </div>
+
+
+                                                            {/*  Test Button*/}
+
+                                                            <div className={classes.testContentItems} style={{ width: "100%", margin: 10 }}>
+                                                                <CButton variant="outline" color="primary"
+                                                                    size="md" block onClick={() => handleGiveTest(item._id)} >Start Test</CButton>
+                                                            </div>
+                                                        </div>
+                                                    </Paper>
+                                                </Grid>
+                                            </>
+                                        ))}
+                                </Grid>
+                            </div>
+                        </Paper>
+                    }
+
+
+
+
+
+
+                    {/*Vajiram and Ravi */}
+
+                    {vajiramTestList.length > 0 &&
+                        <Paper className={classes.categorypaper} elevation={3}>
+
+                            <div className={classes.categoryContainer}>
+                                <h1 className={classes.testCategory}>Vajiram and Ravi</h1>
+                                <Grid container spacing={1}>
+                                    {
+                                        vajiramTestList.map((item, index) => (
+                                            <>
+                                                <Grid item lg={3} md={4} sm={6} xs={12}>
+                                                    <Paper className={classes.paper} elevation={3}>
+                                                        <p className={classes.testHeading}>{item.testName}</p>
+
+                                                        {/* First Content*/}
+                                                        <div className={classes.testContent}>
+                                                            <div className={classes.testContentItems}>
+                                                                {item.testCategory == "Sectional" &&
+                                                                    <p className={classes.testContentHeading}>                 {item.categoryType} </p>}
+                                                                {item.testCategory == "Full Length" &&
+                                                                    <p className={classes.testContentHeading}>Full Length Test</p>
+                                                                }
+
+                                                            </div>
+
+                                                        </div>
+
+
+                                                        {/* Second Content*/}
+                                                        <div className={classes.testContent}>
+
+
+                                                            <div className={classes.testContentItems} style={{ marginTop: item.testCategory ? "-10px" : "25px" }}>
+                                                                <NoteRounded color="primary" className={classes.testContentIcons} />
+                                                                <p className={classes.testContentHeading}>{item.numberOfQuestions} Questions</p>
+                                                            </div>
+                                                        </div>
+
+
+                                                        {/* Second Content*/}
+                                                        <div className={classes.testContent}>
+                                                            <div className={classes.testContentItems}>
+                                                            </div>
+
+
+                                                            {/*  Test Button*/}
+
+                                                            <div className={classes.testContentItems} style={{ width: "100%", margin: 10 }}>
+                                                                <CButton variant="outline" color="primary"
+                                                                    size="md" block onClick={() => handleGiveTest(item._id)} >Start Test</CButton>
+                                                            </div>
+                                                        </div>
+                                                    </Paper>
+                                                </Grid>
+
+                                            </>
+                                        ))}
+                                </Grid>
+                            </div>
                         </Paper>
 
-                    </Grid>
-
-                    <Grid item lg={10} md={7} sm={8} xs={12} className={classes.testContainer}>
-
-              <h3 style={{padding:10,fontSize:15}}>Official Telegram Channel Link:<a href="https://t.me/rapidias_in" target="_blank">https://t.me/rapidias_in</a> </h3>
-              <h3 style={{padding:10,fontSize:15}}>Test Series Private Discussion group:<a href="https://t.me/TestsDiscussion_RapidIAS" target="_blank">https://t.me/TestsDiscussion_RapidIAS</a> </h3>          
-
-                        {/*Vision IAS */}
-
-                        {visionTestList.length > 0 &&
-                            <Paper className={classes.categorypaper} elevation={3}>
-
-                                <div className={classes.categoryContainer}>
-                                    <h1 className={classes.testCategory}>Vision IAS</h1>
-                                    <Grid container spacing={1}>
-                                        {
-                                            visionTestList.map((item, index) => (
-                                                <>
-                                                    <Grid item lg={3} md={4} sm={6} xs={12}>
-                                                        <Paper className={classes.paper} elevation={3}>
-                                                            <p className={classes.testHeading}>{item.testName}</p>
-
-                                                            <div className={classes.testContent}>
-                                                                <div className={classes.testContentItems}>
-                                                                    {item.testCategory == "Sectional" &&
-                                                                        <p className={classes.testContentHeading}>                 {item.categoryType} </p>}
-                                                                    {item.testCategory == "Full Length" &&
-                                                                        <p className={classes.testContentHeading}>Full Length Test</p>
-                                                                    }
-
-                                                                </div>
-
-                                                            </div>
-                                                            {/* Second Content*/}
-                                                            <div className={classes.testContent}>
+                    }
 
 
-                                                                <div className={classes.testContentItems} style={{ marginTop: item.testCategory ? "-10px" : "25px" }}>
-                                                                    <NoteRounded color="primary" className={classes.testContentIcons} />
-                                                                    <p className={classes.testContentHeading}>{item.numberOfQuestions} Questions</p>
-                                                                </div>
-                                                            </div>
 
+                    {/*Shankar IAS Academy */}
 
-                                                            {/* Second Content*/}
-                                                            <div className={classes.testContent}>
-                                                                <div className={classes.testContentItems}>
-                                                                </div>
+                    {shankarTestList.length > 0 &&
+                        <Paper className={classes.categorypaper} elevation={3}>
 
+                            <div className={classes.categoryContainer}>
+                                <h1 className={classes.testCategory}>Shankar IAS Academy</h1>
+                                <Grid container spacing={1}>
+                                    {
+                                        shankarTestList.map((item, index) => (
+                                            <>
+                                                <Grid item lg={3} md={4} sm={6} xs={12}>
+                                                    <Paper className={classes.paper} elevation={3}>
+                                                        <p className={classes.testHeading}>{item.testName}</p>
 
-                                                                {/*  Test Button*/}
-
-                                                                <div className={classes.testContentItems} style={{ width: "100%", margin: 10 }}>
-                                                                    <CButton variant="outline" color="primary"
-                                                                        size="md" block onClick={() => handleGiveTest(item._id)} >Start Test</CButton>
-                                                                </div>
-                                                            </div>
-                                                        </Paper>
-                                                    </Grid>
-                                                </>
-                                            ))}
-                                    </Grid>
-                                </div>
-                            </Paper>
-                        }
-
-
-             {/*Forum IAS */}
-
-             {forumTestList.length > 0 &&
-                            <Paper className={classes.categorypaper} elevation={3}>
-
-                                <div className={classes.categoryContainer}>
-                                    <h1 className={classes.testCategory}>Forum IAS</h1>
-                                    <Grid container spacing={1}>
-                                        {
-                                            forumTestList.map((item, index) => (
-                                                <>
-                                                    <Grid item lg={3} md={4} sm={6} xs={12}>
-                                                        <Paper className={classes.paper} elevation={3}>
-                                                            <p className={classes.testHeading}>{item.testName}</p>
-                                                            <div className={classes.testContent}>
-                                                                <div className={classes.testContentItems}>
-                                                                    {item.testCategory == "Sectional" &&
-                                                                        <p className={classes.testContentHeading}>                 {item.categoryType} </p>}
-                                                                    {item.testCategory == "Full Length" &&
-                                                                        <p className={classes.testContentHeading}>Full Length Test</p>
-                                                                    }
-
-                                                                </div>
+                                                        <div className={classes.testContent}>
+                                                            <div className={classes.testContentItems}>
+                                                                {item.testCategory == "Sectional" &&
+                                                                    <p className={classes.testContentHeading}>                 {item.categoryType} </p>}
+                                                                {item.testCategory == "Full Length" &&
+                                                                    <p className={classes.testContentHeading}>Full Length Test</p>
+                                                                }
 
                                                             </div>
 
-                                                            {/* Second Content*/}
-                                                            <div className={classes.testContent}>
+                                                        </div>
+
+                                                        {/* Second Content*/}
+                                                        <div className={classes.testContent}>
 
 
-                                                                <div className={classes.testContentItems} style={{ marginTop: item.testCategory ? "-10px" : "25px" }}>
-                                                                    <NoteRounded color="primary" className={classes.testContentIcons} />
-                                                                    <p className={classes.testContentHeading}>{item.numberOfQuestions} Questions</p>
-                                                                </div>
+                                                            <div className={classes.testContentItems} style={{ marginTop: item.testCategory ? "-10px" : "25px" }}>
+                                                                <NoteRounded color="primary" className={classes.testContentIcons} />
+                                                                <p className={classes.testContentHeading} >{item.numberOfQuestions} Questions</p>
+                                                            </div>
+                                                        </div>
+
+
+                                                        {/* Second Content*/}
+                                                        <div className={classes.testContent}>
+                                                            <div className={classes.testContentItems}>
                                                             </div>
 
 
-                                                            {/* Second Content*/}
-                                                            <div className={classes.testContent}>
-                                                                <div className={classes.testContentItems}>
-                                                                </div>
+                                                            {/*  Test Button*/}
 
-
-                                                                {/*  Test Button*/}
-                                                                <div className={classes.testContentItems} style={{ width: "100%", margin: 10 }}>
-                                                                    <CButton variant="outline" color="primary"
-                                                                        size="md" block onClick={() => handleGiveTest(item._id)} >Start Test</CButton>
-                                                                </div>
+                                                            <div className={classes.testContentItems} style={{ width: "100%", margin: 10 }}>
+                                                                <CButton variant="outline" color="primary"
+                                                                    size="md" block onClick={() => handleGiveTest(item._id)} >Start Test</CButton>
                                                             </div>
-                                                        </Paper>
-                                                    </Grid>
+                                                        </div>
+                                                    </Paper>
+                                                </Grid>
 
-                                                </>
-                                            ))}
-                                    </Grid>
-                                </div>
-                            </Paper>
-                        }
+                                            </>
+                                        ))}
+                                </Grid>
+                            </div>
+                        </Paper>
+                    }
 
 
-           
 
-     {/*UPSC PYQs */}
-     {upscTestList.length > 0 &&
-                            <Paper className={classes.categorypaper} elevation={3}>
 
-                                <div className={classes.categoryContainer}>
-                                    <h1 className={classes.testCategory}>UPSC PYQs</h1>
-                                    <Grid container spacing={1}>
-                                        {
-                                            upscTestList.map((item, index) => (
-                                                <>
-                                                    <Grid item lg={3} md={4} sm={6} xs={12}>
-                                                        <Paper className={classes.paper} elevation={3}>
-                                                            <p className={classes.testHeading}>{item.testName}</p>
 
-                                                            <div className={classes.testContent}>
-                                                                <div className={classes.testContentItems}>
-                                                                    {item.testCategory == "Sectional" &&
-                                                                        <p className={classes.testContentHeading}>                 {item.categoryType} </p>}
-                                                                    {item.testCategory == "Full Length" &&
-                                                                        <p className={classes.testContentHeading}>Full Length Test</p>
-                                                                    }
-
-                                                                </div>
-
-                                                            </div>
-
-                                                            {/* Second Content*/}
-                                                            <div className={classes.testContent}>
-
-
-                                                                <div className={classes.testContentItems} style={{ marginTop: item.testCategory ? "-10px" : "25px" }}>
-                                                                    <NoteRounded color="primary" className={classes.testContentIcons} />
-                                                                    <p className={classes.testContentHeading}>{item.numberOfQuestions} Questions</p>
-                                                                </div>
-                                                            </div>
-
-
-                                                            {/* Second Content*/}
-                                                            <div className={classes.testContent}>
-                                                                <div className={classes.testContentItems}>
-                                                                </div>
-
-
-                                                                {/*  Test Button*/}
-
-                                                                <div className={classes.testContentItems} style={{ width: "100%", margin: 10 }}>
-                                                                    <CButton variant="outline" color="primary"
-                                                                        size="md" block onClick={() => handleGiveTest(item._id)} >Start Test</CButton>
-                                                                </div>
-                                                            </div>
-                                                        </Paper>
-                                                    </Grid>
-
-                                                </>
-                                            ))}
-                                    </Grid>
-                                </div>
-                            </Paper>
-                        }
-
-
-
-
-   {/*Insights IAS */}
-
-   {insightsTestList.length > 0 &&
-                            <Paper className={classes.categorypaper} elevation={3}>
-
-                                <div className={classes.categoryContainer}>
-                                    <h1 className={classes.testCategory}>Insights IAS</h1>
-                                    <Grid container spacing={1}>
-                                        {
-                                            insightsTestList.map((item, index) => (
-                                                <>
-                                                    <Grid item lg={3} md={4} sm={6} xs={12}>
-                                                        <Paper className={classes.paper} elevation={3}>
-                                                            <p className={classes.testHeading}>{item.testName}</p>
-
-                                                            <div className={classes.testContent}>
-                                                                <div className={classes.testContentItems}>
-                                                                    {item.testCategory == "Sectional" &&
-                                                                        <p className={classes.testContentHeading}>                 {item.categoryType} </p>}
-                                                                    {item.testCategory == "Full Length" &&
-                                                                        <p className={classes.testContentHeading}>Full Length Test</p>
-                                                                    }
-
-                                                                </div>
-
-                                                            </div>
-
-                                                            {/* Second Content*/}
-                                                            <div className={classes.testContent}>
-
-
-                                                                <div className={classes.testContentItems} style={{ marginTop: item.testCategory ? "-10px" : "25px" }}>
-                                                                    <NoteRounded color="primary" className={classes.testContentIcons} />
-                                                                    <p className={classes.testContentHeading}>{item.numberOfQuestions} Questions</p>
-                                                                </div>
-                                                            </div>
-
-
-                                                            {/* Second Content*/}
-                                                            <div className={classes.testContent}>
-                                                                <div className={classes.testContentItems}>
-                                                                </div>
-
-
-                                                                {/*  Test Button*/}
-
-                                                                <div className={classes.testContentItems} style={{ width: "100%", margin: 10 }}>
-                                                                    <CButton variant="outline" color="primary"
-                                                                        size="md" block onClick={() => handleGiveTest(item._id)} >Start Test</CButton>
-                                                                </div>
-                                                            </div>
-                                                        </Paper>
-                                                    </Grid>
-
-                                                </>
-                                            ))}
-                                    </Grid>
-                                </div>
-                            </Paper>
-                        }
-
-
-     {/* Rau IAS */}
-
-     {rauIasTestList.length > 0 &&
-                            <Paper className={classes.categorypaper} elevation={3}>
-
-                                <div className={classes.categoryContainer}>
-                                    <h1 className={classes.testCategory}>Rau IAS</h1>
-                                    <Grid container spacing={1}>
-                                        {
-                                            rauIasTestList.map((item, index) => (
-                                                <>
-                                                    <Grid item lg={3} md={4} sm={6} xs={12}>
-                                                        <Paper className={classes.paper} elevation={3}>
-                                                            <p className={classes.testHeading}>{item.testName}</p>
-
-                                                            <div className={classes.testContent}>
-                                                                <div className={classes.testContentItems}>
-                                                                    {item.testCategory == "Sectional" &&
-                                                                        <p className={classes.testContentHeading}>                 {item.categoryType} </p>}
-                                                                    {item.testCategory == "Full Length" &&
-                                                                        <p className={classes.testContentHeading}>Full Length Test</p>
-                                                                    }
-
-                                                                </div>
-
-                                                            </div>
-                                                            {/* Second Content*/}
-                                                            <div className={classes.testContent}>
-
-
-                                                                <div className={classes.testContentItems} style={{ marginTop: item.testCategory ? "-10px" : "25px" }}>
-                                                                    <NoteRounded color="primary" className={classes.testContentIcons} />
-                                                                    <p className={classes.testContentHeading}>{item.numberOfQuestions} Questions</p>
-                                                                </div>
-                                                            </div>
-
-
-                                                            {/* Second Content*/}
-                                                            <div className={classes.testContent}>
-                                                                <div className={classes.testContentItems}>
-                                                                </div>
-
-
-                                                                {/*  Test Button*/}
-
-                                                                <div className={classes.testContentItems} style={{ width: "100%", margin: 10 }}>
-                                                                    <CButton variant="outline" color="primary"
-                                                                        size="md" block onClick={() => handleGiveTest(item._id)} >Start Test</CButton>
-                                                                </div>
-                                                            </div>
-                                                        </Paper>
-                                                    </Grid>
-                                                </>
-                                            ))}
-                                    </Grid>
-                                </div>
-                            </Paper>
-                        }
-
-
-
-
-  {/*IAS Score */}
-
-  {iasTestList.length > 0 &&
-                            <Paper className={classes.categorypaper} elevation={3}>
-
-                                <div className={classes.categoryContainer}>
-                                    <h1 className={classes.testCategory}>IAS Score</h1>
-                                    <Grid container spacing={1}>
-                                        {
-                                            iasTestList.map((item, index) => (
-                                                <>
-                                                    <Grid item lg={3} md={4} sm={6} xs={12}>
-                                                        <Paper className={classes.paper} elevation={3}>
-                                                            <p className={classes.testHeading}>{item.testName}</p>
-
-                                                            <div className={classes.testContent}>
-                                                                <div className={classes.testContentItems}>
-                                                                    {item.testCategory == "Sectional" &&
-                                                                        <p className={classes.testContentHeading}>                 {item.categoryType} </p>}
-                                                                    {item.testCategory == "Full Length" &&
-                                                                        <p className={classes.testContentHeading}>Full Length Test</p>
-                                                                    }
-
-                                                                </div>
-
-                                                            </div>
-                                                            {/* Second Content*/}
-                                                            <div className={classes.testContent}>
-
-
-                                                                <div className={classes.testContentItems} style={{ marginTop: item.testCategory ? "-10px" : "25px" }}>
-                                                                    <NoteRounded color="primary" className={classes.testContentIcons} />
-                                                                    <p className={classes.testContentHeading}>{item.numberOfQuestions} Questions</p>
-                                                                </div>
-                                                            </div>
-
-
-                                                            {/* Second Content*/}
-                                                            <div className={classes.testContent}>
-                                                                <div className={classes.testContentItems}>
-                                                                </div>
-
-
-                                                                {/*  Test Button*/}
-                                                                <div className={classes.testContentItems} style={{ width: "100%", margin: 10 }}>
-                                                                    <CButton variant="outline" color="primary"
-                                                                        size="md" block onClick={() => handleGiveTest(item._id)} >Start Test</CButton>
-                                                                </div>
-                                                            </div>
-                                                        </Paper>
-                                                    </Grid>
-
-                                                </>
-                                            ))}
-                                    </Grid>
-                                </div>
-                            </Paper>
-                        }
-
-
-           {/*Insight IAS 70 Days */}
-
-           {insightsTestDaysList.length > 0 &&
-                            <Paper className={classes.categorypaper} elevation={3}>
-
-                                <div className={classes.categoryContainer}>
-                                    <h1 className={classes.testCategory}>Insights IAS 70 Days</h1>
-                                    <Grid container spacing={1}>
-                                        {
-                                            insightsTestDaysList.map((item, index) => (
-                                                <>
-                                                    <Grid item lg={3} md={4} sm={6} xs={12}>
-                                                        <Paper className={classes.paper} elevation={3}>
-                                                            <p className={classes.testHeading}>{item.testName}</p>
-
-                                                            <div className={classes.testContent}>
-                                                                <div className={classes.testContentItems}>
-                                                                    {item.testCategory == "Sectional" &&
-                                                                        <p className={classes.testContentHeading}>                 {item.categoryType} </p>}
-                                                                    {item.testCategory == "Full Length" &&
-                                                                        <p className={classes.testContentHeading}>Full Length Test</p>
-                                                                    }
-
-                                                                </div>
-
-                                                            </div>
-                                                            {/* Second Content*/}
-                                                            <div className={classes.testContent}>
-
-
-                                                                <div className={classes.testContentItems} style={{ marginTop: item.testCategory ? "-10px" : "25px" }}>
-                                                                    <NoteRounded color="primary" className={classes.testContentIcons} />
-                                                                    <p className={classes.testContentHeading}>{item.numberOfQuestions} Questions</p>
-                                                                </div>
-                                                            </div>
-
-
-                                                            {/* Second Content*/}
-                                                            <div className={classes.testContent}>
-                                                                <div className={classes.testContentItems}>
-                                                                </div>
-
-
-                                                                {/*  Test Button*/}
-
-                                                                <div className={classes.testContentItems} style={{ width: "100%", margin: 10 }}>
-                                                                    <CButton variant="outline" color="primary"
-                                                                        size="md" block onClick={() => handleGiveTest(item._id)} >Start Test</CButton>
-                                                                </div>
-                                                            </div>
-                                                        </Paper>
-                                                    </Grid>
-                                                </>
-                                            ))}
-                                    </Grid>
-                                </div>
-                            </Paper>
-                        }
-
-
-                        {/* IAS Baba 60 Days */}
-
-                        {iasBabaTestDaysList.length > 0 &&
-                            <Paper className={classes.categorypaper} elevation={3}>
-
-                                <div className={classes.categoryContainer}>
-                                    <h1 className={classes.testCategory}>IAS Baba 60 Days</h1>
-                                    <Grid container spacing={1}>
-                                        {
-                                            iasBabaTestDaysList.map((item, index) => (
-                                                <>
-                                                    <Grid item lg={3} md={4} sm={6} xs={12}>
-                                                        <Paper className={classes.paper} elevation={3}>
-                                                            <p className={classes.testHeading}>{item.testName}</p>
-
-                                                            <div className={classes.testContent}>
-                                                                <div className={classes.testContentItems}>
-                                                                    {item.testCategory == "Sectional" &&
-                                                                        <p className={classes.testContentHeading}>                 {item.categoryType} </p>}
-                                                                    {item.testCategory == "Full Length" &&
-                                                                        <p className={classes.testContentHeading}>Full Length Test</p>
-                                                                    }
-
-                                                                </div>
-
-                                                            </div>
-                                                            {/* Second Content*/}
-                                                            <div className={classes.testContent}>
-
-
-                                                                <div className={classes.testContentItems} style={{ marginTop: item.testCategory ? "-10px" : "25px" }}>
-                                                                    <NoteRounded color="primary" className={classes.testContentIcons} />
-                                                                    <p className={classes.testContentHeading}>{item.numberOfQuestions} Questions</p>
-                                                                </div>
-                                                            </div>
-
-
-                                                            {/* Second Content*/}
-                                                            <div className={classes.testContent}>
-                                                                <div className={classes.testContentItems}>
-                                                                </div>
-
-
-                                                                {/*  Test Button*/}
-
-                                                                <div className={classes.testContentItems} style={{ width: "100%", margin: 10 }}>
-                                                                    <CButton variant="outline" color="primary"
-                                                                        size="md" block onClick={() => handleGiveTest(item._id)} >Start Test</CButton>
-                                                                </div>
-                                                            </div>
-                                                        </Paper>
-                                                    </Grid>
-                                                </>
-                                            ))}
-                                    </Grid>
-                                </div>
-                            </Paper>
-                        }
-
-
-             
-                     
-
-
-                        {/*Vajiram and Ravi */}
-
-                        {vajiramTestList.length > 0 &&
-                            <Paper className={classes.categorypaper} elevation={3}>
-
-                                <div className={classes.categoryContainer}>
-                                    <h1 className={classes.testCategory}>Vajiram and Ravi</h1>
-                                    <Grid container spacing={1}>
-                                        {
-                                            vajiramTestList.map((item, index) => (
-                                                <>
-                                                    <Grid item lg={3} md={4} sm={6} xs={12}>
-                                                        <Paper className={classes.paper} elevation={3}>
-                                                            <p className={classes.testHeading}>{item.testName}</p>
-
-                                                            {/* First Content*/}
-                                                            <div className={classes.testContent}>
-                                                                <div className={classes.testContentItems}>
-                                                                    {item.testCategory == "Sectional" &&
-                                                                        <p className={classes.testContentHeading}>                 {item.categoryType} </p>}
-                                                                    {item.testCategory == "Full Length" &&
-                                                                        <p className={classes.testContentHeading}>Full Length Test</p>
-                                                                    }
-
-                                                                </div>
-
-                                                            </div>
-
-
-                                                            {/* Second Content*/}
-                                                            <div className={classes.testContent}>
-
-
-                                                                <div className={classes.testContentItems} style={{ marginTop: item.testCategory ? "-10px" : "25px" }}>
-                                                                    <NoteRounded color="primary" className={classes.testContentIcons} />
-                                                                    <p className={classes.testContentHeading}>{item.numberOfQuestions} Questions</p>
-                                                                </div>
-                                                            </div>
-
-
-                                                            {/* Second Content*/}
-                                                            <div className={classes.testContent}>
-                                                                <div className={classes.testContentItems}>
-                                                                </div>
-
-
-                                                                {/*  Test Button*/}
-
-                                                                <div className={classes.testContentItems} style={{ width: "100%", margin: 10 }}>
-                                                                    <CButton variant="outline" color="primary"
-                                                                        size="md" block onClick={() => handleGiveTest(item._id)} >Start Test</CButton>
-                                                                </div>
-                                                            </div>
-                                                        </Paper>
-                                                    </Grid>
-
-                                                </>
-                                            ))}
-                                    </Grid>
-                                </div>
-                            </Paper>
-
-                        }
-
-
-
-                        {/*Shankar IAS Academy */}
-
-                        {shankarTestList.length > 0 &&
-                            <Paper className={classes.categorypaper} elevation={3}>
-
-                                <div className={classes.categoryContainer}>
-                                    <h1 className={classes.testCategory}>Shankar IAS Academy</h1>
-                                    <Grid container spacing={1}>
-                                        {
-                                            shankarTestList.map((item, index) => (
-                                                <>
-                                                    <Grid item lg={3} md={4} sm={6} xs={12}>
-                                                        <Paper className={classes.paper} elevation={3}>
-                                                            <p className={classes.testHeading}>{item.testName}</p>
-
-                                                            <div className={classes.testContent}>
-                                                                <div className={classes.testContentItems}>
-                                                                    {item.testCategory == "Sectional" &&
-                                                                        <p className={classes.testContentHeading}>                 {item.categoryType} </p>}
-                                                                    {item.testCategory == "Full Length" &&
-                                                                        <p className={classes.testContentHeading}>Full Length Test</p>
-                                                                    }
-
-                                                                </div>
-
-                                                            </div>
-
-                                                            {/* Second Content*/}
-                                                            <div className={classes.testContent}>
-
-
-                                                                <div className={classes.testContentItems} style={{ marginTop: item.testCategory ? "-10px" : "25px" }}>
-                                                                    <NoteRounded color="primary" className={classes.testContentIcons} />
-                                                                    <p className={classes.testContentHeading} >{item.numberOfQuestions} Questions</p>
-                                                                </div>
-                                                            </div>
-
-
-                                                            {/* Second Content*/}
-                                                            <div className={classes.testContent}>
-                                                                <div className={classes.testContentItems}>
-                                                                </div>
-
-
-                                                                {/*  Test Button*/}
-
-                                                                <div className={classes.testContentItems} style={{ width: "100%", margin: 10 }}>
-                                                                    <CButton variant="outline" color="primary"
-                                                                        size="md" block onClick={() => handleGiveTest(item._id)} >Start Test</CButton>
-                                                                </div>
-                                                            </div>
-                                                        </Paper>
-                                                    </Grid>
-
-                                                </>
-                                            ))}
-                                    </Grid>
-                                </div>
-                            </Paper>
-                        }
-
-
-                      
-                   
-                   
-                    </Grid>
                 </Grid>
+            </Grid>
 
         </div>
 

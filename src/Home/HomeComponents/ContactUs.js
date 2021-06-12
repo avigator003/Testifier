@@ -26,6 +26,8 @@ function ContactUs() {
 <h5 style={{color:"white",marginLeft:20,marginBottom:30}}>Whatsapp:<a href=" https://wa.me/message/ARXIUOKPIV6YD1">   https://wa.me/message/ARXIUOKPIV6YD1 </a> </h5> 
 <h5 style={{color:"white",marginLeft:20,marginBottom:30}}>  Email Address <a href="mailto:rapidiasacademy@gmail.com">  rapidiasacademy@gmail.com</a></h5> 
 <h5 style={{color:"white",marginLeft:20}}>Phone Number - 9284320090</h5> 
+
+<h5 style={{color:"white",marginLeft:20}}>Address - RapidIAS Technologies 81 Third Floor,  Bada Bazar Rd, Old Rajinder Nagar, above Kotak Mahindra Bank, New Delhi, Delhi 110005</h5> 
         </Grid>
         </Grid>
         </>
