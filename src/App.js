@@ -111,7 +111,7 @@ export default App;
 
 const useStyles = makeStyles((theme) => ({
   Appcontainer: {
-    backgroundColor:"black"
+    backgroundColor:"white"
   },
  
 }));
